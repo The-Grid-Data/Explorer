@@ -48,6 +48,7 @@
     "graphql": "^16.8.1",
     "postcss": "^8",
     "prettier": "3.2.5",
+    "prettier-plugin-tailwindcss": "^0.5.14",
     "tailwindcss": "^3.4.1",
     "typescript": "^5"
   }

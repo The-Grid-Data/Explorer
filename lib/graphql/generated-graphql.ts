@@ -1,4 +1,4 @@
-import { useQuery, UseQueryOptions } from "@tanstack/react-query";
+import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = {
@@ -12,22 +12,22 @@ export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & {
 };
 export type MakeEmpty<
   T extends { [key: string]: unknown },
-  K extends keyof T,
+  K extends keyof T
 > = { [_ in K]?: never };
 export type Incremental<T> =
   | T
   | {
-      [P in keyof T]?: P extends " $fragmentName" | "__typename" ? T[P] : never;
+      [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never;
     };
 
 function fetcher<TData, TVariables>(query: string, variables?: TVariables) {
   return async (): Promise<TData> => {
     const res = await fetch(
-      "https://maximum-grackle-73.hasura.app/v1/graphql",
+      'https://maximum-grackle-73.hasura.app/v1/graphql',
       {
-        method: "POST",
-        body: JSON.stringify({ query, variables }),
-      },
+        method: 'POST',
+        body: JSON.stringify({ query, variables })
+      }
     );
 
     const json = await res.json();
@@ -53,45 +53,45 @@ export type Scalars = {
 
 /** Boolean expression to compare columns of type "Int". All fields are combined with logical 'AND'. */
 export type Int_Mysql8_Comparison_Exp = {
-  _eq?: InputMaybe<Scalars["Int"]["input"]>;
-  _gt?: InputMaybe<Scalars["Int"]["input"]>;
-  _gte?: InputMaybe<Scalars["Int"]["input"]>;
-  _in?: InputMaybe<Array<Scalars["Int"]["input"]>>;
-  _is_null?: InputMaybe<Scalars["Boolean"]["input"]>;
-  _lt?: InputMaybe<Scalars["Int"]["input"]>;
-  _lte?: InputMaybe<Scalars["Int"]["input"]>;
-  _neq?: InputMaybe<Scalars["Int"]["input"]>;
-  _nin?: InputMaybe<Array<Scalars["Int"]["input"]>>;
+  _eq?: InputMaybe<Scalars['Int']['input']>;
+  _gt?: InputMaybe<Scalars['Int']['input']>;
+  _gte?: InputMaybe<Scalars['Int']['input']>;
+  _in?: InputMaybe<Array<Scalars['Int']['input']>>;
+  _is_null?: InputMaybe<Scalars['Boolean']['input']>;
+  _lt?: InputMaybe<Scalars['Int']['input']>;
+  _lte?: InputMaybe<Scalars['Int']['input']>;
+  _neq?: InputMaybe<Scalars['Int']['input']>;
+  _nin?: InputMaybe<Array<Scalars['Int']['input']>>;
 };
 
 /** Boolean expression to compare columns of type "String". All fields are combined with logical 'AND'. */
 export type String_Mysql8_Comparison_Exp = {
-  _eq?: InputMaybe<Scalars["String"]["input"]>;
-  _gt?: InputMaybe<Scalars["String"]["input"]>;
-  _gte?: InputMaybe<Scalars["String"]["input"]>;
-  _ilike?: InputMaybe<Scalars["String"]["input"]>;
-  _in?: InputMaybe<Array<Scalars["String"]["input"]>>;
-  _is_null?: InputMaybe<Scalars["Boolean"]["input"]>;
-  _like?: InputMaybe<Scalars["String"]["input"]>;
-  _lt?: InputMaybe<Scalars["String"]["input"]>;
-  _lte?: InputMaybe<Scalars["String"]["input"]>;
-  _neq?: InputMaybe<Scalars["String"]["input"]>;
-  _nin?: InputMaybe<Array<Scalars["String"]["input"]>>;
-  contains?: InputMaybe<Scalars["String"]["input"]>;
+  _eq?: InputMaybe<Scalars['String']['input']>;
+  _gt?: InputMaybe<Scalars['String']['input']>;
+  _gte?: InputMaybe<Scalars['String']['input']>;
+  _ilike?: InputMaybe<Scalars['String']['input']>;
+  _in?: InputMaybe<Array<Scalars['String']['input']>>;
+  _is_null?: InputMaybe<Scalars['Boolean']['input']>;
+  _like?: InputMaybe<Scalars['String']['input']>;
+  _lt?: InputMaybe<Scalars['String']['input']>;
+  _lte?: InputMaybe<Scalars['String']['input']>;
+  _neq?: InputMaybe<Scalars['String']['input']>;
+  _nin?: InputMaybe<Array<Scalars['String']['input']>>;
+  contains?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type AssetStandardSupport = {
-  __typename?: "assetStandardSupport";
+  __typename?: 'assetStandardSupport';
   /** An array relationship */
   assets: Array<Assets>;
-  definition: Scalars["String"]["output"];
-  id: Scalars["Int"]["output"];
-  name: Scalars["String"]["output"];
+  definition: Scalars['String']['output'];
+  id: Scalars['Int']['output'];
+  name: Scalars['String']['output'];
 };
 
 export type AssetStandardSupportAssetsArgs = {
-  limit?: InputMaybe<Scalars["Int"]["input"]>;
-  offset?: InputMaybe<Scalars["Int"]["input"]>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   order_by?: InputMaybe<Array<Assets_Order_By>>;
   where?: InputMaybe<Assets_Bool_Exp>;
 };
@@ -116,17 +116,17 @@ export type AssetStandardSupport_Order_By = {
 };
 
 export type AssetType = {
-  __typename?: "assetType";
+  __typename?: 'assetType';
   /** An array relationship */
   assetType: Array<Assets>;
-  definition: Scalars["String"]["output"];
-  id: Scalars["Int"]["output"];
-  name: Scalars["String"]["output"];
+  definition: Scalars['String']['output'];
+  id: Scalars['Int']['output'];
+  name: Scalars['String']['output'];
 };
 
 export type AssetTypeAssetTypeArgs = {
-  limit?: InputMaybe<Scalars["Int"]["input"]>;
-  offset?: InputMaybe<Scalars["Int"]["input"]>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   order_by?: InputMaybe<Array<Assets_Order_By>>;
   where?: InputMaybe<Assets_Bool_Exp>;
 };
@@ -151,33 +151,33 @@ export type AssetType_Order_By = {
 };
 
 export type Assets = {
-  __typename?: "assets";
-  address: Scalars["String"]["output"];
+  __typename?: 'assets';
+  address: Scalars['String']['output'];
   /** An object relationship */
   assetDeployedOnProductId?: Maybe<Products>;
-  assetStandardId?: Maybe<Scalars["Int"]["output"]>;
+  assetStandardId?: Maybe<Scalars['Int']['output']>;
   /** An object relationship */
   assetStandardSupport?: Maybe<AssetStandardSupport>;
   /** An object relationship */
   assetType?: Maybe<AssetType>;
-  assetTypeId?: Maybe<Scalars["Int"]["output"]>;
-  deployedOnProductId?: Maybe<Scalars["Int"]["output"]>;
-  icon: Scalars["String"]["output"];
-  id: Scalars["Int"]["output"];
-  name: Scalars["String"]["output"];
+  assetTypeId?: Maybe<Scalars['Int']['output']>;
+  deployedOnProductId?: Maybe<Scalars['Int']['output']>;
+  icon: Scalars['String']['output'];
+  id: Scalars['Int']['output'];
+  name: Scalars['String']['output'];
   /** An array relationship */
   products: Array<Products>;
   /** An object relationship */
   profile: Profiles;
-  profileId: Scalars["Int"]["output"];
-  shortDescription: Scalars["String"]["output"];
-  ticker: Scalars["String"]["output"];
-  urlToAssetDocs: Scalars["String"]["output"];
+  profileId: Scalars['Int']['output'];
+  shortDescription: Scalars['String']['output'];
+  ticker: Scalars['String']['output'];
+  urlToAssetDocs: Scalars['String']['output'];
 };
 
 export type AssetsProductsArgs = {
-  limit?: InputMaybe<Scalars["Int"]["input"]>;
-  offset?: InputMaybe<Scalars["Int"]["input"]>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   order_by?: InputMaybe<Array<Products_Order_By>>;
   where?: InputMaybe<Products_Bool_Exp>;
 };
@@ -323,17 +323,17 @@ export type Assets_Var_Samp_Order_By = {
 };
 
 export type Countries = {
-  __typename?: "countries";
-  Code: Scalars["String"]["output"];
-  Name: Scalars["String"]["output"];
+  __typename?: 'countries';
+  Code: Scalars['String']['output'];
+  Name: Scalars['String']['output'];
   /** An array relationship */
   entities: Array<Entities>;
-  id: Scalars["Int"]["output"];
+  id: Scalars['Int']['output'];
 };
 
 export type CountriesEntitiesArgs = {
-  limit?: InputMaybe<Scalars["Int"]["input"]>;
-  offset?: InputMaybe<Scalars["Int"]["input"]>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   order_by?: InputMaybe<Array<Entities_Order_By>>;
   where?: InputMaybe<Entities_Bool_Exp>;
 };
@@ -359,47 +359,47 @@ export type Countries_Order_By = {
 
 /** Boolean expression to compare columns of type "date". All fields are combined with logical 'AND'. */
 export type Date_Mysql8_Comparison_Exp = {
-  _eq?: InputMaybe<Scalars["date"]["input"]>;
-  _gt?: InputMaybe<Scalars["date"]["input"]>;
-  _gte?: InputMaybe<Scalars["date"]["input"]>;
-  _in?: InputMaybe<Array<Scalars["date"]["input"]>>;
-  _is_null?: InputMaybe<Scalars["Boolean"]["input"]>;
-  _lt?: InputMaybe<Scalars["date"]["input"]>;
-  _lte?: InputMaybe<Scalars["date"]["input"]>;
-  _neq?: InputMaybe<Scalars["date"]["input"]>;
-  _nin?: InputMaybe<Array<Scalars["date"]["input"]>>;
+  _eq?: InputMaybe<Scalars['date']['input']>;
+  _gt?: InputMaybe<Scalars['date']['input']>;
+  _gte?: InputMaybe<Scalars['date']['input']>;
+  _in?: InputMaybe<Array<Scalars['date']['input']>>;
+  _is_null?: InputMaybe<Scalars['Boolean']['input']>;
+  _lt?: InputMaybe<Scalars['date']['input']>;
+  _lte?: InputMaybe<Scalars['date']['input']>;
+  _neq?: InputMaybe<Scalars['date']['input']>;
+  _nin?: InputMaybe<Array<Scalars['date']['input']>>;
 };
 
 export type Entities = {
-  __typename?: "entities";
-  address: Scalars["String"]["output"];
+  __typename?: 'entities';
+  address: Scalars['String']['output'];
   /** An object relationship */
   country: Countries;
-  countryId: Scalars["Int"]["output"];
-  dateOfIncorporation?: Maybe<Scalars["date"]["output"]>;
+  countryId: Scalars['Int']['output'];
+  dateOfIncorporation?: Maybe<Scalars['date']['output']>;
   /** An array relationship */
   entities: Array<Entities>;
   /** An object relationship */
   entity?: Maybe<Entities>;
   /** An object relationship */
   entityType?: Maybe<EntityTypes>;
-  entityTypeId?: Maybe<Scalars["Int"]["output"]>;
-  id: Scalars["Int"]["output"];
-  leiNumber: Scalars["String"]["output"];
-  localRegistrationNumber: Scalars["String"]["output"];
-  name: Scalars["String"]["output"];
-  parentEntityId?: Maybe<Scalars["Int"]["output"]>;
+  entityTypeId?: Maybe<Scalars['Int']['output']>;
+  id: Scalars['Int']['output'];
+  leiNumber: Scalars['String']['output'];
+  localRegistrationNumber: Scalars['String']['output'];
+  name: Scalars['String']['output'];
+  parentEntityId?: Maybe<Scalars['Int']['output']>;
   /** An object relationship */
   profile: Profiles;
-  profileId: Scalars["Int"]["output"];
-  taxIdentificationNumber: Scalars["String"]["output"];
-  tradeName: Scalars["String"]["output"];
-  urlToEntity: Scalars["String"]["output"];
+  profileId: Scalars['Int']['output'];
+  taxIdentificationNumber: Scalars['String']['output'];
+  tradeName: Scalars['String']['output'];
+  urlToEntity: Scalars['String']['output'];
 };
 
 export type EntitiesEntitiesArgs = {
-  limit?: InputMaybe<Scalars["Int"]["input"]>;
-  offset?: InputMaybe<Scalars["Int"]["input"]>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   order_by?: InputMaybe<Array<Entities_Order_By>>;
   where?: InputMaybe<Entities_Bool_Exp>;
 };
@@ -551,17 +551,17 @@ export type Entities_Var_Samp_Order_By = {
 };
 
 export type EntityTypes = {
-  __typename?: "entityTypes";
-  definition: Scalars["String"]["output"];
+  __typename?: 'entityTypes';
+  definition: Scalars['String']['output'];
   /** An array relationship */
   entities: Array<Entities>;
-  id: Scalars["Int"]["output"];
-  name: Scalars["String"]["output"];
+  id: Scalars['Int']['output'];
+  name: Scalars['String']['output'];
 };
 
 export type EntityTypesEntitiesArgs = {
-  limit?: InputMaybe<Scalars["Int"]["input"]>;
-  offset?: InputMaybe<Scalars["Int"]["input"]>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   order_by?: InputMaybe<Array<Entities_Order_By>>;
   where?: InputMaybe<Entities_Bool_Exp>;
 };
@@ -588,23 +588,23 @@ export type EntityTypes_Order_By = {
 /** column ordering options */
 export enum Mysql8_Order_By {
   /** in ascending order */
-  Asc = "asc",
+  Asc = 'asc',
   /** in descending order */
-  Desc = "desc",
+  Desc = 'desc'
 }
 
 export type ProductStatus = {
-  __typename?: "productStatus";
-  definition: Scalars["String"]["output"];
-  id: Scalars["Int"]["output"];
-  name: Scalars["String"]["output"];
+  __typename?: 'productStatus';
+  definition: Scalars['String']['output'];
+  id: Scalars['Int']['output'];
+  name: Scalars['String']['output'];
   /** An array relationship */
   products: Array<Products>;
 };
 
 export type ProductStatusProductsArgs = {
-  limit?: InputMaybe<Scalars["Int"]["input"]>;
-  offset?: InputMaybe<Scalars["Int"]["input"]>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   order_by?: InputMaybe<Array<Products_Order_By>>;
   where?: InputMaybe<Products_Bool_Exp>;
 };
@@ -629,17 +629,17 @@ export type ProductStatus_Order_By = {
 };
 
 export type ProductTypes = {
-  __typename?: "productTypes";
-  definition: Scalars["String"]["output"];
-  id: Scalars["Int"]["output"];
-  name: Scalars["String"]["output"];
+  __typename?: 'productTypes';
+  definition: Scalars['String']['output'];
+  id: Scalars['Int']['output'];
+  name: Scalars['String']['output'];
   /** An array relationship */
   products: Array<Products>;
 };
 
 export type ProductTypesProductsArgs = {
-  limit?: InputMaybe<Scalars["Int"]["input"]>;
-  offset?: InputMaybe<Scalars["Int"]["input"]>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   order_by?: InputMaybe<Array<Products_Order_By>>;
   where?: InputMaybe<Products_Bool_Exp>;
 };
@@ -664,40 +664,40 @@ export type ProductTypes_Order_By = {
 };
 
 export type Products = {
-  __typename?: "products";
+  __typename?: 'products';
   /** An object relationship */
   asset?: Maybe<Assets>;
-  deployedOnProductId?: Maybe<Scalars["Int"]["output"]>;
-  descriptionShort: Scalars["String"]["output"];
-  id: Scalars["Int"]["output"];
-  isMainProduct: Scalars["Int"]["output"];
-  launchDate?: Maybe<Scalars["date"]["output"]>;
+  deployedOnProductId?: Maybe<Scalars['Int']['output']>;
+  descriptionShort: Scalars['String']['output'];
+  id: Scalars['Int']['output'];
+  isMainProduct: Scalars['Int']['output'];
+  launchDate?: Maybe<Scalars['date']['output']>;
   /** An object relationship */
   mainAsset?: Maybe<Assets>;
-  mainAssetId?: Maybe<Scalars["Int"]["output"]>;
-  name: Scalars["String"]["output"];
+  mainAssetId?: Maybe<Scalars['Int']['output']>;
+  name: Scalars['String']['output'];
   /** An object relationship */
   product?: Maybe<Products>;
-  productAddress: Scalars["String"]["output"];
+  productAddress: Scalars['String']['output'];
   /** An object relationship */
   productDeployedOnProduct?: Maybe<Products>;
   /** An object relationship */
   productStatus?: Maybe<ProductStatus>;
-  productStatusId?: Maybe<Scalars["Int"]["output"]>;
+  productStatusId?: Maybe<Scalars['Int']['output']>;
   /** An object relationship */
   productType?: Maybe<ProductTypes>;
-  productTypeId?: Maybe<Scalars["Int"]["output"]>;
+  productTypeId?: Maybe<Scalars['Int']['output']>;
   /** An array relationship */
   products: Array<Products>;
   /** An object relationship */
   profile: Profiles;
-  profileId: Scalars["Int"]["output"];
-  urlToProduct: Scalars["String"]["output"];
+  profileId: Scalars['Int']['output'];
+  urlToProduct: Scalars['String']['output'];
 };
 
 export type ProductsProductsArgs = {
-  limit?: InputMaybe<Scalars["Int"]["input"]>;
-  offset?: InputMaybe<Scalars["Int"]["input"]>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   order_by?: InputMaybe<Array<Products_Order_By>>;
   where?: InputMaybe<Products_Bool_Exp>;
 };
@@ -863,17 +863,17 @@ export type Products_Var_Samp_Order_By = {
 };
 
 export type ProfileSectors = {
-  __typename?: "profileSectors";
-  definition: Scalars["String"]["output"];
-  id: Scalars["Int"]["output"];
-  name: Scalars["String"]["output"];
+  __typename?: 'profileSectors';
+  definition: Scalars['String']['output'];
+  id: Scalars['Int']['output'];
+  name: Scalars['String']['output'];
   /** An array relationship */
   profiles: Array<Profiles>;
 };
 
 export type ProfileSectorsProfilesArgs = {
-  limit?: InputMaybe<Scalars["Int"]["input"]>;
-  offset?: InputMaybe<Scalars["Int"]["input"]>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   order_by?: InputMaybe<Array<Profiles_Order_By>>;
   where?: InputMaybe<Profiles_Bool_Exp>;
 };
@@ -898,17 +898,17 @@ export type ProfileSectors_Order_By = {
 };
 
 export type ProfileStatuses = {
-  __typename?: "profileStatuses";
-  definition: Scalars["String"]["output"];
-  id: Scalars["Int"]["output"];
-  name: Scalars["String"]["output"];
+  __typename?: 'profileStatuses';
+  definition: Scalars['String']['output'];
+  id: Scalars['Int']['output'];
+  name: Scalars['String']['output'];
   /** An array relationship */
   profiles: Array<Profiles>;
 };
 
 export type ProfileStatusesProfilesArgs = {
-  limit?: InputMaybe<Scalars["Int"]["input"]>;
-  offset?: InputMaybe<Scalars["Int"]["input"]>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   order_by?: InputMaybe<Array<Profiles_Order_By>>;
   where?: InputMaybe<Profiles_Bool_Exp>;
 };
@@ -933,17 +933,17 @@ export type ProfileStatuses_Order_By = {
 };
 
 export type ProfileTypes = {
-  __typename?: "profileTypes";
-  definition: Scalars["String"]["output"];
-  id: Scalars["Int"]["output"];
-  name: Scalars["String"]["output"];
+  __typename?: 'profileTypes';
+  definition: Scalars['String']['output'];
+  id: Scalars['Int']['output'];
+  name: Scalars['String']['output'];
   /** An array relationship */
   profiles: Array<Profiles>;
 };
 
 export type ProfileTypesProfilesArgs = {
-  limit?: InputMaybe<Scalars["Int"]["input"]>;
-  offset?: InputMaybe<Scalars["Int"]["input"]>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   order_by?: InputMaybe<Array<Profiles_Order_By>>;
   where?: InputMaybe<Profiles_Bool_Exp>;
 };
@@ -968,62 +968,62 @@ export type ProfileTypes_Order_By = {
 };
 
 export type Profiles = {
-  __typename?: "profiles";
+  __typename?: 'profiles';
   /** An array relationship */
   assets: Array<Assets>;
-  descriptionLong: Scalars["String"]["output"];
-  descriptionShort: Scalars["String"]["output"];
+  descriptionLong: Scalars['String']['output'];
+  descriptionShort: Scalars['String']['output'];
   /** An array relationship */
   entities: Array<Entities>;
-  foundingDate?: Maybe<Scalars["date"]["output"]>;
-  id: Scalars["Int"]["output"];
-  logo: Scalars["String"]["output"];
-  name: Scalars["String"]["output"];
+  foundingDate?: Maybe<Scalars['date']['output']>;
+  id: Scalars['Int']['output'];
+  logo: Scalars['String']['output'];
+  name: Scalars['String']['output'];
   /** An array relationship */
   products: Array<Products>;
   /** An object relationship */
   profileSector?: Maybe<ProfileSectors>;
-  profileSectorId?: Maybe<Scalars["Int"]["output"]>;
+  profileSectorId?: Maybe<Scalars['Int']['output']>;
   /** An object relationship */
   profileStatus?: Maybe<ProfileStatuses>;
-  profileStatusId?: Maybe<Scalars["Int"]["output"]>;
+  profileStatusId?: Maybe<Scalars['Int']['output']>;
   /** An object relationship */
   profileType?: Maybe<ProfileTypes>;
-  profileTypeId?: Maybe<Scalars["Int"]["output"]>;
+  profileTypeId?: Maybe<Scalars['Int']['output']>;
   /** An array relationship */
   socials: Array<Socials>;
   /** Self promotion field */
-  tagLine: Scalars["String"]["output"];
-  urlBlog: Scalars["String"]["output"];
-  urlDocumentation: Scalars["String"]["output"];
-  urlMain: Scalars["String"]["output"];
-  urlWhitepaper: Scalars["String"]["output"];
+  tagLine: Scalars['String']['output'];
+  urlBlog: Scalars['String']['output'];
+  urlDocumentation: Scalars['String']['output'];
+  urlMain: Scalars['String']['output'];
+  urlWhitepaper: Scalars['String']['output'];
 };
 
 export type ProfilesAssetsArgs = {
-  limit?: InputMaybe<Scalars["Int"]["input"]>;
-  offset?: InputMaybe<Scalars["Int"]["input"]>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   order_by?: InputMaybe<Array<Assets_Order_By>>;
   where?: InputMaybe<Assets_Bool_Exp>;
 };
 
 export type ProfilesEntitiesArgs = {
-  limit?: InputMaybe<Scalars["Int"]["input"]>;
-  offset?: InputMaybe<Scalars["Int"]["input"]>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   order_by?: InputMaybe<Array<Entities_Order_By>>;
   where?: InputMaybe<Entities_Bool_Exp>;
 };
 
 export type ProfilesProductsArgs = {
-  limit?: InputMaybe<Scalars["Int"]["input"]>;
-  offset?: InputMaybe<Scalars["Int"]["input"]>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   order_by?: InputMaybe<Array<Products_Order_By>>;
   where?: InputMaybe<Products_Bool_Exp>;
 };
 
 export type ProfilesSocialsArgs = {
-  limit?: InputMaybe<Scalars["Int"]["input"]>;
-  offset?: InputMaybe<Scalars["Int"]["input"]>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   order_by?: InputMaybe<Array<Socials_Order_By>>;
   where?: InputMaybe<Socials_Bool_Exp>;
 };
@@ -1179,7 +1179,7 @@ export type Profiles_Var_Samp_Order_By = {
 };
 
 export type Query_Root = {
-  __typename?: "query_root";
+  __typename?: 'query_root';
   /** fetch data from the table: "assetStandardSupport" */
   assetStandardSupport: Array<AssetStandardSupport>;
   /** fetch data from the table: "assetStandardSupport" using primary key columns */
@@ -1243,182 +1243,182 @@ export type Query_Root = {
 };
 
 export type Query_RootAssetStandardSupportArgs = {
-  limit?: InputMaybe<Scalars["Int"]["input"]>;
-  offset?: InputMaybe<Scalars["Int"]["input"]>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   order_by?: InputMaybe<Array<AssetStandardSupport_Order_By>>;
   where?: InputMaybe<AssetStandardSupport_Bool_Exp>;
 };
 
 export type Query_RootAssetStandardSupport_By_PkArgs = {
-  id: Scalars["Int"]["input"];
+  id: Scalars['Int']['input'];
 };
 
 export type Query_RootAssetTypeArgs = {
-  limit?: InputMaybe<Scalars["Int"]["input"]>;
-  offset?: InputMaybe<Scalars["Int"]["input"]>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   order_by?: InputMaybe<Array<AssetType_Order_By>>;
   where?: InputMaybe<AssetType_Bool_Exp>;
 };
 
 export type Query_RootAssetType_By_PkArgs = {
-  id: Scalars["Int"]["input"];
+  id: Scalars['Int']['input'];
 };
 
 export type Query_RootAssetsArgs = {
-  limit?: InputMaybe<Scalars["Int"]["input"]>;
-  offset?: InputMaybe<Scalars["Int"]["input"]>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   order_by?: InputMaybe<Array<Assets_Order_By>>;
   where?: InputMaybe<Assets_Bool_Exp>;
 };
 
 export type Query_RootAssets_By_PkArgs = {
-  id: Scalars["Int"]["input"];
+  id: Scalars['Int']['input'];
 };
 
 export type Query_RootCountriesArgs = {
-  limit?: InputMaybe<Scalars["Int"]["input"]>;
-  offset?: InputMaybe<Scalars["Int"]["input"]>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   order_by?: InputMaybe<Array<Countries_Order_By>>;
   where?: InputMaybe<Countries_Bool_Exp>;
 };
 
 export type Query_RootCountries_By_PkArgs = {
-  id: Scalars["Int"]["input"];
+  id: Scalars['Int']['input'];
 };
 
 export type Query_RootEntitiesArgs = {
-  limit?: InputMaybe<Scalars["Int"]["input"]>;
-  offset?: InputMaybe<Scalars["Int"]["input"]>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   order_by?: InputMaybe<Array<Entities_Order_By>>;
   where?: InputMaybe<Entities_Bool_Exp>;
 };
 
 export type Query_RootEntities_By_PkArgs = {
-  id: Scalars["Int"]["input"];
+  id: Scalars['Int']['input'];
 };
 
 export type Query_RootEntityTypesArgs = {
-  limit?: InputMaybe<Scalars["Int"]["input"]>;
-  offset?: InputMaybe<Scalars["Int"]["input"]>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   order_by?: InputMaybe<Array<EntityTypes_Order_By>>;
   where?: InputMaybe<EntityTypes_Bool_Exp>;
 };
 
 export type Query_RootEntityTypes_By_PkArgs = {
-  id: Scalars["Int"]["input"];
+  id: Scalars['Int']['input'];
 };
 
 export type Query_RootProductStatusArgs = {
-  limit?: InputMaybe<Scalars["Int"]["input"]>;
-  offset?: InputMaybe<Scalars["Int"]["input"]>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   order_by?: InputMaybe<Array<ProductStatus_Order_By>>;
   where?: InputMaybe<ProductStatus_Bool_Exp>;
 };
 
 export type Query_RootProductStatus_By_PkArgs = {
-  id: Scalars["Int"]["input"];
+  id: Scalars['Int']['input'];
 };
 
 export type Query_RootProductTypesArgs = {
-  limit?: InputMaybe<Scalars["Int"]["input"]>;
-  offset?: InputMaybe<Scalars["Int"]["input"]>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   order_by?: InputMaybe<Array<ProductTypes_Order_By>>;
   where?: InputMaybe<ProductTypes_Bool_Exp>;
 };
 
 export type Query_RootProductTypes_By_PkArgs = {
-  id: Scalars["Int"]["input"];
+  id: Scalars['Int']['input'];
 };
 
 export type Query_RootProductsArgs = {
-  limit?: InputMaybe<Scalars["Int"]["input"]>;
-  offset?: InputMaybe<Scalars["Int"]["input"]>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   order_by?: InputMaybe<Array<Products_Order_By>>;
   where?: InputMaybe<Products_Bool_Exp>;
 };
 
 export type Query_RootProducts_By_PkArgs = {
-  id: Scalars["Int"]["input"];
+  id: Scalars['Int']['input'];
 };
 
 export type Query_RootProfileSectorsArgs = {
-  limit?: InputMaybe<Scalars["Int"]["input"]>;
-  offset?: InputMaybe<Scalars["Int"]["input"]>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   order_by?: InputMaybe<Array<ProfileSectors_Order_By>>;
   where?: InputMaybe<ProfileSectors_Bool_Exp>;
 };
 
 export type Query_RootProfileSectors_By_PkArgs = {
-  id: Scalars["Int"]["input"];
+  id: Scalars['Int']['input'];
 };
 
 export type Query_RootProfileStatusesArgs = {
-  limit?: InputMaybe<Scalars["Int"]["input"]>;
-  offset?: InputMaybe<Scalars["Int"]["input"]>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   order_by?: InputMaybe<Array<ProfileStatuses_Order_By>>;
   where?: InputMaybe<ProfileStatuses_Bool_Exp>;
 };
 
 export type Query_RootProfileStatuses_By_PkArgs = {
-  id: Scalars["Int"]["input"];
+  id: Scalars['Int']['input'];
 };
 
 export type Query_RootProfileTypesArgs = {
-  limit?: InputMaybe<Scalars["Int"]["input"]>;
-  offset?: InputMaybe<Scalars["Int"]["input"]>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   order_by?: InputMaybe<Array<ProfileTypes_Order_By>>;
   where?: InputMaybe<ProfileTypes_Bool_Exp>;
 };
 
 export type Query_RootProfileTypes_By_PkArgs = {
-  id: Scalars["Int"]["input"];
+  id: Scalars['Int']['input'];
 };
 
 export type Query_RootProfilesArgs = {
-  limit?: InputMaybe<Scalars["Int"]["input"]>;
-  offset?: InputMaybe<Scalars["Int"]["input"]>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   order_by?: InputMaybe<Array<Profiles_Order_By>>;
   where?: InputMaybe<Profiles_Bool_Exp>;
 };
 
 export type Query_RootProfiles_By_PkArgs = {
-  id: Scalars["Int"]["input"];
+  id: Scalars['Int']['input'];
 };
 
 export type Query_RootSocialTypesArgs = {
-  limit?: InputMaybe<Scalars["Int"]["input"]>;
-  offset?: InputMaybe<Scalars["Int"]["input"]>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   order_by?: InputMaybe<Array<SocialTypes_Order_By>>;
   where?: InputMaybe<SocialTypes_Bool_Exp>;
 };
 
 export type Query_RootSocialTypes_By_PkArgs = {
-  id: Scalars["Int"]["input"];
+  id: Scalars['Int']['input'];
 };
 
 export type Query_RootSocialsArgs = {
-  limit?: InputMaybe<Scalars["Int"]["input"]>;
-  offset?: InputMaybe<Scalars["Int"]["input"]>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   order_by?: InputMaybe<Array<Socials_Order_By>>;
   where?: InputMaybe<Socials_Bool_Exp>;
 };
 
 export type Query_RootSocials_By_PkArgs = {
-  id: Scalars["Int"]["input"];
+  id: Scalars['Int']['input'];
 };
 
 export type SocialTypes = {
-  __typename?: "socialTypes";
-  definition: Scalars["String"]["output"];
-  id: Scalars["Int"]["output"];
-  name: Scalars["String"]["output"];
+  __typename?: 'socialTypes';
+  definition: Scalars['String']['output'];
+  id: Scalars['Int']['output'];
+  name: Scalars['String']['output'];
   /** An array relationship */
   socials: Array<Socials>;
 };
 
 export type SocialTypesSocialsArgs = {
-  limit?: InputMaybe<Scalars["Int"]["input"]>;
-  offset?: InputMaybe<Scalars["Int"]["input"]>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   order_by?: InputMaybe<Array<Socials_Order_By>>;
   where?: InputMaybe<Socials_Bool_Exp>;
 };
@@ -1443,16 +1443,16 @@ export type SocialTypes_Order_By = {
 };
 
 export type Socials = {
-  __typename?: "socials";
-  id: Scalars["Int"]["output"];
-  name: Scalars["String"]["output"];
+  __typename?: 'socials';
+  id: Scalars['Int']['output'];
+  name: Scalars['String']['output'];
   /** An object relationship */
   profile: Profiles;
-  profileId: Scalars["Int"]["output"];
+  profileId: Scalars['Int']['output'];
   /** An object relationship */
   socialType?: Maybe<SocialTypes>;
-  socialTypeId?: Maybe<Scalars["Int"]["output"]>;
-  url: Scalars["String"]["output"];
+  socialTypeId?: Maybe<Scalars['Int']['output']>;
+  url: Scalars['String']['output'];
 };
 
 /** order by aggregate values of table "socials" */
@@ -1554,7 +1554,7 @@ export type Socials_Var_Samp_Order_By = {
 };
 
 export type Subscription_Root = {
-  __typename?: "subscription_root";
+  __typename?: 'subscription_root';
   /** fetch data from the table: "assetStandardSupport" */
   assetStandardSupport: Array<AssetStandardSupport>;
   /** fetch data from the table: "assetStandardSupport" using primary key columns */
@@ -1618,207 +1618,211 @@ export type Subscription_Root = {
 };
 
 export type Subscription_RootAssetStandardSupportArgs = {
-  limit?: InputMaybe<Scalars["Int"]["input"]>;
-  offset?: InputMaybe<Scalars["Int"]["input"]>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   order_by?: InputMaybe<Array<AssetStandardSupport_Order_By>>;
   where?: InputMaybe<AssetStandardSupport_Bool_Exp>;
 };
 
 export type Subscription_RootAssetStandardSupport_By_PkArgs = {
-  id: Scalars["Int"]["input"];
+  id: Scalars['Int']['input'];
 };
 
 export type Subscription_RootAssetTypeArgs = {
-  limit?: InputMaybe<Scalars["Int"]["input"]>;
-  offset?: InputMaybe<Scalars["Int"]["input"]>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   order_by?: InputMaybe<Array<AssetType_Order_By>>;
   where?: InputMaybe<AssetType_Bool_Exp>;
 };
 
 export type Subscription_RootAssetType_By_PkArgs = {
-  id: Scalars["Int"]["input"];
+  id: Scalars['Int']['input'];
 };
 
 export type Subscription_RootAssetsArgs = {
-  limit?: InputMaybe<Scalars["Int"]["input"]>;
-  offset?: InputMaybe<Scalars["Int"]["input"]>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   order_by?: InputMaybe<Array<Assets_Order_By>>;
   where?: InputMaybe<Assets_Bool_Exp>;
 };
 
 export type Subscription_RootAssets_By_PkArgs = {
-  id: Scalars["Int"]["input"];
+  id: Scalars['Int']['input'];
 };
 
 export type Subscription_RootCountriesArgs = {
-  limit?: InputMaybe<Scalars["Int"]["input"]>;
-  offset?: InputMaybe<Scalars["Int"]["input"]>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   order_by?: InputMaybe<Array<Countries_Order_By>>;
   where?: InputMaybe<Countries_Bool_Exp>;
 };
 
 export type Subscription_RootCountries_By_PkArgs = {
-  id: Scalars["Int"]["input"];
+  id: Scalars['Int']['input'];
 };
 
 export type Subscription_RootEntitiesArgs = {
-  limit?: InputMaybe<Scalars["Int"]["input"]>;
-  offset?: InputMaybe<Scalars["Int"]["input"]>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   order_by?: InputMaybe<Array<Entities_Order_By>>;
   where?: InputMaybe<Entities_Bool_Exp>;
 };
 
 export type Subscription_RootEntities_By_PkArgs = {
-  id: Scalars["Int"]["input"];
+  id: Scalars['Int']['input'];
 };
 
 export type Subscription_RootEntityTypesArgs = {
-  limit?: InputMaybe<Scalars["Int"]["input"]>;
-  offset?: InputMaybe<Scalars["Int"]["input"]>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   order_by?: InputMaybe<Array<EntityTypes_Order_By>>;
   where?: InputMaybe<EntityTypes_Bool_Exp>;
 };
 
 export type Subscription_RootEntityTypes_By_PkArgs = {
-  id: Scalars["Int"]["input"];
+  id: Scalars['Int']['input'];
 };
 
 export type Subscription_RootProductStatusArgs = {
-  limit?: InputMaybe<Scalars["Int"]["input"]>;
-  offset?: InputMaybe<Scalars["Int"]["input"]>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   order_by?: InputMaybe<Array<ProductStatus_Order_By>>;
   where?: InputMaybe<ProductStatus_Bool_Exp>;
 };
 
 export type Subscription_RootProductStatus_By_PkArgs = {
-  id: Scalars["Int"]["input"];
+  id: Scalars['Int']['input'];
 };
 
 export type Subscription_RootProductTypesArgs = {
-  limit?: InputMaybe<Scalars["Int"]["input"]>;
-  offset?: InputMaybe<Scalars["Int"]["input"]>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   order_by?: InputMaybe<Array<ProductTypes_Order_By>>;
   where?: InputMaybe<ProductTypes_Bool_Exp>;
 };
 
 export type Subscription_RootProductTypes_By_PkArgs = {
-  id: Scalars["Int"]["input"];
+  id: Scalars['Int']['input'];
 };
 
 export type Subscription_RootProductsArgs = {
-  limit?: InputMaybe<Scalars["Int"]["input"]>;
-  offset?: InputMaybe<Scalars["Int"]["input"]>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   order_by?: InputMaybe<Array<Products_Order_By>>;
   where?: InputMaybe<Products_Bool_Exp>;
 };
 
 export type Subscription_RootProducts_By_PkArgs = {
-  id: Scalars["Int"]["input"];
+  id: Scalars['Int']['input'];
 };
 
 export type Subscription_RootProfileSectorsArgs = {
-  limit?: InputMaybe<Scalars["Int"]["input"]>;
-  offset?: InputMaybe<Scalars["Int"]["input"]>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   order_by?: InputMaybe<Array<ProfileSectors_Order_By>>;
   where?: InputMaybe<ProfileSectors_Bool_Exp>;
 };
 
 export type Subscription_RootProfileSectors_By_PkArgs = {
-  id: Scalars["Int"]["input"];
+  id: Scalars['Int']['input'];
 };
 
 export type Subscription_RootProfileStatusesArgs = {
-  limit?: InputMaybe<Scalars["Int"]["input"]>;
-  offset?: InputMaybe<Scalars["Int"]["input"]>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   order_by?: InputMaybe<Array<ProfileStatuses_Order_By>>;
   where?: InputMaybe<ProfileStatuses_Bool_Exp>;
 };
 
 export type Subscription_RootProfileStatuses_By_PkArgs = {
-  id: Scalars["Int"]["input"];
+  id: Scalars['Int']['input'];
 };
 
 export type Subscription_RootProfileTypesArgs = {
-  limit?: InputMaybe<Scalars["Int"]["input"]>;
-  offset?: InputMaybe<Scalars["Int"]["input"]>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   order_by?: InputMaybe<Array<ProfileTypes_Order_By>>;
   where?: InputMaybe<ProfileTypes_Bool_Exp>;
 };
 
 export type Subscription_RootProfileTypes_By_PkArgs = {
-  id: Scalars["Int"]["input"];
+  id: Scalars['Int']['input'];
 };
 
 export type Subscription_RootProfilesArgs = {
-  limit?: InputMaybe<Scalars["Int"]["input"]>;
-  offset?: InputMaybe<Scalars["Int"]["input"]>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   order_by?: InputMaybe<Array<Profiles_Order_By>>;
   where?: InputMaybe<Profiles_Bool_Exp>;
 };
 
 export type Subscription_RootProfiles_By_PkArgs = {
-  id: Scalars["Int"]["input"];
+  id: Scalars['Int']['input'];
 };
 
 export type Subscription_RootSocialTypesArgs = {
-  limit?: InputMaybe<Scalars["Int"]["input"]>;
-  offset?: InputMaybe<Scalars["Int"]["input"]>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   order_by?: InputMaybe<Array<SocialTypes_Order_By>>;
   where?: InputMaybe<SocialTypes_Bool_Exp>;
 };
 
 export type Subscription_RootSocialTypes_By_PkArgs = {
-  id: Scalars["Int"]["input"];
+  id: Scalars['Int']['input'];
 };
 
 export type Subscription_RootSocialsArgs = {
-  limit?: InputMaybe<Scalars["Int"]["input"]>;
-  offset?: InputMaybe<Scalars["Int"]["input"]>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   order_by?: InputMaybe<Array<Socials_Order_By>>;
   where?: InputMaybe<Socials_Bool_Exp>;
 };
 
 export type Subscription_RootSocials_By_PkArgs = {
-  id: Scalars["Int"]["input"];
+  id: Scalars['Int']['input'];
 };
 
 export type SearchProfilesQueryVariables = Exact<{
-  where?: InputMaybe<Products_Bool_Exp>;
-  limit?: InputMaybe<Scalars["Int"]["input"]>;
-  offset?: InputMaybe<Scalars["Int"]["input"]>;
+  where?: InputMaybe<Profiles_Bool_Exp>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
 }>;
 
 export type SearchProfilesQuery = {
-  __typename?: "query_root";
+  __typename?: 'query_root';
   profiles: Array<{
-    __typename?: "profiles";
+    __typename?: 'profiles';
     name: string;
     logo: string;
     id: number;
     descriptionShort: string;
+    urlDocumentation: string;
     tagLine: string;
     urlMain: string;
-    urlDocumentation: string;
-    products: Array<{ __typename?: "products"; name: string }>;
     socials: Array<{
-      __typename?: "socials";
+      __typename?: 'socials';
       url: string;
-      socialType?: { __typename?: "socialTypes"; name: string } | null;
+      socialType?: { __typename?: 'socialTypes'; name: string } | null;
     }>;
-    profileSector?: { __typename?: "profileSectors"; name: string } | null;
+    profileSector?: { __typename?: 'profileSectors'; name: string } | null;
+    profileStatus?: { __typename?: 'profileStatuses'; name: string } | null;
+    assets: Array<{ __typename?: 'assets'; ticker: string }>;
+    mainProduct: Array<{
+      __typename?: 'products';
+      name: string;
+      productType?: { __typename?: 'productTypes'; name: string } | null;
+    }>;
   }>;
 };
 
 export const SearchProfilesDocument = `
-    query SearchProfiles($where: products_bool_exp, $limit: Int, $offset: Int) {
-  profiles(limit: $limit, offset: $offset) {
+    query SearchProfiles($where: profiles_bool_exp, $limit: Int, $offset: Int) {
+  profiles(limit: $limit, offset: $offset, where: $where) {
     name
     logo
     id
     descriptionShort
-    products(where: $where) {
-      name
-    }
+    urlDocumentation
     tagLine
     urlMain
     socials {
@@ -1830,32 +1834,43 @@ export const SearchProfilesDocument = `
     profileSector {
       name
     }
-    urlDocumentation
+    profileStatus {
+      name
+    }
+    assets {
+      ticker
+    }
+    mainProduct: products(where: {isMainProduct: {_eq: 1}}, limit: 1) {
+      name
+      productType {
+        name
+      }
+    }
   }
 }
     `;
 
 export const useSearchProfilesQuery = <
   TData = SearchProfilesQuery,
-  TError = unknown,
+  TError = unknown
 >(
   variables?: SearchProfilesQueryVariables,
   options?: Omit<
     UseQueryOptions<SearchProfilesQuery, TError, TData>,
-    "queryKey"
+    'queryKey'
   > & {
-    queryKey?: UseQueryOptions<SearchProfilesQuery, TError, TData>["queryKey"];
-  },
+    queryKey?: UseQueryOptions<SearchProfilesQuery, TError, TData>['queryKey'];
+  }
 ) => {
   return useQuery<SearchProfilesQuery, TError, TData>({
     queryKey:
       variables === undefined
-        ? ["SearchProfiles"]
-        : ["SearchProfiles", variables],
+        ? ['SearchProfiles']
+        : ['SearchProfiles', variables],
     queryFn: fetcher<SearchProfilesQuery, SearchProfilesQueryVariables>(
       SearchProfilesDocument,
-      variables,
+      variables
     ),
-    ...options,
+    ...options
   });
 };

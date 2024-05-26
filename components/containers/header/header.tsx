@@ -1,11 +1,11 @@
-"use client";
+'use client';
 
-import Link from "next/link";
-import { MenuIcon } from "lucide-react";
-import { SiGithub } from "react-icons/si";
+import Link from 'next/link';
+import { MenuIcon } from 'lucide-react';
+import { SiGithub } from 'react-icons/si';
 
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Button } from "@/components/ui/button";
+import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
+import { Button } from '@/components/ui/button';
 
 const learnMoreButton = (
   <Link href="/contact">
@@ -66,4 +66,4 @@ export const Header = () => {
       </Sheet>
     </header>
   );
-}
+};

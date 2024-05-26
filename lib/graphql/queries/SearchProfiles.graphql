@@ -1,0 +1,32 @@
+query SearchProfiles($where: profiles_bool_exp, $limit: Int, $offset: Int) {
+  profiles(limit: $limit, offset: $offset, where: $where) {
+    name
+    logo
+    id
+    descriptionShort
+    urlDocumentation
+    tagLine
+    urlMain
+    socials {
+      url
+      socialType {
+        name
+      }
+    }
+    profileSector {
+      name
+    }
+    profileStatus {
+      name
+    }
+    assets {
+      ticker
+    }
+    mainProduct: products(where: { isMainProduct: { _eq: 1 } }, limit: 1) {
+      name
+      productType {
+        name
+      }
+    }
+  }
+}
