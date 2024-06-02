@@ -1,9 +1,12 @@
-export type CardFeatureProps = {
+export type ProfileCardFeatureProps = {
   label: string;
   value?: string | false;
 };
 
-export const CardFeature = ({ label, value }: CardFeatureProps) => {
+export const ProfileCardFeature = ({
+  label,
+  value
+}: ProfileCardFeatureProps) => {
   return (
     <div className="flex flex-col overflow-hidden ">
       <span className="text w-full bg-black p-1 text-xs text-muted">

@@ -1,0 +1,77 @@
+query GetFiltersOptions {
+  ###
+  # Profile filters
+  ####
+  profileTypes {
+    name
+    id
+    definition
+  }
+  profileStatuses {
+    name
+    id
+    definition
+  }
+  profileSectors {
+    name
+    id
+    definition
+  }
+  ###
+  # Product filters
+  ####
+  productTypes {
+    name
+    id
+    definition
+  }
+  productStatus {
+    definition
+    id
+    name
+  }
+  productSupports {
+    id
+    product {
+      name
+      descriptionShort
+    }
+  }
+  products {
+    name
+    id
+    descriptionShort
+  }
+  ###
+  # Asset filters
+  ####
+  assetStandardSupport {
+    definition
+    id
+    name
+  }
+  assetType {
+    name
+    id
+    definition
+  }
+  assets {
+    ticker
+  }
+  ###
+  # Entity filters
+  ####
+  entityTypes {
+    name
+    id
+    definition
+  }
+  entities {
+    name
+    id
+  }
+  countries {
+    Name
+    id
+  }
+}

@@ -1,5 +1,10 @@
-query SearchProfiles($where: profiles_bool_exp, $limit: Int, $offset: Int) {
-  profiles(limit: $limit, offset: $offset, where: $where) {
+query SearchProfiles(
+  $order_by: [profiles_order_by!]
+  $where: profiles_bool_exp
+  $limit: Int
+  $offset: Int
+) {
+  profiles(limit: $limit, offset: $offset, where: $where, order_by: $order_by) {
     name
     logo
     id
@@ -14,6 +19,9 @@ query SearchProfiles($where: profiles_bool_exp, $limit: Int, $offset: Int) {
       }
     }
     profileSector {
+      name
+    }
+    profileType {
       name
     }
     profileStatus {

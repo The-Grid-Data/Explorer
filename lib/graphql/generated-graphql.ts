@@ -1,4 +1,10 @@
-import { useQuery, UseQueryOptions } from '@tanstack/react-query';
+import {
+  useQuery,
+  useInfiniteQuery,
+  UseQueryOptions,
+  UseInfiniteQueryOptions,
+  InfiniteData
+} from '@tanstack/react-query';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = {
@@ -628,6 +634,135 @@ export type ProductStatus_Order_By = {
   products_aggregate?: InputMaybe<Products_Aggregate_Order_By>;
 };
 
+/** Table mapping product support relationships */
+export type ProductSupports = {
+  __typename?: 'productSupports';
+  /** Unique identifier for each support relationship */
+  id: Scalars['Int']['output'];
+  /** An object relationship */
+  product: Products;
+  /** Identifier of the product providing support */
+  productId: Scalars['Int']['output'];
+  /** An object relationship */
+  productSupported: Products;
+  /** Identifier of the product being supported */
+  supportsProductId: Scalars['Int']['output'];
+};
+
+/** order by aggregate values of table "productSupports" */
+export type ProductSupports_Aggregate_Order_By = {
+  avg?: InputMaybe<ProductSupports_Avg_Order_By>;
+  count?: InputMaybe<Mysql8_Order_By>;
+  max?: InputMaybe<ProductSupports_Max_Order_By>;
+  min?: InputMaybe<ProductSupports_Min_Order_By>;
+  stddev_pop?: InputMaybe<ProductSupports_Stddev_Pop_Order_By>;
+  stddev_samp?: InputMaybe<ProductSupports_Stddev_Samp_Order_By>;
+  sum?: InputMaybe<ProductSupports_Sum_Order_By>;
+  var_pop?: InputMaybe<ProductSupports_Var_Pop_Order_By>;
+  var_samp?: InputMaybe<ProductSupports_Var_Samp_Order_By>;
+};
+
+/** order by avg() on columns of table "productSupports" */
+export type ProductSupports_Avg_Order_By = {
+  /** Unique identifier for each support relationship */
+  id?: InputMaybe<Mysql8_Order_By>;
+  /** Identifier of the product providing support */
+  productId?: InputMaybe<Mysql8_Order_By>;
+  /** Identifier of the product being supported */
+  supportsProductId?: InputMaybe<Mysql8_Order_By>;
+};
+
+/** Boolean expression to filter rows from the table "productSupports". All fields are combined with a logical 'AND'. */
+export type ProductSupports_Bool_Exp = {
+  _and?: InputMaybe<Array<ProductSupports_Bool_Exp>>;
+  _not?: InputMaybe<ProductSupports_Bool_Exp>;
+  _or?: InputMaybe<Array<ProductSupports_Bool_Exp>>;
+  id?: InputMaybe<Int_Mysql8_Comparison_Exp>;
+  product?: InputMaybe<Products_Bool_Exp>;
+  productId?: InputMaybe<Int_Mysql8_Comparison_Exp>;
+  productSupported?: InputMaybe<Products_Bool_Exp>;
+  supportsProductId?: InputMaybe<Int_Mysql8_Comparison_Exp>;
+};
+
+/** order by max() on columns of table "productSupports" */
+export type ProductSupports_Max_Order_By = {
+  /** Unique identifier for each support relationship */
+  id?: InputMaybe<Mysql8_Order_By>;
+  /** Identifier of the product providing support */
+  productId?: InputMaybe<Mysql8_Order_By>;
+  /** Identifier of the product being supported */
+  supportsProductId?: InputMaybe<Mysql8_Order_By>;
+};
+
+/** order by min() on columns of table "productSupports" */
+export type ProductSupports_Min_Order_By = {
+  /** Unique identifier for each support relationship */
+  id?: InputMaybe<Mysql8_Order_By>;
+  /** Identifier of the product providing support */
+  productId?: InputMaybe<Mysql8_Order_By>;
+  /** Identifier of the product being supported */
+  supportsProductId?: InputMaybe<Mysql8_Order_By>;
+};
+
+/** Ordering options when selecting data from "productSupports". */
+export type ProductSupports_Order_By = {
+  id?: InputMaybe<Mysql8_Order_By>;
+  product?: InputMaybe<Products_Order_By>;
+  productId?: InputMaybe<Mysql8_Order_By>;
+  productSupported?: InputMaybe<Products_Order_By>;
+  supportsProductId?: InputMaybe<Mysql8_Order_By>;
+};
+
+/** order by stddev_pop() on columns of table "productSupports" */
+export type ProductSupports_Stddev_Pop_Order_By = {
+  /** Unique identifier for each support relationship */
+  id?: InputMaybe<Mysql8_Order_By>;
+  /** Identifier of the product providing support */
+  productId?: InputMaybe<Mysql8_Order_By>;
+  /** Identifier of the product being supported */
+  supportsProductId?: InputMaybe<Mysql8_Order_By>;
+};
+
+/** order by stddev_samp() on columns of table "productSupports" */
+export type ProductSupports_Stddev_Samp_Order_By = {
+  /** Unique identifier for each support relationship */
+  id?: InputMaybe<Mysql8_Order_By>;
+  /** Identifier of the product providing support */
+  productId?: InputMaybe<Mysql8_Order_By>;
+  /** Identifier of the product being supported */
+  supportsProductId?: InputMaybe<Mysql8_Order_By>;
+};
+
+/** order by sum() on columns of table "productSupports" */
+export type ProductSupports_Sum_Order_By = {
+  /** Unique identifier for each support relationship */
+  id?: InputMaybe<Mysql8_Order_By>;
+  /** Identifier of the product providing support */
+  productId?: InputMaybe<Mysql8_Order_By>;
+  /** Identifier of the product being supported */
+  supportsProductId?: InputMaybe<Mysql8_Order_By>;
+};
+
+/** order by var_pop() on columns of table "productSupports" */
+export type ProductSupports_Var_Pop_Order_By = {
+  /** Unique identifier for each support relationship */
+  id?: InputMaybe<Mysql8_Order_By>;
+  /** Identifier of the product providing support */
+  productId?: InputMaybe<Mysql8_Order_By>;
+  /** Identifier of the product being supported */
+  supportsProductId?: InputMaybe<Mysql8_Order_By>;
+};
+
+/** order by var_samp() on columns of table "productSupports" */
+export type ProductSupports_Var_Samp_Order_By = {
+  /** Unique identifier for each support relationship */
+  id?: InputMaybe<Mysql8_Order_By>;
+  /** Identifier of the product providing support */
+  productId?: InputMaybe<Mysql8_Order_By>;
+  /** Identifier of the product being supported */
+  supportsProductId?: InputMaybe<Mysql8_Order_By>;
+};
+
 export type ProductTypes = {
   __typename?: 'productTypes';
   definition: Scalars['String']['output'];
@@ -684,6 +819,10 @@ export type Products = {
   /** An object relationship */
   productStatus?: Maybe<ProductStatus>;
   productStatusId?: Maybe<Scalars['Int']['output']>;
+  /** An array relationship */
+  productSupported: Array<ProductSupports>;
+  /** An array relationship */
+  productSupports: Array<ProductSupports>;
   /** An object relationship */
   productType?: Maybe<ProductTypes>;
   productTypeId?: Maybe<Scalars['Int']['output']>;
@@ -693,6 +832,20 @@ export type Products = {
   profile: Profiles;
   profileId: Scalars['Int']['output'];
   urlToProduct: Scalars['String']['output'];
+};
+
+export type ProductsProductSupportedArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<ProductSupports_Order_By>>;
+  where?: InputMaybe<ProductSupports_Bool_Exp>;
+};
+
+export type ProductsProductSupportsArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<ProductSupports_Order_By>>;
+  where?: InputMaybe<ProductSupports_Bool_Exp>;
 };
 
 export type ProductsProductsArgs = {
@@ -745,6 +898,8 @@ export type Products_Bool_Exp = {
   productDeployedOnProduct?: InputMaybe<Products_Bool_Exp>;
   productStatus?: InputMaybe<ProductStatus_Bool_Exp>;
   productStatusId?: InputMaybe<Int_Mysql8_Comparison_Exp>;
+  productSupported?: InputMaybe<ProductSupports_Bool_Exp>;
+  productSupports?: InputMaybe<ProductSupports_Bool_Exp>;
   productType?: InputMaybe<ProductTypes_Bool_Exp>;
   productTypeId?: InputMaybe<Int_Mysql8_Comparison_Exp>;
   products?: InputMaybe<Products_Bool_Exp>;
@@ -799,6 +954,8 @@ export type Products_Order_By = {
   productDeployedOnProduct?: InputMaybe<Products_Order_By>;
   productStatus?: InputMaybe<ProductStatus_Order_By>;
   productStatusId?: InputMaybe<Mysql8_Order_By>;
+  productSupported_aggregate?: InputMaybe<ProductSupports_Aggregate_Order_By>;
+  productSupports_aggregate?: InputMaybe<ProductSupports_Aggregate_Order_By>;
   productType?: InputMaybe<ProductTypes_Order_By>;
   productTypeId?: InputMaybe<Mysql8_Order_By>;
   products_aggregate?: InputMaybe<Products_Aggregate_Order_By>;
@@ -1208,6 +1365,10 @@ export type Query_Root = {
   productStatus: Array<ProductStatus>;
   /** fetch data from the table: "productStatus" using primary key columns */
   productStatus_by_pk?: Maybe<ProductStatus>;
+  /** An array relationship */
+  productSupports: Array<ProductSupports>;
+  /** fetch data from the table: "productSupports" using primary key columns */
+  productSupports_by_pk?: Maybe<ProductSupports>;
   /** fetch data from the table: "productTypes" */
   productTypes: Array<ProductTypes>;
   /** fetch data from the table: "productTypes" using primary key columns */
@@ -1316,6 +1477,17 @@ export type Query_RootProductStatusArgs = {
 };
 
 export type Query_RootProductStatus_By_PkArgs = {
+  id: Scalars['Int']['input'];
+};
+
+export type Query_RootProductSupportsArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<ProductSupports_Order_By>>;
+  where?: InputMaybe<ProductSupports_Bool_Exp>;
+};
+
+export type Query_RootProductSupports_By_PkArgs = {
   id: Scalars['Int']['input'];
 };
 
@@ -1583,6 +1755,10 @@ export type Subscription_Root = {
   productStatus: Array<ProductStatus>;
   /** fetch data from the table: "productStatus" using primary key columns */
   productStatus_by_pk?: Maybe<ProductStatus>;
+  /** An array relationship */
+  productSupports: Array<ProductSupports>;
+  /** fetch data from the table: "productSupports" using primary key columns */
+  productSupports_by_pk?: Maybe<ProductSupports>;
   /** fetch data from the table: "productTypes" */
   productTypes: Array<ProductTypes>;
   /** fetch data from the table: "productTypes" using primary key columns */
@@ -1694,6 +1870,17 @@ export type Subscription_RootProductStatus_By_PkArgs = {
   id: Scalars['Int']['input'];
 };
 
+export type Subscription_RootProductSupportsArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<ProductSupports_Order_By>>;
+  where?: InputMaybe<ProductSupports_Bool_Exp>;
+};
+
+export type Subscription_RootProductSupports_By_PkArgs = {
+  id: Scalars['Int']['input'];
+};
+
 export type Subscription_RootProductTypesArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
@@ -1782,7 +1969,236 @@ export type Subscription_RootSocials_By_PkArgs = {
   id: Scalars['Int']['input'];
 };
 
+/** One possible value for a given Enum. Enum values are unique values, not a placeholder for a string or numeric value. However an Enum value is returned in a JSON response as a string. */
+export type __EnumValue = {
+  __typename?: '__EnumValue';
+  name: Scalars['String']['output'];
+  description?: Maybe<Scalars['String']['output']>;
+  isDeprecated: Scalars['Boolean']['output'];
+  deprecationReason?: Maybe<Scalars['String']['output']>;
+};
+
+/** Object and Interface types are described by a list of Fields, each of which has a name, potentially a list of arguments, and a return type. */
+export type __Field = {
+  __typename?: '__Field';
+  name: Scalars['String']['output'];
+  description?: Maybe<Scalars['String']['output']>;
+  args: Array<__InputValue>;
+  type: __Type;
+  isDeprecated: Scalars['Boolean']['output'];
+  deprecationReason?: Maybe<Scalars['String']['output']>;
+};
+
+/** Object and Interface types are described by a list of Fields, each of which has a name, potentially a list of arguments, and a return type. */
+export type __FieldArgsArgs = {
+  includeDeprecated?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** Arguments provided to Fields or Directives and the input fields of an InputObject are represented as Input Values which describe their type and optionally a default value. */
+export type __InputValue = {
+  __typename?: '__InputValue';
+  name: Scalars['String']['output'];
+  description?: Maybe<Scalars['String']['output']>;
+  type: __Type;
+  /** A GraphQL-formatted string representing the default value for this input value. */
+  defaultValue?: Maybe<Scalars['String']['output']>;
+  isDeprecated: Scalars['Boolean']['output'];
+  deprecationReason?: Maybe<Scalars['String']['output']>;
+};
+
+/**
+ * The fundamental unit of any GraphQL Schema is the type. There are many kinds of types in GraphQL as represented by the `__TypeKind` enum.
+ *
+ * Depending on the kind of a type, certain fields describe information about that type. Scalar types provide no information beyond a name, description and optional `specifiedByURL`, while Enum types provide their values. Object and Interface types provide the fields they describe. Abstract types, Union and Interface, provide the Object types possible at runtime. List and NonNull types compose other types.
+ */
+export type __Type = {
+  __typename?: '__Type';
+  kind: __TypeKind;
+  name?: Maybe<Scalars['String']['output']>;
+  description?: Maybe<Scalars['String']['output']>;
+  specifiedByURL?: Maybe<Scalars['String']['output']>;
+  fields?: Maybe<Array<__Field>>;
+  interfaces?: Maybe<Array<__Type>>;
+  possibleTypes?: Maybe<Array<__Type>>;
+  enumValues?: Maybe<Array<__EnumValue>>;
+  inputFields?: Maybe<Array<__InputValue>>;
+  ofType?: Maybe<__Type>;
+};
+
+/**
+ * The fundamental unit of any GraphQL Schema is the type. There are many kinds of types in GraphQL as represented by the `__TypeKind` enum.
+ *
+ * Depending on the kind of a type, certain fields describe information about that type. Scalar types provide no information beyond a name, description and optional `specifiedByURL`, while Enum types provide their values. Object and Interface types provide the fields they describe. Abstract types, Union and Interface, provide the Object types possible at runtime. List and NonNull types compose other types.
+ */
+export type __TypeFieldsArgs = {
+  includeDeprecated?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/**
+ * The fundamental unit of any GraphQL Schema is the type. There are many kinds of types in GraphQL as represented by the `__TypeKind` enum.
+ *
+ * Depending on the kind of a type, certain fields describe information about that type. Scalar types provide no information beyond a name, description and optional `specifiedByURL`, while Enum types provide their values. Object and Interface types provide the fields they describe. Abstract types, Union and Interface, provide the Object types possible at runtime. List and NonNull types compose other types.
+ */
+export type __TypeEnumValuesArgs = {
+  includeDeprecated?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/**
+ * The fundamental unit of any GraphQL Schema is the type. There are many kinds of types in GraphQL as represented by the `__TypeKind` enum.
+ *
+ * Depending on the kind of a type, certain fields describe information about that type. Scalar types provide no information beyond a name, description and optional `specifiedByURL`, while Enum types provide their values. Object and Interface types provide the fields they describe. Abstract types, Union and Interface, provide the Object types possible at runtime. List and NonNull types compose other types.
+ */
+export type __TypeInputFieldsArgs = {
+  includeDeprecated?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** An enum describing what kind of type a given `__Type` is. */
+export enum __TypeKind {
+  /** Indicates this type is a scalar. */
+  Scalar = 'SCALAR',
+  /** Indicates this type is an object. `fields` and `interfaces` are valid fields. */
+  Object = 'OBJECT',
+  /** Indicates this type is an interface. `fields`, `interfaces`, and `possibleTypes` are valid fields. */
+  Interface = 'INTERFACE',
+  /** Indicates this type is a union. `possibleTypes` is a valid field. */
+  Union = 'UNION',
+  /** Indicates this type is an enum. `enumValues` is a valid field. */
+  Enum = 'ENUM',
+  /** Indicates this type is an input object. `inputFields` is a valid field. */
+  InputObject = 'INPUT_OBJECT',
+  /** Indicates this type is a list. `ofType` is a valid field. */
+  List = 'LIST',
+  /** Indicates this type is a non-null. `ofType` is a valid field. */
+  NonNull = 'NON_NULL'
+}
+
+export type GetFiltersOptionsQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetFiltersOptionsQuery = {
+  __typename?: 'query_root';
+  profileTypes: Array<{
+    __typename?: 'profileTypes';
+    name: string;
+    id: number;
+    definition: string;
+  }>;
+  profileStatuses: Array<{
+    __typename?: 'profileStatuses';
+    name: string;
+    id: number;
+    definition: string;
+  }>;
+  profileSectors: Array<{
+    __typename?: 'profileSectors';
+    name: string;
+    id: number;
+    definition: string;
+  }>;
+  productTypes: Array<{
+    __typename?: 'productTypes';
+    name: string;
+    id: number;
+    definition: string;
+  }>;
+  productStatus: Array<{
+    __typename?: 'productStatus';
+    definition: string;
+    id: number;
+    name: string;
+  }>;
+  productSupports: Array<{
+    __typename?: 'productSupports';
+    id: number;
+    product: {
+      __typename?: 'products';
+      name: string;
+      descriptionShort: string;
+    };
+  }>;
+  products: Array<{
+    __typename?: 'products';
+    name: string;
+    id: number;
+    descriptionShort: string;
+  }>;
+  assetStandardSupport: Array<{
+    __typename?: 'assetStandardSupport';
+    definition: string;
+    id: number;
+    name: string;
+  }>;
+  assetType: Array<{
+    __typename?: 'assetType';
+    name: string;
+    id: number;
+    definition: string;
+  }>;
+  assets: Array<{ __typename?: 'assets'; ticker: string }>;
+  entityTypes: Array<{
+    __typename?: 'entityTypes';
+    name: string;
+    id: number;
+    definition: string;
+  }>;
+  entities: Array<{ __typename?: 'entities'; name: string; id: number }>;
+  countries: Array<{ __typename?: 'countries'; Name: string; id: number }>;
+};
+
+export type GetOrderByFieldsQueryVariables = Exact<{
+  name: Scalars['String']['input'];
+}>;
+
+export type GetOrderByFieldsQuery = {
+  __typename?: 'query_root';
+  __type?: {
+    __typename?: '__Type';
+    inputFields?: Array<{
+      __typename?: '__InputValue';
+      name: string;
+      type: {
+        __typename?: '__Type';
+        name?: string | null;
+        kind: __TypeKind;
+        inputFields?: Array<{
+          __typename?: '__InputValue';
+          name: string;
+          type: {
+            __typename?: '__Type';
+            name?: string | null;
+            kind: __TypeKind;
+            inputFields?: Array<{
+              __typename?: '__InputValue';
+              name: string;
+              type: {
+                __typename?: '__Type';
+                name?: string | null;
+                kind: __TypeKind;
+                ofType?: {
+                  __typename?: '__Type';
+                  name?: string | null;
+                  kind: __TypeKind;
+                } | null;
+              };
+            }> | null;
+            ofType?: {
+              __typename?: '__Type';
+              name?: string | null;
+              kind: __TypeKind;
+            } | null;
+          };
+        }> | null;
+        ofType?: {
+          __typename?: '__Type';
+          name?: string | null;
+          kind: __TypeKind;
+        } | null;
+      };
+    }> | null;
+  } | null;
+};
+
 export type SearchProfilesQueryVariables = Exact<{
+  order_by?: InputMaybe<Array<Profiles_Order_By> | Profiles_Order_By>;
   where?: InputMaybe<Profiles_Bool_Exp>;
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
@@ -1805,6 +2221,7 @@ export type SearchProfilesQuery = {
       socialType?: { __typename?: 'socialTypes'; name: string } | null;
     }>;
     profileSector?: { __typename?: 'profileSectors'; name: string } | null;
+    profileType?: { __typename?: 'profileTypes'; name: string } | null;
     profileStatus?: { __typename?: 'profileStatuses'; name: string } | null;
     assets: Array<{ __typename?: 'assets'; ticker: string }>;
     mainProduct: Array<{
@@ -1815,9 +2232,239 @@ export type SearchProfilesQuery = {
   }>;
 };
 
+export const GetFiltersOptionsDocument = `
+    query GetFiltersOptions {
+  profileTypes {
+    name
+    id
+    definition
+  }
+  profileStatuses {
+    name
+    id
+    definition
+  }
+  profileSectors {
+    name
+    id
+    definition
+  }
+  productTypes {
+    name
+    id
+    definition
+  }
+  productStatus {
+    definition
+    id
+    name
+  }
+  productSupports {
+    id
+    product {
+      name
+      descriptionShort
+    }
+  }
+  products {
+    name
+    id
+    descriptionShort
+  }
+  assetStandardSupport {
+    definition
+    id
+    name
+  }
+  assetType {
+    name
+    id
+    definition
+  }
+  assets {
+    ticker
+  }
+  entityTypes {
+    name
+    id
+    definition
+  }
+  entities {
+    name
+    id
+  }
+  countries {
+    Name
+    id
+  }
+}
+    `;
+
+export const useGetFiltersOptionsQuery = <
+  TData = GetFiltersOptionsQuery,
+  TError = unknown
+>(
+  variables?: GetFiltersOptionsQueryVariables,
+  options?: Omit<
+    UseQueryOptions<GetFiltersOptionsQuery, TError, TData>,
+    'queryKey'
+  > & {
+    queryKey?: UseQueryOptions<
+      GetFiltersOptionsQuery,
+      TError,
+      TData
+    >['queryKey'];
+  }
+) => {
+  return useQuery<GetFiltersOptionsQuery, TError, TData>({
+    queryKey:
+      variables === undefined
+        ? ['GetFiltersOptions']
+        : ['GetFiltersOptions', variables],
+    queryFn: fetcher<GetFiltersOptionsQuery, GetFiltersOptionsQueryVariables>(
+      GetFiltersOptionsDocument,
+      variables
+    ),
+    ...options
+  });
+};
+
+export const useInfiniteGetFiltersOptionsQuery = <
+  TData = InfiniteData<GetFiltersOptionsQuery>,
+  TError = unknown
+>(
+  variables: GetFiltersOptionsQueryVariables,
+  options: Omit<
+    UseInfiniteQueryOptions<GetFiltersOptionsQuery, TError, TData>,
+    'queryKey'
+  > & {
+    queryKey?: UseInfiniteQueryOptions<
+      GetFiltersOptionsQuery,
+      TError,
+      TData
+    >['queryKey'];
+  }
+) => {
+  return useInfiniteQuery<GetFiltersOptionsQuery, TError, TData>(
+    (() => {
+      const { queryKey: optionsQueryKey, ...restOptions } = options;
+      return {
+        queryKey:
+          optionsQueryKey ?? variables === undefined
+            ? ['GetFiltersOptions.infinite']
+            : ['GetFiltersOptions.infinite', variables],
+        queryFn: metaData =>
+          fetcher<GetFiltersOptionsQuery, GetFiltersOptionsQueryVariables>(
+            GetFiltersOptionsDocument,
+            { ...variables, ...(metaData.pageParam ?? {}) }
+          )(),
+        ...restOptions
+      };
+    })()
+  );
+};
+
+export const GetOrderByFieldsDocument = `
+    query GetOrderByFields($name: String!) {
+  __type(name: $name) {
+    inputFields {
+      name
+      type {
+        inputFields {
+          name
+          type {
+            inputFields {
+              name
+              type {
+                name
+                kind
+                ofType {
+                  name
+                  kind
+                }
+              }
+            }
+            name
+            kind
+            ofType {
+              name
+              kind
+            }
+          }
+        }
+        name
+        kind
+        ofType {
+          name
+          kind
+        }
+      }
+    }
+  }
+}
+    `;
+
+export const useGetOrderByFieldsQuery = <
+  TData = GetOrderByFieldsQuery,
+  TError = unknown
+>(
+  variables: GetOrderByFieldsQueryVariables,
+  options?: Omit<
+    UseQueryOptions<GetOrderByFieldsQuery, TError, TData>,
+    'queryKey'
+  > & {
+    queryKey?: UseQueryOptions<
+      GetOrderByFieldsQuery,
+      TError,
+      TData
+    >['queryKey'];
+  }
+) => {
+  return useQuery<GetOrderByFieldsQuery, TError, TData>({
+    queryKey: ['GetOrderByFields', variables],
+    queryFn: fetcher<GetOrderByFieldsQuery, GetOrderByFieldsQueryVariables>(
+      GetOrderByFieldsDocument,
+      variables
+    ),
+    ...options
+  });
+};
+
+export const useInfiniteGetOrderByFieldsQuery = <
+  TData = InfiniteData<GetOrderByFieldsQuery>,
+  TError = unknown
+>(
+  variables: GetOrderByFieldsQueryVariables,
+  options: Omit<
+    UseInfiniteQueryOptions<GetOrderByFieldsQuery, TError, TData>,
+    'queryKey'
+  > & {
+    queryKey?: UseInfiniteQueryOptions<
+      GetOrderByFieldsQuery,
+      TError,
+      TData
+    >['queryKey'];
+  }
+) => {
+  return useInfiniteQuery<GetOrderByFieldsQuery, TError, TData>(
+    (() => {
+      const { queryKey: optionsQueryKey, ...restOptions } = options;
+      return {
+        queryKey: optionsQueryKey ?? ['GetOrderByFields.infinite', variables],
+        queryFn: metaData =>
+          fetcher<GetOrderByFieldsQuery, GetOrderByFieldsQueryVariables>(
+            GetOrderByFieldsDocument,
+            { ...variables, ...(metaData.pageParam ?? {}) }
+          )(),
+        ...restOptions
+      };
+    })()
+  );
+};
+
 export const SearchProfilesDocument = `
-    query SearchProfiles($where: profiles_bool_exp, $limit: Int, $offset: Int) {
-  profiles(limit: $limit, offset: $offset, where: $where) {
+    query SearchProfiles($order_by: [profiles_order_by!], $where: profiles_bool_exp, $limit: Int, $offset: Int) {
+  profiles(limit: $limit, offset: $offset, where: $where, order_by: $order_by) {
     name
     logo
     id
@@ -1832,6 +2479,9 @@ export const SearchProfilesDocument = `
       }
     }
     profileSector {
+      name
+    }
+    profileType {
       name
     }
     profileStatus {
@@ -1873,4 +2523,39 @@ export const useSearchProfilesQuery = <
     ),
     ...options
   });
+};
+
+export const useInfiniteSearchProfilesQuery = <
+  TData = InfiniteData<SearchProfilesQuery>,
+  TError = unknown
+>(
+  variables: SearchProfilesQueryVariables,
+  options: Omit<
+    UseInfiniteQueryOptions<SearchProfilesQuery, TError, TData>,
+    'queryKey'
+  > & {
+    queryKey?: UseInfiniteQueryOptions<
+      SearchProfilesQuery,
+      TError,
+      TData
+    >['queryKey'];
+  }
+) => {
+  return useInfiniteQuery<SearchProfilesQuery, TError, TData>(
+    (() => {
+      const { queryKey: optionsQueryKey, ...restOptions } = options;
+      return {
+        queryKey:
+          optionsQueryKey ?? variables === undefined
+            ? ['SearchProfiles.infinite']
+            : ['SearchProfiles.infinite', variables],
+        queryFn: metaData =>
+          fetcher<SearchProfilesQuery, SearchProfilesQueryVariables>(
+            SearchProfilesDocument,
+            { ...variables, ...(metaData.pageParam ?? {}) }
+          )(),
+        ...restOptions
+      };
+    })()
+  );
 };

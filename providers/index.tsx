@@ -1,6 +1,9 @@
 import { PropsWithChildren } from 'react';
 import { ReactQueryProvider } from './react-query-provider';
+import { TooltipProvider } from '@/components/ui/tooltip';
 
 export const Providers = ({ children }: PropsWithChildren) => (
-  <ReactQueryProvider>{children}</ReactQueryProvider>
+  <ReactQueryProvider>
+    <TooltipProvider>{children}</TooltipProvider>
+  </ReactQueryProvider>
 );

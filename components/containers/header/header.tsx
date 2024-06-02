@@ -6,6 +6,7 @@ import { SiGithub } from 'react-icons/si';
 
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
+import Image from 'next/image';
 
 const learnMoreButton = (
   <Link href="/contact">
@@ -28,19 +29,24 @@ const cloneRepoButton = (
 
 export const Header = () => {
   return (
-    <header className="flex items-center py-4 px-4 md:container w-full">
-      <div className="w-full justify-start items-center">
+    <header className="container flex w-full items-center py-4">
+      <div className="w-full items-center justify-start">
         <Link href="/" className="flex items-center">
-          <h3 className="text-lg font-semibold tracking-tight">The Grid</h3>
+          <Image
+            alt="The grid logo"
+            src="/thegrid-logo.svg"
+            width={126}
+            height={52}
+          />
         </Link>
       </div>
 
-      <div className="w-full justify-end items-center hidden md:flex gap-2">
+      <div className="hidden w-full items-center justify-end gap-2 md:flex">
         {learnMoreButton}
         {cloneRepoButton}
       </div>
       <Sheet>
-        <SheetTrigger asChild className="w-full flex justify-end items-center">
+        <SheetTrigger asChild className="flex w-full items-center justify-end">
           <div className="w-full md:hidden">
             <Button variant="outline" size="icon">
               <MenuIcon className="h-6 w-6" />
@@ -54,7 +60,7 @@ export const Header = () => {
               <h3 className="text-lg font-semibold tracking-tight">The Grid</h3>
             </Link>
           </SheetTrigger>
-          <ul className="flex flex-col gap-3 mt-4">
+          <ul className="mt-4 flex flex-col gap-3">
             <li>
               <SheetTrigger asChild>{learnMoreButton}</SheetTrigger>
             </li>

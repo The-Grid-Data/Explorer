@@ -6,6 +6,7 @@ import type { Metadata } from 'next';
 
 import { Header } from '@/components/containers/header';
 import { Providers } from '@/providers';
+import { Banner } from '@/components/containers/banner';
 
 type TLayout = Readonly<{
   children: React.ReactNode;
@@ -24,7 +25,8 @@ export default function Layout({ children }: TLayout) {
     <html lang="en" className="h-full">
       <body className={cn(inter.className, 'h-full')}>
         <Providers>
-          <div className="h-full flex flex-col items-center">
+          <Banner />
+          <div className="flex h-full flex-col items-center">
             <Header />
             {children}
           </div>
