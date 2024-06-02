@@ -1,6 +1,6 @@
 import '@/app/globals.css';
 
-import { Inter } from 'next/font/google';
+import { Archivo, DM_Sans } from 'next/font/google';
 import { cn } from '@/lib/utils';
 import type { Metadata } from 'next';
 
@@ -12,7 +12,8 @@ type TLayout = Readonly<{
   children: React.ReactNode;
 }>;
 
-const inter = Inter({ subsets: ['latin'] });
+const archivo = Archivo({ subsets: ['latin'], variable: '--font-archivo' });
+const dmSans = DM_Sans({ subsets: ['latin'], variable: '--font-dm-sans' });
 
 export const metadata: Metadata = {
   title: 'The Grid | Data Explorer',
@@ -23,7 +24,14 @@ export const metadata: Metadata = {
 export default function Layout({ children }: TLayout) {
   return (
     <html lang="en" className="h-full">
-      <body className={cn(inter.className, 'h-full ')}>
+      <body
+        className={cn(
+          dmSans.className,
+          dmSans.variable,
+          archivo.variable,
+          'h-full '
+        )}
+      >
         <Providers>
           <Banner />
           <Header />

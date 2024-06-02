@@ -35,8 +35,8 @@ export const Header = () => {
           <Image
             alt="The grid logo"
             src="/thegrid-logo.svg"
-            width={126}
-            height={52}
+            width={160}
+            height={1200}
           />
         </Link>
       </div>

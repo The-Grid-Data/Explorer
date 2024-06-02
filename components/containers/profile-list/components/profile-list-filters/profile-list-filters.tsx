@@ -30,13 +30,9 @@ export const ProfileListFilters = ({
     </>
   );
 
-  if (!filtersVisibility.showFilters) {
-    return null;
-  }
-
   return (
     <>
-      {isDesktop && (
+      {isDesktop && filtersVisibility.showFilters && (
         <div className="shadow-inner-tb bg-secondary/80 shadow-primary/10">
           <div className="container">
             <div className="ml-auto mr-auto flex max-w-4xl gap-6 rounded-md p-8">
