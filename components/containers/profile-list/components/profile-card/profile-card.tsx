@@ -19,9 +19,9 @@ export const ProfileCard = ({ profile }: ProfileCardCardProps) => {
   return (
     <div>
       <div className="relative mt-20 rounded-lg border-2 border-primary bg-white shadow-sm">
-        <div className="absolute -top-20 left-[-12px] flex w-full items-start gap-4 md:left-[-24px]">
-          <div className="border-1 w-fit shrink-0 -rotate-3 rounded-2xl  border border-primary bg-white shadow-lg">
-            <Avatar className="h-[120px] w-fit min-w-[120px] max-w-[300px] rounded-2xl p-2">
+        <div className="absolute -top-16 left-[-12px] flex w-full items-start gap-3 md:left-[-24px]">
+          <div className="border-1 w-fit shrink-0 -rotate-3 rounded-xl  border border-primary bg-white shadow-lg">
+            <Avatar className="h-[100px] w-[160px] min-w-[120px] rounded-xl p-2">
               {validLogoUrl && (
                 <AvatarImage
                   className="object-scale-down"
@@ -32,7 +32,7 @@ export const ProfileCard = ({ profile }: ProfileCardCardProps) => {
               <AvatarFallback className="bg-white">No logo</AvatarFallback>
             </Avatar>
           </div>
-          <div className="mt-10 flex w-full flex-col gap-5">
+          <div className="mt-7 flex w-full flex-col gap-3">
             <h3 className="text-2xl font-bold">{profile.name}</h3>
             <ProfileCardIconLinks profile={profile} />
           </div>

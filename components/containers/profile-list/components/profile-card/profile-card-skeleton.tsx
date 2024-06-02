@@ -2,12 +2,12 @@ import { Skeleton } from '@/components/ui/skeleton';
 
 export const ProfileCardSkeleton = () => (
   <div className="">
-    <div className="mt-10 flex w-full animate-pulse flex-col gap-2 rounded-xl border-2 border-primary/10 p-6">
-      <div className="-mt-16 flex gap-2">
-        <div className="h-20 w-20 rounded-full bg-white">
-          <Skeleton className="h-20 w-20 rounded-full" />
+    <div className="mt-10 flex w-full animate-pulse flex-col gap-4 rounded-xl border-2 border-primary/10 p-6">
+      <div className="-mt-20 flex gap-4">
+        <div className="h-[100px] w-[220px] bg-white">
+          <Skeleton className="h-[100px] w-[220px] -rotate-3 rounded-xl" />
         </div>
-        <div className="mt-2 flex w-full flex-col gap-4">
+        <div className="mt-6 flex w-full flex-col gap-4">
           <Skeleton className="h-6 w-1/4" />
           <div className="flex w-full gap-2">
             <Skeleton className="h-4 w-4" />
