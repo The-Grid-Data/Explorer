@@ -27,8 +27,8 @@ export const ProfileListSorting = ({ sorting }: ProfileSortingProps) => {
 
   return (
     <div className="flex justify-end gap-4">
-      <div className="flex flex-col gap-2">
-        <Label>Sort by</Label>
+      <div className="flex flex-col gap-1">
+        <Label className="text-xs">Sort by</Label>
         <Select
           value={sorting.sortBy}
           onValueChange={value => {
@@ -47,8 +47,8 @@ export const ProfileListSorting = ({ sorting }: ProfileSortingProps) => {
           </SelectContent>
         </Select>
       </div>
-      <div className="flex flex-col gap-2">
-        <Label>Sort order</Label>
+      <div className="flex flex-col gap-1">
+        <Label className="text-xs">Sort order</Label>
         <Select
           value={sorting.sortOrder}
           onValueChange={value => {

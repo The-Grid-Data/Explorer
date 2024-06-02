@@ -9,18 +9,18 @@ import { Button } from '@/components/ui/button';
 import Image from 'next/image';
 
 const learnMoreButton = (
-  <Link href="/contact">
-    <Button>Learn more</Button>
+  <Link target="_blank" rel="noopener noreferrer" href="https://thegrid.id/">
+    <Button className="w-full md:w-fit">Learn more</Button>
   </Link>
 );
 
 const cloneRepoButton = (
   <Link
-    href="https://github.com/thegrid/data-explorer-app"
+    href="https://github.com/The-Grid-Data/Explorer"
     target="_blank"
     rel="noopener noreferrer"
   >
-    <Button variant="outline">
+    <Button className="w-full md:w-fit" variant="outline">
       <SiGithub className="mr-2" size={18} />
       Clone project
     </Button>

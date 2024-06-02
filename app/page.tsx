@@ -4,11 +4,9 @@ import { ProfileList } from '@/components/containers/profile-list';
 
 export default function Page() {
   return (
-    <main className="container flex flex-col items-center">
-      <div className="flex w-full flex-col space-y-4">
-        <Hero />
-        <ProfileList />
-      </div>
+    <main className="w-full">
+      <Hero />
+      <ProfileList />
     </main>
   );
 }

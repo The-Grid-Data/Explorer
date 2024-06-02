@@ -4,7 +4,7 @@ import { useState } from 'react';
 export type Sorting = ReturnType<typeof useProfileSorting>;
 
 export const useProfileSorting = () => {
-  const [sortBy, setSortBy] = useState<string>('name');
+  const [sortBy, setSortBy] = useState<string>('id');
   const [sortOrder, setSortOrder] = useState<Mysql8_Order_By>(
     Mysql8_Order_By.Asc
   );

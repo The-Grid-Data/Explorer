@@ -18,22 +18,24 @@ export function DatePicker({ value, onChange, label }: DatePicker) {
   const active = value.every(i => i);
   return (
     <FilterContainer badgeContent={active && '1'} label={label} active={active}>
-      <Calendar
-        captionLayout="dropdown-buttons"
-        fromYear={2000}
-        toYear={2024}
-        mode="range"
-        selected={{
-          from: value[0] ? new Date(value[0]) : undefined,
-          to: value[1] ? new Date(value[1]) : undefined
-        }}
-        onSelect={date => {
-          const from = date?.from ? formatDate(date.from) : null;
-          const to = date?.to ? formatDate(date.to) : null;
-          onChange?.([from, to]);
-        }}
-        initialFocus
-      />
+      <div className="flex justify-center">
+        <Calendar
+          captionLayout="dropdown-buttons"
+          fromYear={2000}
+          toYear={2024}
+          mode="range"
+          selected={{
+            from: value[0] ? new Date(value[0]) : undefined,
+            to: value[1] ? new Date(value[1]) : undefined
+          }}
+          onSelect={date => {
+            const from = date?.from ? formatDate(date.from) : null;
+            const to = date?.to ? formatDate(date.to) : null;
+            onChange?.([from, to]);
+          }}
+          initialFocus
+        />
+      </div>
 
       <DatePickerFooter value={value} onChange={onChange} />
     </FilterContainer>
@@ -66,13 +68,12 @@ export const DatePickerFooter = ({
         >
           Clear
         </Button>
-        <div className="flex flex-col">
-          <div className="text text-xs text-muted-foreground">
-            From: {value?.[0] ?? '-'}
-          </div>
-          <div className="text text-xs text-muted-foreground">
-            To: {value?.[1] ?? '-'}
-          </div>
+
+        <div className="text text-xs text-muted-foreground">
+          From{' '}
+          <span className="font-medium text-primary">{value?.[0] ?? '-'}</span>{' '}
+          to{' '}
+          <span className="font-medium text-primary">{value?.[1] ?? '-'}</span>
         </div>
       </div>
 

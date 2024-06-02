@@ -23,13 +23,11 @@ export const metadata: Metadata = {
 export default function Layout({ children }: TLayout) {
   return (
     <html lang="en" className="h-full">
-      <body className={cn(inter.className, 'h-full')}>
+      <body className={cn(inter.className, 'h-full ')}>
         <Providers>
           <Banner />
-          <div className="flex h-full flex-col items-center">
-            <Header />
-            {children}
-          </div>
+          <Header />
+          {children}
         </Providers>
       </body>
     </html>

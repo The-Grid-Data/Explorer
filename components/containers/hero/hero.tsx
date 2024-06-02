@@ -2,7 +2,7 @@ import { Badge } from '@/components/ui/badge';
 
 export const Hero = () => {
   return (
-    <section className="mx-auto flex max-w-4xl flex-col items-center gap-2 py-8 md:py-12 md:pb-8 lg:py-12 lg:pb-12">
+    <section className="container mx-auto flex max-w-4xl flex-col items-center gap-2 py-8 md:py-12 md:pb-8 lg:py-12 lg:pb-12">
       <Badge className="my-2" variant="secondary">
         Currently focused on Solana.
       </Badge>

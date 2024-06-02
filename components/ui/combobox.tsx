@@ -43,12 +43,14 @@ export function ComboBox<T extends string | number>({
       badgeContent={nrOfSelectedOptions > 0 && `${nrOfSelectedOptions}`}
       active={selected.length > 0}
     >
-      <OptionList<T>
-        label={label}
-        selected={selected}
-        options={validOptions}
-        onChange={onChange}
-      />
+      <div className="flex flex-col md:min-w-[480px]">
+        <OptionList<T>
+          label={label}
+          selected={selected}
+          options={validOptions}
+          onChange={onChange}
+        />
+      </div>
     </FilterContainer>
   );
 }

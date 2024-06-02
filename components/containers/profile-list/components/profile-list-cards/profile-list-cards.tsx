@@ -45,17 +45,19 @@ export const ProfileListCards = ({ query, limit }: ProfileListCardsProps) => {
   const nrOfFetchedProfiles = profiles?.length ?? 0;
 
   return (
-    <div className="flex flex-col gap-2 pb-2">
+    <div className="flex flex-col gap-8 pb-2">
       {isError ? (
         <p className="text-base font-light">
           There was an error with your search, please try again or contact the
           administrator.
         </p>
       ) : !isFetching && (!profiles || nrOfFetchedProfiles < 1) ? (
-        <p className="ml-auto mr-auto mt-12 max-w-md text-center text-base text-muted-foreground">
-          No data was found with the current criteria, please update your search
-          term or filters and try again.
-        </p>
+        <div className="ml-auto mr-auto mt-12 max-w-md ">
+          <p className="text-center text-muted-foreground">
+            No data was found with the current criteria, please update your
+            search term or filters and try again.
+          </p>
+        </div>
       ) : (
         profiles?.map((profile, index) => (
           <ProfileCard key={index} profile={profile} />

@@ -5,8 +5,9 @@ import { ProfileCardDataPoint } from './profile-card-data-point';
 import Image from 'next/image';
 import { ProfileCardFeature } from './profile-card-feature';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { ProfileCardIconLinks } from './profile-card-icon-links';
 
-type Profile = SearchProfilesQuery['profiles'][0];
+export type Profile = SearchProfilesQuery['profiles'][0];
 
 export type ProfileCardCardProps = {
   profile: Profile;
@@ -17,10 +18,10 @@ export const ProfileCard = ({ profile }: ProfileCardCardProps) => {
 
   return (
     <div>
-      <div className="relative mt-20 rounded-lg border-2 border-foreground shadow-lg">
-        <div className="absolute -top-12 left-[-2px] flex w-full items-start gap-2">
-          <div className="w-fit shrink-0 rounded-sm bg-foreground p-2">
-            <Avatar className="h-[100px] w-fit min-w-[100px] max-w-[300px] rounded-none bg-white p-2">
+      <div className="relative mt-20 rounded-lg border-2 border-primary bg-white shadow-sm">
+        <div className="absolute -top-20 left-[-12px] flex w-full items-start gap-4 md:left-[-24px]">
+          <div className="border-1 w-fit shrink-0 -rotate-3 rounded-2xl  border border-primary bg-white shadow-lg">
+            <Avatar className="h-[120px] w-fit min-w-[120px] max-w-[300px] rounded-2xl p-2">
               {validLogoUrl && (
                 <AvatarImage
                   className="object-scale-down"
@@ -31,12 +32,13 @@ export const ProfileCard = ({ profile }: ProfileCardCardProps) => {
               <AvatarFallback className="bg-white">No logo</AvatarFallback>
             </Avatar>
           </div>
-          <div className="mt-2 w-full border-black">
-            <h3 className="text-2xl font-semibold">{profile.name}</h3>
+          <div className="mt-10 flex w-full flex-col gap-5">
+            <h3 className="text-2xl font-bold">{profile.name}</h3>
+            <ProfileCardIconLinks profile={profile} />
           </div>
         </div>
-        <div className="flex flex-col gap-2 p-4 pt-20">
-          <div className="flex gap-2">
+        <div className="flex flex-col gap-2 p-4 pt-14">
+          <div className="flex flex-wrap gap-2">
             <ProfileCardFeature
               label="Sector"
               value={profile.profileSector?.name}
@@ -61,7 +63,7 @@ export const ProfileCard = ({ profile }: ProfileCardCardProps) => {
               }
             />
           </div>
-          <div className="space-y-1">
+          <div className="space-y-2">
             <ProfileCardDataPoint label="Tagline" value={profile.tagLine} />
             <ProfileCardDataPoint
               label="Short Description"

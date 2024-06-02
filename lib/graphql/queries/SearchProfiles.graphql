@@ -11,7 +11,10 @@ query SearchProfiles(
     descriptionShort
     urlDocumentation
     tagLine
+    urlWhitepaper
     urlMain
+    urlDocumentation
+    urlBlog
     socials {
       url
       socialType {

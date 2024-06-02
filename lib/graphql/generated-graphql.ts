@@ -2214,7 +2214,9 @@ export type SearchProfilesQuery = {
     descriptionShort: string;
     urlDocumentation: string;
     tagLine: string;
+    urlWhitepaper: string;
     urlMain: string;
+    urlBlog: string;
     socials: Array<{
       __typename?: 'socials';
       url: string;
@@ -2471,7 +2473,10 @@ export const SearchProfilesDocument = `
     descriptionShort
     urlDocumentation
     tagLine
+    urlWhitepaper
     urlMain
+    urlDocumentation
+    urlBlog
     socials {
       url
       socialType {

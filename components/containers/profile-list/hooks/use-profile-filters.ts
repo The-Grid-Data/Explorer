@@ -10,6 +10,7 @@ export type Filters = ReturnType<typeof useProfileFilters>;
 
 export const useProfileFilters = () => {
   const { data } = useGetFiltersOptionsQuery();
+  const [showFilters, setShowFilters] = useState(true);
 
   /*************************************
    * SEARCH FILTERS
@@ -226,9 +227,7 @@ export const useProfileFilters = () => {
       }),
       ...(productDeployedOnFilter.value.length > 0 && {
         products: {
-          productDeployedOnProduct: {
-            deployedOnProductId: { _in: productDeployedOnFilter.value }
-          }
+          deployedOnProductId: { _in: productDeployedOnFilter.value }
         }
       }),
       ...(productSupportsFilter.value.length > 0 && {
@@ -297,6 +296,10 @@ export const useProfileFilters = () => {
       entityTypeFilter,
       entityNameFilter,
       entityCountryFilter
+    },
+    filtersVisibility: {
+      showFilters,
+      setShowFilters
     },
     toQueryWhereFields
   };

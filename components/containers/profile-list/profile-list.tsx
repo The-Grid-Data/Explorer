@@ -11,7 +11,8 @@ import { useProfileFilters } from './hooks/use-profile-filters';
 import { useProfileSorting } from './hooks/use-profile-sorting';
 
 export const ProfileList = () => {
-  const { filters, toQueryWhereFields } = useProfileFilters();
+  const { filters, toQueryWhereFields, filtersVisibility } =
+    useProfileFilters();
   const { sorting, toQuerySortByFields } = useProfileSorting();
 
   const query = {
@@ -22,21 +23,27 @@ export const ProfileList = () => {
   };
 
   return (
-    <div className="w-full">
-      <div className="space-y-2">
-        <div className="flex gap-4">
-          <div className="flex-1">
-            <ProfileListSearch filters={filters} />
-          </div>
+    <div className="w-full space-y-4">
+      <div className="container space-y-4">
+        <div className="flex-1">
+          <ProfileListSearch
+            filtersVisibility={filtersVisibility}
+            filters={filters}
+          />
         </div>
-        <ProfileListFilters filters={filters} />
       </div>
+      <ProfileListFilters
+        filtersVisibility={filtersVisibility}
+        filters={filters}
+      />
 
-      <div className="flex items-end justify-between">
-        <ProfileListFiltersLabel filters={filters} />
-        <ProfileListSorting sorting={sorting} />
-      </div>
-      <div className="mt-2">
+      <div className="container space-y-8">
+        <div className="flex flex-col items-end justify-end gap-4 md:mt-0 md:flex-row">
+          <ProfileListFiltersLabel filters={filters} />
+          <div className="h-2 md:hidden" />
+          <ProfileListSorting sorting={sorting} />
+        </div>
+
         <ProfileListCards query={query} limit={10} />
       </div>
     </div>

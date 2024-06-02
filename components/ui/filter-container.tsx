@@ -45,7 +45,7 @@ export function FilterContainer({
       <FilterContainerContext.Provider value={{ open, setOpen }}>
         <Dialog open={open} onOpenChange={setOpen}>
           <DialogTrigger asChild>{triggerButton}</DialogTrigger>
-          <DialogContent className=" w-fit gap-0 rounded-md p-0 md:min-w-[480px]">
+          <DialogContent className="w-fit gap-0 rounded-md p-0">
             {children}
           </DialogContent>
         </Dialog>
