@@ -32,7 +32,7 @@ query GetFiltersOptions {
   }
   productSupports {
     id
-    product {
+    productSupported {
       name
       descriptionShort
     }
