@@ -1,4 +1,4 @@
-#Welcome to The Grid's referance data explorer. 
+# Welcome to The Grid's referance data explorer. 
 This has been created as a way for data platforms to explore and get inspired by our data. 
 
 This uses our graphQL endpoint which can be found over at [docs.thegrid.id](docs.thegrid.id)
