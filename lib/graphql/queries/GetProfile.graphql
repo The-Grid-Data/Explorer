@@ -86,9 +86,14 @@ query GetProfile($where: profiles_bool_exp) {
         deployedOnProductId
         urlToProduct
       }
-      productSupports {
+      supportedByProducts {
+        supports {
+          name
+          id
+        }
         product {
           name
+          id
         }
       }
     }

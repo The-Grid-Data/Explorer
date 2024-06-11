@@ -8,11 +8,13 @@ import { ProfileCard, ProfileCardSkeleton } from '../profile-card';
 
 export type ProfileListCardsProps = {
   query: SearchProfilesQueryVariables;
-  limit: number;
 };
 
-export const ProfileListCards = ({ query, limit }: ProfileListCardsProps) => {
+const defaultLimit = 10;
+
+export const ProfileListCards = ({ query }: ProfileListCardsProps) => {
   const { ref: fetchNextPageTriggerRef, inView } = useInView({ threshold: 1 });
+  const limit = query?.limit ?? defaultLimit;
 
   const { data, isFetching, isError, fetchNextPage } =
     useInfiniteSearchProfilesQuery(query, {

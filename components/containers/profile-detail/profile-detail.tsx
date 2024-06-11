@@ -19,9 +19,10 @@ export type ProfileDetailProps = {
 };
 
 export const ProfileDetail = ({ profileId }: ProfileDetailProps) => {
-  const { data, isFetching } = useGetProfileQuery({
+  const query = {
     where: { id: { _eq: +profileId } }
-  });
+  };
+  const { data, isFetching } = useGetProfileQuery(query);
   const profile = data?.profiles[0];
 
   if (isFetching) {
@@ -34,7 +35,7 @@ export const ProfileDetail = ({ profileId }: ProfileDetailProps) => {
 
   return (
     <div className="container w-full space-y-10 pb-12">
-      <ProfileHeading profile={profile} />
+      <ProfileHeading queryVariables={query} profile={profile} />
 
       <ProfileDataSection title="Overview">
         <ProfileFeatureContainer>

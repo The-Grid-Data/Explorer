@@ -9,7 +9,7 @@ export type PageProps<P = {}> = {
 
 export default async function Profile({ params }: PageProps<{ id: string }>) {
   return (
-    <div className="md:container">
+    <div>
       <div className="h-10" />
       <ProfileDetail profileId={params.id} />
     </div>

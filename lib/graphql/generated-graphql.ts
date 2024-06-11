@@ -680,7 +680,7 @@ export type ProductSupports = {
   /** Identifier of the product providing support */
   productId: Scalars['Int']['output'];
   /** An object relationship */
-  productSupported: Products;
+  supports: Products;
   /** Identifier of the product being supported */
   supportsProductId: Scalars['Int']['output'];
 };
@@ -716,7 +716,7 @@ export type ProductSupports_Bool_Exp = {
   id?: InputMaybe<Int_Mysql8_Comparison_Exp>;
   product?: InputMaybe<Products_Bool_Exp>;
   productId?: InputMaybe<Int_Mysql8_Comparison_Exp>;
-  productSupported?: InputMaybe<Products_Bool_Exp>;
+  supports?: InputMaybe<Products_Bool_Exp>;
   supportsProductId?: InputMaybe<Int_Mysql8_Comparison_Exp>;
 };
 
@@ -745,7 +745,7 @@ export type ProductSupports_Order_By = {
   id?: InputMaybe<Mysql8_Order_By>;
   product?: InputMaybe<Products_Order_By>;
   productId?: InputMaybe<Mysql8_Order_By>;
-  productSupported?: InputMaybe<Products_Order_By>;
+  supports?: InputMaybe<Products_Order_By>;
   supportsProductId?: InputMaybe<Mysql8_Order_By>;
 };
 
@@ -838,6 +838,8 @@ export type Products = {
   __typename?: 'products';
   /** An object relationship */
   asset?: Maybe<Assets>;
+  /** An array relationship */
+  assetDeployedOnProduct: Array<Assets>;
   deployedOnProductId?: Maybe<Scalars['Int']['output']>;
   descriptionShort: Scalars['String']['output'];
   id: Scalars['Int']['output'];
@@ -857,8 +859,6 @@ export type Products = {
   productStatusId?: Maybe<Scalars['Int']['output']>;
   /** An array relationship */
   productSupported: Array<ProductSupports>;
-  /** An array relationship */
-  productSupports: Array<ProductSupports>;
   /** An object relationship */
   productType?: Maybe<ProductTypes>;
   productTypeId?: Maybe<Scalars['Int']['output']>;
@@ -867,17 +867,19 @@ export type Products = {
   /** An object relationship */
   profile: Profiles;
   profileId: Scalars['Int']['output'];
+  /** An array relationship */
+  supportedByProducts: Array<ProductSupports>;
   urlToProduct: Scalars['String']['output'];
 };
 
-export type ProductsProductSupportedArgs = {
+export type ProductsAssetDeployedOnProductArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<ProductSupports_Order_By>>;
-  where?: InputMaybe<ProductSupports_Bool_Exp>;
+  order_by?: InputMaybe<Array<Assets_Order_By>>;
+  where?: InputMaybe<Assets_Bool_Exp>;
 };
 
-export type ProductsProductSupportsArgs = {
+export type ProductsProductSupportedArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
   order_by?: InputMaybe<Array<ProductSupports_Order_By>>;
@@ -889,6 +891,13 @@ export type ProductsProductsArgs = {
   offset?: InputMaybe<Scalars['Int']['input']>;
   order_by?: InputMaybe<Array<Products_Order_By>>;
   where?: InputMaybe<Products_Bool_Exp>;
+};
+
+export type ProductsSupportedByProductsArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<ProductSupports_Order_By>>;
+  where?: InputMaybe<ProductSupports_Bool_Exp>;
 };
 
 /** order by aggregate values of table "products" */
@@ -921,6 +930,7 @@ export type Products_Bool_Exp = {
   _not?: InputMaybe<Products_Bool_Exp>;
   _or?: InputMaybe<Array<Products_Bool_Exp>>;
   asset?: InputMaybe<Assets_Bool_Exp>;
+  assetDeployedOnProduct?: InputMaybe<Assets_Bool_Exp>;
   deployedOnProductId?: InputMaybe<Int_Mysql8_Comparison_Exp>;
   descriptionShort?: InputMaybe<String_Mysql8_Comparison_Exp>;
   id?: InputMaybe<Int_Mysql8_Comparison_Exp>;
@@ -935,12 +945,12 @@ export type Products_Bool_Exp = {
   productStatus?: InputMaybe<ProductStatus_Bool_Exp>;
   productStatusId?: InputMaybe<Int_Mysql8_Comparison_Exp>;
   productSupported?: InputMaybe<ProductSupports_Bool_Exp>;
-  productSupports?: InputMaybe<ProductSupports_Bool_Exp>;
   productType?: InputMaybe<ProductTypes_Bool_Exp>;
   productTypeId?: InputMaybe<Int_Mysql8_Comparison_Exp>;
   products?: InputMaybe<Products_Bool_Exp>;
   profile?: InputMaybe<Profiles_Bool_Exp>;
   profileId?: InputMaybe<Int_Mysql8_Comparison_Exp>;
+  supportedByProducts?: InputMaybe<ProductSupports_Bool_Exp>;
   urlToProduct?: InputMaybe<String_Mysql8_Comparison_Exp>;
 };
 
@@ -977,6 +987,7 @@ export type Products_Min_Order_By = {
 /** Ordering options when selecting data from "products". */
 export type Products_Order_By = {
   asset?: InputMaybe<Assets_Order_By>;
+  assetDeployedOnProduct_aggregate?: InputMaybe<Assets_Aggregate_Order_By>;
   deployedOnProductId?: InputMaybe<Mysql8_Order_By>;
   descriptionShort?: InputMaybe<Mysql8_Order_By>;
   id?: InputMaybe<Mysql8_Order_By>;
@@ -991,12 +1002,12 @@ export type Products_Order_By = {
   productStatus?: InputMaybe<ProductStatus_Order_By>;
   productStatusId?: InputMaybe<Mysql8_Order_By>;
   productSupported_aggregate?: InputMaybe<ProductSupports_Aggregate_Order_By>;
-  productSupports_aggregate?: InputMaybe<ProductSupports_Aggregate_Order_By>;
   productType?: InputMaybe<ProductTypes_Order_By>;
   productTypeId?: InputMaybe<Mysql8_Order_By>;
   products_aggregate?: InputMaybe<Products_Aggregate_Order_By>;
   profile?: InputMaybe<Profiles_Order_By>;
   profileId?: InputMaybe<Mysql8_Order_By>;
+  supportedByProducts_aggregate?: InputMaybe<ProductSupports_Aggregate_Order_By>;
   urlToProduct?: InputMaybe<Mysql8_Order_By>;
 };
 
@@ -1405,7 +1416,7 @@ export type Query_Root = {
   productStatus: Array<ProductStatus>;
   /** fetch data from the table: "productStatus" using primary key columns */
   productStatus_by_pk?: Maybe<ProductStatus>;
-  /** An array relationship */
+  /** fetch data from the table: "productSupports" */
   productSupports: Array<ProductSupports>;
   /** fetch data from the table: "productSupports" using primary key columns */
   productSupports_by_pk?: Maybe<ProductSupports>;
@@ -1810,7 +1821,7 @@ export type Subscription_Root = {
   productStatus: Array<ProductStatus>;
   /** fetch data from the table: "productStatus" using primary key columns */
   productStatus_by_pk?: Maybe<ProductStatus>;
-  /** An array relationship */
+  /** fetch data from the table: "productSupports" */
   productSupports: Array<ProductSupports>;
   /** fetch data from the table: "productSupports" using primary key columns */
   productSupports_by_pk?: Maybe<ProductSupports>;
@@ -2174,11 +2185,11 @@ export type GetFiltersOptionsQuery = {
   }>;
   productSupports: Array<{
     __typename?: 'productSupports';
-    id: number;
-    productSupported: {
+    supports: {
       __typename?: 'products';
-      name: string;
       descriptionShort: string;
+      name: string;
+      id: number;
     };
   }>;
   products: Array<{
@@ -2367,9 +2378,10 @@ export type GetProfileQuery = {
         deployedOnProductId?: number | null;
         urlToProduct: string;
       } | null;
-      productSupports: Array<{
+      supportedByProducts: Array<{
         __typename?: 'productSupports';
-        product: { __typename?: 'products'; name: string };
+        supports: { __typename?: 'products'; name: string; id: number };
+        product: { __typename?: 'products'; name: string; id: number };
       }>;
     }>;
     mainProduct: Array<{
@@ -2466,10 +2478,10 @@ export const GetFiltersOptionsDocument = `
     name
   }
   productSupports {
-    id
-    productSupported {
-      name
+    supports {
       descriptionShort
+      name
+      id
     }
   }
   products {
@@ -2757,9 +2769,14 @@ export const GetProfileDocument = `
         deployedOnProductId
         urlToProduct
       }
-      productSupports {
+      supportedByProducts {
+        supports {
+          name
+          id
+        }
         product {
           name
+          id
         }
       }
     }

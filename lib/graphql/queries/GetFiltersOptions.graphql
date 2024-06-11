@@ -31,10 +31,10 @@ query GetFiltersOptions {
     name
   }
   productSupports {
-    id
-    productSupported {
-      name
+    supports {
       descriptionShort
+      name
+      id
     }
   }
   products {
