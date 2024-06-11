@@ -82,10 +82,10 @@ export const useProfileFilters = () => {
   });
 
   const productSupportsFilter = useFilter<number>({
-    options: data?.productSupports.map(item => ({
-      value: item.supports.id,
-      label: item.supports.name,
-      description: item.supports.descriptionShort
+    options: data?.products.map(item => ({
+      value: item.id,
+      label: item.name,
+      description: item.descriptionShort
     })),
     type: 'multiselect',
     initialValue: []
@@ -255,7 +255,7 @@ export const useProfileFilters = () => {
       ...(assetDeployedOnFilter.value.length > 0 && {
         assets: {
           assetDeployedOnProductId: {
-            deployedOnProductId: { _in: assetDeployedOnFilter.value }
+            id: { _in: assetDeployedOnFilter.value }
           }
         }
       }),

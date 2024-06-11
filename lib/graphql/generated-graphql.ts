@@ -2484,7 +2484,7 @@ export const GetFiltersOptionsDocument = `
       id
     }
   }
-  products {
+  products(where: {productTypeId: {_in: [15, 16, 17]}}) {
     name
     id
     descriptionShort
