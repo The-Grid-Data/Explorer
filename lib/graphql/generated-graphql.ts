@@ -86,6 +86,42 @@ export type String_Mysql8_Comparison_Exp = {
   contains?: InputMaybe<Scalars['String']['input']>;
 };
 
+export type Tgs = {
+  __typename?: 'TGS';
+  Description: Scalars['String']['output'];
+  Name: Scalars['String']['output'];
+  Parameter_ID: Scalars['String']['output'];
+  Specifications: Scalars['String']['output'];
+  TGSPrefix: Scalars['String']['output'];
+  Table: Scalars['String']['output'];
+  Type: Scalars['String']['output'];
+};
+
+/** Boolean expression to filter rows from the table "TGS". All fields are combined with a logical 'AND'. */
+export type Tgs_Bool_Exp = {
+  Description?: InputMaybe<String_Mysql8_Comparison_Exp>;
+  Name?: InputMaybe<String_Mysql8_Comparison_Exp>;
+  Parameter_ID?: InputMaybe<String_Mysql8_Comparison_Exp>;
+  Specifications?: InputMaybe<String_Mysql8_Comparison_Exp>;
+  TGSPrefix?: InputMaybe<String_Mysql8_Comparison_Exp>;
+  Table?: InputMaybe<String_Mysql8_Comparison_Exp>;
+  Type?: InputMaybe<String_Mysql8_Comparison_Exp>;
+  _and?: InputMaybe<Array<Tgs_Bool_Exp>>;
+  _not?: InputMaybe<Tgs_Bool_Exp>;
+  _or?: InputMaybe<Array<Tgs_Bool_Exp>>;
+};
+
+/** Ordering options when selecting data from "TGS". */
+export type Tgs_Order_By = {
+  Description?: InputMaybe<Mysql8_Order_By>;
+  Name?: InputMaybe<Mysql8_Order_By>;
+  Parameter_ID?: InputMaybe<Mysql8_Order_By>;
+  Specifications?: InputMaybe<Mysql8_Order_By>;
+  TGSPrefix?: InputMaybe<Mysql8_Order_By>;
+  Table?: InputMaybe<Mysql8_Order_By>;
+  Type?: InputMaybe<Mysql8_Order_By>;
+};
+
 export type AssetStandardSupport = {
   __typename?: 'assetStandardSupport';
   /** An array relationship */
@@ -1337,6 +1373,10 @@ export type Profiles_Var_Samp_Order_By = {
 
 export type Query_Root = {
   __typename?: 'query_root';
+  /** fetch data from the table: "TGS" */
+  TGS: Array<Tgs>;
+  /** fetch data from the table: "TGS" using primary key columns */
+  TGS_by_pk?: Maybe<Tgs>;
   /** fetch data from the table: "assetStandardSupport" */
   assetStandardSupport: Array<AssetStandardSupport>;
   /** fetch data from the table: "assetStandardSupport" using primary key columns */
@@ -1401,6 +1441,17 @@ export type Query_Root = {
   socials: Array<Socials>;
   /** fetch data from the table: "socials" using primary key columns */
   socials_by_pk?: Maybe<Socials>;
+};
+
+export type Query_RootTgsArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Tgs_Order_By>>;
+  where?: InputMaybe<Tgs_Bool_Exp>;
+};
+
+export type Query_RootTgs_By_PkArgs = {
+  Parameter_ID: Scalars['String']['input'];
 };
 
 export type Query_RootAssetStandardSupportArgs = {
@@ -1727,6 +1778,10 @@ export type Socials_Var_Samp_Order_By = {
 
 export type Subscription_Root = {
   __typename?: 'subscription_root';
+  /** fetch data from the table: "TGS" */
+  TGS: Array<Tgs>;
+  /** fetch data from the table: "TGS" using primary key columns */
+  TGS_by_pk?: Maybe<Tgs>;
   /** fetch data from the table: "assetStandardSupport" */
   assetStandardSupport: Array<AssetStandardSupport>;
   /** fetch data from the table: "assetStandardSupport" using primary key columns */
@@ -1791,6 +1846,17 @@ export type Subscription_Root = {
   socials: Array<Socials>;
   /** fetch data from the table: "socials" using primary key columns */
   socials_by_pk?: Maybe<Socials>;
+};
+
+export type Subscription_RootTgsArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Tgs_Order_By>>;
+  where?: InputMaybe<Tgs_Bool_Exp>;
+};
+
+export type Subscription_RootTgs_By_PkArgs = {
+  Parameter_ID: Scalars['String']['input'];
 };
 
 export type Subscription_RootAssetStandardSupportArgs = {

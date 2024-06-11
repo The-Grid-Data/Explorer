@@ -2,10 +2,12 @@
 
 import { SearchProfilesQuery } from '@/lib/graphql/generated-graphql';
 import { ProfileCardDataPoint } from './profile-card-data-point';
-import Image from 'next/image';
 import { ProfileCardFeature } from './profile-card-feature';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { ProfileCardIconLinks } from './profile-card-icon-links';
+import { Button } from '@/components/ui/button';
+import Link from 'next/link';
+import { paths } from '@/lib/routes/paths';
 
 export type Profile = SearchProfilesQuery['profiles'][0];
 
@@ -17,10 +19,10 @@ export const ProfileCard = ({ profile }: ProfileCardCardProps) => {
   const validLogoUrl = profile.logo && profile.logo.startsWith('https://');
 
   return (
-    <div>
+    <div className="ml-4">
       <div className="relative mt-20 rounded-lg border-2 border-primary bg-white shadow-sm">
-        <div className="absolute -top-16 left-[-12px] flex w-full items-start gap-3 md:left-[-24px]">
-          <div className="border-1 w-fit shrink-0 -rotate-3 rounded-xl  border border-primary bg-white shadow-lg">
+        <div className="relative -mt-16 flex w-full flex-col items-start gap-3 lg:absolute lg:-top-16 lg:left-[-24px] lg:mt-0 lg:flex-row">
+          <div className="border-1 -ml-6 w-fit shrink-0 -rotate-3 rounded-xl  border border-primary bg-white shadow-lg lg:ml-0">
             <Avatar className="h-[100px] w-[160px] min-w-[120px] rounded-xl p-2">
               {validLogoUrl && (
                 <AvatarImage
@@ -32,12 +34,21 @@ export const ProfileCard = ({ profile }: ProfileCardCardProps) => {
               <AvatarFallback className="bg-white">No logo</AvatarFallback>
             </Avatar>
           </div>
-          <div className="mt-7 flex w-full flex-col gap-3">
+          <div className="flex w-full flex-col gap-3 px-4 lg:mt-7 lg:p-0">
             <h3 className="text-2xl font-bold">{profile.name}</h3>
-            <ProfileCardIconLinks profile={profile} />
+            <div className="flex flex-col gap-4 lg:mr-[-16px] lg:flex-row">
+              <div className="w-fit flex-1">
+                <ProfileCardIconLinks profile={profile} />
+              </div>
+              <Button className="w-full lg:w-fit" variant="default" asChild>
+                <Link href={paths.profile.detail(profile.id.toString())}>
+                  More info
+                </Link>
+              </Button>
+            </div>
           </div>
         </div>
-        <div className="flex flex-col gap-2 p-4 pt-14">
+        <div className="flex flex-col gap-2 p-4 lg:pt-14">
           <div className="flex flex-wrap gap-2">
             <ProfileCardFeature
               label="Sector"
