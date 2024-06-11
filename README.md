@@ -1,7 +1,7 @@
 # Welcome to The Grid's referance data explorer. 
 This has been created as a way for data platforms to explore and get inspired by our data. 
 
-This uses our graphQL endpoint which can be found over at [docs.thegrid.id](docs.thegrid.id)
+This uses our graphQL endpoint which can be found over at [docs.thegrid.id](https://docs.thegrid.id/)
 
 Right now this takes a very profile focused 'lens' view at our data. In the future, this may expand to other lenses. To understand how we look at lenses, see this: 
 
