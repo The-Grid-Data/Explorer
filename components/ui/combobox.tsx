@@ -11,7 +11,7 @@ import {
   CommandList
 } from '@/components/ui/command';
 import { cn } from '@/lib/utils';
-import { plural } from 'pluralize';
+import pluralize from 'pluralize';
 import { FilterContainer, useFilterContainer } from './filter-container';
 import { useRef } from 'react';
 
@@ -154,7 +154,7 @@ export const OptionList = <T extends string | number>({
           )}
           <div className="text text-sm text-muted-foreground">
             {nrOfSelectedOptions} out of {options?.length}{' '}
-            {plural(label?.toLowerCase())} selected
+            {pluralize('option', nrOfSelectedOptions)} selected
           </div>
         </div>
         <Button onClick={() => setOpen(false)}>Close</Button>

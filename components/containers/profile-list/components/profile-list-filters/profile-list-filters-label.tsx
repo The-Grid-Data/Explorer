@@ -15,7 +15,7 @@ export const ProfileListFiltersLabel = ({
 
   if (activeFiltersSum > 0) {
     return (
-      <div className="flex items-center gap-2">
+      <div className="flex w-full items-center gap-2">
         <span className="text text-sm text-muted-foreground">
           There {pluralize('is', activeFiltersSum)}{' '}
           <span className="font-semibold text-primary">{activeFiltersSum}</span>{' '}

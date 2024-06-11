@@ -97,7 +97,7 @@ export const useProfileFilters = () => {
   });
 
   const productDeployedOnFilter = useFilter<number>({
-    options: data?.products.map(item => ({
+    options: data?.deployedOnProducts.map(item => ({
       value: item.id,
       label: item.name,
       description: item.descriptionShort
@@ -133,7 +133,7 @@ export const useProfileFilters = () => {
   });
 
   const assetDeployedOnFilter = useFilter<number>({
-    options: data?.products.map(item => ({
+    options: data?.deployedOnProducts.map(item => ({
       value: item.id,
       label: item.name,
       description: item.descriptionShort
@@ -232,7 +232,9 @@ export const useProfileFilters = () => {
       }),
       ...(productSupportsFilter.value.length > 0 && {
         products: {
-          supportedByProducts: { id: { _in: productSupportsFilter.value } }
+          supportsProducts: {
+            supportsProductId: { _in: productSupportsFilter.value }
+          }
         }
       }),
       ...(productLaunchDateFilter.value.every(i => i) && {

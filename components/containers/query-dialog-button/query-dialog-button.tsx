@@ -7,7 +7,7 @@ import {
   DialogTitle,
   DialogTrigger
 } from '@/components/ui/dialog';
-import { ScrollArea } from '@/components/ui/scroll-area';
+import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 
@@ -45,7 +45,7 @@ export const QueryDialogButton = ({
           View Query
         </Button>
       </DialogTrigger>
-      <DialogContent className="min-w-[60%] rounded-md">
+      <DialogContent className="w-[90%] rounded-md md:w-full md:p-4 lg:min-w-64">
         <DialogHeader>
           <DialogTitle>View query</DialogTitle>
           <DialogDescription>
@@ -53,25 +53,12 @@ export const QueryDialogButton = ({
           </DialogDescription>
         </DialogHeader>
         <div className="space-y-4">
-          <div className="flex flex-col gap-2">
-            <h3 className="text-sm font-semibold">Query</h3>
-            <Separator />
-            <ScrollArea className="h-[200px]">
-              <pre className="text overflow-x-auto bg-slate-50 text-xs">
-                {queryDocument}
-              </pre>
-            </ScrollArea>
-          </div>
+          <CodeSection title="Query" content={queryDocument} />
           {variables && (
-            <div className="flex flex-col gap-2">
-              <h3 className="text-sm font-semibold">Variables</h3>
-              <Separator />
-              <ScrollArea className="h-[200px]">
-                <pre className="text overflow-x-auto bg-slate-50 text-xs">
-                  {JSON.stringify(variables, null, 2)}
-                </pre>
-              </ScrollArea>
-            </div>
+            <CodeSection
+              title="Variables"
+              content={JSON.stringify(variables, null, 2)}
+            />
           )}
         </div>
         <DialogFooter>
@@ -83,5 +70,26 @@ export const QueryDialogButton = ({
         </DialogFooter>
       </DialogContent>
     </Dialog>
+  );
+};
+
+export const CodeSection = ({
+  content,
+  title
+}: {
+  content: string;
+  title: string;
+}) => {
+  return (
+    <div className="flex w-full flex-1 flex-col gap-2">
+      <h3 className="flex-1 text-sm font-semibold">{title}</h3>
+      <Separator />
+      <ScrollArea className="h-fit max-h-[200px] min-w-[100%] overflow-auto bg-slate-100">
+        <pre className="text whitespace-wrap w-full text-wrap p-4 text-xs">
+          {content}
+        </pre>
+        <ScrollBar orientation="horizontal" />
+      </ScrollArea>
+    </div>
   );
 };

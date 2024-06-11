@@ -37,7 +37,14 @@ query GetFiltersOptions {
       id
     }
   }
-  products(where: { productTypeId: { _in: [15, 16, 17] } }) {
+  deployedOnProducts: products(
+    where: { productTypeId: { _in: [15, 16, 17] } }
+  ) {
+    name
+    id
+    descriptionShort
+  }
+  products {
     name
     id
     descriptionShort

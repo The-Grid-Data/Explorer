@@ -41,7 +41,7 @@ export const ProfileList = () => {
         filters={filters}
       />
 
-      <div className="container  space-y-4 md:space-y-2">
+      <div className="container space-y-4 md:space-y-2">
         <div className="flex flex-col items-end justify-end gap-4 md:mt-0 md:flex-row">
           <ProfileListFiltersLabel filters={filters} />
           <ProfileListSorting sorting={sorting} />
