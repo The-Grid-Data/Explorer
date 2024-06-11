@@ -2175,7 +2175,7 @@ export type GetFiltersOptionsQuery = {
   productSupports: Array<{
     __typename?: 'productSupports';
     id: number;
-    product: {
+    productSupported: {
       __typename?: 'products';
       name: string;
       descriptionShort: string;
@@ -2263,6 +2263,144 @@ export type GetOrderByFieldsQuery = {
   } | null;
 };
 
+export type GetProfileQueryVariables = Exact<{
+  where?: InputMaybe<Profiles_Bool_Exp>;
+}>;
+
+export type GetProfileQuery = {
+  __typename?: 'query_root';
+  profiles: Array<{
+    __typename?: 'profiles';
+    name: string;
+    logo: string;
+    id: number;
+    foundingDate?: any | null;
+    descriptionShort: string;
+    descriptionLong: string;
+    profileSectorId?: number | null;
+    profileStatusId?: number | null;
+    profileTypeId?: number | null;
+    tagLine: string;
+    urlBlog: string;
+    urlDocumentation: string;
+    urlMain: string;
+    urlWhitepaper: string;
+    socials: Array<{
+      __typename?: 'socials';
+      url: string;
+      socialTypeId?: number | null;
+      profileId: number;
+      name: string;
+      id: number;
+      socialType?: {
+        __typename?: 'socialTypes';
+        id: number;
+        name: string;
+      } | null;
+    }>;
+    assets: Array<{
+      __typename?: 'assets';
+      ticker: string;
+      shortDescription: string;
+      urlToAssetDocs: string;
+      name: string;
+      icon: string;
+      address: string;
+      deployedOnProductId?: number | null;
+      assetTypeId?: number | null;
+    }>;
+    profileType?: {
+      __typename?: 'profileTypes';
+      name: string;
+      id: number;
+      definition: string;
+    } | null;
+    profileStatus?: {
+      __typename?: 'profileStatuses';
+      name: string;
+      id: number;
+      definition: string;
+    } | null;
+    profileSector?: {
+      __typename?: 'profileSectors';
+      name: string;
+      id: number;
+      definition: string;
+    } | null;
+    products: Array<{
+      __typename?: 'products';
+      urlToProduct: string;
+      descriptionShort: string;
+      id: number;
+      isMainProduct: number;
+      launchDate?: any | null;
+      name: string;
+      productAddress: string;
+      productStatusId?: number | null;
+      asset?: {
+        __typename?: 'assets';
+        name: string;
+        id: number;
+        icon: string;
+        deployedOnProductId?: number | null;
+        assetTypeId?: number | null;
+        assetStandardId?: number | null;
+        address: string;
+        urlToAssetDocs: string;
+        ticker: string;
+        profileId: number;
+        shortDescription: string;
+      } | null;
+      mainAsset?: {
+        __typename?: 'assets';
+        urlToAssetDocs: string;
+        ticker: string;
+        profileId: number;
+        shortDescription: string;
+        name: string;
+      } | null;
+      productDeployedOnProduct?: {
+        __typename?: 'products';
+        name: string;
+        launchDate?: any | null;
+        descriptionShort: string;
+        deployedOnProductId?: number | null;
+        urlToProduct: string;
+      } | null;
+      productSupports: Array<{
+        __typename?: 'productSupports';
+        product: { __typename?: 'products'; name: string };
+      }>;
+    }>;
+    mainProduct: Array<{
+      __typename?: 'products';
+      name: string;
+      productType?: { __typename?: 'productTypes'; name: string } | null;
+    }>;
+    entities: Array<{
+      __typename?: 'entities';
+      tradeName: string;
+      profileId: number;
+      urlToEntity: string;
+      name: string;
+      localRegistrationNumber: string;
+      leiNumber: string;
+      dateOfIncorporation?: any | null;
+      countryId: number;
+      address: string;
+      id: number;
+      taxIdentificationNumber: string;
+      country: { __typename?: 'countries'; Code: string; Name: string };
+      entityType?: {
+        __typename?: 'entityTypes';
+        name: string;
+        id: number;
+        definition: string;
+      } | null;
+    }>;
+  }>;
+};
+
 export type SearchProfilesQueryVariables = Exact<{
   order_by?: InputMaybe<Array<Profiles_Order_By> | Profiles_Order_By>;
   where?: InputMaybe<Profiles_Bool_Exp>;
@@ -2329,7 +2467,7 @@ export const GetFiltersOptionsDocument = `
   }
   productSupports {
     id
-    product {
+    productSupported {
       name
       descriptionShort
     }
@@ -2522,6 +2660,186 @@ export const useInfiniteGetOrderByFieldsQuery = <
         queryFn: metaData =>
           fetcher<GetOrderByFieldsQuery, GetOrderByFieldsQueryVariables>(
             GetOrderByFieldsDocument,
+            { ...variables, ...(metaData.pageParam ?? {}) }
+          )(),
+        ...restOptions
+      };
+    })()
+  );
+};
+
+export const GetProfileDocument = `
+    query GetProfile($where: profiles_bool_exp) {
+  profiles(limit: 1, offset: 0, where: $where) {
+    name
+    logo
+    id
+    foundingDate
+    descriptionShort
+    descriptionLong
+    profileSectorId
+    profileStatusId
+    profileTypeId
+    tagLine
+    urlBlog
+    urlDocumentation
+    urlMain
+    urlWhitepaper
+    socials {
+      url
+      socialTypeId
+      profileId
+      name
+      id
+      socialType {
+        id
+        name
+      }
+    }
+    assets {
+      ticker
+      shortDescription
+      urlToAssetDocs
+      name
+      icon
+      address
+      deployedOnProductId
+      assetTypeId
+    }
+    profileType {
+      name
+      id
+      definition
+    }
+    profileStatus {
+      name
+      id
+      definition
+    }
+    profileSector {
+      name
+      id
+      definition
+    }
+    products {
+      urlToProduct
+      descriptionShort
+      id
+      isMainProduct
+      launchDate
+      name
+      productAddress
+      productStatusId
+      asset {
+        name
+        id
+        icon
+        deployedOnProductId
+        assetTypeId
+        assetStandardId
+        address
+        urlToAssetDocs
+        ticker
+        profileId
+        shortDescription
+      }
+      mainAsset {
+        urlToAssetDocs
+        ticker
+        profileId
+        shortDescription
+        name
+      }
+      productDeployedOnProduct {
+        name
+        launchDate
+        descriptionShort
+        deployedOnProductId
+        urlToProduct
+      }
+      productSupports {
+        product {
+          name
+        }
+      }
+    }
+    mainProduct: products(where: {isMainProduct: {_eq: 1}}, limit: 1) {
+      name
+      productType {
+        name
+      }
+    }
+    entities {
+      tradeName
+      profileId
+      urlToEntity
+      name
+      localRegistrationNumber
+      leiNumber
+      dateOfIncorporation
+      countryId
+      address
+      country {
+        Code
+        Name
+      }
+      id
+      entityType {
+        name
+        id
+        definition
+      }
+      taxIdentificationNumber
+    }
+  }
+}
+    `;
+
+export const useGetProfileQuery = <TData = GetProfileQuery, TError = unknown>(
+  variables?: GetProfileQueryVariables,
+  options?: Omit<
+    UseQueryOptions<GetProfileQuery, TError, TData>,
+    'queryKey'
+  > & { queryKey?: UseQueryOptions<GetProfileQuery, TError, TData>['queryKey'] }
+) => {
+  return useQuery<GetProfileQuery, TError, TData>({
+    queryKey:
+      variables === undefined ? ['GetProfile'] : ['GetProfile', variables],
+    queryFn: fetcher<GetProfileQuery, GetProfileQueryVariables>(
+      GetProfileDocument,
+      variables
+    ),
+    ...options
+  });
+};
+
+export const useInfiniteGetProfileQuery = <
+  TData = InfiniteData<GetProfileQuery>,
+  TError = unknown
+>(
+  variables: GetProfileQueryVariables,
+  options: Omit<
+    UseInfiniteQueryOptions<GetProfileQuery, TError, TData>,
+    'queryKey'
+  > & {
+    queryKey?: UseInfiniteQueryOptions<
+      GetProfileQuery,
+      TError,
+      TData
+    >['queryKey'];
+  }
+) => {
+  return useInfiniteQuery<GetProfileQuery, TError, TData>(
+    (() => {
+      const { queryKey: optionsQueryKey, ...restOptions } = options;
+      return {
+        queryKey:
+          optionsQueryKey ?? variables === undefined
+            ? ['GetProfile.infinite']
+            : ['GetProfile.infinite', variables],
+        queryFn: metaData =>
+          fetcher<GetProfileQuery, GetProfileQueryVariables>(
+            GetProfileDocument,
             { ...variables, ...(metaData.pageParam ?? {}) }
           )(),
         ...restOptions

@@ -1,0 +1,45 @@
+'use client';
+
+import { GetProfileQuery } from '@/lib/graphql/generated-graphql';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { ProfileCardIconLinks } from '@/components/containers/profile-card-icon-links';
+
+export type Profile = GetProfileQuery['profiles'][0];
+
+export type ProfileCardCardProps = {
+  profile: Profile;
+};
+
+export const ProfileHeading = ({ profile }: ProfileCardCardProps) => {
+  const validLogoUrl = profile.logo && profile.logo.startsWith('https://');
+
+  return (
+    <div className="flex flex-col gap-6">
+      <div className="flex flex-col items-start gap-6 lg:flex-row">
+        <div className="border-1 w-fit shrink-0 -rotate-3 rounded-xl border border-primary bg-white shadow-lg">
+          <Avatar className="h-[100px] w-[220px] min-w-[120px] rounded-xl p-4">
+            {validLogoUrl && (
+              <AvatarImage
+                className="object-scale-down"
+                src={profile.logo}
+                alt={profile.name}
+              />
+            )}
+            <AvatarFallback className="bg-white">No logo</AvatarFallback>
+          </Avatar>
+        </div>
+        <div>
+          <div className="flex items-center gap-6">
+            <h3 className=" text-5xl font-bold">{profile.name}</h3>
+            <div className="">
+              <ProfileCardIconLinks profile={profile} />
+            </div>
+          </div>
+          <span className="text w-full text-sm">
+            {profile.descriptionShort || '-'}
+          </span>
+        </div>
+      </div>
+    </div>
+  );
+};

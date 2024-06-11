@@ -4,10 +4,10 @@ import { SearchProfilesQuery } from '@/lib/graphql/generated-graphql';
 import { ProfileCardDataPoint } from './profile-card-data-point';
 import { ProfileCardFeature } from './profile-card-feature';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { ProfileCardIconLinks } from './profile-card-icon-links';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { paths } from '@/lib/routes/paths';
+import { ProfileCardIconLinks } from '@/components/containers/profile-card-icon-links';
 
 export type Profile = SearchProfilesQuery['profiles'][0];
 
@@ -28,7 +28,7 @@ export const ProfileCard = ({ profile }: ProfileCardCardProps) => {
                 <AvatarImage
                   className="object-scale-down"
                   src={profile.logo}
-                  alt="@shadcn"
+                  alt={profile.name}
                 />
               )}
               <AvatarFallback className="bg-white">No logo</AvatarFallback>

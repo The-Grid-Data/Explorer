@@ -9,8 +9,12 @@ import { Button } from '@/components/ui/button';
 import Image from 'next/image';
 
 const learnMoreButton = (
-  <Link target="_blank" rel="noopener noreferrer" href="https://thegrid.id/">
-    <Button className="w-full md:w-fit">Learn more</Button>
+  <Link
+    target="_blank"
+    rel="noopener noreferrer"
+    href="https://docs.thegrid.id"
+  >
+    <Button className="w-full md:w-fit">Read the docs</Button>
   </Link>
 );
 

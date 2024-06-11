@@ -1,4 +1,3 @@
-import { Profile } from './profile-card';
 import { Globe, Rss, FileText, FileCode2 } from 'lucide-react';
 import Link from 'next/link';
 import { PropsWithChildren } from 'react';
@@ -12,7 +11,16 @@ import {
 } from '@/components/ui/tooltip';
 
 export type ProfileCardFeatureProps = {
-  profile: Profile;
+  profile: {
+    urlMain: string;
+    urlBlog: string;
+    urlWhitepaper: string;
+    urlDocumentation: string;
+    socials: Array<{
+      url: string;
+      socialType?: { name: string } | null;
+    }>;
+  };
 };
 
 const iconFilledClassName = 'fill-primary hover:fill-primary/60';

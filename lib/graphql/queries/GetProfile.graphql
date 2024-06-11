@@ -1,0 +1,124 @@
+query GetProfile($where: profiles_bool_exp) {
+  profiles(limit: 1, offset: 0, where: $where) {
+    name
+    logo
+    id
+    foundingDate
+    descriptionShort
+    descriptionLong
+    profileSectorId
+    profileStatusId
+    profileTypeId
+    tagLine
+    urlBlog
+    urlDocumentation
+    urlMain
+    urlWhitepaper
+    socials {
+      url
+      socialTypeId
+      profileId
+      name
+      id
+      socialType {
+        id
+        name
+      }
+    }
+    assets {
+      ticker
+      shortDescription
+      urlToAssetDocs
+      name
+      icon
+      address
+      deployedOnProductId
+      assetTypeId
+    }
+    profileType {
+      name
+      id
+      definition
+    }
+    profileStatus {
+      name
+      id
+      definition
+    }
+    profileSector {
+      name
+      id
+      definition
+    }
+    products {
+      urlToProduct
+      descriptionShort
+      id
+      isMainProduct
+      launchDate
+      name
+      productAddress
+      productStatusId
+      asset {
+        name
+        id
+        icon
+        deployedOnProductId
+        assetTypeId
+        assetStandardId
+        address
+        urlToAssetDocs
+        ticker
+        profileId
+        shortDescription
+      }
+      mainAsset {
+        urlToAssetDocs
+        ticker
+        profileId
+        shortDescription
+        name
+      }
+      productDeployedOnProduct {
+        name
+        launchDate
+        descriptionShort
+        deployedOnProductId
+        urlToProduct
+      }
+      productSupports {
+        product {
+          name
+        }
+      }
+    }
+    mainProduct: products(where: { isMainProduct: { _eq: 1 } }, limit: 1) {
+      name
+      productType {
+        name
+      }
+    }
+    entities {
+      tradeName
+      profileId
+      urlToEntity
+      name
+      localRegistrationNumber
+      leiNumber
+      dateOfIncorporation
+      countryId
+      address
+      country {
+        Code
+        Name
+      }
+      id
+      entityType {
+        name
+        id
+        definition
+      }
+      taxIdentificationNumber
+    }
+  }
+}

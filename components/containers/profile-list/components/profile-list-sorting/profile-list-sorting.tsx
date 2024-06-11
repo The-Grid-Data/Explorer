@@ -26,7 +26,7 @@ export const ProfileListSorting = ({ sorting }: ProfileSortingProps) => {
   const options = useMemo(() => extractOrderByOptions(data), [data]);
 
   return (
-    <div className="flex justify-end gap-4">
+    <div className="flex w-full flex-col justify-end gap-4 md:flex-row">
       <div className="flex flex-col gap-1">
         <Label className="text-xs">Sort by</Label>
         <Select
@@ -35,7 +35,7 @@ export const ProfileListSorting = ({ sorting }: ProfileSortingProps) => {
             sorting.setSortBy(value);
           }}
         >
-          <SelectTrigger className="h-7 w-[180px]">
+          <SelectTrigger className="h-7 w-full md:w-[180px]">
             <SelectValue placeholder="Sort by" />
           </SelectTrigger>
           <SelectContent>
@@ -55,7 +55,7 @@ export const ProfileListSorting = ({ sorting }: ProfileSortingProps) => {
             sorting.setSortOrder(value as Mysql8_Order_By);
           }}
         >
-          <SelectTrigger className="h-7 w-[130px]">
+          <SelectTrigger className="h-7 w-full md:w-[130px]">
             <SelectValue placeholder="Sort order" />
           </SelectTrigger>
           <SelectContent>
