@@ -34,7 +34,7 @@ export const ProfileFilters = ({
         onChange={options => {
           filters.profileStatusesFilter.setValue(options);
         }}
-        options={filters.profileSectorsFilter.options}
+        options={filters.profileStatusesFilter.options}
       />
 
       <DatePicker
