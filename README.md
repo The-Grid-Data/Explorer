@@ -6,7 +6,7 @@ This uses our graphQL endpoint which can be found over at [docs.thegrid.id](http
 Right now this takes a very profile focused 'lens' view at our data. In the future, this may expand to other lenses. To understand how we look at lenses, see this: 
 
 
-### Instalation
+### Installation
 
 Install [pnpm](https://pnpm.io/installation)
 
