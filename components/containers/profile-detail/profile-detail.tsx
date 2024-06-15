@@ -13,6 +13,9 @@ import {
   ProfileDataPointContainer
 } from './components/profile-data-point';
 import ProfileLoading from './components/profile-loading';
+import { ProductCard } from './components/product-card';
+import { AssetCard } from './components/asset-card';
+import { EntityCard } from './components/entity-card';
 
 export type ProfileDetailProps = {
   profileId: string;
@@ -39,22 +42,6 @@ export const ProfileDetail = ({ profileId }: ProfileDetailProps) => {
 
       <ProfileDataSection title="Overview">
         <ProfileFeatureContainer>
-          <ProfileDataPointContainer>
-            <ProfileDataPoint label="Tagline" value={profile.tagLine} />
-            <ProfileDataPoint
-              label="Short Description"
-              value={profile.descriptionShort}
-            />
-            <ProfileDataPoint
-              label="Long Description"
-              value={profile.descriptionLong}
-            />
-          </ProfileDataPointContainer>
-        </ProfileFeatureContainer>
-      </ProfileDataSection>
-
-      <ProfileDataSection title="Key Facts">
-        <ProfileFeatureContainer>
           <ProfileFeature label="Sector" value={profile.profileSector?.name} />
           <ProfileFeature
             label="Profile type"
@@ -73,21 +60,48 @@ export const ProfileDetail = ({ profileId }: ProfileDetailProps) => {
             }
           />
         </ProfileFeatureContainer>
+        <div className="h-1" />
+        <ProfileFeatureContainer>
+          <ProfileDataPointContainer>
+            <ProfileDataPoint label="Tagline" value={profile.tagLine} />
+            <ProfileDataPoint
+              label="Short Description"
+              value={profile.descriptionShort}
+            />
+            <ProfileDataPoint
+              label="Long Description"
+              value={profile.descriptionLong}
+            />
+          </ProfileDataPointContainer>
+        </ProfileFeatureContainer>
       </ProfileDataSection>
+
       <ProfileDataSection title="Products">
-        <pre className="text overflow-x-auto text-xs">
-          {JSON.stringify(profile.products, null, 2)}
-        </pre>
+        <div className="flex flex-wrap gap-4">
+          {!Boolean(profile.products.length) && <p>No products found</p>}
+          {Boolean(profile.products.length) &&
+            profile.products.map(product => (
+              <ProductCard key={product.id} product={product} />
+            ))}
+        </div>
       </ProfileDataSection>
       <ProfileDataSection title="Assets">
-        <pre className="text overflow-x-auto text-xs">
-          {JSON.stringify(profile.assets, null, 2)}
-        </pre>
+        <div className="flex flex-wrap gap-4">
+          {!Boolean(profile.assets.length) && <p>No assets found</p>}
+          {Boolean(profile.assets.length) &&
+            profile.assets.map(asset => (
+              <AssetCard key={asset.id} asset={asset} />
+            ))}
+        </div>
       </ProfileDataSection>
       <ProfileDataSection title="Entities">
-        <pre className="text overflow-x-auto text-xs">
-          {JSON.stringify(profile.entities, null, 2)}
-        </pre>
+        <div className="flex flex-wrap gap-4">
+          {!Boolean(profile.entities.length) && <p>No entities found</p>}
+          {Boolean(profile.entities.length) &&
+            profile.entities.map(asset => (
+              <EntityCard key={asset.id} entity={asset} />
+            ))}
+        </div>
       </ProfileDataSection>
     </div>
   );

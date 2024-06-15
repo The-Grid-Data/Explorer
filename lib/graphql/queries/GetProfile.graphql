@@ -26,6 +26,7 @@ query GetProfile($where: profiles_bool_exp) {
       }
     }
     assets {
+      id
       ticker
       shortDescription
       urlToAssetDocs
@@ -34,6 +35,13 @@ query GetProfile($where: profiles_bool_exp) {
       address
       deployedOnProductId
       assetTypeId
+      assetType {
+        id
+        name
+      }
+      assetDeployedOnProductId {
+        name
+      }
     }
     profileType {
       name
@@ -59,6 +67,17 @@ query GetProfile($where: profiles_bool_exp) {
       name
       productAddress
       productStatusId
+      productType {
+        name
+      }
+      productStatus {
+        name
+      }
+      supportsProducts {
+        product {
+          name
+        }
+      }
       asset {
         name
         id
@@ -123,6 +142,7 @@ query GetProfile($where: profiles_bool_exp) {
         id
         definition
       }
+      parentEntityId
       taxIdentificationNumber
     }
   }

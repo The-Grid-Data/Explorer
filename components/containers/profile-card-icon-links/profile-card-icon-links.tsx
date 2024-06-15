@@ -1,14 +1,7 @@
 import { Globe, Rss, FileText, FileCode2 } from 'lucide-react';
-import Link from 'next/link';
-import { PropsWithChildren } from 'react';
 import { SiX, SiDiscord, SiLinkedin, SiTelegram } from 'react-icons/si';
 import { Separator } from '@/components/ui/separator';
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger
-} from '@/components/ui/tooltip';
+import { IconLink } from '@/components/ui/icon-link';
 
 export type ProfileCardFeatureProps = {
   profile: {
@@ -79,24 +72,5 @@ export const ProfileCardIconLinks = ({ profile }: ProfileCardFeatureProps) => {
         </>
       )}
     </div>
-  );
-};
-
-export const IconLink = ({
-  children,
-  url,
-  tooltipLabel
-}: PropsWithChildren<{ url: string; tooltipLabel?: string }>) => {
-  return (
-    <TooltipProvider>
-      <Tooltip delayDuration={100}>
-        <TooltipTrigger>
-          <Link href={url} target="_blank" rel="noopener noreferrer">
-            {children}
-          </Link>
-        </TooltipTrigger>
-        <TooltipContent>{tooltipLabel}</TooltipContent>
-      </Tooltip>
-    </TooltipProvider>
   );
 };

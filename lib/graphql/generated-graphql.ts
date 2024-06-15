@@ -2317,6 +2317,7 @@ export type GetProfileQuery = {
     }>;
     assets: Array<{
       __typename?: 'assets';
+      id: number;
       ticker: string;
       shortDescription: string;
       urlToAssetDocs: string;
@@ -2325,6 +2326,11 @@ export type GetProfileQuery = {
       address: string;
       deployedOnProductId?: number | null;
       assetTypeId?: number | null;
+      assetType?: { __typename?: 'assetType'; id: number; name: string } | null;
+      assetDeployedOnProductId?: {
+        __typename?: 'products';
+        name: string;
+      } | null;
     }>;
     profileType?: {
       __typename?: 'profileTypes';
@@ -2354,6 +2360,12 @@ export type GetProfileQuery = {
       name: string;
       productAddress: string;
       productStatusId?: number | null;
+      productType?: { __typename?: 'productTypes'; name: string } | null;
+      productStatus?: { __typename?: 'productStatus'; name: string } | null;
+      supportsProducts: Array<{
+        __typename?: 'productSupports';
+        product: { __typename?: 'products'; name: string };
+      }>;
       asset?: {
         __typename?: 'assets';
         name: string;
@@ -2407,6 +2419,7 @@ export type GetProfileQuery = {
       countryId: number;
       address: string;
       id: number;
+      parentEntityId?: number | null;
       taxIdentificationNumber: string;
       country: { __typename?: 'countries'; Code: string; Name: string };
       entityType?: {
@@ -2720,6 +2733,7 @@ export const GetProfileDocument = `
       }
     }
     assets {
+      id
       ticker
       shortDescription
       urlToAssetDocs
@@ -2728,6 +2742,13 @@ export const GetProfileDocument = `
       address
       deployedOnProductId
       assetTypeId
+      assetType {
+        id
+        name
+      }
+      assetDeployedOnProductId {
+        name
+      }
     }
     profileType {
       name
@@ -2753,6 +2774,17 @@ export const GetProfileDocument = `
       name
       productAddress
       productStatusId
+      productType {
+        name
+      }
+      productStatus {
+        name
+      }
+      supportsProducts {
+        product {
+          name
+        }
+      }
       asset {
         name
         id
@@ -2817,6 +2849,7 @@ export const GetProfileDocument = `
         id
         definition
       }
+      parentEntityId
       taxIdentificationNumber
     }
   }

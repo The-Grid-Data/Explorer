@@ -1,13 +1,24 @@
+import { cn } from '@/lib/utils';
 import { PropsWithChildren } from 'react';
 
 export type ProfileDataPointProps = {
   label: string;
   value?: string | false;
+  fullWidth?: boolean;
 };
 
-export const ProfileDataPoint = ({ label, value }: ProfileDataPointProps) => (
-  <div className="flex flex-col items-start md:flex-row">
-    <div className="text flex w-fit shrink-0 items-center rounded bg-primary p-1 px-2 text-xs text-muted md:w-fit">
+export const ProfileDataPoint = ({
+  label,
+  value,
+  fullWidth
+}: ProfileDataPointProps) => (
+  <div className={cn('flex flex-col items-start', !fullWidth && 'md:flex-row')}>
+    <div
+      className={cn(
+        'text flex items-center rounded bg-primary p-1 px-2 text-xs text-muted',
+        fullWidth ? 'w-full' : 'w-fit shrink-0 md:w-fit'
+      )}
+    >
       {label}:
     </div>
     <span className="text ml-1 w-full text-sm">{value || '-'}</span>
