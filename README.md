@@ -3,7 +3,7 @@ This has been created as a way for data platforms to explore and get inspired by
 
 This uses our graphQL endpoint which can be found over at [docs.thegrid.id](https://docs.thegrid.id/)
 
-Right now this takes a very profile focused 'lens' view at our data. In the future, this may expand to other lenses. To understand how we look at lenses, see this: 
+Right now this takes a very profile focused 'lens' view at our data. In the future, this may expand to other lenses. To understand how we look at lenses, [see this:](https://docs.thegrid.id/lenses-at-the-grid-18)
 
 
 ### Installation
