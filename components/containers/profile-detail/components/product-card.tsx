@@ -71,7 +71,7 @@ export const ProductCard = ({ product }: ProductCardCardProps) => {
                   fullWidth
                   label="Supports"
                   value={product.supportsProducts
-                    .map(product => product.product.name)
+                    .map(product => product.supports.name)
                     .join(', ')}
                 />
               </ProfileDataPointContainer>

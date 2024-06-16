@@ -74,7 +74,7 @@ query GetProfile($where: profiles_bool_exp) {
         name
       }
       supportsProducts {
-        product {
+        supports {
           name
         }
       }

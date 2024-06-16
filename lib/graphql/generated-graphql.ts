@@ -2364,7 +2364,7 @@ export type GetProfileQuery = {
       productStatus?: { __typename?: 'productStatus'; name: string } | null;
       supportsProducts: Array<{
         __typename?: 'productSupports';
-        product: { __typename?: 'products'; name: string };
+        supports: { __typename?: 'products'; name: string };
       }>;
       asset?: {
         __typename?: 'assets';
@@ -2781,7 +2781,7 @@ export const GetProfileDocument = `
         name
       }
       supportsProducts {
-        product {
+        supports {
           name
         }
       }

@@ -36,16 +36,11 @@ export const ProfileHeading = ({
             <AvatarFallback className="bg-white">No logo</AvatarFallback>
           </Avatar>
         </div>
-        <div className="flex flex-col gap-2">
-          <div className="flex items-center gap-6">
-            <h3 className=" text-5xl font-bold">{profile.name}</h3>
-            <div className="">
-              <ProfileCardIconLinks profile={profile} />
-            </div>
+        <div className="flex flex-col gap-4 md:gap-2">
+          <div className="flex flex-col gap-2 md:flex-row md:items-center md:gap-6">
+            <h3 className="text-5xl font-bold">{profile.name}</h3>
+            <ProfileCardIconLinks profile={profile} />
           </div>
-          <span className="text w-full text-sm">
-            {profile.descriptionShort || '-'}
-          </span>
           <QueryDialogButton
             variables={queryVariables}
             queryDocument={GetProfileDocument}

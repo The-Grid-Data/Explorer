@@ -21,9 +21,9 @@ const iconBorderedClassName = 'text-primary hover:text-primary/60';
 
 const socialsIconMap = {
   'Twitter / X': <SiX className={iconFilledClassName} size={16} />,
-  Discord: <SiTelegram className={iconFilledClassName} size={16} />,
+  Discord: <SiDiscord className={iconFilledClassName} size={16} />,
   LinkedIn: <SiLinkedin className={iconFilledClassName} size={16} />,
-  Telegram: <SiDiscord className={iconFilledClassName} size={16} />
+  Telegram: <SiTelegram className={iconFilledClassName} size={16} />
 } as const;
 
 export const ProfileCardIconLinks = ({ profile }: ProfileCardFeatureProps) => {
