@@ -18,6 +18,18 @@ const learnMoreButton = (
   </Link>
 );
 
+const claimProfileButton = (
+  <Link
+    target="_blank"
+    rel="noopener noreferrer"
+    href="https://data.thegrid.id/form/205d9e06-7463-49f8-8509-71bada2f92bb"
+  >
+    <Button variant="outline" className="w-full md:w-fit">
+      Claim your profile
+    </Button>
+  </Link>
+);
+
 const cloneRepoButton = (
   <Link
     href="https://github.com/The-Grid-Data/Explorer"
@@ -47,6 +59,7 @@ export const Header = () => {
 
       <div className="hidden w-full items-center justify-end gap-2 md:flex">
         {learnMoreButton}
+        {claimProfileButton}
         {cloneRepoButton}
       </div>
       <Sheet>
