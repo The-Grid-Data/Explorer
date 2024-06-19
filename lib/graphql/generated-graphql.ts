@@ -1194,6 +1194,7 @@ export type Profiles = {
   /** An object relationship */
   profileType?: Maybe<ProfileTypes>;
   profileTypeId?: Maybe<Scalars['Int']['output']>;
+  slug: Scalars['String']['output'];
   /** An array relationship */
   socials: Array<Socials>;
   /** Self promotion field */
@@ -1273,6 +1274,7 @@ export type Profiles_Bool_Exp = {
   profileStatusId?: InputMaybe<Int_Mysql8_Comparison_Exp>;
   profileType?: InputMaybe<ProfileTypes_Bool_Exp>;
   profileTypeId?: InputMaybe<Int_Mysql8_Comparison_Exp>;
+  slug?: InputMaybe<String_Mysql8_Comparison_Exp>;
   socials?: InputMaybe<Socials_Bool_Exp>;
   tagLine?: InputMaybe<String_Mysql8_Comparison_Exp>;
   urlBlog?: InputMaybe<String_Mysql8_Comparison_Exp>;
@@ -1291,6 +1293,7 @@ export type Profiles_Max_Order_By = {
   profileSectorId?: InputMaybe<Mysql8_Order_By>;
   profileStatusId?: InputMaybe<Mysql8_Order_By>;
   profileTypeId?: InputMaybe<Mysql8_Order_By>;
+  slug?: InputMaybe<Mysql8_Order_By>;
   /** Self promotion field */
   tagLine?: InputMaybe<Mysql8_Order_By>;
   urlBlog?: InputMaybe<Mysql8_Order_By>;
@@ -1309,6 +1312,7 @@ export type Profiles_Min_Order_By = {
   profileSectorId?: InputMaybe<Mysql8_Order_By>;
   profileStatusId?: InputMaybe<Mysql8_Order_By>;
   profileTypeId?: InputMaybe<Mysql8_Order_By>;
+  slug?: InputMaybe<Mysql8_Order_By>;
   /** Self promotion field */
   tagLine?: InputMaybe<Mysql8_Order_By>;
   urlBlog?: InputMaybe<Mysql8_Order_By>;
@@ -1334,6 +1338,7 @@ export type Profiles_Order_By = {
   profileStatusId?: InputMaybe<Mysql8_Order_By>;
   profileType?: InputMaybe<ProfileTypes_Order_By>;
   profileTypeId?: InputMaybe<Mysql8_Order_By>;
+  slug?: InputMaybe<Mysql8_Order_By>;
   socials_aggregate?: InputMaybe<Socials_Aggregate_Order_By>;
   tagLine?: InputMaybe<Mysql8_Order_By>;
   urlBlog?: InputMaybe<Mysql8_Order_By>;

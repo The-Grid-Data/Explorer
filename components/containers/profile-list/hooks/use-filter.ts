@@ -15,12 +15,12 @@ export type SearchFilterProps = BaseFilterProps<string> & {
   type: 'search';
 };
 
-export type SelectFilterProps<T> = BaseFilterProps<string> & {
+export type SelectFilterProps<T> = BaseFilterProps<T> & {
   type: 'select';
   options?: Options<T>;
 };
 
-export type MultiSelectFilterProps<T> = BaseFilterProps<string[]> & {
+export type MultiSelectFilterProps<T> = BaseFilterProps<T[]> & {
   type: 'multiselect';
   options?: Options<T>;
 };
