@@ -19,7 +19,7 @@ export const AssetCard = ({ asset }: AssetCardProps) => {
   return (
     <div className="relative w-full rounded-xl border-2 border-primary bg-secondary/40 shadow-md lg:w-[480px]">
       <div className="flex flex-col">
-        <div className="flex gap-2">
+        <div className="flex flex-wrap gap-2">
           <h3 className="text-l rounded-br-lg rounded-tl-lg bg-primary px-4 py-2 text-secondary">
             {asset.name}
           </h3>

@@ -21,7 +21,7 @@ export const ProfileDataPoint = ({
     >
       {label}:
     </div>
-    <span className="text ml-1 w-full text-sm">{value || '-'}</span>
+    <span className="text ml-1 w-full break-all text-sm">{value || '-'}</span>
   </div>
 );
 

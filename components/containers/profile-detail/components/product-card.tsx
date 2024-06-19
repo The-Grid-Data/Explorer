@@ -20,7 +20,7 @@ export const ProductCard = ({ product }: ProductCardCardProps) => {
     <div className="relative w-full rounded-xl border-2 border-primary bg-secondary/40 shadow-md lg:w-[480px]">
       <div className="flex flex-col gap-2">
         <div className="flex flex-wrap">
-          <div className="flex gap-2">
+          <div className="flex flex-wrap gap-2">
             <h3 className="text-l rounded-br-lg  rounded-tl-lg bg-primary px-4 py-2  text-secondary">
               {product.name}
             </h3>
