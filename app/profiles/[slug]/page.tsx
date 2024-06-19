@@ -1,4 +1,5 @@
 import { ProfileDetail } from '@/components/containers/profile-detail';
+import { siteConfig } from '@/lib/site-config';
 
 export const dynamic = 'force-dynamic';
 
@@ -7,6 +8,13 @@ export type PageProps<P = {}> = {
   searchParams: { [key: string]: string | string[] | undefined };
 };
 
+export async function generateMetadata({
+  params
+}: PageProps<{ slug: string }>) {
+  return {
+    title: `${params.slug} | ${siteConfig.pageTitle}`
+  };
+}
 export default async function Profile({ params }: PageProps<{ slug: string }>) {
   return (
     <div>

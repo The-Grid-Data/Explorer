@@ -7,6 +7,7 @@ import type { Metadata } from 'next';
 import { Header } from '@/components/containers/header';
 import { Providers } from '@/providers';
 import { Banner } from '@/components/containers/banner';
+import { siteConfig } from '@/lib/site-config';
 
 type TLayout = Readonly<{
   children: React.ReactNode;
@@ -16,9 +17,8 @@ const archivo = Archivo({ subsets: ['latin'], variable: '--font-archivo' });
 const dmSans = DM_Sans({ subsets: ['latin'], variable: '--font-dm-sans' });
 
 export const metadata: Metadata = {
-  title: 'The Grid | Data Explorer',
-  description:
-    'Powering Discoverability of Assets, Products, and Services in Web3.'
+  title: siteConfig.pageTitle,
+  description: siteConfig.pageDescription
 };
 
 export default function Layout({ children }: TLayout) {
