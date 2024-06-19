@@ -13,14 +13,14 @@ import { useProfileSorting } from './hooks/use-profile-sorting';
 import { SearchProfilesDocument } from '@/lib/graphql/generated-graphql';
 import { siteConfig } from '@/lib/site-config';
 
-const defaultFilter = siteConfig.filterByProjectIds.length
+const defaultFilter = siteConfig.filterByProductIds.length
   ? {
       _or: [
         {
           products: {
             supportsProducts: {
               supportsProductId: {
-                _in: siteConfig.filterByProjectIds
+                _in: siteConfig.filterByProductIds
               }
             }
           }
@@ -28,21 +28,21 @@ const defaultFilter = siteConfig.filterByProjectIds.length
         {
           products: {
             deployedOnProductId: {
-              _in: siteConfig.filterByProjectIds
+              _in: siteConfig.filterByProductIds
             }
           }
         },
         {
           products: {
             id: {
-              _in: siteConfig.filterByProjectIds
+              _in: siteConfig.filterByProductIds
             }
           }
         },
         {
           assets: {
             deployedOnProductId: {
-              _in: siteConfig.filterByProjectIds
+              _in: siteConfig.filterByProductIds
             }
           }
         }
