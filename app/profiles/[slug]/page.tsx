@@ -7,11 +7,11 @@ export type PageProps<P = {}> = {
   searchParams: { [key: string]: string | string[] | undefined };
 };
 
-export default async function Profile({ params }: PageProps<{ id: string }>) {
+export default async function Profile({ params }: PageProps<{ slug: string }>) {
   return (
     <div>
       <div className="h-10" />
-      <ProfileDetail profileId={params.id} />
+      <ProfileDetail profileId={params.slug} />
     </div>
   );
 }

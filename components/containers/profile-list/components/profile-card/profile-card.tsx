@@ -23,7 +23,7 @@ export const ProfileCard = ({ profile }: ProfileCardCardProps) => {
       <div className="relative mt-20 rounded-lg border-2 border-primary bg-white shadow-sm">
         <div className="relative -mt-16 flex w-full flex-col items-start gap-3 lg:absolute lg:-top-16 lg:left-[-24px] lg:mt-0 lg:flex-row">
           <div className="border-1 -ml-6 w-fit shrink-0 -rotate-3 rounded-xl  border-2 border-primary bg-white shadow-lg hover:scale-105 lg:ml-0">
-            <Link href={paths.profile.detail(profile.id.toString())}>
+            <Link target="_blank" href={paths.profile.detail(profile.slug)}>
               <Avatar className="h-[100px] w-[160px] min-w-[120px] rounded-xl p-2">
                 {validLogoUrl && (
                   <AvatarImage
@@ -38,8 +38,9 @@ export const ProfileCard = ({ profile }: ProfileCardCardProps) => {
           </div>
           <div className="flex w-full flex-col gap-3 px-4 lg:mt-7 lg:p-0">
             <Link
+              target="_blank"
               className="w-fit"
-              href={paths.profile.detail(profile.id.toString())}
+              href={paths.profile.detail(profile.slug)}
             >
               <h3 className="w-fit text-2xl font-bold hover:underline">
                 {profile.name}
@@ -50,7 +51,7 @@ export const ProfileCard = ({ profile }: ProfileCardCardProps) => {
                 <ProfileCardIconLinks profile={profile} />
               </div>
               <Button className="w-full lg:w-fit" variant="default" asChild>
-                <Link href={paths.profile.detail(profile.id.toString())}>
+                <Link target="_blank" href={paths.profile.detail(profile.slug)}>
                   More info
                 </Link>
               </Button>

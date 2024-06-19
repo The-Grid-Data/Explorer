@@ -8,6 +8,7 @@ query SearchProfiles(
     name
     logo
     id
+    slug
     descriptionShort
     urlDocumentation
     tagLine

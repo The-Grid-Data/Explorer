@@ -2451,6 +2451,7 @@ export type SearchProfilesQuery = {
     name: string;
     logo: string;
     id: number;
+    slug: string;
     descriptionShort: string;
     urlDocumentation: string;
     tagLine: string;
@@ -2920,6 +2921,7 @@ export const SearchProfilesDocument = `
     name
     logo
     id
+    slug
     descriptionShort
     urlDocumentation
     tagLine

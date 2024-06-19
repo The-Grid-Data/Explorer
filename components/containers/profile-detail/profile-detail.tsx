@@ -23,7 +23,7 @@ export type ProfileDetailProps = {
 
 export const ProfileDetail = ({ profileId }: ProfileDetailProps) => {
   const query = {
-    where: { id: { _eq: +profileId } }
+    where: { slug: { _eq: profileId } }
   };
   const { data, isFetching } = useGetProfileQuery(query);
   const profile = data?.profiles[0];
