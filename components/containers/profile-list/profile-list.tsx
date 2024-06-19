@@ -11,6 +11,44 @@ import { ProfileListSorting } from './components/profile-list-sorting';
 import { useProfileFilters } from './hooks/use-profile-filters';
 import { useProfileSorting } from './hooks/use-profile-sorting';
 import { SearchProfilesDocument } from '@/lib/graphql/generated-graphql';
+import { siteConfig } from '@/lib/site-config';
+
+const defaultFilter = siteConfig.filterByProjectIds.length
+  ? {
+      _or: [
+        {
+          products: {
+            supportsProducts: {
+              supportsProductId: {
+                _in: siteConfig.filterByProjectIds
+              }
+            }
+          }
+        },
+        {
+          products: {
+            deployedOnProductId: {
+              _in: siteConfig.filterByProjectIds
+            }
+          }
+        },
+        {
+          products: {
+            id: {
+              _in: siteConfig.filterByProjectIds
+            }
+          }
+        },
+        {
+          assets: {
+            deployedOnProductId: {
+              _in: siteConfig.filterByProjectIds
+            }
+          }
+        }
+      ]
+    }
+  : {};
 
 export const ProfileList = () => {
   const { filters, toQueryWhereFields, filtersVisibility } =
@@ -19,7 +57,8 @@ export const ProfileList = () => {
 
   const query = {
     where: {
-      ...toQueryWhereFields()
+      ...toQueryWhereFields(),
+      ...defaultFilter
     },
     order_by: [toQuerySortByFields()],
     limit: 10,
