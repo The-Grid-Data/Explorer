@@ -1,4 +1,7 @@
-query GetFiltersOptions {
+query GetFiltersOptions(
+  $productSupports: productSupports_bool_exp
+  $deployedOnProducts: products_bool_exp
+) {
   ###
   # Profile filters
   ####
@@ -30,16 +33,14 @@ query GetFiltersOptions {
     id
     name
   }
-  productSupports {
+  productSupports(where: $productSupports) {
     supports {
       descriptionShort
       name
       id
     }
   }
-  deployedOnProducts: products(
-    where: { productTypeId: { _in: [15, 16, 17] } }
-  ) {
+  deployedOnProducts: products(where: $deployedOnProducts) {
     name
     id
     descriptionShort

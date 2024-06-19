@@ -5,11 +5,26 @@ import {
 
 import { useFilter } from './use-filter';
 import { useState } from 'react';
+import { siteConfig } from '@/lib/site-config';
 
 export type Filters = ReturnType<typeof useProfileFilters>;
 
 export const useProfileFilters = () => {
-  const { data } = useGetFiltersOptionsQuery();
+  const { data } = useGetFiltersOptionsQuery({
+    productSupports: {
+      ...(siteConfig.filterByProductIds?.length > 0 && {
+        supportsProductId: { _in: siteConfig.filterByProductIds }
+      })
+    },
+    deployedOnProducts: {
+      ...(siteConfig.filterProductTypeIdsOptions?.length > 0 && {
+        productTypeId: { _in: siteConfig.filterProductTypeIdsOptions }
+      }),
+      ...(siteConfig.filterByProductIds?.length > 0 && {
+        deployedOnProductId: { _in: siteConfig.filterByProductIds }
+      })
+    }
+  });
   const [showFilters, setShowFilters] = useState(true);
 
   /*************************************

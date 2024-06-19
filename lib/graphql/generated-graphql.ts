@@ -2154,7 +2154,10 @@ export enum __TypeKind {
   NonNull = 'NON_NULL'
 }
 
-export type GetFiltersOptionsQueryVariables = Exact<{ [key: string]: never }>;
+export type GetFiltersOptionsQueryVariables = Exact<{
+  productSupports?: InputMaybe<ProductSupports_Bool_Exp>;
+  deployedOnProducts?: InputMaybe<Products_Bool_Exp>;
+}>;
 
 export type GetFiltersOptionsQuery = {
   __typename?: 'query_root';
@@ -2476,7 +2479,7 @@ export type SearchProfilesQuery = {
 };
 
 export const GetFiltersOptionsDocument = `
-    query GetFiltersOptions {
+    query GetFiltersOptions($productSupports: productSupports_bool_exp, $deployedOnProducts: products_bool_exp) {
   profileTypes {
     name
     id
@@ -2502,14 +2505,14 @@ export const GetFiltersOptionsDocument = `
     id
     name
   }
-  productSupports {
+  productSupports(where: $productSupports) {
     supports {
       descriptionShort
       name
       id
     }
   }
-  deployedOnProducts: products(where: {productTypeId: {_in: [15, 16, 17]}}) {
+  deployedOnProducts: products(where: $deployedOnProducts) {
     name
     id
     descriptionShort
