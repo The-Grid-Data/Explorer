@@ -51,7 +51,7 @@ export const EntityCard = ({ entity }: EntityCardProps) => {
             <ProfileDataPointContainer>
               <ProfileDataPoint
                 fullWidth
-                label="Address"
+                label="Incorporation Date"
                 value={entity.dateOfIncorporation}
               />
               <ProfileDataPoint
@@ -61,7 +61,7 @@ export const EntityCard = ({ entity }: EntityCardProps) => {
               />
               <ProfileDataPoint
                 fullWidth
-                label="Address"
+                label="Parent entity"
                 value={entity.parentEntityId?.toString()}
               />
             </ProfileDataPointContainer>
