@@ -103,10 +103,10 @@ export const useProfileFilters = () => {
   });
 
   const productSupportsFilter = useFilter<number>({
-    options: data?.products.map(item => ({
-      value: item.id,
-      label: item.name,
-      description: item.descriptionShort
+    options: data?.productSupports.map(item => ({
+      value: item.supports.id,
+      label: item.supports.name,
+      description: item.supports.descriptionShort
     })),
     type: 'multiselect',
     initialValue: []
