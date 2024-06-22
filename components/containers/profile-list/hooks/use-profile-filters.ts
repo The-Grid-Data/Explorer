@@ -17,12 +17,18 @@ export const useProfileFilters = () => {
       })
     },
     deployedOnProducts: {
-      ...(siteConfig.filterProductTypeIdsOptions?.length > 0 && {
-        productTypeId: { _in: siteConfig.filterProductTypeIdsOptions }
-      }),
-      ...(siteConfig.filterByProductIds?.length > 0 && {
-        deployedOnProductId: { _in: siteConfig.filterByProductIds }
-      })
+      _or: [
+        {
+          ...(siteConfig.filterByProductIds?.length > 0 && {
+            deployedOnProductId: { _in: siteConfig.filterByProductIds }
+          })
+        },
+        {
+          ...(siteConfig.filterProductTypeIdsOptions?.length > 0 && {
+            productTypeId: { _in: siteConfig.filterProductTypeIdsOptions }
+          })
+        }
+      ]
     }
   });
   const [showFilters, setShowFilters] = useState(true);
