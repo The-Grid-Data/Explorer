@@ -2,6 +2,7 @@ export const siteConfig = {
   pageTitle: 'The Grid | Data Explorer',
   pageDescription:
     'Powering Discoverability of Assets, Products, and Services in Web3.',
-  filterByProductIds: [], // used to filter on top of the user filters. Filters the products in the main list but also the filter options of (productSupports, productDeployedOnFilter and assetDeployedOnFilter)
-  blockchainProductTypeIds: [15, 16, 17] // used to filter default options. used by productDeployedOnFilter.
+  filterByProductIds: [], // Used to filter which blockchains to show in the full list. 
+  blockhainIds: [], // Filter default options. Filters the options of (productSupports, productDeployedOnFilter and assetDeployedOnFilter)
+  blockchainProductTypeIds: [15, 16, 17] // Filter default options. used by productDeployedOnFilter.
 };
