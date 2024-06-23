@@ -17,15 +17,15 @@ export const useProfileFilters = () => {
       })
     },
     deployedOnProducts: {
+      // ...(siteConfig.filterByProductIds?.length > 0 && {
+      //   deployedOnProductId: { _in: siteConfig.filterByProductIds }
+      // }),
       _or: [
         {
-          ...(siteConfig.filterByProductIds?.length > 0 && {
-            deployedOnProductId: { _in: siteConfig.filterByProductIds }
-          })
-        },
-        {
-          ...(siteConfig.filterProductTypeIdsOptions?.length > 0 && {
-            productTypeId: { _in: siteConfig.filterProductTypeIdsOptions }
+          ...(siteConfig.blockchainProductTypeIds?.length > 0 && {
+            productTypeId: {
+              _in: siteConfig.blockchainProductTypeIds
+            }
           })
         }
       ]
@@ -103,11 +103,18 @@ export const useProfileFilters = () => {
   });
 
   const productSupportsFilter = useFilter<number>({
-    options: data?.productSupports.map(item => ({
-      value: item.supports.id,
-      label: item.supports.name,
-      description: item.supports.descriptionShort
-    })),
+    //@todo: we are filtering products by distinct id in the FE, we might wanna move this to the query but is not supported at the moment
+    options: Array.from(
+      new Map(
+        data?.productSupports
+          .map(item => ({
+            value: item.supports.id,
+            label: item.supports.name,
+            description: item.supports.descriptionShort
+          }))
+          .map(option => [option.value, option])
+      ).values()
+    ),
     type: 'multiselect',
     initialValue: []
   });
