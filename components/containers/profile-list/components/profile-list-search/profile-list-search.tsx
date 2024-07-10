@@ -15,7 +15,7 @@ export const ProfileListSearch = ({
   filtersVisibility
 }: ProfileListSearchProps) => {
   return (
-    <div className="flex items-end gap-4">
+    <div className="flex gap-4">
       <div className="flex w-full flex-col gap-2">
         <Label className="text-xs" htmlFor="search">
           Search profiles
@@ -46,8 +46,7 @@ export const ProfileListSearch = ({
           />
           <label
             htmlFor="terms"
-            className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-          >
+            className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
             Include description results
           </label>
         </div>
