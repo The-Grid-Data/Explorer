@@ -72,7 +72,6 @@ export const ProfileList = () => {
     limit: 10,
     offset: 0
   };
-  console.log('query', query);
 
   return (
     <div className="w-full space-y-4">
