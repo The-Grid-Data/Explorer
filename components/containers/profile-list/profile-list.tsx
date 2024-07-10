@@ -10,60 +10,69 @@ import { ProfileListSearch } from './components/profile-list-search';
 import { ProfileListSorting } from './components/profile-list-sorting';
 import { useProfileFilters } from './hooks/use-profile-filters';
 import { useProfileSorting } from './hooks/use-profile-sorting';
-import { SearchProfilesDocument } from '@/lib/graphql/generated-graphql';
+import {
+  SearchProfilesDocument,
+  SearchProfilesQueryVariables
+} from '@/lib/graphql/generated-graphql';
 import { siteConfig } from '@/lib/site-config';
 
-const defaultFilter = siteConfig.filterByProductIds.length
-  ? {
-      _or: [
-        {
-          products: {
-            supportsProducts: {
-              supportsProductId: {
-                _in: siteConfig.filterByProductIds
-              }
-            }
-          }
-        },
-        {
-          products: {
-            deployedOnProductId: {
-              _in: siteConfig.filterByProductIds
-            }
-          }
-        },
-        {
-          products: {
-            id: {
-              _in: siteConfig.filterByProductIds
-            }
-          }
-        },
-        {
-          assets: {
-            deployedOnProductId: {
-              _in: siteConfig.filterByProductIds
-            }
+const defaultWhereFilter = {
+  _or: [
+    {
+      products: {
+        supportsProducts: {
+          supportsProductId: {
+            _in: siteConfig.filterByProductIds
           }
         }
-      ]
+      }
+    },
+    {
+      products: {
+        deployedOnProductId: {
+          _in: siteConfig.filterByProductIds
+        }
+      }
+    },
+    {
+      products: {
+        id: {
+          _in: siteConfig.filterByProductIds
+        }
+      }
+    },
+    {
+      assets: {
+        deployedOnProductId: {
+          _in: siteConfig.filterByProductIds
+        }
+      }
     }
-  : {};
+  ]
+};
+
+const withDefaultWhereFilter = (
+  query: SearchProfilesQueryVariables['where']
+) => {
+  if (siteConfig.filterByProductIds?.length < 1) return query;
+
+  if (query?._or) {
+    query._or = [...query._or, ...defaultWhereFilter._or];
+  }
+  return query;
+};
 
 export const ProfileList = () => {
   const { filters, toQueryWhereFields, filtersVisibility } =
     useProfileFilters();
   const { sorting, toQuerySortByFields } = useProfileSorting();
-
   const query = {
-    where: {
-      ...toQueryWhereFields(),
-      ...defaultFilter
-    },
+    where: withDefaultWhereFilter(toQueryWhereFields()),
     order_by: [toQuerySortByFields()],
     limit: 10,
     offset: 0
   };
+  console.log('query', query);
 
   return (
     <div className="w-full space-y-4">

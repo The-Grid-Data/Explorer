@@ -12,13 +12,13 @@ export type Filters = ReturnType<typeof useProfileFilters>;
 export const useProfileFilters = () => {
   const { data } = useGetFiltersOptionsQuery({
     productSupports: {
-      ...(siteConfig.blockhainIds?.length > 0 && {
-        supportsProductId: { _in: siteConfig.blockhainIds }
+      ...(siteConfig.blockchainIds?.length > 0 && {
+        supportsProductId: { _in: siteConfig.blockchainIds }
       })
     },
     deployedOnProducts: {
-      ...(siteConfig.blockhainIds?.length > 0 && {
-        deployedOnProductId: { _in: siteConfig.blockhainIds }
+      ...(siteConfig.blockchainIds?.length > 0 && {
+        deployedOnProductId: { _in: siteConfig.blockchainIds }
       }),
       _or: [
         {
