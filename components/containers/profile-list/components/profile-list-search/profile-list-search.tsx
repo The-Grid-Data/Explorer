@@ -15,56 +15,59 @@ export const ProfileListSearch = ({
   filtersVisibility
 }: ProfileListSearchProps) => {
   return (
-    <div className="flex gap-4">
-      <div className="flex w-full flex-col gap-2">
-        <Label className="text-xs" htmlFor="search">
-          Search profiles
-        </Label>
-        <Input
-          name="search"
-          className="h-10"
-          type="text"
-          placeholder="Search by name or description"
-          value={filters.searchFilter.value}
-          onChange={event => {
-            filters.searchFilter.setValue(event.target.value);
-          }}
-        />
-        <div className="flex items-center space-x-2">
-          <Checkbox
-            id="terms"
-            checked={filters.searchFilter.config?.fields.descriptionLong}
-            onCheckedChange={(value: boolean) => {
-              filters.searchFilter.setConfig(config => ({
-                ...config,
-                fields: {
-                  ...config.fields,
-                  descriptionLong: value
-                }
-              }));
+    <div className="space-y-2">
+      <div className="flex items-end gap-4">
+        <div className="flex w-full flex-col gap-2">
+          <Label className="text-xs" htmlFor="search">
+            Search profiles
+          </Label>
+          <Input
+            name="search"
+            className="h-10"
+            type="text"
+            placeholder="Search by name or description"
+            value={filters.searchFilter.value}
+            onChange={event => {
+              filters.searchFilter.setValue(event.target.value);
             }}
           />
-          <label
-            htmlFor="terms"
-            className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-            Include description results
-          </label>
         </div>
+        <Button
+          onClick={() => {
+            filtersVisibility.setShowFilters(!filtersVisibility.showFilters);
+          }}
+          variant="outline"
+          size="sm"
+          className="hidden h-10 shrink-0 gap-1 md:flex"
+        >
+          <Filter className="h-3.5 w-3.5" />
+          <span className="sr-only sm:not-sr-only">
+            {filtersVisibility.showFilters && 'Hide filters'}
+            {!filtersVisibility.showFilters && 'Show filters'}
+          </span>
+        </Button>
       </div>
-      <Button
-        onClick={() => {
-          filtersVisibility.setShowFilters(!filtersVisibility.showFilters);
-        }}
-        variant="outline"
-        size="sm"
-        className="hidden h-10 shrink-0 gap-1 md:flex"
-      >
-        <Filter className="h-3.5 w-3.5" />
-        <span className="sr-only sm:not-sr-only">
-          {filtersVisibility.showFilters && 'Hide filters'}
-          {!filtersVisibility.showFilters && 'Show filters'}
-        </span>
-      </Button>
+      <div className="flex items-center space-x-2">
+        <Checkbox
+          id="terms"
+          checked={filters.searchFilter.config?.fields.descriptionLong}
+          onCheckedChange={(value: boolean) => {
+            filters.searchFilter.setConfig(config => ({
+              ...config,
+              fields: {
+                ...config.fields,
+                descriptionLong: value
+              }
+            }));
+          }}
+        />
+        <label
+          htmlFor="terms"
+          className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+        >
+          Include description results
+        </label>
+      </div>
     </div>
   );
 };
