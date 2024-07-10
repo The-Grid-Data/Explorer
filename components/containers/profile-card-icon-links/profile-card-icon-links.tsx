@@ -1,5 +1,5 @@
 import { Globe, Rss, FileText, FileCode2 } from 'lucide-react';
-import { SiX, SiDiscord, SiLinkedin, SiTelegram } from 'react-icons/si';
+import { SiX, SiDiscord, SiLinkedin, SiTelegram, SiFarcaster } from 'react-icons/si';
 import { Separator } from '@/components/ui/separator';
 import { IconLink } from '@/components/ui/icon-link';
 
@@ -23,7 +23,8 @@ const socialsIconMap = {
   'Twitter / X': <SiX className={iconFilledClassName} size={16} />,
   Discord: <SiDiscord className={iconFilledClassName} size={16} />,
   LinkedIn: <SiLinkedin className={iconFilledClassName} size={16} />,
-  Telegram: <SiTelegram className={iconFilledClassName} size={16} />
+  Telegram: <SiTelegram className={iconFilledClassName} size={16} />,
+  Warpcast: <SiFarcaster className={iconFilledClassName} size={16}
 } as const;
 
 export const ProfileCardIconLinks = ({ profile }: ProfileCardFeatureProps) => {
