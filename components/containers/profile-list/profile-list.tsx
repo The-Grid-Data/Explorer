@@ -17,53 +17,56 @@ import {
 import { siteConfig } from '@/lib/site-config';
 
 const defaultWhereFilter = {
-  _or: [],
   _and: [
     {
-      products: {
-        supportsProducts: {
-          supportsProductId: {
-            _in: siteConfig.filterByProductIds
+      _or: [
+        {
+          products: {
+            supportsProducts: {
+              supportsProductId: {
+                _in: siteConfig.filterByProductIds
+              }
+            }
+          }
+        },
+        {
+          products: {
+            deployedOnProductId: {
+              _in: siteConfig.filterByProductIds
+            }
+          }
+        },
+        {
+          products: {
+            id: {
+              _in: siteConfig.filterByProductIds
+            }
+          }
+        },
+        {
+          assets: {
+            deployedOnProductId: {
+              _in: siteConfig.filterByProductIds
+            }
           }
         }
-      }
-    },
-    {
-      products: {
-        deployedOnProductId: {
-          _in: siteConfig.filterByProductIds
-        }
-      }
-    },
-    {
-      products: {
-        id: {
-          _in: siteConfig.filterByProductIds
-        }
-      }
-    },
-    {
-      assets: {
-        deployedOnProductId: {
-          _in: siteConfig.filterByProductIds
-        }
-      }
+      ]
     }
   ]
 };
 
 const withDefaultWhereFilter = (
-  query: SearchProfilesQueryVariables['where']
+  where: SearchProfilesQueryVariables['where']
 ) => {
-  if (siteConfig.filterByProductIds?.length < 1) return query;
+  if (!siteConfig.filterByProductIds?.length) return where;
 
-  if (query?._or && defaultWhereFilter?._or) {
-    query._or = [...query._or, ...defaultWhereFilter._or];
-  }
-  if (query?._and && defaultWhereFilter._and) {
-    query._and = [...query._and, ...defaultWhereFilter._and];
-  }
-  return query;
+  where = where ?? {};
+
+  where._and = where._and
+    ? [...where._and, ...defaultWhereFilter._and]
+    : [...defaultWhereFilter._and];
+
+  return where;
 };
 
 export const ProfileList = () => {
