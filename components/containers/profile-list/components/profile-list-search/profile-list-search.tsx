@@ -3,6 +3,7 @@ import { Filters } from '../../hooks/use-profile-filters';
 import { Label } from '@/components/ui/label';
 import { Filter } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Checkbox } from '@/components/ui/checkbox';
 
 export type ProfileListSearchProps = {
   filters: Filters['filters'];
@@ -29,6 +30,27 @@ export const ProfileListSearch = ({
             filters.searchFilter.setValue(event.target.value);
           }}
         />
+        <div className="flex items-center space-x-2">
+          <Checkbox
+            id="terms"
+            checked={filters.searchFilter.config?.fields.descriptionLong}
+            onCheckedChange={(value: boolean) => {
+              filters.searchFilter.setConfig(config => ({
+                ...config,
+                fields: {
+                  ...config.fields,
+                  descriptionLong: value
+                }
+              }));
+            }}
+          />
+          <label
+            htmlFor="terms"
+            className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+          >
+            Include description results
+          </label>
+        </div>
       </div>
       <Button
         onClick={() => {

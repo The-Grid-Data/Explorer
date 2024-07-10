@@ -36,9 +36,20 @@ export const useProfileFilters = () => {
   /*************************************
    * SEARCH FILTERS
    *************************************/
-  const searchFilter = useFilter({
+  const searchFilter = useFilter<{
+    fields: {
+      name: boolean;
+      descriptionLong: boolean;
+    };
+  }>({
     type: 'search',
-    initialValue: ''
+    initialValue: '',
+    config: {
+      fields: {
+        name: true,
+        descriptionLong: false
+      }
+    }
   });
 
   /*************************************
@@ -220,10 +231,15 @@ export const useProfileFilters = () => {
        *************************************/
       ...(searchFilter.value.length > 0 && {
         _or: [
-          { name: { _ilike: `%${searchFilter.value}%` } },
-          { descriptionLong: { _ilike: `%${searchFilter.value}%` } }
+          ...(searchFilter.config?.fields?.name
+            ? [{ name: { _ilike: `%${searchFilter.value}%` } }]
+            : []),
+          ...(searchFilter.config?.fields?.descriptionLong
+            ? [{ descriptionLong: { _ilike: `%${searchFilter.value}%` } }]
+            : [])
         ]
       }),
+
       /*************************************
        * PROFILE FILTERS
        *************************************/

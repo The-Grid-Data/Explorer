@@ -7,33 +7,35 @@ type Options<T> = Array<{
 }>;
 
 // Define the types for search and select filter props
-type BaseFilterProps<T> = {
+type BaseFilterProps<T, C = unknown> = {
   initialValue?: T;
+  config?: C;
 };
 
-export type SearchFilterProps = BaseFilterProps<string> & {
+export type SearchFilterProps<T, C = unknown> = BaseFilterProps<T, C> & {
   type: 'search';
+  config: C;
 };
 
-export type SelectFilterProps<T> = BaseFilterProps<T> & {
+export type SelectFilterProps<T, C = unknown> = BaseFilterProps<T, C> & {
   type: 'select';
   options?: Options<T>;
 };
 
-export type MultiSelectFilterProps<T> = BaseFilterProps<T[]> & {
+export type MultiSelectFilterProps<T, C = unknown> = BaseFilterProps<T[], C> & {
   type: 'multiselect';
   options?: Options<T>;
 };
 
-export type RangeFilterProps<T> = BaseFilterProps<[T, T]> & {
+export type RangeFilterProps<T, C = unknown> = BaseFilterProps<[T, T], C> & {
   type: 'range';
 };
 
-export type UseFilterProps<T> =
-  | SearchFilterProps
-  | SelectFilterProps<T>
-  | MultiSelectFilterProps<T>
-  | RangeFilterProps<T>;
+export type UseFilterProps<T = unknown, C = unknown> =
+  | SearchFilterProps<T, C>
+  | SelectFilterProps<T, C>
+  | MultiSelectFilterProps<T, C>
+  | RangeFilterProps<T, C>;
 
 export type BaseReturn = {
   reset: () => void;
@@ -41,10 +43,14 @@ export type BaseReturn = {
 };
 
 // Define overloads for the useFilter function
-export function useFilter(props: SearchFilterProps): BaseReturn & {
+export function useFilter<C>(
+  props: SearchFilterProps<string, C>
+): BaseReturn & {
   type: 'search';
   value: string;
   setValue: React.Dispatch<React.SetStateAction<string>>;
+  config?: C;
+  setConfig: React.Dispatch<React.SetStateAction<C>>;
 };
 
 export function useFilter<T extends string | number>(
@@ -78,9 +84,10 @@ export function useFilter<T extends string | number | null>(
 };
 
 // Implement the useFilter function
-export function useFilter<T>(props: UseFilterProps<T>): any {
+export function useFilter<T, C = unknown>(props: UseFilterProps<T, C>): any {
   const { initialValue, type } = props;
   const [value, setValue] = useState(initialValue);
+  const [config, setConfig] = useState(props?.config);
 
   const reset = () => {
     setValue(initialValue);
@@ -116,7 +123,9 @@ export function useFilter<T>(props: UseFilterProps<T>): any {
       ...base,
       active: (value as string)?.length > 0,
       value: value as string,
-      setValue: setValue as React.Dispatch<React.SetStateAction<string>>
+      setValue: setValue as React.Dispatch<React.SetStateAction<string>>,
+      config: config as C,
+      setConfig: setConfig as React.Dispatch<React.SetStateAction<C>>
     };
   }
 
