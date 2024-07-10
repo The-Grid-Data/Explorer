@@ -17,7 +17,8 @@ import {
 import { siteConfig } from '@/lib/site-config';
 
 const defaultWhereFilter = {
-  _or: [
+  _or: [],
+  _and: [
     {
       products: {
         supportsProducts: {
@@ -56,8 +57,11 @@ const withDefaultWhereFilter = (
 ) => {
   if (siteConfig.filterByProductIds?.length < 1) return query;
 
-  if (query?._or) {
+  if (query?._or && defaultWhereFilter?._or) {
     query._or = [...query._or, ...defaultWhereFilter._or];
+  }
+  if (query?._and && defaultWhereFilter._and) {
+    query._and = [...query._and, ...defaultWhereFilter._and];
   }
   return query;
 };
