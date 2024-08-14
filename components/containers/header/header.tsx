@@ -30,6 +30,19 @@ const claimProfileButton = (
   </Link>
 );
 
+const cloneRepoButton = (
+  <Link
+    href="https://github.com/The-Grid-Data/Explorer"
+    target="_blank"
+    rel="noopener noreferrer"
+  >
+    <Button className="w-full md:w-fit" variant="outline">
+      <SiGithub className="mr-2" size={18} />
+      Clone project
+    </Button>
+  </Link>
+);
+
 export const Header = () => {
   return (
     <header className="container flex w-full items-center py-4">
