@@ -51,7 +51,7 @@ export const Header = () => {
           <Image
             alt="Superatemlogo"
             src="/Superteam.svg"
-            width={300}
+            width={250}
             height={1200}
           />
         </Link>
