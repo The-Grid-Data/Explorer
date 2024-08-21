@@ -366,8 +366,8 @@ export type Assets_Var_Samp_Order_By = {
 
 export type Countries = {
   __typename?: 'countries';
-  Code: Scalars['String']['output'];
-  Name: Scalars['String']['output'];
+  code: Scalars['String']['output'];
+  name: Scalars['String']['output'];
   /** An array relationship */
   entities: Array<Entities>;
   id: Scalars['Int']['output'];
@@ -382,8 +382,8 @@ export type CountriesEntitiesArgs = {
 
 /** Boolean expression to filter rows from the table "countries". All fields are combined with a logical 'AND'. */
 export type Countries_Bool_Exp = {
-  Code?: InputMaybe<String_Mysql8_Comparison_Exp>;
-  Name?: InputMaybe<String_Mysql8_Comparison_Exp>;
+  code?: InputMaybe<String_Mysql8_Comparison_Exp>;
+  name?: InputMaybe<String_Mysql8_Comparison_Exp>;
   _and?: InputMaybe<Array<Countries_Bool_Exp>>;
   _not?: InputMaybe<Countries_Bool_Exp>;
   _or?: InputMaybe<Array<Countries_Bool_Exp>>;
@@ -393,8 +393,8 @@ export type Countries_Bool_Exp = {
 
 /** Ordering options when selecting data from "countries". */
 export type Countries_Order_By = {
-  Code?: InputMaybe<Mysql8_Order_By>;
-  Name?: InputMaybe<Mysql8_Order_By>;
+  code?: InputMaybe<Mysql8_Order_By>;
+  name?: InputMaybe<Mysql8_Order_By>;
   entities_aggregate?: InputMaybe<Entities_Aggregate_Order_By>;
   id?: InputMaybe<Mysql8_Order_By>;
 };
@@ -2232,7 +2232,7 @@ export type GetFiltersOptionsQuery = {
     definition: string;
   }>;
   entities: Array<{ __typename?: 'entities'; name: string; id: number }>;
-  countries: Array<{ __typename?: 'countries'; Name: string; id: number }>;
+  countries: Array<{ __typename?: 'countries'; name: string; id: number }>;
 };
 
 export type GetOrderByFieldsQueryVariables = Exact<{
@@ -2429,7 +2429,7 @@ export type GetProfileQuery = {
       id: number;
       parentEntityId?: number | null;
       taxIdentificationNumber: string;
-      country: { __typename?: 'countries'; Code: string; Name: string };
+      country: { __typename?: 'countries'; Code: string; name: string };
       entityType?: {
         __typename?: 'entityTypes';
         name: string;
@@ -2545,7 +2545,7 @@ export const GetFiltersOptionsDocument = `
     id
   }
   countries {
-    Name
+    name
     id
   }
 }
@@ -2849,8 +2849,8 @@ export const GetProfileDocument = `
       countryId
       address
       country {
-        Code
-        Name
+        code
+        name
       }
       id
       entityType {

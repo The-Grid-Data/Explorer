@@ -45,7 +45,7 @@ export const EntityCard = ({ entity }: EntityCardProps) => {
               value={entity.taxIdentificationNumber}
             />
             <ProfileFeature label="Lei Code" value={entity.leiNumber} />
-            <ProfileFeature label="Country" value={entity.country.Name} />
+            <ProfileFeature label="Country" value={entity.country.name} />
           </ProfileFeatureContainer>
           <div className="space-y-2">
             <ProfileDataPointContainer>
