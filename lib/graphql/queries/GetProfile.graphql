@@ -133,8 +133,8 @@ query GetProfile($where: profiles_bool_exp) {
       countryId
       address
       country {
-        Code
-        Name
+        code
+        name
       }
       id
       entityType {

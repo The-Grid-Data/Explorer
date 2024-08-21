@@ -217,7 +217,7 @@ export const useProfileFilters = () => {
   const entityCountryFilter = useFilter<number>({
     options: data?.countries.map(item => ({
       value: item.id,
-      label: item.Name,
+      label: item.name,
       description: null
     })),
     type: 'multiselect',

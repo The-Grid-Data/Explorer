@@ -79,7 +79,7 @@ query GetFiltersOptions(
     id
   }
   countries {
-    Name
+    name
     id
   }
 }
