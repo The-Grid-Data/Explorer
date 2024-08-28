@@ -8,7 +8,7 @@ export const Hero = () => {
       </Badge>
 
       <h1 className="scroll-m-20 text-balance text-center text-4xl font-extrabold leading-tight tracking-tight lg:text-5xl lg:leading-[1.1]">
-        A node of Truth around information on Assets, Products, and Services in Solana.
+        A Node of Truth on Assets, Products, and Services in Solana.
       </h1>
       <p className="max-w-xl text-center text-lg font-light text-foreground">
         Use the filters below (mainly Profile sector + Product Type) to sort through and discover the ecosystem. 
