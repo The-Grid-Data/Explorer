@@ -1,4 +1,5 @@
 import { PropsWithChildren } from 'react';
+import { Separator } from '@/components/ui/separator';
 
 export type FilterGroupProps = PropsWithChildren<{
   title: string;
@@ -7,7 +8,10 @@ export type FilterGroupProps = PropsWithChildren<{
 export const FilterGroup = ({ title, children }: FilterGroupProps) => {
   return (
     <div className="flex w-full flex-col gap-2">
-      <h3 className="text-xs font-medium text-muted-foreground">{title}</h3>
+      <div>
+        <h3 className="font-bold">{title}</h3>
+        <Separator className="my-1" />
+      </div>
       {children}
     </div>
   );

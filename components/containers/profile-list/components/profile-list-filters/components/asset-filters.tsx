@@ -6,7 +6,7 @@ export const AssetFilters = ({ filters }: { filters: Filters['filters'] }) => {
   return (
     <FilterGroup title="Asset filters">
       <ComboBox
-        label="Type"
+        label="Asset Type"
         selected={filters.assetTypeFilter.value}
         onChange={options => {
           filters.assetTypeFilter.setValue(options);
@@ -15,7 +15,7 @@ export const AssetFilters = ({ filters }: { filters: Filters['filters'] }) => {
       />
 
       <ComboBox
-        label="Asset ticker"
+        label="Asset Ticker"
         selected={filters.assetTickerFilter.value}
         onChange={options => {
           filters.assetTickerFilter.setValue(options);
@@ -24,7 +24,7 @@ export const AssetFilters = ({ filters }: { filters: Filters['filters'] }) => {
       />
 
       <ComboBox
-        label="Deployed on"
+        label="Deployed on Products"
         selected={filters.assetDeployedOnFilter.value}
         onChange={options => {
           filters.assetDeployedOnFilter.setValue(options);
@@ -33,7 +33,7 @@ export const AssetFilters = ({ filters }: { filters: Filters['filters'] }) => {
       />
 
       <ComboBox
-        label="Asset standard"
+        label="Asset Standard"
         selected={filters.assetStandardFilter.value}
         onChange={options => {
           filters.assetStandardFilter.setValue(options);

@@ -11,7 +11,7 @@ export const ProfileFilters = ({
   return (
     <FilterGroup title="Profile filters">
       <ComboBox
-        label="Type"
+        label="Profile Type"
         selected={filters.profileTypeFilter.value}
         onChange={options => {
           filters.profileTypeFilter.setValue(options);
@@ -20,7 +20,7 @@ export const ProfileFilters = ({
       />
 
       <ComboBox
-        label="Sector"
+        label="Profile Sector"
         selected={filters.profileSectorsFilter.value}
         onChange={options => {
           filters.profileSectorsFilter.setValue(options);
@@ -29,7 +29,7 @@ export const ProfileFilters = ({
       />
 
       <ComboBox
-        label="Status"
+        label="Profile Status"
         selected={filters.profileStatusesFilter.value}
         onChange={options => {
           filters.profileStatusesFilter.setValue(options);
@@ -42,7 +42,7 @@ export const ProfileFilters = ({
         onChange={date => {
           filters.profileFoundingDateFilter.setValue(date);
         }}
-        label="Founding date"
+        label="Profile Founding date"
       />
     </FilterGroup>
   );

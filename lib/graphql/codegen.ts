@@ -7,6 +7,11 @@ const codegenConfig: CodegenConfig = {
   schema: process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT_URL,
   overwrite: true,
   ignoreNoDocuments: true,
+  config: {
+    skipDocumentsValidation: {
+      ignoreRules: ['MaxIntrospectionDepthRule']
+    }
+  },
   documents: './lib/graphql/queries/**/*.graphql',
   generates: {
     'lib/graphql/generated-graphql.ts': {

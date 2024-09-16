@@ -10,69 +10,15 @@ import { ProfileListSearch } from './components/profile-list-search';
 import { ProfileListSorting } from './components/profile-list-sorting';
 import { useProfileFilters } from './hooks/use-profile-filters';
 import { useProfileSorting } from './hooks/use-profile-sorting';
-import {
-  SearchProfilesDocument,
-  SearchProfilesQueryVariables
-} from '@/lib/graphql/generated-graphql';
+import { SearchProfilesDocument } from '@/lib/graphql/generated-graphql';
+import { withDefaultWhereFilter } from '@/lib/utils/default-where-filter';
+import CheckboxGrid from '@/components/ui/checkbox-grid';
 import { siteConfig } from '@/lib/site-config';
 
-const defaultWhereFilter = {
-  _and: [
-    {
-      _or: [
-        {
-          products: {
-            supportsProducts: {
-              supportsProductId: {
-                _in: siteConfig.filterByProductIds
-              }
-            }
-          }
-        },
-        {
-          products: {
-            deployedOnProductId: {
-              _in: siteConfig.filterByProductIds
-            }
-          }
-        },
-        {
-          products: {
-            id: {
-              _in: siteConfig.filterByProductIds
-            }
-          }
-        },
-        {
-          assets: {
-            deployedOnProductId: {
-              _in: siteConfig.filterByProductIds
-            }
-          }
-        }
-      ]
-    }
-  ]
-};
-
-const withDefaultWhereFilter = (
-  where: SearchProfilesQueryVariables['where']
-) => {
-  if (!siteConfig.filterByProductIds?.length) return where;
-
-  where = where ?? {};
-
-  where._and = where._and
-    ? [...where._and, ...defaultWhereFilter._and]
-    : [...defaultWhereFilter._and];
-
-  return where;
-};
-
 export const ProfileList = () => {
-  const { filters, toQueryWhereFields, filtersVisibility } =
-    useProfileFilters();
+  const { filters, toQueryWhereFields } = useProfileFilters();
   const { sorting, toQuerySortByFields } = useProfileSorting();
+
   const query = {
     where: withDefaultWhereFilter(toQueryWhereFields()),
     order_by: [toQuerySortByFields()],
@@ -82,30 +28,49 @@ export const ProfileList = () => {
 
   return (
     <div className="w-full space-y-4">
-      <div className="container space-y-4">
-        <div className="flex-1">
-          <ProfileListSearch
-            filtersVisibility={filtersVisibility}
-            filters={filters}
-          />
-        </div>
-      </div>
-      <ProfileListFilters
-        filtersVisibility={filtersVisibility}
-        filters={filters}
-      />
-
-      <div className="container space-y-4 md:space-y-2">
-        <div className="flex flex-col items-end justify-end gap-4 md:mt-0 md:flex-row">
-          <ProfileListFiltersLabel filters={filters} />
-          <ProfileListSorting sorting={sorting} />
-          <QueryDialogButton
-            queryDocument={SearchProfilesDocument}
-            variables={query}
-            buttonLabel="View query"
+      <div className="container space-y-4 md:space-y-10">
+        <div className="space-y-4">
+          <h1 className="text-xl font-bold lg:text-xl ">Product types</h1>
+          <CheckboxGrid
+            selected={filters.productTypesFilter.value}
+            options={filters.productTypesFilter.options ?? []}
+            onChange={selected => {
+              filters.productTypesFilter.setValue(selected);
+            }}
           />
         </div>
 
+        <div className="space-y-4">
+          <h1 className="text-xl font-bold lg:text-xl ">Tags</h1>
+          <CheckboxGrid
+            selected={filters.tagsFilter.value}
+            options={filters.tagsFilter.options ?? []}
+            onChange={selected => {
+              filters.tagsFilter.setValue(selected);
+            }}
+          />
+        </div>
+
+        <div className="flex flex-col items-start gap-12 pt-4 md:flex-row">
+          <div className="flex w-full flex-col gap-4">
+            <ProfileListSearch filters={filters} />
+            <div className="flex flex-col gap-4 md:flex-row">
+              <ProfileListFilters filters={filters} />
+              <ProfileListFiltersLabel filters={filters} />
+            </div>
+          </div>
+
+          <div className="flex w-full flex-col items-end gap-4 md:w-fit md:flex-row md:justify-start">
+            <ProfileListSorting sorting={sorting} />
+            {siteConfig.displayQueries && (
+              <QueryDialogButton
+                queryDocument={SearchProfilesDocument}
+                variables={query}
+                buttonLabel="View query"
+              />
+            )}
+          </div>
+        </div>
         <ProfileListCards query={query} />
       </div>
     </div>
