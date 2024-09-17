@@ -40,16 +40,18 @@ export const ProfileList = () => {
           />
         </div>
 
-        <div className="space-y-4">
-          <h1 className="text-xl font-bold lg:text-xl ">Tags</h1>
-          <CheckboxGrid
-            selected={filters.tagsFilter.value}
-            options={filters.tagsFilter.options ?? []}
-            onChange={selected => {
-              filters.tagsFilter.setValue(selected);
-            }}
-          />
-        </div>
+        {Boolean(siteConfig.tags.length) && (
+          <div className="space-y-4">
+            <h1 className="text-xl font-bold lg:text-xl ">Tags</h1>
+            <CheckboxGrid
+              selected={filters.tagsFilter.value}
+              options={filters.tagsFilter.options ?? []}
+              onChange={selected => {
+                filters.tagsFilter.setValue(selected);
+              }}
+            />
+          </div>
+        )}
 
         <div className="flex flex-col items-start gap-12 pt-4 md:flex-row">
           <div className="flex w-full flex-col gap-4">
