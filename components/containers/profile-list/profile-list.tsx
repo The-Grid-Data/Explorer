@@ -40,7 +40,7 @@ export const ProfileList = () => {
           />
         </div>
 
-        {Boolean(siteConfig.tags.length) && (
+        {!Boolean(siteConfig.tags.length) && (
           <div className="space-y-4">
             <h1 className="text-xl font-bold lg:text-xl ">Tags</h1>
             <CheckboxGrid
