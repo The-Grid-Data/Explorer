@@ -50,11 +50,10 @@ export default function CheckboxGrid<T extends string | number>({
     <div>
       <div className="mb-6 flex flex-wrap gap-4">
         {visibleItems.map(option => (
-          <TooltipProvider>
+          <TooltipProvider key={option.value.toString()}>
             <Tooltip>
               <TooltipTrigger asChild>
                 <Button
-                  key={option.value.toString()}
                   variant={
                     selected.includes(option.value) ? 'outline' : 'secondary'
                   }
