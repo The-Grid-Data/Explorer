@@ -11,8 +11,7 @@ export const Hero = () => {
         A Node of Truth on Assets, Products, and Services in Solana.
       </h1>
       <p className="max-w-xl text-center text-lg font-light text-foreground">
-        Use the filters below (mainly Profile sector + Product Type) to sort
-        through and discover the ecosystem.
+        Explore the largest offchain dataset for Solana projects, use the filters to find projects relevant to you. 
       </p>
     </section>
   );
