@@ -10,11 +10,6 @@ export type Filters = ReturnType<typeof useProfileFilters>;
 
 export const useProfileFilters = () => {
   const { data } = useGetFiltersOptionsQuery({
-    tags: {
-      ...(siteConfig.tags?.length > 0 && {
-        id: { _in: siteConfig.tags }
-      })
-    },
     productSupports: {
       ...(siteConfig.blockchainIds?.length > 0 && {
         supportsProductId: { _in: siteConfig.blockchainIds }

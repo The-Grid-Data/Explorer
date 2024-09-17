@@ -47,9 +47,7 @@ export const ProfileCard = ({ profile }: ProfileCardCardProps) => {
                 <ProfileCardIconLinks profile={profile} />
               </div>
               <Button className="w-full lg:w-fit" variant="default" asChild>
-                <Link target="_blank" href={paths.profile.detail(profile.slug)}>
-                  More info
-                </Link>
+                <Link href={paths.profile.detail(profile.slug)}>More info</Link>
               </Button>
             </div>
           </div>
