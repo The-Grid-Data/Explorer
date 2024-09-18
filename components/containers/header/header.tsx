@@ -9,12 +9,8 @@ import { Button } from '@/components/ui/button';
 import Image from 'next/image';
 
 const learnMoreButton = (
-  <Link
-    target="_blank"
-    rel="noopener noreferrer"
-    href="https://docs.thegrid.id"
-  >
-    <Button className="w-full md:w-fit">Read the docs</Button>
+  <Link target="_blank" rel="noopener noreferrer" href="https://thegrid.id">
+    <Button className="w-full md:w-fit">The Grid Data API</Button>
   </Link>
 );
 
@@ -22,7 +18,7 @@ const claimProfileButton = (
   <Link
     target="_blank"
     rel="noopener noreferrer"
-    href="https://data.thegrid.id/form/d72408d4-d3f2-45ee-9248-70e86bfba351" 
+    href="https://data.thegrid.id/form/d72408d4-d3f2-45ee-9248-70e86bfba351"
   >
     <Button variant="outline" className="w-full md:w-fit">
       Claim your profile
@@ -32,7 +28,7 @@ const claimProfileButton = (
 
 const cloneRepoButton = (
   <Link
-    href="https://github.com/The-Grid-Data/Explorer"
+    href="https://github.com/The-Grid-Data/Superteam_Solana_Explorer"
     target="_blank"
     rel="noopener noreferrer"
   >
@@ -49,9 +45,9 @@ export const Header = () => {
       <div className="w-full items-center justify-start">
         <Link href="/" className="flex items-center">
           <Image
-            alt="The grid logo"
-            src="/thegrid-logo.svg"
-            width={160}
+            alt="Superatemlogo"
+            src="/Superteam.svg"
+            width={250}
             height={1200}
           />
         </Link>
