@@ -6,7 +6,7 @@ export const EntityFilters = ({ filters }: { filters: Filters['filters'] }) => {
   return (
     <FilterGroup title="Entity filters">
       <ComboBox
-        label="Type"
+        label="Entity Type"
         selected={filters.entityTypeFilter.value}
         onChange={options => {
           filters.entityTypeFilter.setValue(options);
@@ -15,7 +15,7 @@ export const EntityFilters = ({ filters }: { filters: Filters['filters'] }) => {
       />
 
       <ComboBox
-        label="Name"
+        label="Entity Name"
         selected={filters.entityNameFilter.value}
         onChange={options => {
           filters.entityNameFilter.setValue(options);
@@ -24,7 +24,7 @@ export const EntityFilters = ({ filters }: { filters: Filters['filters'] }) => {
       />
 
       <ComboBox
-        label="Country"
+        label="Entity Country"
         selected={filters.entityCountryFilter.value}
         onChange={options => {
           filters.entityCountryFilter.setValue(options);

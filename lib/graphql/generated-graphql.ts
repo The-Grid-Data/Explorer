@@ -86,42 +86,6 @@ export type String_Mysql8_Comparison_Exp = {
   contains?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type Tgs = {
-  __typename?: 'TGS';
-  Description: Scalars['String']['output'];
-  Name: Scalars['String']['output'];
-  Parameter_ID: Scalars['String']['output'];
-  Specifications: Scalars['String']['output'];
-  TGSPrefix: Scalars['String']['output'];
-  Table: Scalars['String']['output'];
-  Type: Scalars['String']['output'];
-};
-
-/** Boolean expression to filter rows from the table "TGS". All fields are combined with a logical 'AND'. */
-export type Tgs_Bool_Exp = {
-  Description?: InputMaybe<String_Mysql8_Comparison_Exp>;
-  Name?: InputMaybe<String_Mysql8_Comparison_Exp>;
-  Parameter_ID?: InputMaybe<String_Mysql8_Comparison_Exp>;
-  Specifications?: InputMaybe<String_Mysql8_Comparison_Exp>;
-  TGSPrefix?: InputMaybe<String_Mysql8_Comparison_Exp>;
-  Table?: InputMaybe<String_Mysql8_Comparison_Exp>;
-  Type?: InputMaybe<String_Mysql8_Comparison_Exp>;
-  _and?: InputMaybe<Array<Tgs_Bool_Exp>>;
-  _not?: InputMaybe<Tgs_Bool_Exp>;
-  _or?: InputMaybe<Array<Tgs_Bool_Exp>>;
-};
-
-/** Ordering options when selecting data from "TGS". */
-export type Tgs_Order_By = {
-  Description?: InputMaybe<Mysql8_Order_By>;
-  Name?: InputMaybe<Mysql8_Order_By>;
-  Parameter_ID?: InputMaybe<Mysql8_Order_By>;
-  Specifications?: InputMaybe<Mysql8_Order_By>;
-  TGSPrefix?: InputMaybe<Mysql8_Order_By>;
-  Table?: InputMaybe<Mysql8_Order_By>;
-  Type?: InputMaybe<Mysql8_Order_By>;
-};
-
 export type AssetStandardSupport = {
   __typename?: 'assetStandardSupport';
   /** An array relationship */
@@ -367,10 +331,10 @@ export type Assets_Var_Samp_Order_By = {
 export type Countries = {
   __typename?: 'countries';
   code: Scalars['String']['output'];
-  name: Scalars['String']['output'];
   /** An array relationship */
   entities: Array<Entities>;
   id: Scalars['Int']['output'];
+  name: Scalars['String']['output'];
 };
 
 export type CountriesEntitiesArgs = {
@@ -382,21 +346,21 @@ export type CountriesEntitiesArgs = {
 
 /** Boolean expression to filter rows from the table "countries". All fields are combined with a logical 'AND'. */
 export type Countries_Bool_Exp = {
-  code?: InputMaybe<String_Mysql8_Comparison_Exp>;
-  name?: InputMaybe<String_Mysql8_Comparison_Exp>;
   _and?: InputMaybe<Array<Countries_Bool_Exp>>;
   _not?: InputMaybe<Countries_Bool_Exp>;
   _or?: InputMaybe<Array<Countries_Bool_Exp>>;
+  code?: InputMaybe<String_Mysql8_Comparison_Exp>;
   entities?: InputMaybe<Entities_Bool_Exp>;
   id?: InputMaybe<Int_Mysql8_Comparison_Exp>;
+  name?: InputMaybe<String_Mysql8_Comparison_Exp>;
 };
 
 /** Ordering options when selecting data from "countries". */
 export type Countries_Order_By = {
   code?: InputMaybe<Mysql8_Order_By>;
-  name?: InputMaybe<Mysql8_Order_By>;
   entities_aggregate?: InputMaybe<Entities_Aggregate_Order_By>;
   id?: InputMaybe<Mysql8_Order_By>;
+  name?: InputMaybe<Mysql8_Order_By>;
 };
 
 /** Boolean expression to compare columns of type "date". All fields are combined with logical 'AND'. */
@@ -1136,6 +1100,135 @@ export type ProfileStatuses_Order_By = {
   profiles_aggregate?: InputMaybe<Profiles_Aggregate_Order_By>;
 };
 
+/**   */
+export type ProfileTags = {
+  __typename?: 'profileTags';
+  /**   */
+  id: Scalars['Int']['output'];
+  /** An object relationship */
+  profile: Profiles;
+  /**   */
+  profileId: Scalars['Int']['output'];
+  /** An object relationship */
+  tag: Tags;
+  /**   */
+  tagId: Scalars['Int']['output'];
+};
+
+/** order by aggregate values of table "profileTags" */
+export type ProfileTags_Aggregate_Order_By = {
+  avg?: InputMaybe<ProfileTags_Avg_Order_By>;
+  count?: InputMaybe<Mysql8_Order_By>;
+  max?: InputMaybe<ProfileTags_Max_Order_By>;
+  min?: InputMaybe<ProfileTags_Min_Order_By>;
+  stddev_pop?: InputMaybe<ProfileTags_Stddev_Pop_Order_By>;
+  stddev_samp?: InputMaybe<ProfileTags_Stddev_Samp_Order_By>;
+  sum?: InputMaybe<ProfileTags_Sum_Order_By>;
+  var_pop?: InputMaybe<ProfileTags_Var_Pop_Order_By>;
+  var_samp?: InputMaybe<ProfileTags_Var_Samp_Order_By>;
+};
+
+/** order by avg() on columns of table "profileTags" */
+export type ProfileTags_Avg_Order_By = {
+  /**   */
+  id?: InputMaybe<Mysql8_Order_By>;
+  /**   */
+  profileId?: InputMaybe<Mysql8_Order_By>;
+  /**   */
+  tagId?: InputMaybe<Mysql8_Order_By>;
+};
+
+/** Boolean expression to filter rows from the table "profileTags". All fields are combined with a logical 'AND'. */
+export type ProfileTags_Bool_Exp = {
+  _and?: InputMaybe<Array<ProfileTags_Bool_Exp>>;
+  _not?: InputMaybe<ProfileTags_Bool_Exp>;
+  _or?: InputMaybe<Array<ProfileTags_Bool_Exp>>;
+  id?: InputMaybe<Int_Mysql8_Comparison_Exp>;
+  profile?: InputMaybe<Profiles_Bool_Exp>;
+  profileId?: InputMaybe<Int_Mysql8_Comparison_Exp>;
+  tag?: InputMaybe<Tags_Bool_Exp>;
+  tagId?: InputMaybe<Int_Mysql8_Comparison_Exp>;
+};
+
+/** order by max() on columns of table "profileTags" */
+export type ProfileTags_Max_Order_By = {
+  /**   */
+  id?: InputMaybe<Mysql8_Order_By>;
+  /**   */
+  profileId?: InputMaybe<Mysql8_Order_By>;
+  /**   */
+  tagId?: InputMaybe<Mysql8_Order_By>;
+};
+
+/** order by min() on columns of table "profileTags" */
+export type ProfileTags_Min_Order_By = {
+  /**   */
+  id?: InputMaybe<Mysql8_Order_By>;
+  /**   */
+  profileId?: InputMaybe<Mysql8_Order_By>;
+  /**   */
+  tagId?: InputMaybe<Mysql8_Order_By>;
+};
+
+/** Ordering options when selecting data from "profileTags". */
+export type ProfileTags_Order_By = {
+  id?: InputMaybe<Mysql8_Order_By>;
+  profile?: InputMaybe<Profiles_Order_By>;
+  profileId?: InputMaybe<Mysql8_Order_By>;
+  tag?: InputMaybe<Tags_Order_By>;
+  tagId?: InputMaybe<Mysql8_Order_By>;
+};
+
+/** order by stddev_pop() on columns of table "profileTags" */
+export type ProfileTags_Stddev_Pop_Order_By = {
+  /**   */
+  id?: InputMaybe<Mysql8_Order_By>;
+  /**   */
+  profileId?: InputMaybe<Mysql8_Order_By>;
+  /**   */
+  tagId?: InputMaybe<Mysql8_Order_By>;
+};
+
+/** order by stddev_samp() on columns of table "profileTags" */
+export type ProfileTags_Stddev_Samp_Order_By = {
+  /**   */
+  id?: InputMaybe<Mysql8_Order_By>;
+  /**   */
+  profileId?: InputMaybe<Mysql8_Order_By>;
+  /**   */
+  tagId?: InputMaybe<Mysql8_Order_By>;
+};
+
+/** order by sum() on columns of table "profileTags" */
+export type ProfileTags_Sum_Order_By = {
+  /**   */
+  id?: InputMaybe<Mysql8_Order_By>;
+  /**   */
+  profileId?: InputMaybe<Mysql8_Order_By>;
+  /**   */
+  tagId?: InputMaybe<Mysql8_Order_By>;
+};
+
+/** order by var_pop() on columns of table "profileTags" */
+export type ProfileTags_Var_Pop_Order_By = {
+  /**   */
+  id?: InputMaybe<Mysql8_Order_By>;
+  /**   */
+  profileId?: InputMaybe<Mysql8_Order_By>;
+  /**   */
+  tagId?: InputMaybe<Mysql8_Order_By>;
+};
+
+/** order by var_samp() on columns of table "profileTags" */
+export type ProfileTags_Var_Samp_Order_By = {
+  /**   */
+  id?: InputMaybe<Mysql8_Order_By>;
+  /**   */
+  profileId?: InputMaybe<Mysql8_Order_By>;
+  /**   */
+  tagId?: InputMaybe<Mysql8_Order_By>;
+};
+
 export type ProfileTypes = {
   __typename?: 'profileTypes';
   definition: Scalars['String']['output'];
@@ -1191,6 +1284,8 @@ export type Profiles = {
   /** An object relationship */
   profileStatus?: Maybe<ProfileStatuses>;
   profileStatusId?: Maybe<Scalars['Int']['output']>;
+  /** An array relationship */
+  profileTags: Array<ProfileTags>;
   /** An object relationship */
   profileType?: Maybe<ProfileTypes>;
   profileTypeId?: Maybe<Scalars['Int']['output']>;
@@ -1224,6 +1319,13 @@ export type ProfilesProductsArgs = {
   offset?: InputMaybe<Scalars['Int']['input']>;
   order_by?: InputMaybe<Array<Products_Order_By>>;
   where?: InputMaybe<Products_Bool_Exp>;
+};
+
+export type ProfilesProfileTagsArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<ProfileTags_Order_By>>;
+  where?: InputMaybe<ProfileTags_Bool_Exp>;
 };
 
 export type ProfilesSocialsArgs = {
@@ -1272,6 +1374,7 @@ export type Profiles_Bool_Exp = {
   profileSectorId?: InputMaybe<Int_Mysql8_Comparison_Exp>;
   profileStatus?: InputMaybe<ProfileStatuses_Bool_Exp>;
   profileStatusId?: InputMaybe<Int_Mysql8_Comparison_Exp>;
+  profileTags?: InputMaybe<ProfileTags_Bool_Exp>;
   profileType?: InputMaybe<ProfileTypes_Bool_Exp>;
   profileTypeId?: InputMaybe<Int_Mysql8_Comparison_Exp>;
   slug?: InputMaybe<String_Mysql8_Comparison_Exp>;
@@ -1336,6 +1439,7 @@ export type Profiles_Order_By = {
   profileSectorId?: InputMaybe<Mysql8_Order_By>;
   profileStatus?: InputMaybe<ProfileStatuses_Order_By>;
   profileStatusId?: InputMaybe<Mysql8_Order_By>;
+  profileTags_aggregate?: InputMaybe<ProfileTags_Aggregate_Order_By>;
   profileType?: InputMaybe<ProfileTypes_Order_By>;
   profileTypeId?: InputMaybe<Mysql8_Order_By>;
   slug?: InputMaybe<Mysql8_Order_By>;
@@ -1389,10 +1493,6 @@ export type Profiles_Var_Samp_Order_By = {
 
 export type Query_Root = {
   __typename?: 'query_root';
-  /** fetch data from the table: "TGS" */
-  TGS: Array<Tgs>;
-  /** fetch data from the table: "TGS" using primary key columns */
-  TGS_by_pk?: Maybe<Tgs>;
   /** fetch data from the table: "assetStandardSupport" */
   assetStandardSupport: Array<AssetStandardSupport>;
   /** fetch data from the table: "assetStandardSupport" using primary key columns */
@@ -1441,6 +1541,10 @@ export type Query_Root = {
   profileStatuses: Array<ProfileStatuses>;
   /** fetch data from the table: "profileStatuses" using primary key columns */
   profileStatuses_by_pk?: Maybe<ProfileStatuses>;
+  /** An array relationship */
+  profileTags: Array<ProfileTags>;
+  /** fetch data from the table: "profileTags" using primary key columns */
+  profileTags_by_pk?: Maybe<ProfileTags>;
   /** fetch data from the table: "profileTypes" */
   profileTypes: Array<ProfileTypes>;
   /** fetch data from the table: "profileTypes" using primary key columns */
@@ -1457,17 +1561,14 @@ export type Query_Root = {
   socials: Array<Socials>;
   /** fetch data from the table: "socials" using primary key columns */
   socials_by_pk?: Maybe<Socials>;
-};
-
-export type Query_RootTgsArgs = {
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Tgs_Order_By>>;
-  where?: InputMaybe<Tgs_Bool_Exp>;
-};
-
-export type Query_RootTgs_By_PkArgs = {
-  Parameter_ID: Scalars['String']['input'];
+  /** fetch data from the table: "tagTypes" */
+  tagTypes: Array<TagTypes>;
+  /** fetch data from the table: "tagTypes" using primary key columns */
+  tagTypes_by_pk?: Maybe<TagTypes>;
+  /** fetch data from the table: "tags" */
+  tags: Array<Tags>;
+  /** fetch data from the table: "tags" using primary key columns */
+  tags_by_pk?: Maybe<Tags>;
 };
 
 export type Query_RootAssetStandardSupportArgs = {
@@ -1602,6 +1703,17 @@ export type Query_RootProfileStatuses_By_PkArgs = {
   id: Scalars['Int']['input'];
 };
 
+export type Query_RootProfileTagsArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<ProfileTags_Order_By>>;
+  where?: InputMaybe<ProfileTags_Bool_Exp>;
+};
+
+export type Query_RootProfileTags_By_PkArgs = {
+  id: Scalars['Int']['input'];
+};
+
 export type Query_RootProfileTypesArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
@@ -1643,6 +1755,28 @@ export type Query_RootSocialsArgs = {
 };
 
 export type Query_RootSocials_By_PkArgs = {
+  id: Scalars['Int']['input'];
+};
+
+export type Query_RootTagTypesArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<TagTypes_Order_By>>;
+  where?: InputMaybe<TagTypes_Bool_Exp>;
+};
+
+export type Query_RootTagTypes_By_PkArgs = {
+  id: Scalars['Int']['input'];
+};
+
+export type Query_RootTagsArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Tags_Order_By>>;
+  where?: InputMaybe<Tags_Bool_Exp>;
+};
+
+export type Query_RootTags_By_PkArgs = {
   id: Scalars['Int']['input'];
 };
 
@@ -1794,10 +1928,6 @@ export type Socials_Var_Samp_Order_By = {
 
 export type Subscription_Root = {
   __typename?: 'subscription_root';
-  /** fetch data from the table: "TGS" */
-  TGS: Array<Tgs>;
-  /** fetch data from the table: "TGS" using primary key columns */
-  TGS_by_pk?: Maybe<Tgs>;
   /** fetch data from the table: "assetStandardSupport" */
   assetStandardSupport: Array<AssetStandardSupport>;
   /** fetch data from the table: "assetStandardSupport" using primary key columns */
@@ -1846,6 +1976,10 @@ export type Subscription_Root = {
   profileStatuses: Array<ProfileStatuses>;
   /** fetch data from the table: "profileStatuses" using primary key columns */
   profileStatuses_by_pk?: Maybe<ProfileStatuses>;
+  /** An array relationship */
+  profileTags: Array<ProfileTags>;
+  /** fetch data from the table: "profileTags" using primary key columns */
+  profileTags_by_pk?: Maybe<ProfileTags>;
   /** fetch data from the table: "profileTypes" */
   profileTypes: Array<ProfileTypes>;
   /** fetch data from the table: "profileTypes" using primary key columns */
@@ -1862,17 +1996,14 @@ export type Subscription_Root = {
   socials: Array<Socials>;
   /** fetch data from the table: "socials" using primary key columns */
   socials_by_pk?: Maybe<Socials>;
-};
-
-export type Subscription_RootTgsArgs = {
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Tgs_Order_By>>;
-  where?: InputMaybe<Tgs_Bool_Exp>;
-};
-
-export type Subscription_RootTgs_By_PkArgs = {
-  Parameter_ID: Scalars['String']['input'];
+  /** fetch data from the table: "tagTypes" */
+  tagTypes: Array<TagTypes>;
+  /** fetch data from the table: "tagTypes" using primary key columns */
+  tagTypes_by_pk?: Maybe<TagTypes>;
+  /** fetch data from the table: "tags" */
+  tags: Array<Tags>;
+  /** fetch data from the table: "tags" using primary key columns */
+  tags_by_pk?: Maybe<Tags>;
 };
 
 export type Subscription_RootAssetStandardSupportArgs = {
@@ -2007,6 +2138,17 @@ export type Subscription_RootProfileStatuses_By_PkArgs = {
   id: Scalars['Int']['input'];
 };
 
+export type Subscription_RootProfileTagsArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<ProfileTags_Order_By>>;
+  where?: InputMaybe<ProfileTags_Bool_Exp>;
+};
+
+export type Subscription_RootProfileTags_By_PkArgs = {
+  id: Scalars['Int']['input'];
+};
+
 export type Subscription_RootProfileTypesArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
@@ -2049,6 +2191,90 @@ export type Subscription_RootSocialsArgs = {
 
 export type Subscription_RootSocials_By_PkArgs = {
   id: Scalars['Int']['input'];
+};
+
+export type Subscription_RootTagTypesArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<TagTypes_Order_By>>;
+  where?: InputMaybe<TagTypes_Bool_Exp>;
+};
+
+export type Subscription_RootTagTypes_By_PkArgs = {
+  id: Scalars['Int']['input'];
+};
+
+export type Subscription_RootTagsArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Tags_Order_By>>;
+  where?: InputMaybe<Tags_Bool_Exp>;
+};
+
+export type Subscription_RootTags_By_PkArgs = {
+  id: Scalars['Int']['input'];
+};
+
+export type TagTypes = {
+  __typename?: 'tagTypes';
+  definition: Scalars['String']['output'];
+  id: Scalars['Int']['output'];
+  name: Scalars['String']['output'];
+};
+
+/** Boolean expression to filter rows from the table "tagTypes". All fields are combined with a logical 'AND'. */
+export type TagTypes_Bool_Exp = {
+  _and?: InputMaybe<Array<TagTypes_Bool_Exp>>;
+  _not?: InputMaybe<TagTypes_Bool_Exp>;
+  _or?: InputMaybe<Array<TagTypes_Bool_Exp>>;
+  definition?: InputMaybe<String_Mysql8_Comparison_Exp>;
+  id?: InputMaybe<Int_Mysql8_Comparison_Exp>;
+  name?: InputMaybe<String_Mysql8_Comparison_Exp>;
+};
+
+/** Ordering options when selecting data from "tagTypes". */
+export type TagTypes_Order_By = {
+  definition?: InputMaybe<Mysql8_Order_By>;
+  id?: InputMaybe<Mysql8_Order_By>;
+  name?: InputMaybe<Mysql8_Order_By>;
+};
+
+export type Tags = {
+  __typename?: 'tags';
+  description: Scalars['String']['output'];
+  id: Scalars['Int']['output'];
+  name: Scalars['String']['output'];
+  /** An array relationship */
+  profileTags: Array<ProfileTags>;
+  tagTypeId: Scalars['Int']['output'];
+};
+
+export type TagsProfileTagsArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<ProfileTags_Order_By>>;
+  where?: InputMaybe<ProfileTags_Bool_Exp>;
+};
+
+/** Boolean expression to filter rows from the table "tags". All fields are combined with a logical 'AND'. */
+export type Tags_Bool_Exp = {
+  _and?: InputMaybe<Array<Tags_Bool_Exp>>;
+  _not?: InputMaybe<Tags_Bool_Exp>;
+  _or?: InputMaybe<Array<Tags_Bool_Exp>>;
+  description?: InputMaybe<String_Mysql8_Comparison_Exp>;
+  id?: InputMaybe<Int_Mysql8_Comparison_Exp>;
+  name?: InputMaybe<String_Mysql8_Comparison_Exp>;
+  profileTags?: InputMaybe<ProfileTags_Bool_Exp>;
+  tagTypeId?: InputMaybe<Int_Mysql8_Comparison_Exp>;
+};
+
+/** Ordering options when selecting data from "tags". */
+export type Tags_Order_By = {
+  description?: InputMaybe<Mysql8_Order_By>;
+  id?: InputMaybe<Mysql8_Order_By>;
+  name?: InputMaybe<Mysql8_Order_By>;
+  profileTags_aggregate?: InputMaybe<ProfileTags_Aggregate_Order_By>;
+  tagTypeId?: InputMaybe<Mysql8_Order_By>;
 };
 
 /** One possible value for a given Enum. Enum values are unique values, not a placeholder for a string or numeric value. However an Enum value is returned in a JSON response as a string. */
@@ -2105,6 +2331,7 @@ export type __Type = {
   enumValues?: Maybe<Array<__EnumValue>>;
   inputFields?: Maybe<Array<__InputValue>>;
   ofType?: Maybe<__Type>;
+  isOneOf?: Maybe<Scalars['Boolean']['output']>;
 };
 
 /**
@@ -2157,6 +2384,7 @@ export enum __TypeKind {
 export type GetFiltersOptionsQueryVariables = Exact<{
   productSupports?: InputMaybe<ProductSupports_Bool_Exp>;
   deployedOnProducts?: InputMaybe<Products_Bool_Exp>;
+  tags?: InputMaybe<Tags_Bool_Exp>;
 }>;
 
 export type GetFiltersOptionsQuery = {
@@ -2233,6 +2461,12 @@ export type GetFiltersOptionsQuery = {
   }>;
   entities: Array<{ __typename?: 'entities'; name: string; id: number }>;
   countries: Array<{ __typename?: 'countries'; name: string; id: number }>;
+  tags: Array<{
+    __typename?: 'tags';
+    name: string;
+    id: number;
+    description: string;
+  }>;
 };
 
 export type GetOrderByFieldsQueryVariables = Exact<{
@@ -2429,7 +2663,7 @@ export type GetProfileQuery = {
       id: number;
       parentEntityId?: number | null;
       taxIdentificationNumber: string;
-      country: { __typename?: 'countries'; Code: string; name: string };
+      country: { __typename?: 'countries'; code: string; name: string };
       entityType?: {
         __typename?: 'entityTypes';
         name: string;
@@ -2479,7 +2713,7 @@ export type SearchProfilesQuery = {
 };
 
 export const GetFiltersOptionsDocument = `
-    query GetFiltersOptions($productSupports: productSupports_bool_exp, $deployedOnProducts: products_bool_exp) {
+    query GetFiltersOptions($productSupports: productSupports_bool_exp, $deployedOnProducts: products_bool_exp, $tags: tags_bool_exp) {
   profileTypes {
     name
     id
@@ -2495,7 +2729,7 @@ export const GetFiltersOptionsDocument = `
     id
     definition
   }
-  productTypes {
+  productTypes(order_by: {products_aggregate: {count: desc}}) {
     name
     id
     definition
@@ -2547,6 +2781,11 @@ export const GetFiltersOptionsDocument = `
   countries {
     name
     id
+  }
+  tags(where: $tags, order_by: {profileTags_aggregate: {count: desc}}) {
+    name
+    id
+    description
   }
 }
     `;

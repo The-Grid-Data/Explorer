@@ -6,7 +6,7 @@ import {
   SelectValue
 } from '@/components/ui/select';
 import {
-  GetOrderByFieldsQuery,
+  __TypeKind,
   Mysql8_Order_By,
   useGetOrderByFieldsQuery
 } from '@/lib/graphql/generated-graphql';
@@ -35,7 +35,7 @@ export const ProfileListSorting = ({ sorting }: ProfileSortingProps) => {
             sorting.setSortBy(value);
           }}
         >
-          <SelectTrigger className="h-8 w-full md:w-[180px]">
+          <SelectTrigger className="w-full md:w-[180px]">
             <SelectValue placeholder="Sort by" />
           </SelectTrigger>
           <SelectContent>
@@ -55,7 +55,7 @@ export const ProfileListSorting = ({ sorting }: ProfileSortingProps) => {
             sorting.setSortOrder(value as Mysql8_Order_By);
           }}
         >
-          <SelectTrigger className="h-8 w-full md:w-[130px]">
+          <SelectTrigger className="w-full md:w-[130px]">
             <SelectValue placeholder="Sort order" />
           </SelectTrigger>
           <SelectContent>
@@ -99,4 +99,53 @@ const extractOrderByOptions = (data?: GetOrderByFieldsQuery): string[] => {
 
     return 0;
   });
+};
+
+export type GetOrderByFieldsQuery = {
+  __typename?: 'query_root';
+  __type?: {
+    __typename?: '__Type';
+    inputFields?: Array<{
+      __typename?: '__InputValue';
+      name: string;
+      type: {
+        __typename?: '__Type';
+        name?: string | null;
+        kind: __TypeKind;
+        inputFields?: Array<{
+          __typename?: '__InputValue';
+          name: string;
+          type: {
+            __typename?: '__Type';
+            name?: string | null;
+            kind: __TypeKind;
+            inputFields?: Array<{
+              __typename?: '__InputValue';
+              name: string;
+              type: {
+                __typename?: '__Type';
+                name?: string | null;
+                kind: __TypeKind;
+                ofType?: {
+                  __typename?: '__Type';
+                  name?: string | null;
+                  kind: __TypeKind;
+                } | null;
+              };
+            }> | null;
+            ofType?: {
+              __typename?: '__Type';
+              name?: string | null;
+              kind: __TypeKind;
+            } | null;
+          };
+        }> | null;
+        ofType?: {
+          __typename?: '__Type';
+          name?: string | null;
+          kind: __TypeKind;
+        } | null;
+      };
+    }> | null;
+  } | null;
 };

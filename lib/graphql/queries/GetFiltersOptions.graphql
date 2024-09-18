@@ -1,6 +1,7 @@
 query GetFiltersOptions(
   $productSupports: productSupports_bool_exp
   $deployedOnProducts: products_bool_exp
+  $tags: tags_bool_exp
 ) {
   ###
   # Profile filters
@@ -23,7 +24,7 @@ query GetFiltersOptions(
   ###
   # Product filters
   ####
-  productTypes {
+  productTypes(order_by: { products_aggregate: { count: desc } }) {
     name
     id
     definition
@@ -81,5 +82,13 @@ query GetFiltersOptions(
   countries {
     name
     id
+  }
+  ###
+  # Tags filters
+  ####
+  tags(where: $tags, order_by: { profileTags_aggregate: { count: desc } }) {
+    name
+    id
+    description
   }
 }

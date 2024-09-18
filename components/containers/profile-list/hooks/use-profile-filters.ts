@@ -4,7 +4,6 @@ import {
 } from '@/lib/graphql/generated-graphql';
 
 import { useFilter } from './use-filter';
-import { useState } from 'react';
 import { siteConfig } from '@/lib/site-config';
 
 export type Filters = ReturnType<typeof useProfileFilters>;
@@ -31,23 +30,45 @@ export const useProfileFilters = () => {
       ]
     }
   });
-  const [showFilters, setShowFilters] = useState(true);
+
+  /*************************************
+   * CHECKBOX GRID FILTERS
+   *************************************/
+  const productTypesFilter = useFilter<number>({
+    options: data?.productTypes.map(item => ({
+      value: item.id,
+      label: item.name,
+      description: item.definition
+    })),
+    type: 'multiselect',
+    initialValue: []
+  });
+
+  const tagsFilter = useFilter<number>({
+    options: data?.tags.map(item => ({
+      value: item.id,
+      label: item.name,
+      description: item.description
+    })),
+    type: 'multiselect',
+    initialValue: []
+  });
 
   /*************************************
    * SEARCH FILTERS
    *************************************/
   const searchFilter = useFilter<{
     fields: {
-      name: boolean;
-      descriptionLong: boolean;
+      profileName: boolean;
+      productName: boolean;
     };
   }>({
     type: 'search',
     initialValue: '',
     config: {
       fields: {
-        name: true,
-        descriptionLong: false
+        profileName: true,
+        productName: true
       }
     }
   });
@@ -88,16 +109,6 @@ export const useProfileFilters = () => {
   const profileFoundingDateFilter = useFilter<string | null>({
     type: 'range',
     initialValue: [null, null]
-  });
-
-  const productTypesFilter = useFilter<number>({
-    options: data?.productTypes.map(item => ({
-      value: item.id,
-      label: item.name,
-      description: item.definition
-    })),
-    type: 'multiselect',
-    initialValue: []
   });
 
   /*************************************
@@ -231,11 +242,11 @@ export const useProfileFilters = () => {
        *************************************/
       ...(searchFilter.value.length > 0 && {
         _or: [
-          ...(searchFilter.config?.fields?.name
-            ? [{ name: { _ilike: `%${searchFilter.value}%` } }]
-            : []),
-          ...(searchFilter.config?.fields?.descriptionLong
-            ? [{ descriptionLong: { _ilike: `%${searchFilter.value}%` } }]
+          ...(searchFilter.config?.fields?.productName
+            ? [
+                { name: { _ilike: `%${searchFilter.value}%` } },
+                { products: { name: { _ilike: `%${searchFilter.value}%` } } }
+              ]
             : [])
         ]
       }),
@@ -319,6 +330,12 @@ export const useProfileFilters = () => {
       }),
       ...(entityCountryFilter.value.length > 0 && {
         entities: { countryId: { _in: entityCountryFilter.value } }
+      }),
+      /*************************************
+       * TAGS FILTERS
+       *************************************/
+      ...(tagsFilter.value.length > 0 && {
+        profileTags: { tagId: { _in: tagsFilter.value } }
       })
     } satisfies SearchProfilesQueryVariables['where'];
   };
@@ -341,11 +358,8 @@ export const useProfileFilters = () => {
       assetStandardFilter,
       entityTypeFilter,
       entityNameFilter,
-      entityCountryFilter
-    },
-    filtersVisibility: {
-      showFilters,
-      setShowFilters
+      entityCountryFilter,
+      tagsFilter
     },
     toQueryWhereFields
   };

@@ -11,16 +11,7 @@ export const ProductFilters = ({
   return (
     <FilterGroup title="Product filters">
       <ComboBox
-        label="Type"
-        selected={filters.productTypesFilter.value}
-        onChange={options => {
-          filters.productTypesFilter.setValue(options);
-        }}
-        options={filters.productTypesFilter.options}
-      />
-
-      <ComboBox
-        label="Status"
+        label="Product Status"
         selected={filters.productStatusFilter.value}
         onChange={options => {
           filters.productStatusFilter.setValue(options);
@@ -29,7 +20,7 @@ export const ProductFilters = ({
       />
 
       <ComboBox
-        label="Deployed on"
+        label="Deployed On Products"
         selected={filters.productDeployedOnFilter.value}
         onChange={options => {
           filters.productDeployedOnFilter.setValue(options);
@@ -38,7 +29,7 @@ export const ProductFilters = ({
       />
 
       <ComboBox
-        label="Supports"
+        label="Supports Products"
         selected={filters.productSupportsFilter.value}
         onChange={options => {
           filters.productSupportsFilter.setValue(options);
@@ -51,7 +42,7 @@ export const ProductFilters = ({
         onChange={date => {
           filters.productLaunchDateFilter.setValue(date);
         }}
-        label="Launching date"
+        label="Product Launching Date"
       />
     </FilterGroup>
   );

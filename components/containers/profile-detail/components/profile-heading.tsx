@@ -7,6 +7,7 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { ProfileCardIconLinks } from '@/components/containers/profile-card-icon-links';
 import { QueryDialogButton } from '@/components/containers/query-dialog-button';
+import { siteConfig } from '@/lib/site-config';
 
 export type Profile = GetProfileQuery['profiles'][0];
 
@@ -23,7 +24,7 @@ export const ProfileHeading = ({
 
   return (
     <div className="flex flex-col gap-6">
-      <div className="flex flex-col items-start gap-6 lg:flex-row">
+      <div className="flex flex-col items-start gap-6 lg:flex-row lg:items-center">
         <div className="border-1 w-fit shrink-0 -rotate-3 rounded-xl border border-primary bg-white shadow-lg">
           <Avatar className="h-[100px] w-[220px] min-w-[120px] rounded-xl p-4">
             {validLogoUrl && (
@@ -41,11 +42,13 @@ export const ProfileHeading = ({
             <h3 className="text-5xl font-bold">{profile.name}</h3>
             <ProfileCardIconLinks profile={profile} />
           </div>
-          <QueryDialogButton
-            variables={queryVariables}
-            queryDocument={GetProfileDocument}
-            buttonLabel="View query"
-          />
+          {siteConfig.displayQueries && (
+            <QueryDialogButton
+              variables={queryVariables}
+              queryDocument={GetProfileDocument}
+              buttonLabel="View query"
+            />
+          )}
         </div>
       </div>
     </div>
