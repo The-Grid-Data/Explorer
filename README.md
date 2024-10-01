@@ -1,4 +1,4 @@
-# Welcome to The Grid's referance data explorer. 
+# Welcome to The Grid's reference data explorer. 
 This has been created as a way for data platforms to explore and get inspired by our data. It is easily deployable on Vercel. 
 
 This uses our graphQL endpoint which can be found over at [docs.thegrid.id](https://docs.thegrid.id/)
