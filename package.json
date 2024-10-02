@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "npm run graphql:watch & next dev",
+    "dev": "next dev",
+    "dev:watch": "npm run graphql:watch & next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
@@ -37,6 +38,7 @@
     "graphql-request": "^7.1.0",
     "lucide-react": "^0.378.0",
     "next": "14.2.3",
+    "nuqs": "^1.19.3",
     "pluralize": "^8.0.0",
     "react": "^18.3.1",
     "react-day-picker": "^8.10.1",

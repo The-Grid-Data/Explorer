@@ -8,7 +8,7 @@ import { Header } from '@/components/containers/header';
 import { Providers } from '@/providers';
 import { Banner } from '@/components/containers/banner';
 import { siteConfig } from '@/lib/site-config';
-import { Analytics } from "@vercel/analytics/react";
+import { Analytics } from '@vercel/analytics/react';
 
 type TLayout = Readonly<{
   children: React.ReactNode;
@@ -25,6 +25,10 @@ export const metadata: Metadata = {
 export default function Layout({ children }: TLayout) {
   return (
     <html lang="en" className="h-full">
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1"
+      />
       <body
         className={cn(
           dmSans.className,

@@ -5,6 +5,7 @@ import {
 
 import { useFilter } from './use-filter';
 import { siteConfig } from '@/lib/site-config';
+import { parseAsArrayOf, parseAsInteger, parseAsString } from 'nuqs';
 
 export type Filters = ReturnType<typeof useProfileFilters>;
 
@@ -41,7 +42,8 @@ export const useProfileFilters = () => {
       description: item.definition
     })),
     type: 'multiselect',
-    initialValue: []
+    name: 'productTypes',
+    parseBuilder: parseAsArrayOf(parseAsInteger).withDefault([])
   });
 
   const tagsFilter = useFilter<number>({
@@ -51,8 +53,9 @@ export const useProfileFilters = () => {
       description: item.description
     })),
     type: 'multiselect',
-    initialValue: []
-  });
+    name: 'tags',
+    parseBuilder: parseAsArrayOf(parseAsInteger).withDefault([])
+  }); 
 
   /*************************************
    * SEARCH FILTERS
@@ -64,7 +67,8 @@ export const useProfileFilters = () => {
     };
   }>({
     type: 'search',
-    initialValue: '',
+    name: 'search',
+    parseBuilder: parseAsString.withDefault(''),
     config: {
       fields: {
         profileName: true,
@@ -83,7 +87,8 @@ export const useProfileFilters = () => {
       description: item.definition
     })),
     type: 'multiselect',
-    initialValue: []
+    name: 'profileType',
+    parseBuilder: parseAsArrayOf(parseAsInteger).withDefault([])
   });
 
   const profileSectorsFilter = useFilter<number>({
@@ -93,7 +98,8 @@ export const useProfileFilters = () => {
       description: item.definition
     })),
     type: 'multiselect',
-    initialValue: []
+    name: 'profileSectors',
+    parseBuilder: parseAsArrayOf(parseAsInteger).withDefault([])
   });
 
   const profileStatusesFilter = useFilter<number>({
@@ -103,12 +109,14 @@ export const useProfileFilters = () => {
       description: item.definition
     })),
     type: 'multiselect',
-    initialValue: []
+    name: 'profileStatuses',
+    parseBuilder: parseAsArrayOf(parseAsInteger).withDefault([])
   });
 
   const profileFoundingDateFilter = useFilter<string | null>({
     type: 'range',
-    initialValue: [null, null]
+    name: 'profileFoundingDate',
+    parseBuilder: parseAsArrayOf(parseAsString).withDefault([null, null])
   });
 
   /*************************************
@@ -121,7 +129,8 @@ export const useProfileFilters = () => {
       description: item.definition
     })),
     type: 'multiselect',
-    initialValue: []
+    name: 'productStatus',
+    parseBuilder: parseAsArrayOf(parseAsInteger).withDefault([])
   });
 
   const productSupportsFilter = useFilter<number>({
@@ -138,12 +147,14 @@ export const useProfileFilters = () => {
       ).values()
     ),
     type: 'multiselect',
-    initialValue: []
+    name: 'productSupports',
+    parseBuilder: parseAsArrayOf(parseAsInteger).withDefault([])
   });
 
   const productLaunchDateFilter = useFilter<string | null>({
     type: 'range',
-    initialValue: [null, null]
+    name: 'productLaunchDate',
+    parseBuilder: parseAsArrayOf(parseAsString).withDefault([null, null])
   });
 
   const productDeployedOnFilter = useFilter<number>({
@@ -153,7 +164,8 @@ export const useProfileFilters = () => {
       description: item.descriptionShort
     })),
     type: 'multiselect',
-    initialValue: []
+    name: 'productDeployedOn',
+    parseBuilder: parseAsArrayOf(parseAsInteger).withDefault([])
   });
 
   /*************************************
@@ -166,7 +178,8 @@ export const useProfileFilters = () => {
       description: item.definition
     })),
     type: 'multiselect',
-    initialValue: []
+    name: 'assetType',
+    parseBuilder: parseAsArrayOf(parseAsInteger).withDefault([])
   });
 
   const assetTickerFilter = useFilter<string>({
@@ -179,7 +192,8 @@ export const useProfileFilters = () => {
         description: null
       })),
     type: 'multiselect',
-    initialValue: []
+    name: 'assetTicker',
+    parseBuilder: parseAsArrayOf(parseAsString).withDefault([])
   });
 
   const assetDeployedOnFilter = useFilter<number>({
@@ -189,7 +203,8 @@ export const useProfileFilters = () => {
       description: item.descriptionShort
     })),
     type: 'multiselect',
-    initialValue: []
+    name: 'assetDeployedOn',
+    parseBuilder: parseAsArrayOf(parseAsInteger).withDefault([])
   });
 
   const assetStandardFilter = useFilter<number>({
@@ -199,7 +214,8 @@ export const useProfileFilters = () => {
       description: item.definition
     })),
     type: 'multiselect',
-    initialValue: []
+    name: 'assetStandard',
+    parseBuilder: parseAsArrayOf(parseAsInteger).withDefault([])
   });
 
   /*************************************
@@ -212,7 +228,8 @@ export const useProfileFilters = () => {
       description: item.definition
     })),
     type: 'multiselect',
-    initialValue: []
+    name: 'entityType',
+    parseBuilder: parseAsArrayOf(parseAsInteger).withDefault([])
   });
 
   const entityNameFilter = useFilter<number>({
@@ -222,7 +239,8 @@ export const useProfileFilters = () => {
       description: null
     })),
     type: 'multiselect',
-    initialValue: []
+    name: 'entityName',
+    parseBuilder: parseAsArrayOf(parseAsInteger).withDefault([])
   });
 
   const entityCountryFilter = useFilter<number>({
@@ -232,7 +250,8 @@ export const useProfileFilters = () => {
       description: null
     })),
     type: 'multiselect',
-    initialValue: []
+    name: 'entityCountry',
+    parseBuilder: parseAsArrayOf(parseAsInteger).withDefault([])
   });
 
   const toQueryWhereFields = () => {

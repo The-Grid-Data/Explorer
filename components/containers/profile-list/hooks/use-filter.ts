@@ -1,4 +1,8 @@
+'use client'
+
 import { useState } from 'react';
+import { useQueryState } from 'nuqs'
+
 
 type Options<T> = Array<{
   label: string;
@@ -8,8 +12,9 @@ type Options<T> = Array<{
 
 // Define the types for search and select filter props
 type BaseFilterProps<T, C = unknown> = {
-  initialValue?: T;
+  name: string;
   config?: C;
+  parseBuilder: any
 };
 
 export type SearchFilterProps<T, C = unknown> = BaseFilterProps<T, C> & {
@@ -85,12 +90,12 @@ export function useFilter<T extends string | number | null>(
 
 // Implement the useFilter function
 export function useFilter<T, C = unknown>(props: UseFilterProps<T, C>): any {
-  const { initialValue, type } = props;
-  const [value, setValue] = useState(initialValue);
+  const {  name, type, parseBuilder } = props;
   const [config, setConfig] = useState(props?.config);
-
+  const [value, setValue] = useQueryState(name, parseBuilder)
+  
   const reset = () => {
-    setValue(initialValue);
+    setValue(null);
   };
 
   const base = {
@@ -140,3 +145,5 @@ export function useFilter<T, C = unknown>(props: UseFilterProps<T, C>): any {
 
   throw new Error('Invalid filter type');
 }
+
+
