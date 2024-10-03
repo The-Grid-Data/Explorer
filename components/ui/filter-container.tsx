@@ -7,6 +7,7 @@ import { Drawer, DrawerContent, DrawerTrigger } from '@/components/ui/drawer';
 import { Dialog, DialogContent, DialogTrigger } from './dialog';
 import { cn } from '@/lib/utils';
 import { Badge } from './badge';
+import { useEventListener } from '@/hooks/use-event-listener';
 
 export type FilterContainerProps = PropsWithChildren<{
   label: string;
@@ -22,6 +23,10 @@ export function FilterContainer({
 }: FilterContainerProps) {
   const [open, setOpen] = useState(false);
   const isDesktop = useMediaQuery('(min-width: 768px)');
+
+  useEventListener('close-dialog', () => {
+    setOpen(false);
+  });
 
   const triggerButton = (
     <Button

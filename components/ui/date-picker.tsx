@@ -6,7 +6,7 @@ import { Button } from './button';
 import { cn } from '@/lib/utils';
 import { format } from 'date-fns';
 
-type Range = [null | string, null | string];
+type Range = [string, string] | null;
 
 export type DatePicker = {
   label: string;
@@ -15,7 +15,7 @@ export type DatePicker = {
 };
 
 export function DatePicker({ value, onChange, label }: DatePicker) {
-  const active = value.every(i => i);
+  const active = value?.every(i => i);
   return (
     <FilterContainer badgeContent={active && '1'} label={label} active={active}>
       <div className="flex justify-center">
@@ -25,12 +25,12 @@ export function DatePicker({ value, onChange, label }: DatePicker) {
           toYear={2024}
           mode="range"
           selected={{
-            from: value[0] ? new Date(value[0]) : undefined,
-            to: value[1] ? new Date(value[1]) : undefined
+            from: value?.[0] ? new Date(value[0]) : undefined,
+            to: value?.[1] ? new Date(value[1]) : undefined
           }}
           onSelect={date => {
-            const from = date?.from ? formatDate(date.from) : null;
-            const to = date?.to ? formatDate(date.to) : null;
+            const from = date?.from ? formatDate(date.from) : '';
+            const to = date?.to ? formatDate(date.to) : '';
             onChange?.([from, to]);
           }}
           initialFocus
@@ -63,7 +63,7 @@ export const DatePickerFooter = ({
           size="sm"
           disabled={!value}
           onClick={() => {
-            onChange?.([null, null]);
+            onChange?.(null);
           }}
         >
           Clear
