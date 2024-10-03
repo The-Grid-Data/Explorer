@@ -55,7 +55,7 @@ export const useProfileFilters = () => {
     type: 'multiselect',
     name: 'tags',
     parseBuilder: parseAsArrayOf(parseAsInteger).withDefault([])
-  }); 
+  });
 
   /*************************************
    * SEARCH FILTERS
@@ -113,10 +113,10 @@ export const useProfileFilters = () => {
     parseBuilder: parseAsArrayOf(parseAsInteger).withDefault([])
   });
 
-  const profileFoundingDateFilter = useFilter<string | null>({
+  const profileFoundingDateFilter = useFilter<string>({
     type: 'range',
     name: 'profileFoundingDate',
-    parseBuilder: parseAsArrayOf(parseAsString).withDefault([null, null])
+    parseBuilder: parseAsArrayOf(parseAsString)
   });
 
   /*************************************
@@ -151,10 +151,10 @@ export const useProfileFilters = () => {
     parseBuilder: parseAsArrayOf(parseAsInteger).withDefault([])
   });
 
-  const productLaunchDateFilter = useFilter<string | null>({
+  const productLaunchDateFilter = useFilter<string>({
     type: 'range',
     name: 'productLaunchDate',
-    parseBuilder: parseAsArrayOf(parseAsString).withDefault([null, null])
+    parseBuilder: parseAsArrayOf(parseAsString)
   });
 
   const productDeployedOnFilter = useFilter<number>({
@@ -282,7 +282,7 @@ export const useProfileFilters = () => {
       ...(profileStatusesFilter.value.length > 0 && {
         profileStatus: { id: { _in: profileStatusesFilter.value } }
       }),
-      ...(profileFoundingDateFilter.value.every(i => i) && {
+      ...(profileFoundingDateFilter.value?.every?.(i => i) && {
         foundingDate: {
           _gte: profileFoundingDateFilter.value[0],
           _lte: profileFoundingDateFilter.value[1]
@@ -311,7 +311,7 @@ export const useProfileFilters = () => {
           }
         }
       }),
-      ...(productLaunchDateFilter.value.every(i => i) && {
+      ...(productLaunchDateFilter.value?.every?.(i => i) && {
         foundingDate: {
           _gte: productLaunchDateFilter.value[0],
           _lte: productLaunchDateFilter.value[1]

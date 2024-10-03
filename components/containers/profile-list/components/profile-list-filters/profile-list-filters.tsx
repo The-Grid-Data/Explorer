@@ -1,3 +1,5 @@
+'use client';
+
 import { Filters } from '../../hooks/use-profile-filters';
 import { ProfileFilters } from './components/profile-filters';
 import { ProductFilters } from './components/product-filters';
@@ -5,14 +7,22 @@ import { AssetFilters } from './components/asset-filters';
 import { EntityFilters } from './components/entity-filters';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
-import { Filter, MenuIcon } from 'lucide-react';
+import { Filter } from 'lucide-react';
 import { ScrollArea } from '@/components/ui/scroll-area';
+import { useState } from 'react';
+import { useEventListener } from '@/hooks/use-event-listener';
 
 export type ProfileFiltersProps = {
   filters: Filters['filters'];
 };
 
 export const ProfileListFilters = ({ filters }: ProfileFiltersProps) => {
+  const [open, setOpen] = useState(false);
+
+  useEventListener('close-dialog', () => {
+    setOpen(false);
+  });
+
   const filterNodes = (
     <>
       <ProfileFilters filters={filters} />
@@ -23,7 +33,7 @@ export const ProfileListFilters = ({ filters }: ProfileFiltersProps) => {
   );
 
   return (
-    <Sheet>
+    <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>
         <div className="w-full md:w-fit">
           <Button className="flex w-full shrink-0 gap-2">

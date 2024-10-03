@@ -12,6 +12,7 @@ export const ProfileListSearch = ({ filters }: ProfileListSearchProps) => {
       <Label
         className="absolute -top-4 text-xl font-bold lg:text-xl"
         htmlFor="search"
+        id="search-bar"
       >
         Search profiles & products
       </Label>

@@ -1,8 +1,7 @@
-'use client'
+'use client';
 
 import { useState } from 'react';
-import { useQueryState } from 'nuqs'
-
+import { useQueryState } from 'nuqs';
 
 type Options<T> = Array<{
   label: string;
@@ -14,7 +13,7 @@ type Options<T> = Array<{
 type BaseFilterProps<T, C = unknown> = {
   name: string;
   config?: C;
-  parseBuilder: any
+  parseBuilder: any;
 };
 
 export type SearchFilterProps<T, C = unknown> = BaseFilterProps<T, C> & {
@@ -80,20 +79,23 @@ export function useFilter<T extends string | number>(
   setValue: React.Dispatch<React.SetStateAction<Array<T>>>;
 };
 
-export function useFilter<T extends string | number | null>(
+export function useFilter<T extends string | number>(
   props: RangeFilterProps<T>
 ): BaseReturn & {
   type: 'range';
-  value: [T, T];
-  setValue: React.Dispatch<React.SetStateAction<[T, T]>>;
+  value: [T, T] | null;
+  setValue: React.Dispatch<React.SetStateAction<[T, T] | null>>;
 };
 
 // Implement the useFilter function
 export function useFilter<T, C = unknown>(props: UseFilterProps<T, C>): any {
-  const {  name, type, parseBuilder } = props;
+  const { name, type, parseBuilder } = props;
   const [config, setConfig] = useState(props?.config);
-  const [value, setValue] = useQueryState(name, parseBuilder)
-  
+  const [value, setValue] = useQueryState(
+    name,
+    parseBuilder?.withOptions?.({ throttleMs: 1000, clearOnDefault: true })
+  );
+
   const reset = () => {
     setValue(null);
   };
@@ -145,5 +147,3 @@ export function useFilter<T, C = unknown>(props: UseFilterProps<T, C>): any {
 
   throw new Error('Invalid filter type');
 }
-
-
