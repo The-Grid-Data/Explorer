@@ -78,14 +78,13 @@ export function useFilter<T, C = unknown>(props: UseFilterProps<T, C>): any {
   const [value, _setValue] = useState<any>(initialValue);
   const [config, setConfig] = useState<C>(props.config as C);
 
-  const reset = () => {
-    setValue(initialValue);
-    onChange?.(initialValue as any);
-  };
-
   const setValue = (newValue: any) => {
     _setValue(newValue);
     onChange?.(newValue);
+  };
+
+  const reset = () => {
+    setValue(null);
   };
 
   const base = {

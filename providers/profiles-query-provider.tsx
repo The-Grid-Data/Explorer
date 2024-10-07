@@ -3,12 +3,9 @@ import { useProfileSortingContext } from '@/providers/sorting-provider';
 import { useProfileFiltersContext } from '@/providers/filters-provider';
 import { SearchProfilesQueryVariables } from '@/lib/graphql/generated-graphql';
 
-const ProfilesQueryContext = createContext<SearchProfilesQueryVariables>({
-  where: {},
-  order_by: [],
-  limit: 10,
-  offset: 0
-});
+const ProfilesQueryContext = createContext<SearchProfilesQueryVariables | null>(
+  null
+);
 
 export const ProfileQueryProvider = ({ children }: React.PropsWithChildren) => {
   const filters = useProfileFiltersContext();
@@ -16,7 +13,7 @@ export const ProfileQueryProvider = ({ children }: React.PropsWithChildren) => {
 
   const query: SearchProfilesQueryVariables = {
     where: filters.toQueryWhereFields(),
-    order_by: [sorting.toQuerySortByFields()],
+    order_by: sorting.toQuerySortByFields(),
     limit: 10,
     offset: 0
   };
