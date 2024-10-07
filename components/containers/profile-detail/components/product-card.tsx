@@ -66,6 +66,7 @@ export const ProductCard = ({ product }: ProductCardCardProps) => {
                   fullWidth
                   label="Address"
                   value={product.productAddress}
+                  opts={{ breakAll: true }}
                 />
                 <ProfileDataPoint
                   fullWidth

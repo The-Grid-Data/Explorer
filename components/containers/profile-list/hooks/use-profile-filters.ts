@@ -2,21 +2,58 @@ import {
   SearchProfilesQueryVariables,
   useGetFiltersOptionsQuery
 } from '@/lib/graphql/generated-graphql';
-
+import {
+  useQueryStates,
+  parseAsArrayOf,
+  parseAsInteger,
+  parseAsString
+} from 'nuqs';
 import { useFilter } from './use-filter';
 import { siteConfig } from '@/lib/site-config';
-import { parseAsArrayOf, parseAsInteger, parseAsString } from 'nuqs';
 
 export type Filters = ReturnType<typeof useProfileFilters>;
 
+const isNotEmpty = (
+  value: string | number | Array<string | number> | null
+): value is string | number | Array<string | number> => {
+  if (typeof value === 'string' || Array.isArray(value)) {
+    return value.length > 0;
+  }
+  return value !== null && value !== undefined;
+};
+
 export const useProfileFilters = () => {
-  const { data } = useGetFiltersOptionsQuery({
-    productSupports: {
+  const [queryParams, setQueryParams] = useQueryStates(
+    {
+      productTypes: parseAsArrayOf(parseAsInteger).withDefault([]),
+      tags: parseAsArrayOf(parseAsInteger).withDefault([]),
+      search: parseAsString.withDefault(''),
+      profileType: parseAsArrayOf(parseAsInteger).withDefault([]),
+      profileSectors: parseAsArrayOf(parseAsInteger).withDefault([]),
+      profileStatuses: parseAsArrayOf(parseAsInteger).withDefault([]),
+      profileFoundingDate: parseAsArrayOf(parseAsString),
+      productStatus: parseAsArrayOf(parseAsInteger).withDefault([]),
+      productSupports: parseAsArrayOf(parseAsInteger).withDefault([]),
+      productLaunchDate: parseAsArrayOf(parseAsString),
+      productDeployedOn: parseAsArrayOf(parseAsInteger).withDefault([]),
+      assetType: parseAsArrayOf(parseAsInteger).withDefault([]),
+      assetTicker: parseAsArrayOf(parseAsString).withDefault([]),
+      assetDeployedOn: parseAsArrayOf(parseAsInteger).withDefault([]),
+      assetStandard: parseAsArrayOf(parseAsInteger).withDefault([]),
+      entityType: parseAsArrayOf(parseAsInteger).withDefault([]),
+      entityName: parseAsArrayOf(parseAsInteger).withDefault([]),
+      entityCountry: parseAsArrayOf(parseAsInteger).withDefault([])
+    },
+    { clearOnDefault: true, throttleMs: 1000 }
+  );
+
+  const { data, isLoading } = useGetFiltersOptionsQuery({
+    productSupportsWhere: {
       ...(siteConfig.blockchainIds?.length > 0 && {
         supportsProductId: { _in: siteConfig.blockchainIds }
       })
     },
-    deployedOnProducts: {
+    deployedOnProductsWhere: {
       ...(siteConfig.blockchainIds?.length > 0 && {
         deployedOnProductId: { _in: siteConfig.blockchainIds }
       }),
@@ -42,8 +79,8 @@ export const useProfileFilters = () => {
       description: item.definition
     })),
     type: 'multiselect',
-    name: 'productTypes',
-    parseBuilder: parseAsArrayOf(parseAsInteger).withDefault([])
+    initialValue: queryParams.productTypes,
+    onChange: newValue => setQueryParams({ productTypes: newValue })
   });
 
   const tagsFilter = useFilter<number>({
@@ -53,8 +90,8 @@ export const useProfileFilters = () => {
       description: item.description
     })),
     type: 'multiselect',
-    name: 'tags',
-    parseBuilder: parseAsArrayOf(parseAsInteger).withDefault([])
+    initialValue: queryParams.tags,
+    onChange: newValue => setQueryParams({ tags: newValue })
   });
 
   /*************************************
@@ -67,14 +104,14 @@ export const useProfileFilters = () => {
     };
   }>({
     type: 'search',
-    name: 'search',
-    parseBuilder: parseAsString.withDefault(''),
+    initialValue: queryParams.search,
     config: {
       fields: {
         profileName: true,
         productName: true
       }
-    }
+    },
+    onChange: newValue => setQueryParams({ search: newValue })
   });
 
   /*************************************
@@ -87,8 +124,8 @@ export const useProfileFilters = () => {
       description: item.definition
     })),
     type: 'multiselect',
-    name: 'profileType',
-    parseBuilder: parseAsArrayOf(parseAsInteger).withDefault([])
+    initialValue: queryParams.profileType,
+    onChange: newValue => setQueryParams({ profileType: newValue })
   });
 
   const profileSectorsFilter = useFilter<number>({
@@ -98,8 +135,8 @@ export const useProfileFilters = () => {
       description: item.definition
     })),
     type: 'multiselect',
-    name: 'profileSectors',
-    parseBuilder: parseAsArrayOf(parseAsInteger).withDefault([])
+    initialValue: queryParams.profileSectors,
+    onChange: newValue => setQueryParams({ profileSectors: newValue })
   });
 
   const profileStatusesFilter = useFilter<number>({
@@ -109,14 +146,14 @@ export const useProfileFilters = () => {
       description: item.definition
     })),
     type: 'multiselect',
-    name: 'profileStatuses',
-    parseBuilder: parseAsArrayOf(parseAsInteger).withDefault([])
+    initialValue: queryParams.profileStatuses,
+    onChange: newValue => setQueryParams({ profileStatuses: newValue })
   });
 
   const profileFoundingDateFilter = useFilter<string>({
     type: 'range',
-    name: 'profileFoundingDate',
-    parseBuilder: parseAsArrayOf(parseAsString)
+    initialValue: queryParams.profileFoundingDate as [string, string] | null,
+    onChange: newValue => setQueryParams({ profileFoundingDate: newValue })
   });
 
   /*************************************
@@ -129,8 +166,8 @@ export const useProfileFilters = () => {
       description: item.definition
     })),
     type: 'multiselect',
-    name: 'productStatus',
-    parseBuilder: parseAsArrayOf(parseAsInteger).withDefault([])
+    initialValue: queryParams.productStatus,
+    onChange: newValue => setQueryParams({ productStatus: newValue })
   });
 
   const productSupportsFilter = useFilter<number>({
@@ -147,14 +184,14 @@ export const useProfileFilters = () => {
       ).values()
     ),
     type: 'multiselect',
-    name: 'productSupports',
-    parseBuilder: parseAsArrayOf(parseAsInteger).withDefault([])
+    initialValue: queryParams.productSupports,
+    onChange: newValue => setQueryParams({ productSupports: newValue })
   });
 
   const productLaunchDateFilter = useFilter<string>({
     type: 'range',
-    name: 'productLaunchDate',
-    parseBuilder: parseAsArrayOf(parseAsString)
+    initialValue: queryParams.productLaunchDate as [string, string] | null,
+    onChange: newValue => setQueryParams({ productLaunchDate: newValue })
   });
 
   const productDeployedOnFilter = useFilter<number>({
@@ -164,8 +201,8 @@ export const useProfileFilters = () => {
       description: item.descriptionShort
     })),
     type: 'multiselect',
-    name: 'productDeployedOn',
-    parseBuilder: parseAsArrayOf(parseAsInteger).withDefault([])
+    initialValue: queryParams.productDeployedOn,
+    onChange: newValue => setQueryParams({ productDeployedOn: newValue })
   });
 
   /*************************************
@@ -178,8 +215,8 @@ export const useProfileFilters = () => {
       description: item.definition
     })),
     type: 'multiselect',
-    name: 'assetType',
-    parseBuilder: parseAsArrayOf(parseAsInteger).withDefault([])
+    initialValue: queryParams.assetType,
+    onChange: newValue => setQueryParams({ assetType: newValue })
   });
 
   const assetTickerFilter = useFilter<string>({
@@ -192,8 +229,8 @@ export const useProfileFilters = () => {
         description: null
       })),
     type: 'multiselect',
-    name: 'assetTicker',
-    parseBuilder: parseAsArrayOf(parseAsString).withDefault([])
+    initialValue: queryParams.assetTicker,
+    onChange: newValue => setQueryParams({ assetTicker: newValue })
   });
 
   const assetDeployedOnFilter = useFilter<number>({
@@ -203,8 +240,8 @@ export const useProfileFilters = () => {
       description: item.descriptionShort
     })),
     type: 'multiselect',
-    name: 'assetDeployedOn',
-    parseBuilder: parseAsArrayOf(parseAsInteger).withDefault([])
+    initialValue: queryParams.assetDeployedOn,
+    onChange: newValue => setQueryParams({ assetDeployedOn: newValue })
   });
 
   const assetStandardFilter = useFilter<number>({
@@ -214,8 +251,8 @@ export const useProfileFilters = () => {
       description: item.definition
     })),
     type: 'multiselect',
-    name: 'assetStandard',
-    parseBuilder: parseAsArrayOf(parseAsInteger).withDefault([])
+    initialValue: queryParams.assetStandard,
+    onChange: newValue => setQueryParams({ assetStandard: newValue })
   });
 
   /*************************************
@@ -228,8 +265,8 @@ export const useProfileFilters = () => {
       description: item.definition
     })),
     type: 'multiselect',
-    name: 'entityType',
-    parseBuilder: parseAsArrayOf(parseAsInteger).withDefault([])
+    initialValue: queryParams.entityType,
+    onChange: newValue => setQueryParams({ entityType: newValue })
   });
 
   const entityNameFilter = useFilter<number>({
@@ -239,8 +276,8 @@ export const useProfileFilters = () => {
       description: null
     })),
     type: 'multiselect',
-    name: 'entityName',
-    parseBuilder: parseAsArrayOf(parseAsInteger).withDefault([])
+    initialValue: queryParams.entityName,
+    onChange: newValue => setQueryParams({ entityName: newValue })
   });
 
   const entityCountryFilter = useFilter<number>({
@@ -250,8 +287,8 @@ export const useProfileFilters = () => {
       description: null
     })),
     type: 'multiselect',
-    name: 'entityCountry',
-    parseBuilder: parseAsArrayOf(parseAsInteger).withDefault([])
+    initialValue: queryParams.entityCountry,
+    onChange: newValue => setQueryParams({ entityCountry: newValue })
   });
 
   const toQueryWhereFields = () => {
@@ -259,7 +296,7 @@ export const useProfileFilters = () => {
       /*************************************
        * SEARCH FILTERS
        *************************************/
-      ...(searchFilter.value.length > 0 && {
+      ...(isNotEmpty(searchFilter?.value) && {
         _or: [
           ...(searchFilter.config?.fields?.productName
             ? [
@@ -273,13 +310,13 @@ export const useProfileFilters = () => {
       /*************************************
        * PROFILE FILTERS
        *************************************/
-      ...(profileTypeFilter.value.length > 0 && {
+      ...(isNotEmpty(profileTypeFilter.value) && {
         profileType: { id: { _in: profileTypeFilter.value } }
       }),
-      ...(profileSectorsFilter.value.length > 0 && {
+      ...(isNotEmpty(profileSectorsFilter.value) && {
         profileSector: { id: { _in: profileSectorsFilter.value } }
       }),
-      ...(profileStatusesFilter.value.length > 0 && {
+      ...(isNotEmpty(profileStatusesFilter.value) && {
         profileStatus: { id: { _in: profileStatusesFilter.value } }
       }),
       ...(profileFoundingDateFilter.value?.every?.(i => i) && {
@@ -291,20 +328,20 @@ export const useProfileFilters = () => {
       /*************************************
        * PRODUCT FILTERS
        *************************************/
-      ...(productTypesFilter.value.length > 0 && {
+      ...(isNotEmpty(productTypesFilter.value) && {
         products: { productTypeId: { _in: productTypesFilter.value } }
       }),
-      ...(productStatusFilter.value.length > 0 && {
+      ...(isNotEmpty(productStatusFilter.value) && {
         products: {
           productStatus: { id: { _in: productStatusFilter.value } }
         }
       }),
-      ...(productDeployedOnFilter.value.length > 0 && {
+      ...(isNotEmpty(productDeployedOnFilter.value) && {
         products: {
           deployedOnProductId: { _in: productDeployedOnFilter.value }
         }
       }),
-      ...(productSupportsFilter.value.length > 0 && {
+      ...(isNotEmpty(productSupportsFilter.value) && {
         products: {
           supportsProducts: {
             supportsProductId: { _in: productSupportsFilter.value }
@@ -320,46 +357,47 @@ export const useProfileFilters = () => {
       /*************************************
        * ASSET FILTERS
        *************************************/
-      ...(assetTypeFilter.value.length > 0 && {
+      ...(isNotEmpty(assetTypeFilter.value) && {
         assets: { assetTypeId: { _in: assetTypeFilter.value } }
       }),
-      ...(assetTickerFilter.value.length > 0 && {
+      ...(isNotEmpty(assetTickerFilter.value) && {
         assets: {
           ticker: { _in: assetTickerFilter.value }
         }
       }),
-      ...(assetDeployedOnFilter.value.length > 0 && {
+      ...(isNotEmpty(assetDeployedOnFilter.value) && {
         assets: {
           assetDeployedOnProductId: {
             id: { _in: assetDeployedOnFilter.value }
           }
         }
       }),
-      ...(assetStandardFilter.value.length > 0 && {
+      ...(isNotEmpty(assetStandardFilter.value) && {
         assets: { assetStandardId: { _in: assetStandardFilter.value } }
       }),
       /*************************************
        * ENTITY FILTERS
        *************************************/
-      ...(entityTypeFilter.value.length > 0 && {
+      ...(isNotEmpty(entityTypeFilter.value) && {
         entities: { entityTypeId: { _in: entityTypeFilter.value } }
       }),
-      ...(entityNameFilter.value.length > 0 && {
+      ...(isNotEmpty(entityNameFilter.value) && {
         entities: { id: { _in: entityNameFilter.value } }
       }),
-      ...(entityCountryFilter.value.length > 0 && {
+      ...(isNotEmpty(entityCountryFilter.value) && {
         entities: { countryId: { _in: entityCountryFilter.value } }
       }),
       /*************************************
        * TAGS FILTERS
        *************************************/
-      ...(tagsFilter.value.length > 0 && {
+      ...(isNotEmpty(tagsFilter.value) && {
         profileTags: { tagId: { _in: tagsFilter.value } }
       })
     } satisfies SearchProfilesQueryVariables['where'];
   };
 
   return {
+    isLoading,
     filters: {
       searchFilter,
       profileTypeFilter,

@@ -20,7 +20,7 @@ export const ProfileListSearch = ({ filters }: ProfileListSearchProps) => {
         name="search"
         type="text"
         placeholder="Search by profile name or product name"
-        value={filters.searchFilter.value}
+        value={filters.searchFilter.value ?? ''}
         onChange={event => {
           filters.searchFilter.setValue(event.target.value);
         }}

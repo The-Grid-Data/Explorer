@@ -2382,9 +2382,9 @@ export enum __TypeKind {
 }
 
 export type GetFiltersOptionsQueryVariables = Exact<{
-  productSupports?: InputMaybe<ProductSupports_Bool_Exp>;
-  deployedOnProducts?: InputMaybe<Products_Bool_Exp>;
-  tags?: InputMaybe<Tags_Bool_Exp>;
+  productSupportsWhere?: InputMaybe<ProductSupports_Bool_Exp>;
+  deployedOnProductsWhere?: InputMaybe<Products_Bool_Exp>;
+  productTypesWhere?: InputMaybe<ProductTypes_Bool_Exp>;
 }>;
 
 export type GetFiltersOptionsQuery = {
@@ -2713,7 +2713,7 @@ export type SearchProfilesQuery = {
 };
 
 export const GetFiltersOptionsDocument = `
-    query GetFiltersOptions($productSupports: productSupports_bool_exp, $deployedOnProducts: products_bool_exp, $tags: tags_bool_exp) {
+    query GetFiltersOptions($productSupportsWhere: productSupports_bool_exp, $deployedOnProductsWhere: products_bool_exp, $productTypesWhere: productTypes_bool_exp) {
   profileTypes {
     name
     id
@@ -2729,7 +2729,10 @@ export const GetFiltersOptionsDocument = `
     id
     definition
   }
-  productTypes(order_by: {products_aggregate: {count: desc}}) {
+  productTypes(
+    where: $productTypesWhere
+    order_by: {products_aggregate: {count: desc}}
+  ) {
     name
     id
     definition
@@ -2739,14 +2742,14 @@ export const GetFiltersOptionsDocument = `
     id
     name
   }
-  productSupports(where: $productSupports) {
+  productSupports(where: $productSupportsWhere) {
     supports {
       descriptionShort
       name
       id
     }
   }
-  deployedOnProducts: products(where: $deployedOnProducts) {
+  deployedOnProducts: products(where: $deployedOnProductsWhere) {
     name
     id
     descriptionShort
@@ -2782,7 +2785,7 @@ export const GetFiltersOptionsDocument = `
     name
     id
   }
-  tags(where: $tags, order_by: {profileTags_aggregate: {count: desc}}) {
+  tags(order_by: {profileTags_aggregate: {count: desc}}) {
     name
     id
     description

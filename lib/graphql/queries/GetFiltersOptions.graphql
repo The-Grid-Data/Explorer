@@ -1,7 +1,8 @@
 query GetFiltersOptions(
-  $productSupports: productSupports_bool_exp
-  $deployedOnProducts: products_bool_exp
-  $tags: tags_bool_exp
+  $productSupportsWhere: productSupports_bool_exp
+  $deployedOnProductsWhere: products_bool_exp
+  $productTypesWhere: productTypes_bool_exp
+  $tagsWhere: tags_bool_exp
 ) {
   ###
   # Profile filters
@@ -24,7 +25,10 @@ query GetFiltersOptions(
   ###
   # Product filters
   ####
-  productTypes(order_by: { products_aggregate: { count: desc } }) {
+  productTypes(
+    where: $productTypesWhere
+    order_by: { products_aggregate: { count: desc } }
+  ) {
     name
     id
     definition
@@ -34,14 +38,14 @@ query GetFiltersOptions(
     id
     name
   }
-  productSupports(where: $productSupports) {
+  productSupports(where: $productSupportsWhere) {
     supports {
       descriptionShort
       name
       id
     }
   }
-  deployedOnProducts: products(where: $deployedOnProducts) {
+  deployedOnProducts: products(where: $deployedOnProductsWhere) {
     name
     id
     descriptionShort
@@ -86,7 +90,10 @@ query GetFiltersOptions(
   ###
   # Tags filters
   ####
-  tags(where: $tags, order_by: { profileTags_aggregate: { count: desc } }) {
+  tags(
+    where: $tagsWhere
+    order_by: { profileTags_aggregate: { count: desc } }
+  ) {
     name
     id
     description

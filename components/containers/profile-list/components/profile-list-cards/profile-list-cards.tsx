@@ -8,6 +8,7 @@ import { ProfileCard, ProfileCardSkeleton } from '../profile-card';
 import { useToast } from '@/components/ui/use-toast';
 import { ToastAction } from '@/components/ui/toast';
 import { dispatchCustomEvent } from '@/hooks/use-event-listener';
+import { useDebounceValue } from 'usehooks-ts';
 
 export type ProfileListCardsProps = {
   query: SearchProfilesQueryVariables;
@@ -20,11 +21,13 @@ export const ProfileListCards = ({ query }: ProfileListCardsProps) => {
   const { toast, findToastById } = useToast();
   const resultToast = findToastById(resultToastId);
 
+  const [debouncedQuery] = useDebounceValue(query, 500);
+
   const { ref: fetchNextPageTriggerRef, inView } = useInView({ threshold: 1 });
   const limit = query?.limit ?? defaultLimit;
 
   const { data, isFetching, isError, fetchNextPage, status } =
-    useInfiniteSearchProfilesQuery(query, {
+    useInfiniteSearchProfilesQuery(debouncedQuery, {
       initialPageParam: {
         limit,
         offset: 0

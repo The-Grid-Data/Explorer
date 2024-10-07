@@ -5,12 +5,16 @@ export type ProfileDataPointProps = {
   label: string;
   value?: string | false;
   fullWidth?: boolean;
+  opts?: {
+    breakAll?: boolean;
+  };
 };
 
 export const ProfileDataPoint = ({
   label,
   value,
-  fullWidth
+  fullWidth,
+  opts={breakAll:false},
 }: ProfileDataPointProps) => (
   <div className={cn('flex flex-col items-start', !fullWidth && 'md:flex-row')}>
     <div
@@ -21,7 +25,7 @@ export const ProfileDataPoint = ({
     >
       {label}:
     </div>
-    <span className="text ml-1 w-full break-all text-sm">{value || '-'}</span>
+    <span className={cn('text ml-1 w-full text-sm', opts?.breakAll && 'break-all')}>{value || '-'}</span>
   </div>
 );
 

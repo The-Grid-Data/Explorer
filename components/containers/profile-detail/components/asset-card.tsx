@@ -50,6 +50,7 @@ export const AssetCard = ({ asset }: AssetCardProps) => {
                 fullWidth
                 label="Address"
                 value={asset.address}
+                opts={{ breakAll: true }}
               />
             </ProfileDataPointContainer>
           </div>

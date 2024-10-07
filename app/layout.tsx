@@ -2,7 +2,7 @@ import '@/app/globals.css';
 
 import { Archivo, DM_Sans } from 'next/font/google';
 import { cn } from '@/lib/utils';
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 
 import { Header } from '@/components/containers/header';
 import { Providers } from '@/providers';
@@ -22,13 +22,16 @@ export const metadata: Metadata = {
   description: siteConfig.pageDescription
 };
 
+// export const viewport: Viewport = {
+//   initialScale: 1,
+//   width: 'device-width',
+//   maximumScale: 1,
+//   viewportFit: 'cover'
+// };
+
 export default function Layout({ children }: TLayout) {
   return (
     <html lang="en" className="h-full">
-      <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1, maximum-scale=1"
-      />
       <body
         className={cn(
           dmSans.className,

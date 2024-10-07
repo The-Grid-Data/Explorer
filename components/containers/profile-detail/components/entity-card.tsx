@@ -58,6 +58,7 @@ export const EntityCard = ({ entity }: EntityCardProps) => {
                 fullWidth
                 label="Address"
                 value={entity.address}
+                opts={{ breakAll: true }}
               />
               <ProfileDataPoint
                 fullWidth

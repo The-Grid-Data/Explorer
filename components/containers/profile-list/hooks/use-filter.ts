@@ -1,7 +1,4 @@
-'use client';
-
 import { useState } from 'react';
-import { useQueryState } from 'nuqs';
 
 type Options<T> = Array<{
   label: string;
@@ -11,35 +8,34 @@ type Options<T> = Array<{
 
 // Define the types for search and select filter props
 type BaseFilterProps<T, C = unknown> = {
-  name: string;
+  initialValue?: T;
+  onChange?: (newValue: T) => void;
   config?: C;
-  parseBuilder: any;
 };
 
-export type SearchFilterProps<T, C = unknown> = BaseFilterProps<T, C> & {
+export type SearchFilterProps<C = unknown> = BaseFilterProps<string, C> & {
   type: 'search';
-  config: C;
 };
 
-export type SelectFilterProps<T, C = unknown> = BaseFilterProps<T, C> & {
+export type SelectFilterProps<T> = BaseFilterProps<T | null> & {
   type: 'select';
   options?: Options<T>;
 };
 
-export type MultiSelectFilterProps<T, C = unknown> = BaseFilterProps<T[], C> & {
+export type MultiSelectFilterProps<T> = BaseFilterProps<T[]> & {
   type: 'multiselect';
   options?: Options<T>;
 };
 
-export type RangeFilterProps<T, C = unknown> = BaseFilterProps<[T, T], C> & {
+export type RangeFilterProps<T> = BaseFilterProps<[T, T] | null> & {
   type: 'range';
 };
 
-export type UseFilterProps<T = unknown, C = unknown> =
-  | SearchFilterProps<T, C>
-  | SelectFilterProps<T, C>
-  | MultiSelectFilterProps<T, C>
-  | RangeFilterProps<T, C>;
+export type UseFilterProps<T, C = unknown> =
+  | SearchFilterProps<C>
+  | SelectFilterProps<T>
+  | MultiSelectFilterProps<T>
+  | RangeFilterProps<T>;
 
 export type BaseReturn = {
   reset: () => void;
@@ -47,57 +43,44 @@ export type BaseReturn = {
 };
 
 // Define overloads for the useFilter function
-export function useFilter<C>(
-  props: SearchFilterProps<string, C>
-): BaseReturn & {
+export function useFilter<C>(props: SearchFilterProps<C>): BaseReturn & {
   type: 'search';
   value: string;
-  setValue: React.Dispatch<React.SetStateAction<string>>;
+  setValue: (newValue: string) => void;
   config?: C;
   setConfig: React.Dispatch<React.SetStateAction<C>>;
 };
 
-export function useFilter<T extends string | number>(
-  props: SelectFilterProps<T>
-): BaseReturn & {
+export function useFilter<T>(props: SelectFilterProps<T>): BaseReturn & {
   type: 'select';
-  value: T;
+  value: T | null;
   options?: Options<T>;
-  setValue: React.Dispatch<React.SetStateAction<T>>;
+  setValue: (newValue: T | null) => void;
 };
 
-export function useFilter<T extends string | number>(
-  props: MultiSelectFilterProps<T>
-): BaseReturn & {
+export function useFilter<T>(props: MultiSelectFilterProps<T>): BaseReturn & {
   type: 'multiselect';
-  value: Array<T>;
-  options?: Array<{
-    label: string;
-    value: T;
-    description: string;
-  }>;
-  setValue: React.Dispatch<React.SetStateAction<Array<T>>>;
+  value: T[];
+  options?: Options<T>;
+  setValue: (newValue: T[]) => void;
 };
 
-export function useFilter<T extends string | number>(
-  props: RangeFilterProps<T>
-): BaseReturn & {
+export function useFilter<T>(props: RangeFilterProps<T>): BaseReturn & {
   type: 'range';
   value: [T, T] | null;
-  setValue: React.Dispatch<React.SetStateAction<[T, T] | null>>;
+  setValue: (newValue: [T, T] | null) => void;
 };
 
 // Implement the useFilter function
 export function useFilter<T, C = unknown>(props: UseFilterProps<T, C>): any {
-  const { name, type, parseBuilder } = props;
-  const [config, setConfig] = useState(props?.config);
-  const [value, setValue] = useQueryState(
-    name,
-    parseBuilder?.withOptions?.({ throttleMs: 1000, clearOnDefault: true })
-  );
+  const { initialValue, type, onChange } = props;
+
+  const [value, setValue] = useState<any>(initialValue);
+  const [config, setConfig] = useState<C>(props.config as C);
 
   const reset = () => {
-    setValue(null);
+    setValue(initialValue);
+    onChange?.(initialValue as any);
   };
 
   const base = {
@@ -105,43 +88,43 @@ export function useFilter<T, C = unknown>(props: UseFilterProps<T, C>): any {
     type
   };
 
+  if (type === 'search') {
+    return {
+      ...base,
+      active: value?.length > 0,
+      value: value as string,
+      setValue: setValue as (newValue: string) => void,
+      config,
+      setConfig
+    };
+  }
+
   if (type === 'select') {
     return {
       ...base,
-      active: (value as any)?.length > 0,
-      value: value as T,
-      options: props.options,
-      setValue: setValue as React.Dispatch<React.SetStateAction<T>>
+      active: value != null,
+      value: value as T | null,
+      options: (props as SelectFilterProps<T>).options,
+      setValue: setValue as (newValue: T | null) => void
     };
   }
 
   if (type === 'multiselect') {
     return {
       ...base,
-      active: (value as Array<T>)?.length > 0,
-      value: value as Array<T>,
-      options: props.options,
-      setValue: setValue as React.Dispatch<React.SetStateAction<Array<T>>>
-    };
-  }
-
-  if (type === 'search') {
-    return {
-      ...base,
-      active: (value as string)?.length > 0,
-      value: value as string,
-      setValue: setValue as React.Dispatch<React.SetStateAction<string>>,
-      config: config as C,
-      setConfig: setConfig as React.Dispatch<React.SetStateAction<C>>
+      active: (value as T[])?.length > 0,
+      value: value as T[],
+      options: (props as MultiSelectFilterProps<T>).options,
+      setValue: setValue as (newValue: T[]) => void
     };
   }
 
   if (type === 'range') {
     return {
       ...base,
-      active: (value as [T, T])?.every(i => i),
-      value: value as [T, T],
-      setValue: setValue as React.Dispatch<React.SetStateAction<[T, T]>>
+      active: value != null && (value as [T, T]).every(i => i != null),
+      value: value as [T, T] | null,
+      setValue: setValue as (newValue: [T, T] | null) => void
     };
   }
 

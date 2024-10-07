@@ -16,7 +16,7 @@ import CheckboxGrid from '@/components/ui/checkbox-grid';
 import { siteConfig } from '@/lib/site-config';
 
 export const ProfileList = () => {
-  const { filters, toQueryWhereFields } = useProfileFilters();
+  const { filters, toQueryWhereFields, isLoading } = useProfileFilters();
   const { sorting, toQuerySortByFields } = useProfileSorting();
 
   const query = {
@@ -30,8 +30,13 @@ export const ProfileList = () => {
     <div className="w-full space-y-4">
       <div className="container space-y-4 md:space-y-10">
         <div className="space-y-4">
-          <h1 className="text-xl font-bold lg:text-xl ">Product types</h1>
+          <h1 className="text-xl font-bold lg:text-xl ">
+            Product types{' '}
+            {filters.productTypesFilter?.options &&
+              `(${filters.productTypesFilter.options.length})`}
+          </h1>
           <CheckboxGrid
+            isLoading={isLoading}
             selected={filters.productTypesFilter.value}
             options={filters.productTypesFilter.options ?? []}
             onChange={selected => {
@@ -42,8 +47,13 @@ export const ProfileList = () => {
 
         {!Boolean(siteConfig.tags.length) && (
           <div className="space-y-4">
-            <h1 className="text-xl font-bold lg:text-xl ">Tags</h1>
+            <h1 className="text-xl font-bold lg:text-xl ">
+              Tags{' '}
+              {filters.tagsFilter?.options &&
+                `(${filters.tagsFilter.options.length})`}
+            </h1>
             <CheckboxGrid
+              isLoading={isLoading}
               selected={filters.tagsFilter.value}
               options={filters.tagsFilter.options ?? []}
               onChange={selected => {
@@ -53,7 +63,7 @@ export const ProfileList = () => {
           </div>
         )}
 
-        <div className="flex flex-col items-start gap-12 pt-4 md:flex-row">
+        <div className="flex flex-col items-start gap-12 pt-4 lg:flex-row">
           <div className="flex w-full flex-col gap-4">
             <ProfileListSearch filters={filters} />
             <div className="flex flex-col gap-4 md:flex-row">
