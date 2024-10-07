@@ -1,14 +1,9 @@
 import pluralize from 'pluralize';
-import { Filters } from '../../hooks/use-profile-filters';
 import { Button } from '@/components/ui/button';
+import { useProfileFiltersContext } from '@/providers/filters-provider';
 
-export type ProfileListFiltersLabelProps = {
-  filters: Filters['filters'];
-};
-
-export const ProfileListFiltersLabel = ({
-  filters
-}: ProfileListFiltersLabelProps) => {
+export const ProfileListFiltersLabel = () => {
+  const { filters } = useProfileFiltersContext();
   const activeFiltersSum = Object.values(filters)
     .map(item => item.active)
     .reduce((sum, active) => sum + (active ? 1 : 0), 0);

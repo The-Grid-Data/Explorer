@@ -11,12 +11,10 @@ import { Filter } from 'lucide-react';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { useState } from 'react';
 import { useEventListener } from '@/hooks/use-event-listener';
+import { useProfileFiltersContext } from '@/providers/filters-provider';
 
-export type ProfileFiltersProps = {
-  filters: Filters['filters'];
-};
-
-export const ProfileListFilters = ({ filters }: ProfileFiltersProps) => {
+export const ProfileListFilters = () => {
+  const { filters } = useProfileFiltersContext();
   const [open, setOpen] = useState(false);
 
   useEventListener('close-dialog', () => {

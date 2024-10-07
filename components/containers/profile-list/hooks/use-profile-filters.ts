@@ -10,17 +10,10 @@ import {
 } from 'nuqs';
 import { useFilter } from './use-filter';
 import { siteConfig } from '@/lib/site-config';
+import { useState } from 'react';
+import { isNotEmpty } from '@/lib/utils/is-not-empty';
 
 export type Filters = ReturnType<typeof useProfileFilters>;
-
-const isNotEmpty = (
-  value: string | number | Array<string | number> | null
-): value is string | number | Array<string | number> => {
-  if (typeof value === 'string' || Array.isArray(value)) {
-    return value.length > 0;
-  }
-  return value !== null && value !== undefined;
-};
 
 export const useProfileFilters = () => {
   const [queryParams, setQueryParams] = useQueryStates(
@@ -46,28 +39,45 @@ export const useProfileFilters = () => {
     },
     { clearOnDefault: true, throttleMs: 1000 }
   );
+  const [tags, setTags] = useState<number[] | null>(queryParams.tags);
 
-  const { data, isLoading } = useGetFiltersOptionsQuery({
-    productSupportsWhere: {
-      ...(siteConfig.blockchainIds?.length > 0 && {
-        supportsProductId: { _in: siteConfig.blockchainIds }
-      })
-    },
-    deployedOnProductsWhere: {
-      ...(siteConfig.blockchainIds?.length > 0 && {
-        deployedOnProductId: { _in: siteConfig.blockchainIds }
-      }),
-      _or: [
-        {
-          ...(siteConfig.blockchainProductTypeIds?.length > 0 && {
-            productTypeId: {
-              _in: siteConfig.blockchainProductTypeIds
+  const { data, isLoading } = useGetFiltersOptionsQuery(
+    {
+      productSupportsWhere: {
+        ...(isNotEmpty(siteConfig.blockchainIds) && {
+          supportsProductId: { _in: siteConfig.blockchainIds }
+        })
+      },
+      productTypesWhere: {
+        ...((isNotEmpty(tags) || isNotEmpty(siteConfig.tags)) && {
+          products: {
+            profile: {
+              profileTags: {
+                tagId: {
+                  _in: [...(tags || []), ...(siteConfig.tags || [])]
+                }
+              }
             }
-          })
-        }
-      ]
-    }
-  });
+          }
+        })
+      },
+      deployedOnProductsWhere: {
+        ...(isNotEmpty(siteConfig.blockchainIds) && {
+          deployedOnProductId: { _in: siteConfig.blockchainIds }
+        }),
+        _or: [
+          {
+            ...(isNotEmpty(siteConfig.blockchainProductTypeIds) && {
+              productTypeId: {
+                _in: siteConfig.blockchainProductTypeIds
+              }
+            })
+          }
+        ]
+      }
+    },
+    { placeholderData: prevData => prevData }
+  );
 
   /*************************************
    * CHECKBOX GRID FILTERS
@@ -91,7 +101,10 @@ export const useProfileFilters = () => {
     })),
     type: 'multiselect',
     initialValue: queryParams.tags,
-    onChange: newValue => setQueryParams({ tags: newValue })
+    onChange: newValue => {
+      setQueryParams({ tags: newValue });
+      setTags(newValue);
+    }
   });
 
   /*************************************

@@ -11,17 +11,16 @@ import {
   useGetOrderByFieldsQuery
 } from '@/lib/graphql/generated-graphql';
 import { Sorting } from '../../hooks/use-profile-sorting';
-import { useMemo } from 'react';
+import { memo, useMemo } from 'react';
 import { Label } from '@/components/ui/label';
+import { useProfileSortingContext } from '@/providers/sorting-provider';
 
-export type ProfileSortingProps = {
-  sorting: Sorting['sorting'];
-};
-
-export const ProfileListSorting = ({ sorting }: ProfileSortingProps) => {
+const ProfileListSortingComponent = () => {
   const { data } = useGetOrderByFieldsQuery({
     name: 'profiles_order_by'
   });
+
+  const { sorting } = useProfileSortingContext();
 
   const options = useMemo(() => extractOrderByOptions(data), [data]);
 
@@ -149,3 +148,5 @@ export type GetOrderByFieldsQuery = {
     }> | null;
   } | null;
 };
+
+export const ProfileListSorting = memo(ProfileListSortingComponent);
