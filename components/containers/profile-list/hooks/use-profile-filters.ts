@@ -305,12 +305,8 @@ export const useProfileFilters = () => {
   });
 
   const toQueryWhereFields = () => {
-    return {
-      /*************************************
-       * SEARCH FILTERS
-       *************************************/
-      ...(isNotEmpty(searchFilter?.value) && {
-        _or: [
+    const searchConditions = isNotEmpty(searchFilter?.value)
+      ? [
           ...(searchFilter.config?.fields?.productName
             ? [
                 { name: { _ilike: `%${searchFilter.value}%` } },
@@ -318,11 +314,9 @@ export const useProfileFilters = () => {
               ]
             : [])
         ]
-      }),
+      : [];
 
-      /*************************************
-       * PROFILE FILTERS
-       *************************************/
+    const profileConditions = {
       ...(isNotEmpty(profileTypeFilter.value) && {
         profileType: { id: { _in: profileTypeFilter.value } }
       }),
@@ -337,69 +331,93 @@ export const useProfileFilters = () => {
           _gte: profileFoundingDateFilter.value[0],
           _lte: profileFoundingDateFilter.value[1]
         }
-      }),
-      /*************************************
-       * PRODUCT FILTERS
-       *************************************/
+      })
+    };
+
+    const productConditions = {
       ...(isNotEmpty(productTypesFilter.value) && {
-        products: { productTypeId: { _in: productTypesFilter.value } }
+        productTypeId: { _in: productTypesFilter.value }
       }),
       ...(isNotEmpty(productStatusFilter.value) && {
-        products: {
-          productStatus: { id: { _in: productStatusFilter.value } }
-        }
+        productStatus: { id: { _in: productStatusFilter.value } }
       }),
       ...(isNotEmpty(productDeployedOnFilter.value) && {
-        products: {
-          deployedOnProductId: { _in: productDeployedOnFilter.value }
-        }
+        deployedOnProductId: { _in: productDeployedOnFilter.value }
       }),
       ...(isNotEmpty(productSupportsFilter.value) && {
-        products: {
-          supportsProducts: {
-            supportsProductId: { _in: productSupportsFilter.value }
-          }
+        supportsProducts: {
+          supportsProductId: { _in: productSupportsFilter.value }
         }
       }),
       ...(productLaunchDateFilter.value?.every?.(i => i) && {
-        foundingDate: {
+        launchDate: {
           _gte: productLaunchDateFilter.value[0],
           _lte: productLaunchDateFilter.value[1]
         }
-      }),
-      /*************************************
-       * ASSET FILTERS
-       *************************************/
+      })
+    };
+
+    const assetConditions = {
       ...(isNotEmpty(assetTypeFilter.value) && {
-        assets: { assetTypeId: { _in: assetTypeFilter.value } }
+        assetTypeId: { _in: assetTypeFilter.value }
       }),
       ...(isNotEmpty(assetTickerFilter.value) && {
-        assets: {
-          ticker: { _in: assetTickerFilter.value }
-        }
+        ticker: { _in: assetTickerFilter.value }
       }),
       ...(isNotEmpty(assetDeployedOnFilter.value) && {
-        assets: {
-          assetDeployedOnProductId: {
-            id: { _in: assetDeployedOnFilter.value }
-          }
+        assetDeployedOnProductId: {
+          id: { _in: assetDeployedOnFilter.value }
         }
       }),
       ...(isNotEmpty(assetStandardFilter.value) && {
-        assets: { assetStandardId: { _in: assetStandardFilter.value } }
+        assetStandardId: { _in: assetStandardFilter.value }
+      })
+    };
+
+    const entityConditions = {
+      ...(isNotEmpty(entityTypeFilter.value) && {
+        entityTypeId: { _in: entityTypeFilter.value }
       }),
+      ...(isNotEmpty(entityNameFilter.value) && {
+        id: { _in: entityNameFilter.value }
+      }),
+      ...(isNotEmpty(entityCountryFilter.value) && {
+        countryId: { _in: entityCountryFilter.value }
+      })
+    };
+
+    return {
+      /*************************************
+       * SEARCH FILTERS
+       *************************************/
+      ...(searchConditions.length > 0 && { _or: searchConditions }),
+
+      /*************************************
+       * PROFILE FILTERS
+       *************************************/
+      ...(Object.keys(profileConditions).length > 0 && profileConditions),
+
+      /*************************************
+       * PRODUCT FILTERS
+       *************************************/
+      ...(Object.keys(productConditions).length > 0 && {
+        products: productConditions
+      }),
+
+      /*************************************
+       * ASSET FILTERS
+       *************************************/
+      ...(Object.keys(assetConditions).length > 0 && {
+        assets: assetConditions
+      }),
+
       /*************************************
        * ENTITY FILTERS
        *************************************/
-      ...(isNotEmpty(entityTypeFilter.value) && {
-        entities: { entityTypeId: { _in: entityTypeFilter.value } }
+      ...(Object.keys(entityConditions).length > 0 && {
+        entities: entityConditions
       }),
-      ...(isNotEmpty(entityNameFilter.value) && {
-        entities: { id: { _in: entityNameFilter.value } }
-      }),
-      ...(isNotEmpty(entityCountryFilter.value) && {
-        entities: { countryId: { _in: entityCountryFilter.value } }
-      }),
+
       /*************************************
        * TAGS FILTERS
        *************************************/

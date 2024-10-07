@@ -41,7 +41,7 @@ export function ComboBox<T extends string | number>({
     <FilterContainer
       label={label}
       badgeContent={nrOfSelectedOptions > 0 && `${nrOfSelectedOptions}`}
-      active={selected.length > 0}
+      active={selected?.length > 0}
     >
       <div className="flex flex-col md:min-w-[480px]">
         <OptionList<T>
@@ -95,12 +95,12 @@ export const OptionList = <T extends string | number>({
                 value={option.value as string}
                 onSelect={() => {
                   // Determine if the option is already selected
-                  const isSelected = selected.includes(option.value);
+                  const isSelected = selected?.includes(option.value);
 
                   // Update the selected options list
                   const updatedSelected = isSelected
-                    ? selected.filter(item => item !== option.value)
-                    : [...selected, option.value]; // Ensure you're adding just the value
+                    ? selected?.filter(item => item !== option.value)
+                    : [...(selected || []), option.value]; // Ensure you're adding just the value
 
                   // Update the state
                   onChange(updatedSelected);
@@ -110,7 +110,7 @@ export const OptionList = <T extends string | number>({
                 <Check
                   className={cn(
                     'mr-2 h-4 w-4 flex-shrink-0',
-                    selected.includes(option.value)
+                    selected?.includes(option.value)
                       ? 'opacity-100'
                       : 'opacity-0'
                   )}
