@@ -9,13 +9,13 @@ import { useDebounceValue } from 'usehooks-ts';
 import { useProfilesQueryContext } from '@/providers/profiles-query-provider';
 
 const defaultLimit = 10;
-const resultToastId = 'search-results-toast';
+// const resultToastId = 'search-results-toast';
 
 export const ProfileListCards = () => {
   const query = useProfilesQueryContext();
 
-  const { toast, findToastById } = useToast();
-  const resultToast = findToastById(resultToastId);
+  // const { toast, findToastById } = useToast();
+  // const resultToast = findToastById(resultToastId);
 
   const [debouncedQuery] = useDebounceValue(query, 500);
 
@@ -24,6 +24,7 @@ export const ProfileListCards = () => {
 
   const { data, isFetching, isError, fetchNextPage, status } =
     useInfiniteSearchProfilesQuery(debouncedQuery, {
+      placeholderData: previousData => previousData,
       initialPageParam: {
         limit,
         offset: 0
@@ -52,24 +53,24 @@ export const ProfileListCards = () => {
   const profiles = data?.pages?.flatMap(page => page.profiles);
   const nrOfFetchedProfiles = profiles?.length ?? 0;
 
-  const { update: updateResultsToast, display: displayResultsToast } = toast({
-    trigger: false,
-    id: resultToastId,
-    title: 'Loading...',
-    action: <ToastActionComponent />
-  });
+  // const { update: updateResultsToast, display: displayResultsToast } = toast({
+  //   trigger: false,
+  //   id: resultToastId,
+  //   title: 'Loading...',
+  //   action: <ToastActionComponent />
+  // });
 
-  useEffect(() => {
-    if (status === 'success') {
-      updateResultsToast({
-        id: resultToastId,
-        title: 'Results updated'
-      });
-    } else if (status === 'pending') {
-      !resultToast?.open && displayResultsToast();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [status, resultToast?.open]);
+  // useEffect(() => {
+  //   if (status === 'success') {
+  //     updateResultsToast({
+  //       id: resultToastId,
+  //       title: 'Results updated'
+  //     });
+  //   } else if (status === 'pending') {
+  //     !resultToast?.open && displayResultsToast();
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [profiles, resultToast?.open]);
 
   return (
     <div className="flex flex-col gap-8 pb-2">
