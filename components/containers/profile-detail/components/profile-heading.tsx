@@ -25,7 +25,7 @@ export const ProfileHeading = ({
   return (
     <div className="flex flex-col gap-6">
       <div className="flex flex-col items-start gap-6 lg:flex-row lg:items-center">
-        <div className="border-1 w-fit shrink-0 -rotate-3 rounded-xl border border-primary bg-white shadow-lg">
+        <div className="border-1 w-fit shrink-0 rounded-xl border border-primary bg-white shadow-lg">
           <Avatar className="h-[100px] w-[220px] min-w-[120px] rounded-xl p-4">
             {validLogoUrl && (
               <AvatarImage
