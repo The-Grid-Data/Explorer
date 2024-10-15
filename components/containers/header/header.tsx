@@ -22,7 +22,7 @@ const claimProfileButton = (
   <Link
     target="_blank"
     rel="noopener noreferrer"
-    href="https://data.thegrid.id/form/d72408d4-d3f2-45ee-9248-70e86bfba351" 
+    href="https://enter.thegrid.id/claimprofile" 
   >
     <Button variant="outline" className="w-full md:w-fit">
       Claim your profile
