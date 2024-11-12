@@ -6,7 +6,7 @@ export default function Page() {
   return (
     <main className="min-h-[1600px] w-full">
       <Hero />
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense>
         <ProfileList />
       </Suspense>
     </main>

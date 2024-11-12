@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { paths } from '@/lib/routes/paths';
 import { ProfileCardIconLinks } from '@/components/containers/profile-card-icon-links';
+import { Badge } from '@/components/ui/badge';
 
 export type Profile = SearchProfilesQuery['profiles'][0];
 
@@ -37,11 +38,19 @@ export const ProfileCard = ({ profile }: ProfileCardCardProps) => {
             </Link>
           </div>
           <div className="flex w-full flex-col gap-3 px-4 lg:mt-7 lg:p-0">
-            <Link className="w-fit" href={paths.profile.detail(profile.slug)}>
-              <h3 className="w-fit text-2xl font-bold hover:underline">
-                {profile.name}
-              </h3>
-            </Link>
+            <div className="flex flex-row gap-2">
+              <Link
+                className="flex w-fit items-center gap-2"
+                href={paths.profile.detail(profile.slug)}
+              >
+                <h3 className="w-fit text-2xl font-bold hover:underline">
+                  {profile.name}
+                </h3>
+                {profile.profileTags.find(tag => tag.id === 7) && (
+                  <Badge className="w-fit">Verified</Badge>
+                )}
+              </Link>
+            </div>
             <div className="flex flex-col gap-4 lg:mr-[-16px] lg:flex-row">
               <div className="w-fit flex-1">
                 <ProfileCardIconLinks profile={profile} />

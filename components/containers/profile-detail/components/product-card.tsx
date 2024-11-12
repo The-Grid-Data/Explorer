@@ -8,6 +8,8 @@ import {
 } from './profile-data-point';
 import { Globe } from 'lucide-react';
 import { IconLink } from '@/components/ui/icon-link';
+import { paths } from '@/lib/routes/paths';
+import { DeepLink } from '@/components/ui/deep-link';
 
 export type Profile = GetProfileQuery['profiles'][0];
 export type Product = Profile['products'][0];
@@ -57,7 +59,17 @@ export const ProductCard = ({ product }: ProductCardCardProps) => {
               />
               <ProfileFeature
                 label="Deployed on"
-                value={product.productDeployedOnProduct?.name}
+                value={
+                  <DeepLink
+                    href={
+                      product.productDeployedOnProduct?.profile?.slug &&
+                      paths.profile.detail(
+                        product.productDeployedOnProduct.profile.slug
+                      )
+                    }
+                    value={product.productDeployedOnProduct?.name}
+                  />
+                }
               />
             </ProfileFeatureContainer>
             <div className="space-y-2">

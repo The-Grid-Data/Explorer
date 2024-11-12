@@ -1,17 +1,19 @@
-import { PropsWithChildren } from 'react';
+import { PropsWithChildren, ReactNode } from 'react';
+import Link from 'next/link';
+import { DeepLink } from '@/components/ui/deep-link';
 
 export type ProfileFeatureProps = {
   label: string;
-  value?: string | false;
+  value?: string | false | ReactNode;
 };
 
 export const ProfileFeature = ({ label, value }: ProfileFeatureProps) => {
   return (
     <div className="flex flex-col items-start overflow-hidden">
-      <span className="text w-full rounded-t-sm bg-primary px-2 py-1 text-xs text-muted">
+      <span className="w-full rounded-t-sm bg-primary px-2 py-1 text-xs text-muted">
         {label}
       </span>
-      <span className="text w-full rounded-b-sm border border-t-0 border-black px-2 py-1 text-sm">
+      <span className="w-full rounded-b-sm border border-t-0 border-black px-2 py-1 text-sm">
         {value || '-'}
       </span>
     </div>

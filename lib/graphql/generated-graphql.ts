@@ -174,8 +174,8 @@ export type Assets = {
   /** An array relationship */
   products: Array<Products>;
   /** An object relationship */
-  profile: Profiles;
-  profileId: Scalars['Int']['output'];
+  profile?: Maybe<Profiles>;
+  profileId?: Maybe<Scalars['Int']['output']>;
   shortDescription: Scalars['String']['output'];
   ticker: Scalars['String']['output'];
   urlToAssetDocs: Scalars['String']['output'];
@@ -380,8 +380,8 @@ export type Entities = {
   __typename?: 'entities';
   address: Scalars['String']['output'];
   /** An object relationship */
-  country: Countries;
-  countryId: Scalars['Int']['output'];
+  country?: Maybe<Countries>;
+  countryId?: Maybe<Scalars['Int']['output']>;
   dateOfIncorporation?: Maybe<Scalars['date']['output']>;
   /** An array relationship */
   entities: Array<Entities>;
@@ -819,16 +819,16 @@ export type Products = {
   /** An object relationship */
   productDeployedOnProduct?: Maybe<Products>;
   /** An object relationship */
-  productStatus?: Maybe<ProductStatus>;
-  productStatusId?: Maybe<Scalars['Int']['output']>;
+  productStatus: ProductStatus;
+  productStatusId: Scalars['Int']['output'];
   /** An object relationship */
-  productType?: Maybe<ProductTypes>;
-  productTypeId?: Maybe<Scalars['Int']['output']>;
+  productType: ProductTypes;
+  productTypeId: Scalars['Int']['output'];
   /** An array relationship */
   products: Array<Products>;
   /** An object relationship */
-  profile: Profiles;
-  profileId: Scalars['Int']['output'];
+  profile?: Maybe<Profiles>;
+  profileId?: Maybe<Scalars['Int']['output']>;
   /** An array relationship */
   supportedByProducts: Array<ProductSupports>;
   /** An array relationship */
@@ -1279,16 +1279,16 @@ export type Profiles = {
   /** An array relationship */
   products: Array<Products>;
   /** An object relationship */
-  profileSector?: Maybe<ProfileSectors>;
-  profileSectorId?: Maybe<Scalars['Int']['output']>;
+  profileSector: ProfileSectors;
+  profileSectorId: Scalars['Int']['output'];
   /** An object relationship */
-  profileStatus?: Maybe<ProfileStatuses>;
-  profileStatusId?: Maybe<Scalars['Int']['output']>;
+  profileStatus: ProfileStatuses;
+  profileStatusId: Scalars['Int']['output'];
   /** An array relationship */
   profileTags: Array<ProfileTags>;
   /** An object relationship */
-  profileType?: Maybe<ProfileTypes>;
-  profileTypeId?: Maybe<Scalars['Int']['output']>;
+  profileType: ProfileTypes;
+  profileTypeId: Scalars['Int']['output'];
   slug: Scalars['String']['output'];
   /** An array relationship */
   socials: Array<Socials>;
@@ -2246,7 +2246,7 @@ export type Tags = {
   name: Scalars['String']['output'];
   /** An array relationship */
   profileTags: Array<ProfileTags>;
-  tagTypeId: Scalars['Int']['output'];
+  tagTypeId?: Maybe<Scalars['Int']['output']>;
 };
 
 export type TagsProfileTagsArgs = {
@@ -2385,6 +2385,7 @@ export type GetFiltersOptionsQueryVariables = Exact<{
   productSupportsWhere?: InputMaybe<ProductSupports_Bool_Exp>;
   deployedOnProductsWhere?: InputMaybe<Products_Bool_Exp>;
   productTypesWhere?: InputMaybe<ProductTypes_Bool_Exp>;
+  tagsWhere?: InputMaybe<Tags_Bool_Exp>;
 }>;
 
 export type GetFiltersOptionsQuery = {
@@ -2536,9 +2537,9 @@ export type GetProfileQuery = {
     foundingDate?: any | null;
     descriptionShort: string;
     descriptionLong: string;
-    profileSectorId?: number | null;
-    profileStatusId?: number | null;
-    profileTypeId?: number | null;
+    profileSectorId: number;
+    profileStatusId: number;
+    profileTypeId: number;
     tagLine: string;
     urlBlog: string;
     urlDocumentation: string;
@@ -2574,24 +2575,24 @@ export type GetProfileQuery = {
         name: string;
       } | null;
     }>;
-    profileType?: {
+    profileType: {
       __typename?: 'profileTypes';
       name: string;
       id: number;
       definition: string;
-    } | null;
-    profileStatus?: {
+    };
+    profileStatus: {
       __typename?: 'profileStatuses';
       name: string;
       id: number;
       definition: string;
-    } | null;
-    profileSector?: {
+    };
+    profileSector: {
       __typename?: 'profileSectors';
       name: string;
       id: number;
       definition: string;
-    } | null;
+    };
     products: Array<{
       __typename?: 'products';
       urlToProduct: string;
@@ -2601,9 +2602,9 @@ export type GetProfileQuery = {
       launchDate?: any | null;
       name: string;
       productAddress: string;
-      productStatusId?: number | null;
-      productType?: { __typename?: 'productTypes'; name: string } | null;
-      productStatus?: { __typename?: 'productStatus'; name: string } | null;
+      productStatusId: number;
+      productType: { __typename?: 'productTypes'; name: string };
+      productStatus: { __typename?: 'productStatus'; name: string };
       supportsProducts: Array<{
         __typename?: 'productSupports';
         supports: { __typename?: 'products'; name: string };
@@ -2619,14 +2620,14 @@ export type GetProfileQuery = {
         address: string;
         urlToAssetDocs: string;
         ticker: string;
-        profileId: number;
+        profileId?: number | null;
         shortDescription: string;
       } | null;
       mainAsset?: {
         __typename?: 'assets';
         urlToAssetDocs: string;
         ticker: string;
-        profileId: number;
+        profileId?: number | null;
         shortDescription: string;
         name: string;
       } | null;
@@ -2637,6 +2638,7 @@ export type GetProfileQuery = {
         descriptionShort: string;
         deployedOnProductId?: number | null;
         urlToProduct: string;
+        profile?: { __typename?: 'profiles'; slug: string } | null;
       } | null;
       supportedByProducts: Array<{
         __typename?: 'productSupports';
@@ -2647,7 +2649,7 @@ export type GetProfileQuery = {
     mainProduct: Array<{
       __typename?: 'products';
       name: string;
-      productType?: { __typename?: 'productTypes'; name: string } | null;
+      productType: { __typename?: 'productTypes'; name: string };
     }>;
     entities: Array<{
       __typename?: 'entities';
@@ -2658,18 +2660,22 @@ export type GetProfileQuery = {
       localRegistrationNumber: string;
       leiNumber: string;
       dateOfIncorporation?: any | null;
-      countryId: number;
+      countryId?: number | null;
       address: string;
       id: number;
       parentEntityId?: number | null;
       taxIdentificationNumber: string;
-      country: { __typename?: 'countries'; code: string; name: string };
+      country?: { __typename?: 'countries'; code: string; name: string } | null;
       entityType?: {
         __typename?: 'entityTypes';
         name: string;
         id: number;
         definition: string;
       } | null;
+    }>;
+    profileTags: Array<{
+      __typename?: 'profileTags';
+      tag: { __typename?: 'tags'; name: string; id: number };
     }>;
   }>;
 };
@@ -2700,20 +2706,21 @@ export type SearchProfilesQuery = {
       url: string;
       socialType?: { __typename?: 'socialTypes'; name: string } | null;
     }>;
-    profileSector?: { __typename?: 'profileSectors'; name: string } | null;
-    profileType?: { __typename?: 'profileTypes'; name: string } | null;
-    profileStatus?: { __typename?: 'profileStatuses'; name: string } | null;
+    profileTags: Array<{ __typename?: 'profileTags'; id: number }>;
+    profileSector: { __typename?: 'profileSectors'; name: string };
+    profileType: { __typename?: 'profileTypes'; name: string };
+    profileStatus: { __typename?: 'profileStatuses'; name: string };
     assets: Array<{ __typename?: 'assets'; ticker: string }>;
     mainProduct: Array<{
       __typename?: 'products';
       name: string;
-      productType?: { __typename?: 'productTypes'; name: string } | null;
+      productType: { __typename?: 'productTypes'; name: string };
     }>;
   }>;
 };
 
 export const GetFiltersOptionsDocument = `
-    query GetFiltersOptions($productSupportsWhere: productSupports_bool_exp, $deployedOnProductsWhere: products_bool_exp, $productTypesWhere: productTypes_bool_exp) {
+    query GetFiltersOptions($productSupportsWhere: productSupports_bool_exp, $deployedOnProductsWhere: products_bool_exp, $productTypesWhere: productTypes_bool_exp, $tagsWhere: tags_bool_exp) {
   profileTypes {
     name
     id
@@ -2785,7 +2792,7 @@ export const GetFiltersOptionsDocument = `
     name
     id
   }
-  tags(order_by: {profileTags_aggregate: {count: desc}}) {
+  tags(where: $tagsWhere, order_by: {profileTags_aggregate: {count: desc}}) {
     name
     id
     description
@@ -3062,6 +3069,9 @@ export const GetProfileDocument = `
         descriptionShort
         deployedOnProductId
         urlToProduct
+        profile {
+          slug
+        }
       }
       supportedByProducts {
         supports {
@@ -3102,6 +3112,12 @@ export const GetProfileDocument = `
       }
       parentEntityId
       taxIdentificationNumber
+    }
+    profileTags {
+      tag {
+        name
+        id
+      }
     }
   }
 }
@@ -3179,6 +3195,9 @@ export const SearchProfilesDocument = `
       socialType {
         name
       }
+    }
+    profileTags {
+      id
     }
     profileSector {
       name

@@ -59,6 +59,13 @@ export const ProfileDetail = ({ profileId }: ProfileDetailProps) => {
               profile.assets.map(asset => asset.ticker).join(', ')
             }
           />
+          <ProfileFeature
+            label="Tags"
+            value={
+              Boolean(profile.profileTags.length) &&
+              profile.profileTags.map(tag => tag.tag.name).join(', ')
+            }
+          />
         </ProfileFeatureContainer>
         <div className="h-1" />
         <ProfileFeatureContainer>

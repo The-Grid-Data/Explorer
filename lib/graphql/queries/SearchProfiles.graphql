@@ -22,6 +22,9 @@ query SearchProfiles(
         name
       }
     }
+    profileTags {
+      id
+    }
     profileSector {
       name
     }

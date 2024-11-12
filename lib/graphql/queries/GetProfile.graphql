@@ -104,6 +104,9 @@ query GetProfile($where: profiles_bool_exp) {
         descriptionShort
         deployedOnProductId
         urlToProduct
+        profile {
+          slug
+        }
       }
       supportedByProducts {
         supports {
@@ -144,6 +147,12 @@ query GetProfile($where: profiles_bool_exp) {
       }
       parentEntityId
       taxIdentificationNumber
+    }
+    profileTags {
+      tag {
+        name
+        id
+      }
     }
   }
 }
