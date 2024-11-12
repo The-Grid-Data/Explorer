@@ -1,5 +1,7 @@
 export const siteConfig = {
   pageTitle: 'The Grid | Data Explorer',
+  verifiedTagId: null,
+  logoSrc: '/thegrid-logo.svg',
   pageDescription:
     'Powering Discoverability of Assets, Products, and Services in Web3.',
   filterByProductIds: [], // Used to filter which blockchains to show in the full list.

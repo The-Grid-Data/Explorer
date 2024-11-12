@@ -9,6 +9,7 @@ import Link from 'next/link';
 import { paths } from '@/lib/routes/paths';
 import { ProfileCardIconLinks } from '@/components/containers/profile-card-icon-links';
 import { Badge } from '@/components/ui/badge';
+import { siteConfig } from '@/lib/site-config';
 
 export type Profile = SearchProfilesQuery['profiles'][0];
 
@@ -46,9 +47,9 @@ export const ProfileCard = ({ profile }: ProfileCardCardProps) => {
                 <h3 className="w-fit text-2xl font-bold hover:underline">
                   {profile.name}
                 </h3>
-                {profile.profileTags.find(tag => tag.id === 7) && (
-                  <Badge className="w-fit">Verified</Badge>
-                )}
+                {profile.profileTags.find(
+                  tag => tag.id === siteConfig.verifiedTagId
+                ) && <Badge className="w-fit">Verified</Badge>}
               </Link>
             </div>
             <div className="flex flex-col gap-4 lg:mr-[-16px] lg:flex-row">

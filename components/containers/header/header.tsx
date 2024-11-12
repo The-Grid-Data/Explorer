@@ -7,6 +7,7 @@ import { SiGithub } from 'react-icons/si';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
+import { siteConfig } from '@/lib/site-config';
 
 const learnMoreButton = (
   <Link
@@ -22,7 +23,7 @@ const claimProfileButton = (
   <Link
     target="_blank"
     rel="noopener noreferrer"
-    href="https://enter.thegrid.id/claimprofile" 
+    href="https://enter.thegrid.id/claimprofile"
   >
     <Button variant="outline" className="w-full md:w-fit">
       Claim your profile
@@ -50,7 +51,7 @@ export const Header = () => {
         <Link href="/" className="flex items-center">
           <Image
             alt="The grid logo"
-            src="/thegrid-logo.svg"
+            src={siteConfig.logoSrc}
             width={160}
             height={1200}
           />
@@ -83,6 +84,9 @@ export const Header = () => {
             </li>
             <li>
               <SheetTrigger asChild>{cloneRepoButton}</SheetTrigger>
+            </li>
+            <li>
+              <SheetTrigger asChild>{claimProfileButton}</SheetTrigger>
             </li>
           </ul>
         </SheetContent>
