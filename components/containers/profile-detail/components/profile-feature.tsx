@@ -4,7 +4,7 @@ import { DeepLink } from '@/components/ui/deep-link';
 
 export type ProfileFeatureProps = {
   label: string;
-  value?: string | false | ReactNode;
+  value?: string | false | ReactNode | null;
 };
 
 export const ProfileFeature = ({ label, value }: ProfileFeatureProps) => {
