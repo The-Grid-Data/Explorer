@@ -75,7 +75,7 @@ export const ProductCard = ({ product }: ProductCardCardProps) => {
           children:
             Boolean(product.supportsProducts.length > 0) &&
             product.supportsProducts.map(supportProduct => (
-              <div className="flex gap-2">
+              <div className="flex gap-2" key={supportProduct.supports.name}>
                 <DeepLinkBadge
                   icon={<Package size={16} />}
                   href={

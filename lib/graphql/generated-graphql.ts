@@ -2573,6 +2573,7 @@ export type GetProfileQuery = {
       assetDeployedOnProductId?: {
         __typename?: 'products';
         name: string;
+        profile?: { __typename?: 'profiles'; slug: string } | null;
       } | null;
     }>;
     profileType: {
@@ -2607,7 +2608,11 @@ export type GetProfileQuery = {
       productStatus: { __typename?: 'productStatus'; name: string };
       supportsProducts: Array<{
         __typename?: 'productSupports';
-        supports: { __typename?: 'products'; name: string };
+        supports: {
+          __typename?: 'products';
+          name: string;
+          profile?: { __typename?: 'profiles'; slug: string } | null;
+        };
       }>;
       asset?: {
         __typename?: 'assets';
@@ -3006,6 +3011,9 @@ export const GetProfileDocument = `
       }
       assetDeployedOnProductId {
         name
+        profile {
+          slug
+        }
       }
     }
     profileType {
@@ -3041,6 +3049,9 @@ export const GetProfileDocument = `
       supportsProducts {
         supports {
           name
+          profile {
+            slug
+          }
         }
       }
       asset {
