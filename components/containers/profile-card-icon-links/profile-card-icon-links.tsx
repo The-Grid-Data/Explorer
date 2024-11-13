@@ -4,8 +4,11 @@ import {
   SiDiscord,
   SiLinkedin,
   SiTelegram,
-  SiFarcaster
+  SiFarcaster,
+  SiGithub,
+  SiReddit
 } from 'react-icons/si';
+
 import { Separator } from '@/components/ui/separator';
 import { IconLink } from '@/components/ui/icon-link';
 
@@ -26,11 +29,13 @@ const iconFilledClassName = 'fill-primary hover:fill-primary/60';
 const iconBorderedClassName = 'text-primary hover:text-primary/60';
 
 const socialsIconMap = {
-  'Twitter / X': <SiX className={iconFilledClassName} size={16} />,
-  Discord: <SiDiscord className={iconFilledClassName} size={16} />,
-  LinkedIn: <SiLinkedin className={iconFilledClassName} size={16} />,
-  Telegram: <SiTelegram className={iconFilledClassName} size={16} />,
-  Warpcast: <SiFarcaster className={iconFilledClassName} size={16} />
+  'Twitter / X': <SiX className={iconFilledClassName} size={20} />,
+  Discord: <SiDiscord className={iconFilledClassName} size={20} />,
+  LinkedIn: <SiLinkedin className={iconFilledClassName} size={20} />,
+  Telegram: <SiTelegram className={iconFilledClassName} size={20} />,
+  Warpcast: <SiFarcaster className={iconFilledClassName} size={20} />,
+  GitHub: <SiGithub className={iconFilledClassName} size={20} />,
+  Reddit: <SiReddit className={iconFilledClassName} size={20} />
 } as const;
 
 export const ProfileCardIconLinks = ({ profile }: ProfileCardFeatureProps) => {

@@ -1,14 +1,14 @@
 'use client';
 
 import { GetProfileQuery } from '@/lib/graphql/generated-graphql';
-import { ProfileFeature, ProfileFeatureContainer } from './profile-feature';
-import {
-  ProfileDataPoint,
-  ProfileDataPointContainer
-} from './profile-data-point';
-import { FileCode2 } from 'lucide-react';
+import { paths } from '@/lib/routes/paths';
+import { DeepLinkBadge } from '@/components/ui/deep-link-badge';
+import { ProfileDataCard } from './profile-data-card';
+import { FileCode2, Package } from 'lucide-react';
 import { IconLink } from '@/components/ui/icon-link';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Separator } from '@radix-ui/react-separator';
+import { CardTitle } from '@/components/ui/card';
 
 export type Profile = GetProfileQuery['profiles'][0];
 export type Asset = Profile['assets'][0];
@@ -18,22 +18,24 @@ export type AssetCardProps = {
 
 export const AssetCard = ({ asset }: AssetCardProps) => {
   return (
-    <div className="relative w-full rounded-xl border-2 border-primary bg-secondary/40 shadow-md">
-      <div className="flex flex-col">
-        <div className="flex flex-wrap items-center gap-2">
-          <div className="flex items-center gap-2 rounded-br-lg rounded-tl-lg bg-primary px-4 py-2">
-            <Avatar className="h-[20px] w-[20px] rounded-xl">
-              <AvatarImage
-                className="object-scale-down"
-                src={asset.icon}
-                alt={asset.name}
-              />
-              <AvatarFallback className="bg-white font-bold">
-                {asset.name.at(0)?.toUpperCase()}
-              </AvatarFallback>
-            </Avatar>
-            <h3 className="text-l  text-secondary">{asset.name}</h3>
-          </div>
+    <ProfileDataCard
+      title={
+        <div className="flex items-center gap-2">
+          <Avatar className="h-[20px] w-[20px] rounded-xl">
+            <AvatarImage
+              src={asset.icon}
+              alt={asset.name}
+              className="object-scale-down"
+            />
+            <AvatarFallback className="font-bold">
+              {asset.name.at(0)?.toUpperCase()}
+            </AvatarFallback>
+          </Avatar>
+          <CardTitle>{asset.name}</CardTitle>
+          <Separator
+            className="mx-2 h-[10px] rounded-lg border-[1px]"
+            orientation="vertical"
+          />
           {asset.urlToAssetDocs && (
             <IconLink url={asset.urlToAssetDocs} tooltipLabel="Website">
               <FileCode2
@@ -43,30 +45,41 @@ export const AssetCard = ({ asset }: AssetCardProps) => {
             </IconLink>
           )}
         </div>
-        <div className="space-y-2 p-4">
-          <p className="text pb-2 text-sm">
-            {asset.shortDescription || 'No description avaliable'}
-          </p>
-          <ProfileFeatureContainer>
-            <ProfileFeature label="Asset type" value={asset.assetType?.name} />
-          </ProfileFeatureContainer>
-          <div className="space-y-2">
-            <ProfileDataPointContainer>
-              <ProfileDataPoint
-                fullWidth
-                label="Deployed on"
-                value={asset.assetDeployedOnProductId?.name}
-              />
-              <ProfileDataPoint
-                fullWidth
-                label="Address"
-                value={asset.address}
-                opts={{ breakAll: true }}
-              />
-            </ProfileDataPointContainer>
-          </div>
-        </div>
-      </div>
-    </div>
+      }
+      description={asset.shortDescription || 'No description available'}
+      dataPoints={[
+        {
+          label: 'Asset Type',
+          value: asset.assetType?.name || '-'
+        },
+        {
+          label: 'Deployed on',
+          value: (
+            <DeepLinkBadge
+              icon={<Package size={16} />}
+              href={
+                asset.assetDeployedOnProductId?.profile?.slug &&
+                paths.profile.detail(
+                  asset.assetDeployedOnProductId?.profile?.slug,
+                  {
+                    section: 'products'
+                  }
+                )
+              }
+              value={asset.assetDeployedOnProductId?.name}
+            />
+          )
+        },
+        {
+          label: 'Address',
+          fullWidth: true,
+          children: asset.address ? (
+            <span className="w-full break-all text-sm">{asset.address}</span>
+          ) : (
+            '-'
+          )
+        }
+      ]}
+    />
   );
 };

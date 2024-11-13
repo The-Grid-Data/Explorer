@@ -4,18 +4,18 @@ import { useGetProfileQuery } from '@/lib/graphql/generated-graphql';
 import ProfileNotFound from './components/profile-not-found';
 import { ProfileHeading } from './components/profile-heading';
 import { ProfileDataSection } from './components/profile-data-section';
-import {
-  ProfileFeature,
-  ProfileFeatureContainer
-} from './components/profile-feature';
-import {
-  ProfileDataPoint,
-  ProfileDataPointContainer
-} from './components/profile-data-point';
+import { ProfileDataPoint } from './components/profile-data-point';
 import ProfileLoading from './components/profile-loading';
 import { ProductCard } from './components/product-card';
 import { AssetCard } from './components/asset-card';
 import { EntityCard } from './components/entity-card';
+import { Card, CardContent } from '@/components/ui/card';
+import { ReactNode } from 'react';
+import { Badge } from '@/components/ui/badge';
+import Link from 'next/link';
+import { paths } from '@/lib/routes/paths';
+import { Banknote, Building2, Package } from 'lucide-react';
+import { OverviewSection } from './components/overview-section';
 
 export type ProfileDetailProps = {
   profileId: string;
@@ -40,51 +40,26 @@ export const ProfileDetail = ({ profileId }: ProfileDetailProps) => {
     <div className="container w-full space-y-10 pb-12">
       <ProfileHeading queryVariables={query} profile={profile} />
 
-      <ProfileDataSection title="Overview">
-        <ProfileFeatureContainer>
-          <ProfileFeature label="Sector" value={profile.profileSector?.name} />
-          <ProfileFeature
-            label="Profile type"
-            value={profile.profileType?.name}
-          />
-          <ProfileFeature
-            label="Main Product Type"
-            value={profile.mainProduct.at(0)?.productType?.name}
-          />
-          <ProfileFeature label="Status" value={profile.profileStatus?.name} />
-          <ProfileFeature
-            label="Issued Assets"
-            value={
-              Boolean(profile.assets.length) &&
-              profile.assets.map(asset => asset.ticker).join(', ')
-            }
-          />
-          <ProfileFeature
-            label="Tags"
-            value={
-              Boolean(profile.profileTags.length) &&
-              profile.profileTags.map(tag => tag.tag.name).join(', ')
-            }
-          />
-        </ProfileFeatureContainer>
-        <div className="h-1" />
-        <ProfileFeatureContainer>
-          <ProfileDataPointContainer>
-            <ProfileDataPoint label="Tagline" value={profile.tagLine} />
-            <ProfileDataPoint
-              label="Short Description"
-              value={profile.descriptionShort}
-            />
-            <ProfileDataPoint
-              label="Long Description"
-              value={profile.descriptionLong}
-            />
-          </ProfileDataPointContainer>
-        </ProfileFeatureContainer>
-      </ProfileDataSection>
+      <section className="space-y-3">
+        <ProfileDataPoint label="Tagline" value={profile.tagLine} />
+        <ProfileDataPoint
+          label="Short Description"
+          value={profile.descriptionShort}
+        />
+        <ProfileDataPoint
+          label="Long Description"
+          value={profile.descriptionLong}
+        />
+      </section>
 
-      <ProfileDataSection title="Products">
-        <div className="flex flex-wrap gap-4">
+      <OverviewSection profile={profile} />
+
+      <ProfileDataSection
+        title="Products"
+        id="products"
+        icon={<Package className="h-6 w-6" />}
+      >
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {!Boolean(profile.products.length) && <p>No products found</p>}
           {Boolean(profile.products.length) &&
             profile.products.map(product => (
@@ -92,8 +67,12 @@ export const ProfileDetail = ({ profileId }: ProfileDetailProps) => {
             ))}
         </div>
       </ProfileDataSection>
-      <ProfileDataSection title="Assets">
-        <div className="flex flex-wrap gap-4">
+
+      <ProfileDataSection
+        icon={<Banknote className="h-6 w-6" />}
+        title="Assets"
+      >
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {!Boolean(profile.assets.length) && <p>No assets found</p>}
           {Boolean(profile.assets.length) &&
             profile.assets.map(asset => (
@@ -101,8 +80,12 @@ export const ProfileDetail = ({ profileId }: ProfileDetailProps) => {
             ))}
         </div>
       </ProfileDataSection>
-      <ProfileDataSection title="Entities">
-        <div className="flex flex-wrap gap-4">
+
+      <ProfileDataSection
+        icon={<Building2 className="h-6 w-6" />}
+        title="Entities"
+      >
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {!Boolean(profile.entities.length) && <p>No entities found</p>}
           {Boolean(profile.entities.length) &&
             profile.entities.map(asset => (

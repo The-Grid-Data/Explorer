@@ -41,6 +41,9 @@ query GetProfile($where: profiles_bool_exp) {
       }
       assetDeployedOnProductId {
         name
+        profile {
+          slug
+        }
       }
     }
     profileType {
@@ -76,6 +79,9 @@ query GetProfile($where: profiles_bool_exp) {
       supportsProducts {
         supports {
           name
+          profile {
+            slug
+          }
         }
       }
       asset {

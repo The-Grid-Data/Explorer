@@ -14,18 +14,13 @@ export const ProfileDataPoint = ({
   label,
   value,
   fullWidth,
-  opts={breakAll:false},
+  opts = { breakAll: false }
 }: ProfileDataPointProps) => (
-  <div className={cn('flex flex-col items-start', !fullWidth && 'md:flex-row')}>
-    <div
-      className={cn(
-        'text flex items-center rounded bg-primary p-1 px-2 text-xs text-muted',
-        fullWidth ? 'w-full' : 'w-fit shrink-0 md:w-fit'
-      )}
-    >
-      {label}:
-    </div>
-    <span className={cn('text ml-1 w-full text-sm', opts?.breakAll && 'break-all')}>{value || '-'}</span>
+  <div className={cn('flex flex-col items-start gap-1')}>
+    <p className="text-sm text-muted-foreground">{label}:</p>
+    <p className={cn('w-full text-sm ', opts?.breakAll && 'break-all')}>
+      {value || '-'}
+    </p>
   </div>
 );
 

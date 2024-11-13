@@ -2,21 +2,27 @@
 
 import { Separator } from '@/components/ui/separator';
 
-import { PropsWithChildren } from 'react';
+import { PropsWithChildren, ReactNode } from 'react';
 
 export type ProfileDataSectionProps = PropsWithChildren<{
+  id?: string;
   title: string;
+  icon: ReactNode;
 }>;
 
 export const ProfileDataSection = ({
+  icon,
   title,
-  children
+  children,
+  id
 }: ProfileDataSectionProps) => {
   return (
-    <div className="flex flex-col gap-2">
-      <h3 className=" text-2xl font-bold">{title}</h3>
-      <Separator />
+    <section id={id} className="mb-8 rounded-lg bg-primary/5 p-6">
+      <h2 className="mb-4 flex items-center gap-2 text-2xl font-semibold">
+        {icon}
+        {title}
+      </h2>
       {children}
-    </div>
+    </section>
   );
 };
