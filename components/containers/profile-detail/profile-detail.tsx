@@ -9,11 +9,6 @@ import ProfileLoading from './components/profile-loading';
 import { ProductCard } from './components/product-card';
 import { AssetCard } from './components/asset-card';
 import { EntityCard } from './components/entity-card';
-import { Card, CardContent } from '@/components/ui/card';
-import { ReactNode } from 'react';
-import { Badge } from '@/components/ui/badge';
-import Link from 'next/link';
-import { paths } from '@/lib/routes/paths';
 import { Banknote, Building2, Package } from 'lucide-react';
 import { OverviewSection } from './components/overview-section';
 
@@ -23,10 +18,10 @@ export type ProfileDetailProps = {
 
 export const ProfileDetail = ({ profileId }: ProfileDetailProps) => {
   const query = {
-    where: { slug: { _eq: profileId } }
+    where: { root: { slug: { _eq: profileId } } }
   };
   const { data, isFetching } = useGetProfileQuery(query);
-  const profile = data?.profiles[0];
+  const profile = data?.profileInfos?.[0];
 
   if (isFetching) {
     return <ProfileLoading />;
@@ -59,10 +54,12 @@ export const ProfileDetail = ({ profileId }: ProfileDetailProps) => {
         id="products"
         icon={<Package className="h-6 w-6" />}
       >
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {!Boolean(profile.products.length) && <p>No products found</p>}
-          {Boolean(profile.products.length) &&
-            profile.products.map(product => (
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {!Boolean(profile?.root?.products?.length) && (
+            <p>No products found</p>
+          )}
+          {Boolean(profile?.root?.products?.length) &&
+            profile?.root?.products?.map(product => (
               <ProductCard key={product.id} product={product} />
             ))}
         </div>
@@ -72,10 +69,10 @@ export const ProfileDetail = ({ profileId }: ProfileDetailProps) => {
         icon={<Banknote className="h-6 w-6" />}
         title="Assets"
       >
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {!Boolean(profile.assets.length) && <p>No assets found</p>}
-          {Boolean(profile.assets.length) &&
-            profile.assets.map(asset => (
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {!Boolean(profile.root?.assets?.length) && <p>No assets found</p>}
+          {Boolean(profile.root?.assets?.length) &&
+            profile.root?.assets?.map(asset => (
               <AssetCard key={asset.id} asset={asset} />
             ))}
         </div>
@@ -86,9 +83,9 @@ export const ProfileDetail = ({ profileId }: ProfileDetailProps) => {
         title="Entities"
       >
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {!Boolean(profile.entities.length) && <p>No entities found</p>}
-          {Boolean(profile.entities.length) &&
-            profile.entities.map(asset => (
+          {!Boolean(profile.root?.entities?.length) && <p>No entities found</p>}
+          {Boolean(profile.root?.entities?.length) &&
+            profile.root?.entities?.map(asset => (
               <EntityCard key={asset.id} entity={asset} />
             ))}
         </div>

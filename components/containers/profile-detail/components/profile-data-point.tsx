@@ -4,7 +4,6 @@ import { PropsWithChildren } from 'react';
 export type ProfileDataPointProps = {
   label: string;
   value?: string | false;
-  fullWidth?: boolean;
   opts?: {
     breakAll?: boolean;
   };
@@ -13,7 +12,6 @@ export type ProfileDataPointProps = {
 export const ProfileDataPoint = ({
   label,
   value,
-  fullWidth,
   opts = { breakAll: false }
 }: ProfileDataPointProps) => (
   <div className={cn('flex flex-col items-start gap-1')}>

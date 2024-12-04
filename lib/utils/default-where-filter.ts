@@ -1,38 +1,55 @@
 import { siteConfig } from '@/lib/site-config';
-import { SearchProfilesQueryVariables } from '@/lib/graphql/generated-graphql';
+import {
+  SearchProfilesQueryVariables,
+  CProfileInfosBoolExp
+} from '@/lib/graphql/generated-graphql';
 
-const getDefaultWhereFilter = () => {
-  const orConditions = [];
+const getDefaultWhereFilter = (): CProfileInfosBoolExp => {
+  const orConditions: CProfileInfosBoolExp[] = [];
 
   if (siteConfig.filterByProductIds?.length) {
     orConditions.push(
       {
-        products: {
-          supportsProducts: {
-            supportsProductId: {
+        root: {
+          products: {
+            supportsProductsBySupportsProductId: {
+              productId: {
+                _in: siteConfig.filterByProductIds
+              }
+            }
+          }
+        }
+      },
+      {
+        root: {
+          products: {
+            productDeployments: {
+              deploymentId: {
+                _in: siteConfig.filterByProductIds
+              }
+            }
+          }
+        }
+      },
+      {
+        root: {
+          products: {
+            id: {
               _in: siteConfig.filterByProductIds
             }
           }
         }
       },
       {
-        products: {
-          deployedOnProductId: {
-            _in: siteConfig.filterByProductIds
-          }
-        }
-      },
-      {
-        products: {
-          id: {
-            _in: siteConfig.filterByProductIds
-          }
-        }
-      },
-      {
-        assets: {
-          deployedOnProductId: {
-            _in: siteConfig.filterByProductIds
+        root: {
+          assets: {
+            assetDeployments: {
+              smartContractDeployment: {
+                deployedOnId: {
+                  _in: siteConfig.filterByProductIds
+                }
+              }
+            }
           }
         }
       }
@@ -41,15 +58,17 @@ const getDefaultWhereFilter = () => {
 
   if (siteConfig.tags?.length) {
     orConditions.push({
-      profileTags: {
-        tagId: {
-          _in: siteConfig.tags
+      root: {
+        profileTags: {
+          tagId: {
+            _in: siteConfig.tags
+          }
         }
       }
     });
   }
 
-  return orConditions.length ? { _and: [{ _or: orConditions }] } : {};
+  return orConditions.length ? { _or: orConditions } : {};
 };
 
 export const withDefaultWhereFilter = (

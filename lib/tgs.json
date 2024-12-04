@@ -1,0 +1,2466 @@
+{
+    "id.thegrid.tgs-007": {
+      "id.thegrid.tgs-007.profileInfos.name": {
+        "parameter_id": "id.thegrid.tgs-007.profileInfos.name",
+        "description": "The full official name of the Profile as used in their branding and documentation.",
+        "is_enum": "false"
+      },
+      "id.thegrid.tgs-007.profileInfos.profileType": {
+        "parameter_id": "id.thegrid.tgs-007.profileInfos.profileType",
+        "description": "The primary operational category or business model of the Profile (e.g. DAO, project, investor, government). Refer to standardized list of Profile types.",
+        "is_enum": "true",
+        "possible_values": [
+          {
+            "id": 0,
+            "name": "-",
+            "definition": "not_set"
+          },
+          {
+            "id": 1,
+            "name": "DAO",
+            "definition": "A group of individuals with a flattened hierarchy for decision-making and operational execution using blockchain technology."
+          },
+          {
+            "id": 2,
+            "name": "Company",
+            "definition": "A profile with a for-profit mandate or a business plan aimed at generating revenue."
+          },
+          {
+            "id": 8,
+            "name": "NFT Collection",
+            "definition": "A set of unique digital art items, typically created by a single creator or themed to include works from multiple creators."
+          },
+          {
+            "id": 14,
+            "name": "Project",
+            "definition": "An organization with an undefined objective, purpose, or offering."
+          },
+          {
+            "id": 17,
+            "name": "Investor",
+            "definition": "A profile primarily focused on raising and deploying funds to generate returns on the initial investment."
+          },
+          {
+            "id": 18,
+            "name": "Government",
+            "definition": "An organization or agency exercising political authority in the interests of its residents or constituents."
+          }
+        ]
+      },
+      "id.thegrid.tgs-007.profileInfos.profileSector": {
+        "parameter_id": "id.thegrid.tgs-007.profileInfos.profileSector",
+        "description": "The primary industry, use case, or problem space the Profile operates in or serves. Refer to standardized list of sectors and subsectors.",
+        "is_enum": "true",
+        "possible_values": [
+          {
+            "id": 0,
+            "name": "-",
+            "definition": "not_set"
+          },
+          {
+            "id": 1,
+            "name": "Finance",
+            "definition": "The sector encompassing activities related to the trading, exchanging, or management of fungible assets, such as cryptocurrencies, tokens, or other digital assets, within the blockchain and Web3 ecosystem."
+          },
+          {
+            "id": 2,
+            "name": "Payments",
+            "definition": "The sector involving services or platforms that facilitate the transfer of cryptocurrencies or other digital assets from one person or entity to another, often in exchange for goods or services within the decentralized economy."
+          },
+          {
+            "id": 8,
+            "name": "Insurance",
+            "definition": "The sector dealing with smart contracts or dApps that provide protection for digital assets, on-chain activities, and blockchain-based investments."
+          },
+          {
+            "id": 9,
+            "name": "Asset Management",
+            "definition": "The sector that includes tools, products, or services that allow users to securely store, manage, and interact with their digital assets, such as cryptocurrencies and tokens, within the blockchain ecosystem. Examples include wallets and portfolio manageme"
+          },
+          {
+            "id": 10,
+            "name": "Developer Tooling",
+            "definition": "The sector comprising services, products, and frameworks that support developers in designing, building, and deploying dApps and smart contracts on blockchain platforms."
+          },
+          {
+            "id": 11,
+            "name": "Gaming",
+            "definition": "The sector that encompasses dApps and platforms that offer interactive entertainment experiences, often integrating blockchain technology for asset ownership, rewards, and in-game economies."
+          },
+          {
+            "id": 12,
+            "name": "Infrastructure",
+            "definition": "The sector comprising foundational technologies, protocols, and services that enable the operation and interoperability of blockchain networks and dApps. Examples include nodes, staking mechanisms, and cross-chain solutions."
+          },
+          {
+            "id": 19,
+            "name": "Blockchain Platforms",
+            "definition": "The sector consisting of decentralized platforms and frameworks that allow developers to build, deploy, and interact with smart contracts and dApps. Examples include Ethereum, Binance Smart Chain, and Solana."
+          },
+          {
+            "id": 20,
+            "name": "Supply chain",
+            "definition": "The sector that leverages blockchain technology to enhance the transparency, traceability, and efficiency of the movement of physical goods, including fast-moving consumer goods, across decentralized supply chain networks."
+          },
+          {
+            "id": 21,
+            "name": "Data & Analytics",
+            "definition": "The sector encompassing services, APIs, and platforms that provide reliable and tamper-proof data, statistics, and insights for the blockchain and Web3 ecosystem. This includes oracles and data providers that feed off-chain information to smart contracts."
+          },
+          {
+            "id": 25,
+            "name": "NFTs",
+            "definition": "The sector revolving around NFTs, which are unique digital assets stored on a blockchain. This includes NFT marketplaces, creation tools, and platforms that facilitate the minting, trading, and collection of these unique digital items."
+          },
+          {
+            "id": 26,
+            "name": "Healthcare",
+            "definition": "The sector exploring the application of blockchain technology and decentralized solutions to improve the security, privacy, and interoperability of healthcare data and services, enabling patient-centric approaches and secure data sharing."
+          },
+          {
+            "id": 27,
+            "name": "Science",
+            "definition": "The sector focused on leveraging blockchain technology and decentralized networks to advance scientific research, collaboration, and funding. This includes projects that aim to democratize access to scientific data, tools, and resources."
+          },
+          {
+            "id": 28,
+            "name": "Security",
+            "definition": "The sector dedicated to enhancing the safety and resilience of blockchain networks, smart contracts, and dApps through advanced cryptographic techniques, and best practices."
+          },
+          {
+            "id": 29,
+            "name": "Auditing",
+            "definition": "The sector specializing in the methodological review and verification of blockchain projects, smart contracts, and dApps to ensure their security, reliability, and adherence to best practices and standards."
+          },
+          {
+            "id": 30,
+            "name": "Mining",
+            "definition": "The sector involved in the process of validating transactions and adding new blocks to a blockchain network, typically through PoW consensus mechanisms. This includes mining hardware, software, and pool services."
+          },
+          {
+            "id": 31,
+            "name": "Metaverse",
+            "definition": "The sector at the intersection of blockchain technology and immersive virtual worlds, where users can interact with digital assets, participate in decentralized economies, and experience new forms of social engagement and creativity."
+          },
+          {
+            "id": 43,
+            "name": "Venture Capital",
+            "definition": "The sector focused on investing in and supporting the growth of promising blockchain and Web3 projects, startups, and ecosystems through strategic funding, mentorship, and partnerships."
+          },
+          {
+            "id": 824,
+            "name": "Media",
+            "definition": "Includes news websites, image sites and video hosting websites. "
+          },
+          {
+            "id": 825,
+            "name": "Meme",
+            "definition": "The sector that contains all things meme related. "
+          },
+          {
+            "id": 830,
+            "name": "Social",
+            "definition": "Anything to do with social media, social interactions"
+          },
+          {
+            "id": 4318,
+            "name": "Community & Events",
+            "definition": "The sector that acts as a catch all around groups of people or gatherings that are focused on Web3 & Blockchain but may not have a specific technical product"
+          },
+          {
+            "id": 4588,
+            "name": "Service Provider",
+            "definition": "Offers specialized services to the the Web3 ecosystem which are not covered by the other sectors. These include technical (development, infrastructure), business (marketing, PR, design), financial (accounting, tax), education (training and certifications) legal, consulting, and administrative services."
+          }
+        ]
+      },
+      "id.thegrid.tgs-007.profileInfos.profileStatus": {
+        "parameter_id": "id.thegrid.tgs-007.profileInfos.profileStatus",
+        "description": "The current operational state of the Profile (e.g. Active, Inactive, Closed). Refer to the standardized list of status options.",
+        "is_enum": "true",
+        "possible_values": [
+          {
+            "id": 0,
+            "name": "-",
+            "definition": "not_set"
+          },
+          {
+            "id": 1,
+            "name": "Announced",
+            "definition": "The profile's information is public, but with limited one-way interaction (e.g., newsletter subscription, social media following), or all product(s)/service(s) are not yet available."
+          },
+          {
+            "id": 2,
+            "name": "Active",
+            "definition": "The profile's offering allows for successful two-way interaction (e.g., using the product/service, building on the blockchain), or the profile maintains a functioning product."
+          },
+          {
+            "id": 3,
+            "name": "Inactive",
+            "definition": "Interactions with the profile's service/product are frequently unsuccessful, or the service/product is no longer supported or actively developed. All socials are invalid or suspended with no other way to contact or follow the project (no blog or up-to-date documentation), even when interaction with the product is still possible."
+          },
+          {
+            "id": 4,
+            "name": "Closed",
+            "definition": "Interaction with the profile's offering is no longer possible, or the entity has announced the profile's closure."
+          },
+          {
+            "id": 30,
+            "name": "Acquired",
+            "definition": "The profile has been purchased by or merged with another company/protocol."
+          }
+        ]
+      },
+      "id.thegrid.tgs-007.profileInfos.foundingDate": {
+        "parameter_id": "id.thegrid.tgs-007.profileInfos.foundingDate",
+        "description": "The date when the Profile was first established, registered, or publicly announced. Use ISO 8601 format (YYYY-MM-DD) when possible. Can usually be shortened to Month and Year.",
+        "is_enum": "false"
+      },
+      "id.thegrid.tgs-007.profileInfos.logo": {
+        "parameter_id": "id.thegrid.tgs-007.profileInfos.logo",
+        "description": "A PNG or SVG image file representing the Profile's logo, with a transparent background and a minimum resolution of 256x256 pixels.",
+        "is_enum": "false"
+      },
+      "id.thegrid.tgs-007.profileInfos.descriptionShort": {
+        "parameter_id": "id.thegrid.tgs-007.profileInfos.descriptionShort",
+        "description": "Provide an objective overview of the Profile's primary purpose, product, or service. Avoid subjective claims, marketing language, or unnecessary technical jargon. Focus on clear, factual information. Limit to 200 characters.\n",
+        "is_enum": "false"
+      },
+      "id.thegrid.tgs-007.profileInfos.descriptionLong": {
+        "parameter_id": "id.thegrid.tgs-007.profileInfos.descriptionLong",
+        "description": "A more detailed overview of the Profile, including its mission, target audience, and key features or offerings. Limit to 500 characters and avoid subjective claims.",
+        "is_enum": "false"
+      },
+      "id.thegrid.tgs-007.profileInfos.tagLine": {
+        "parameter_id": "id.thegrid.tgs-007.profileInfos.tagLine",
+        "description": "A brief, memorable phrase or slogan used by the Profile to convey its mission or value proposition. If the tagline is in all caps or contains irregular spaces or line breaks, reformat it to a single line, single spaced, and sentence case. Only use a full stop in a tagline if the original source uses one.\n",
+        "is_enum": "false"
+      },
+      "id.thegrid.tgs-007.assets.name": {
+        "parameter_id": "id.thegrid.tgs-007.assets.name",
+        "description": "The official name of the Asset as used in its branding, marketing, and trading materials.\n",
+        "is_enum": "false"
+      },
+      "id.thegrid.tgs-007.assets.ticker": {
+        "parameter_id": "id.thegrid.tgs-007.assets.ticker",
+        "description": "The unique trading symbol used to represent the Asset on exchanges and trading platforms. Use only capital letters and numbers.",
+        "is_enum": "false"
+      },
+      "id.thegrid.tgs-007.assets.icon": {
+        "parameter_id": "id.thegrid.tgs-007.assets.icon",
+        "description": "A square PNG but ideally an SVG image file representing the Asset's icon or logo, with a transparent background and a minimum resolution of 128x128 pixels.",
+        "is_enum": "false"
+      },
+      "id.thegrid.tgs-007.assets.shortDescription": {
+        "parameter_id": "id.thegrid.tgs-007.assets.shortDescription",
+        "description": "A concise, one-sentence summary of the Asset's key characteristics, use case, or value proposition. Limit to 200 characters and avoid subjective claims.",
+        "is_enum": "false"
+      },
+      "id.thegrid.tgs-007.assets.assetTypes": {
+        "parameter_id": "id.thegrid.tgs-007.assets.assetTypes",
+        "description": "The primary category or function of the Asset (e.g. Currency, Utility, Security) and what is does.\n",
+        "is_enum": "true",
+        "possible_values": [
+          {
+            "id": 0,
+            "name": "-",
+            "definition": "not set"
+          },
+          {
+            "id": 1,
+            "name": "Currency",
+            "definition": "General cryptocurrency used for payment or investment purposes."
+          },
+          {
+            "id": 2,
+            "name": "NFT",
+            "definition": "Unique token usually representing a piece of art, often part of a collection."
+          },
+          {
+            "id": 5,
+            "name": "Memecoin",
+            "definition": "A token that has little to no utility, often stemming from an online cultural movement, event or happenstance."
+          },
+          {
+            "id": 6,
+            "name": "Utility",
+            "definition": "A token required to take action or redeem services within a specific system."
+          },
+          {
+            "id": 7,
+            "name": "Governance",
+            "definition": "A token required for decision-making within a protocol or entity."
+          },
+          {
+            "id": 8,
+            "name": "Security",
+            "definition": "A token clearly marked to represent a fungible financial instrument."
+          },
+          {
+            "id": 10,
+            "name": "Stablecoin",
+            "definition": "A token often pegged to a fiat currency or traditional commodity."
+          },
+          {
+            "id": 3943,
+            "name": "Digital Reward Assets",
+            "definition": "Virtual currencies or points issued by platforms, programs, or games that can be exchanged for cryptocurrencies, NFTs, fiat money, or other real-world assets. These assets represent value within a specific ecosystem but may adopt broader utility."
+          }
+        ]
+      },
+      "id.thegrid.tgs-007.assets.address": {
+        "parameter_id": "id.thegrid.tgs-007.assets.address",
+        "description": "The unique smart contract address of the Asset on the blockchain it is deployed on. Use a standard blockchain explorer to validate the address.",
+        "is_enum": "false"
+      },
+      "id.thegrid.tgs-007.assets.profile": {
+        "parameter_id": "id.thegrid.tgs-007.assets.profile",
+        "description": "A reference to the Profile associated with the Asset, using the Profile's unique identifier or name.",
+        "is_enum": "false"
+      },
+      "id.thegrid.tgs-007.assets.assetStatus": {
+        "parameter_id": "id.thegrid.tgs-007.assets.assetStatus",
+        "description": "The current development or access stage of the asset. Refer to the standardized list of asset status options.",
+        "is_enum": "true",
+        "possible_values": [
+          {
+            "id": 0,
+            "name": "not set",
+            "definition": ""
+          },
+          {
+            "id": 1,
+            "name": "Announced",
+            "definition": "This asset has been announced but is not live"
+          },
+          {
+            "id": 2,
+            "name": "Live",
+            "definition": "This asset is usable"
+          },
+          {
+            "id": 3,
+            "name": "End of Life",
+            "definition": "The asset is still online but is no longer supported"
+          }
+        ]
+      },
+      "id.thegrid.tgs-007.assets.assetSupportTypes": {
+        "parameter_id": "id.thegrid.tgs-007.assets.assetSupportTypes",
+        "description": "",
+        "is_enum": "true",
+        "possible_values": [
+          {
+            "id": 0,
+            "name": "(not set)",
+            "definition": "  "
+          },
+          {
+            "id": 1,
+            "name": "Native",
+            "definition": "This is the core asset to this protocol, eg BTC for Bitcoin"
+          },
+          {
+            "id": 2,
+            "name": "Supports",
+            "definition": "This asset can be used in this product"
+          }
+        ]
+      },
+      "id.thegrid.tgs-007.products.name": {
+        "parameter_id": "id.thegrid.tgs-007.products.name",
+        "description": "The official name of the product as used in its branding, marketing, and user-facing materials.",
+        "is_enum": "false"
+      },
+      "id.thegrid.tgs-007.products.productType": {
+        "parameter_id": "id.thegrid.tgs-007.products.productType",
+        "description": "The primary category or function of the product (e.g. exchange, wallet, lending platform). Refer to standardized list of product types.",
+        "is_enum": "true",
+        "possible_values": [
+          {
+            "id": 0,
+            "name": "-",
+            "definition": "not_set"
+          },
+          {
+            "id": 15,
+            "name": "L1",
+            "definition": "A base layer blockchain that acts as the lowest settlement layer. Examples include Bitcoin or Ethereum."
+          },
+          {
+            "id": 16,
+            "name": "L2",
+            "definition": "A blockchain that inherits security from another L1 blockchain, often with the intent to improve either scaling, speed or cost."
+          },
+          {
+            "id": 17,
+            "name": "L3",
+            "definition": "A blockchain built on a L2, often with a specific objective or function."
+          },
+          {
+            "id": 18,
+            "name": "Oracle",
+            "definition": "Takes off chain data and makes it available on chain."
+          },
+          {
+            "id": 20,
+            "name": "Hardware Wallet",
+            "definition": "A private key manager that requires physical equipment in order for users to interact with their onchain assets."
+          },
+          {
+            "id": 23,
+            "name": "Bridge",
+            "definition": "An application used to port assets from one blockchain to another."
+          },
+          {
+            "id": 24,
+            "name": "Bridge Aggregator",
+            "definition": "An application that collects many different applications for the purpose of porting assets."
+          },
+          {
+            "id": 25,
+            "name": "Decentralised Exchange",
+            "definition": "A protocol that enables the trading of cryptocurrencies directly between users without the need for a central authority."
+          },
+          {
+            "id": 26,
+            "name": "DEX Aggregator ",
+            "definition": "A service that scans multiple decentralised exchanges, often to compare prices and liquidity for trading pairs."
+          },
+          {
+            "id": 27,
+            "name": "Centralised Exchange",
+            "definition": "A platform where cryptocurrencies are traded through an authority or mediator that facilitates the transactions and often provides wallet services."
+          },
+          {
+            "id": 28,
+            "name": "On/Off Ramp",
+            "definition": "Services that allow for the conversion between cryptocurrencies and fiat currencies, facilitating entry and exit points into the crypto market."
+          },
+          {
+            "id": 29,
+            "name": "FinOps Tooling",
+            "definition": "Financial operations tools for managing spending and monetary administration efficiently (e.g., \"accounting”. Example: www.request.finance"
+          },
+          {
+            "id": 30,
+            "name": "Decentralised Borrowing & Lending",
+            "definition": "A peer-to-peer financial system on the blockchain that allows users to collateralize digital assets without the need for a central authority."
+          },
+          {
+            "id": 31,
+            "name": "Centralised Borrowing & Lending",
+            "definition": "Platforms operated by mediating entities that facilitate the collateralization of digital assets, often with added features like interest accounts."
+          },
+          {
+            "id": 32,
+            "name": "Offchain Insurance",
+            "definition": "Products and contracts that provide coverage for crypto-related risks and events, processed outside the blockchain."
+          },
+          {
+            "id": 33,
+            "name": "Onchain Insurance",
+            "definition": "Products and contracts that provide coverage for crypto-related risks and events, executed automatically on the blockchain."
+          },
+          {
+            "id": 34,
+            "name": "Pricing Data API",
+            "definition": "A service providing real-time and historical financial information for cryptocurrencies from various markets for integration into apps and services."
+          },
+          {
+            "id": 35,
+            "name": "OnChain Data API",
+            "definition": "A service offering developers direct access to information stored on a blockchain, usually for the purpose of building applications on it."
+          },
+          {
+            "id": 36,
+            "name": "Game",
+            "definition": "Interactive digital entertainment designed on blockchain technology, often incorporating cryptocurrencies, NFTs, play to earn or tokenized assets for in-game transactions and ownership."
+          },
+          {
+            "id": 37,
+            "name": "NFT Marketplace",
+            "definition": "An online platform where unique digital assets can be bought, sold or traded."
+          },
+          {
+            "id": 38,
+            "name": "NFT Issuance Platform",
+            "definition": "A service that allows users to create and issue their own unique digital assets, typically involving digital art or collectibles."
+          },
+          {
+            "id": 39,
+            "name": "News & Media",
+            "definition": "Creates, curates, or distributes Web3 content in various formats. It delivers research or information on market trends, tech news, and regulations while facilitating user engagement. It may use blockchain for content rights management and monetization. It includes subscription-based products."
+          },
+          {
+            "id": 40,
+            "name": "RWA Tokenisation Platform",
+            "definition": "A platform that enables the conversion of rights to a physical asset into a digital token on a blockchain."
+          },
+          {
+            "id": 41,
+            "name": "Liquid Staking",
+            "definition": "A form of securing a blockchain that involves locking up participants’ onchain assets, and the participants receive an asset in return that can be spent, traded or exchanged like any other fungible asset."
+          },
+          {
+            "id": 42,
+            "name": "Derivatives ",
+            "definition": "Financial contracts on the blockchain whose value is based on the performance of an underlying digital asset, allowing for hedging, speculation, or access to new markets."
+          },
+          {
+            "id": 44,
+            "name": "Stablecoin Issuance",
+            "definition": "The process of creating and managing digital currencies pegged to traditional assets like fiat money or gold to reduce volatility in the crypto market."
+          },
+          {
+            "id": 45,
+            "name": "Music",
+            "definition": "Blockchain-based platforms that enable creators to tokenize, sell, and manage rights to their music, ensuring fair compensation and distribution."
+          },
+          {
+            "id": 46,
+            "name": "Node Software",
+            "definition": "Enables a computer to participate in a blockchain network by maintaining and validating activity on the blockchain. This also includes node hosting services that enable you to run your own node. "
+          },
+          {
+            "id": 47,
+            "name": "Pool Software",
+            "definition": "Enables the aggregation of computational resources or liquidity from multiple participants, commonly used in DeFi protocols for staking, mining or liquidity provision."
+          },
+          {
+            "id": 48,
+            "name": "Custody Technology Provider",
+            "definition": "A company that offers solutions for the secure storage and management of digital assets."
+          },
+          {
+            "id": 49,
+            "name": "Custodian",
+            "definition": "An entity responsible for holding and safeguarding a client's securities or assets to prevent theft or loss."
+          },
+          {
+            "id": 50,
+            "name": "DAO Management Platform",
+            "definition": "Provides tools for the creation, administration and governance of entities that have a flattened hierarchy for decision-making and operating."
+          },
+          {
+            "id": 51,
+            "name": "Internet of Things (IoT)",
+            "definition": "Facilitates secure, decentralized communication and transactions between connected devices with the integration of blockchain technology."
+          },
+          {
+            "id": 52,
+            "name": "Digital Assets Terminal",
+            "definition": "A comprehensive platform or interface providing real-time data, analysis tools, and trading capabilities across various cryptocurrencies and digital stores of value."
+          },
+          {
+            "id": 305,
+            "name": "RPC Provider",
+            "definition": "A service that offers Remote Procedure Call (RPC) endpoints, allowing developers and applications to interact with blockchain networks without running a full node."
+          },
+          {
+            "id": 383,
+            "name": "Explorer",
+            "definition": "A tool that allows you to interact with onchain information or explore data. "
+          },
+          {
+            "id": 410,
+            "name": "Data",
+            "definition": "A catch all term for data services, providers that are not specific onchain data sets. "
+          },
+          {
+            "id": 472,
+            "name": "Multi-Sig Wallet",
+            "definition": "A cryptocurrency wallet that requires multiple private keys to authorize a transaction, enhancing security by distributing control among multiple parties."
+          },
+          {
+            "id": 692,
+            "name": "Wallet",
+            "definition": "A software application or hardware device that stores private keys and allows users to send, receive, and manage their cryptocurrency assets."
+          },
+          {
+            "id": 1042,
+            "name": "Launch Pad",
+            "definition": "A platform that facilitates the initial offering and distribution of new cryptocurrency tokens, often providing a streamlined process for projects to raise funds and for investors to participate in early-stage token sales."
+          },
+          {
+            "id": 1118,
+            "name": "Yield Aggregator",
+            "definition": "A tool to the process of deploying assets and collecting the rewards on behalf of users. "
+          },
+          {
+            "id": 1391,
+            "name": "Compute Network",
+            "definition": "A product that provides decentralized computational resources for specific tasks, such as AI training, graphical rendering, or confidential computing."
+          },
+          {
+            "id": 1642,
+            "name": "Gambling/Casino",
+            "definition": "A blockchain-based platform that offers games of chance or skill where users can wager cryptocurrency or tokens. These platforms typically leverage smart contracts for transparency and provable fairness in game outcomes."
+          },
+          {
+            "id": 1941,
+            "name": "Dust Collector",
+            "definition": "Collects small parts of assets and may convert them"
+          },
+          {
+            "id": 1954,
+            "name": "Trading Bot",
+            "definition": "A bot, ususally in a chat app such as telegram, that enables its users to trade digital assets"
+          },
+          {
+            "id": 2006,
+            "name": "Shared Sequencer",
+            "definition": "A specialized blockchain infrastructure component that orders and batches transactions for multiple chains, rollups, or applications. "
+          },
+          {
+            "id": 2007,
+            "name": "Messaging Protocol",
+            "definition": "A decentralized communication infrastructure that enables secure, private, and often censorship-resistant exchange of messages between users or applications. "
+          },
+          {
+            "id": 2018,
+            "name": "Risk Assessment",
+            "definition": "A product or service that identifies, analyzes, and evaluates potential threats and vulnerabilities in blockchain systems, smart contracts, and crypto operations."
+          },
+          {
+            "id": 2408,
+            "name": "Prediction Markets",
+            "definition": "A place to make predictions on events that tend to be settled onchain."
+          },
+          {
+            "id": 2830,
+            "name": "Payments Infrastructure",
+            "definition": "A system or platform that facilitates financial transactions and payment processing within the blockchain ecosystem, supporting various payment methods and asset types. This includes physical and digital debit and rewards cards."
+          },
+          {
+            "id": 2838,
+            "name": "Decentralised Identity",
+            "definition": "Includes identity solutions that may follow DID standards or are products to do with issuing identity on blockchain networks. "
+          },
+          {
+            "id": 2880,
+            "name": "Social Platform",
+            "definition": "An application or service that facilitates online community building and social interactions, incorporating or supporting blockchain-based features such as tokenized incentives, decentralized identity, or content ownership."
+          },
+          {
+            "id": 2883,
+            "name": "Cross-chain Infrastructure",
+            "definition": "Solutions that enable interoperability, communication, or asset transfers between different blockchain networks, facilitating cross-chain operations and ecosystem connectivity."
+          },
+          {
+            "id": 2886,
+            "name": "Blockchain Gaming Infrastructure",
+            "definition": "Tools, frameworks, and platforms that enable the development and integration of blockchain technology into games, facilitating features such as in-game economies, digital asset ownership, and decentralized gameplay mechanics."
+          },
+          {
+            "id": 3592,
+            "name": "Transport",
+            "definition": "A product that helps move things or people from A -\u003E B"
+          },
+          {
+            "id": 3607,
+            "name": "Developer Tooling",
+            "definition": "SDKs, frameworks, APIs, or services designed to facilitate the creation, testing, deployment, or integration of blockchain applications or transactions."
+          },
+          {
+            "id": 3608,
+            "name": "DePin",
+            "definition": "A catch all term for products that provide decentralised physical infrastructure - An example may be the renting of hardware "
+          },
+          {
+            "id": 3645,
+            "name": "Staking Infra",
+            "definition": "Tools that help development teams run staking for their own teams"
+          },
+          {
+            "id": 3916,
+            "name": "Market Maker",
+            "definition": "A centralised service that provides liquidity to markets by continuously buying and selling assets, helping to ensure price stability and market efficiency in both centralized and decentralized environments. NOT an Automated Market Maker in a DEX."
+          },
+          {
+            "id": 3935,
+            "name": "Mobile Phone",
+            "definition": "A communication device that is often mobile. Often fits in ones hand and connected to the internet. "
+          },
+          {
+            "id": 3941,
+            "name": "Grants Platform",
+            "definition": "A platform that enables companies or projects to create, issue and manage grants. Could also be a grant aggregator, may also be a jobs board but generally is focused on Grants. "
+          },
+          {
+            "id": 3943,
+            "name": "Impact Initiative",
+            "definition": "A project or platform designed to facilitate philanthropic endeavors and create positive social or environmental change. This includes charitable activities, donations, conservation efforts, and art initiatives. "
+          },
+          {
+            "id": 3955,
+            "name": "Events & Conferences",
+            "definition": "A organized gathering or series of gatherings including conferences, summits, hackathons, and workshops that facilitate knowledge sharing, networking, skill development, or innovation. These events may be in-person, virtual, or hybrid."
+          },
+          {
+            "id": 3956,
+            "name": "Venture Services",
+            "definition": "Specialized financial and support services, including venture capital, investment funds, accelerators, and incubators that provide funding, mentorship, resources, and networking opportunities to early-stage blockchain projects and startups.  Currently acts as a catch all for VC related activity."
+          },
+          {
+            "id": 3957,
+            "name": "Decentralized File Storage",
+            "definition": "A blockchain-based network or protocol that enables distributed storage and retrieval of digital files across multiple nodes."
+          },
+          {
+            "id": 4215,
+            "name": "Customer Engagement Platform",
+            "definition": "Enables interaction with, management, and nurturing of customer relationships. Includes customer data management, communication tools, loyalty programs, analytics, and automation."
+          },
+          {
+            "id": 4216,
+            "name": "Service Provider",
+            "definition": "Offers specialized services to the the Web3 ecosystem which are not covered by the other product types. These include technical (development, infrastructure), business (marketing, PR, design), financial (accounting, tax), education (training and certifications) legal, consulting, and administrative services."
+          }
+        ]
+      },
+      "id.thegrid.tgs-007.products.description": {
+        "parameter_id": "id.thegrid.tgs-007.products.description",
+        "description": "A concise, objective statement explaining what the product does and who it is for.",
+        "is_enum": "false"
+      },
+      "id.thegrid.tgs-007.products.productStatus": {
+        "parameter_id": "id.thegrid.tgs-007.products.productStatus",
+        "description": "The current development or access stage of the product (e.g. Beta, Live, Deprecated).",
+        "is_enum": "true",
+        "possible_values": [
+          {
+            "id": 0,
+            "name": "-",
+            "definition": "not set"
+          },
+          {
+            "id": 1,
+            "name": "In Development",
+            "definition": "The product has been announced but is not yet accessible to users, and no further information has been provided."
+          },
+          {
+            "id": 2,
+            "name": "Early access",
+            "definition": "It is possible to apply for product access, but access is not guaranteed for all users."
+          },
+          {
+            "id": 4,
+            "name": "Open Beta",
+            "definition": "The product is currently being tested and often has a disclaimer."
+          },
+          {
+            "id": 5,
+            "name": "Live",
+            "definition": "The product is fully deployed, accessible, and usable by anyone."
+          },
+          {
+            "id": 6,
+            "name": "Support Ended",
+            "definition": "The product may still be accessible but is no longer being supported."
+          },
+          {
+            "id": 3509,
+            "name": "Discontinued",
+            "definition": "The product has been taken offline and is no longer accessable to any user."
+          }
+        ]
+      },
+      "id.thegrid.tgs-007.products.isMainProduct": {
+        "parameter_id": "id.thegrid.tgs-007.products.isMainProduct",
+        "description": "A boolean value indicating whether the product is the Profile's primary or flagship offering.",
+        "is_enum": "true",
+        "possible_values": [
+          {
+            "id": 1,
+            "name": "True",
+            "definition": ""
+          },
+          {
+            "id": 2,
+            "name": "False",
+            "definition": ""
+          }
+        ]
+      },
+      "id.thegrid.tgs-007.products.launchDate": {
+        "parameter_id": "id.thegrid.tgs-007.products.launchDate",
+        "description": "The date when the product was first launched or made publicly available. Use ISO 8601 format (YYYY-MM-DD) when possible.",
+        "is_enum": "false"
+      },
+      "id.thegrid.tgs-007.products.supportsProducts": {
+        "parameter_id": "id.thegrid.tgs-007.products.supportsProducts",
+        "description": "Lists all the products that this product explicitly supports. This also describes a direction of support, for example a wallet may support a chain, but a chain does not support a wallet. Not used for on-chain deployments.",
+        "is_enum": "false"
+      },
+      "id.thegrid.tgs-007.entities.name": {
+        "parameter_id": "id.thegrid.tgs-007.entities.name",
+        "description": "The legal name of the Entity as registered with the relevant regulatory bodies or government agencies.",
+        "is_enum": "false"
+      },
+      "id.thegrid.tgs-007.entities.tradeName": {
+        "parameter_id": "id.thegrid.tgs-007.entities.tradeName",
+        "description": "Any additional trading names, brands, or trademarks associated with the Entity, separate from its legal name.",
+        "is_enum": "false"
+      },
+      "id.thegrid.tgs-007.entities.entityTypes": {
+        "parameter_id": "id.thegrid.tgs-007.entities.entityTypes",
+        "description": "The legal structure or registration category of the Entity (e.g. LLC, Foundation, Corporation).",
+        "is_enum": "true",
+        "possible_values": [
+          {
+            "id": 0,
+            "name": "-",
+            "definition": "not set"
+          },
+          {
+            "id": 1,
+            "name": "Foundation",
+            "definition": "An entity that conducts activities without the purpose of generating profit, and is set up as a foundation in its local jurisdiction."
+          },
+          {
+            "id": 3,
+            "name": "Corporation",
+            "definition": "A for-profit company in its local jurisdiction that may function as an umbrella entity for other companies. Examples include: LLC, BV, ЗАО, S.R.L. and other commonly known forms of business entity.  "
+          },
+          {
+            "id": 4,
+            "name": "Startup",
+            "definition": "A new, for-profit company in its local jurisdiction that is often building a technology-related product, entering an emerging market, seeking non-traditional funding, or a combination of such activities."
+          },
+          {
+            "id": 5,
+            "name": "Goverment Agency",
+            "definition": "A representative or organization that acts on behalf of a nation state’s interests."
+          },
+          {
+            "id": 7,
+            "name": "Listed Company",
+            "definition": "A for-profit entity that has successfully issued equity that can be traded on at least one stock exchange."
+          }
+        ]
+      },
+      "id.thegrid.tgs-007.entities.dateOfIncorporation": {
+        "parameter_id": "id.thegrid.tgs-007.entities.dateOfIncorporation",
+        "description": "The date when the Entity was legally registered or incorporated. Use ISO 8601 format (YYYY-MM-DD) when possible.",
+        "is_enum": "false"
+      },
+      "id.thegrid.tgs-007.entities.parentEntity": {
+        "parameter_id": "id.thegrid.tgs-007.entities.parentEntity",
+        "description": "A reference to the parent Entity, if applicable, using the parent Entity's unique identifier or name.",
+        "is_enum": "false"
+      },
+      "id.thegrid.tgs-007.entities.localRegistrationNumber": {
+        "parameter_id": "id.thegrid.tgs-007.entities.localRegistrationNumber",
+        "description": "The registration number assigned to the Entity by the relevant regulatory body or government agency, if applicable.",
+        "is_enum": "false"
+      },
+      "id.thegrid.tgs-007.entities.taxIdentificationNumber": {
+        "parameter_id": "id.thegrid.tgs-007.entities.taxIdentificationNumber",
+        "description": "The unique tax identification number assigned to the Entity by the relevant tax authority, if applicable.",
+        "is_enum": "false"
+      },
+      "id.thegrid.tgs-007.entities.address": {
+        "parameter_id": "id.thegrid.tgs-007.entities.address",
+        "description": "The registered physical address of the Entity, including street, city, state/province (if applicable), and postal code.",
+        "is_enum": "false"
+      },
+      "id.thegrid.tgs-007.entities.country": {
+        "parameter_id": "id.thegrid.tgs-007.entities.country",
+        "description": "The country in which the Entity is legally registered or incorporated, using the ISO 3166-1 alpha-2 country code format.",
+        "is_enum": "true",
+        "possible_values": [
+          {
+            "id": 0,
+            "name": "-",
+            "definition": ""
+          },
+          {
+            "id": 2,
+            "name": "Afghanistan",
+            "definition": ""
+          },
+          {
+            "id": 3,
+            "name": "Albania",
+            "definition": ""
+          },
+          {
+            "id": 4,
+            "name": "Algeria",
+            "definition": ""
+          },
+          {
+            "id": 5,
+            "name": "American Samoa",
+            "definition": ""
+          },
+          {
+            "id": 6,
+            "name": "Andorra",
+            "definition": ""
+          },
+          {
+            "id": 7,
+            "name": "Angola",
+            "definition": ""
+          },
+          {
+            "id": 8,
+            "name": "Anguilla",
+            "definition": ""
+          },
+          {
+            "id": 9,
+            "name": "Antarctica",
+            "definition": ""
+          },
+          {
+            "id": 10,
+            "name": "Antigua and Barbuda",
+            "definition": ""
+          },
+          {
+            "id": 11,
+            "name": "Argentina",
+            "definition": ""
+          },
+          {
+            "id": 12,
+            "name": "Armenia",
+            "definition": ""
+          },
+          {
+            "id": 13,
+            "name": "Aruba",
+            "definition": ""
+          },
+          {
+            "id": 14,
+            "name": "Australia",
+            "definition": ""
+          },
+          {
+            "id": 15,
+            "name": "Austria",
+            "definition": ""
+          },
+          {
+            "id": 16,
+            "name": "Azerbaijan",
+            "definition": ""
+          },
+          {
+            "id": 17,
+            "name": "Bahamas",
+            "definition": ""
+          },
+          {
+            "id": 18,
+            "name": "Bahrain",
+            "definition": ""
+          },
+          {
+            "id": 19,
+            "name": "Bangladesh",
+            "definition": ""
+          },
+          {
+            "id": 20,
+            "name": "Barbados",
+            "definition": ""
+          },
+          {
+            "id": 21,
+            "name": "Belarus",
+            "definition": ""
+          },
+          {
+            "id": 22,
+            "name": "Belgium",
+            "definition": ""
+          },
+          {
+            "id": 23,
+            "name": "Belize",
+            "definition": ""
+          },
+          {
+            "id": 24,
+            "name": "Benin",
+            "definition": ""
+          },
+          {
+            "id": 25,
+            "name": "Bermuda",
+            "definition": ""
+          },
+          {
+            "id": 26,
+            "name": "Bhutan",
+            "definition": ""
+          },
+          {
+            "id": 27,
+            "name": "Bolivia, Plurinational State of",
+            "definition": ""
+          },
+          {
+            "id": 28,
+            "name": "Bonaire, Sint Eustatius and Saba",
+            "definition": ""
+          },
+          {
+            "id": 29,
+            "name": "Bosnia and Herzegovina",
+            "definition": ""
+          },
+          {
+            "id": 30,
+            "name": "Botswana",
+            "definition": ""
+          },
+          {
+            "id": 31,
+            "name": "Bouvet Island",
+            "definition": ""
+          },
+          {
+            "id": 32,
+            "name": "Brazil",
+            "definition": ""
+          },
+          {
+            "id": 33,
+            "name": "British Indian Ocean Territory",
+            "definition": ""
+          },
+          {
+            "id": 34,
+            "name": "Brunei Darussalam",
+            "definition": ""
+          },
+          {
+            "id": 35,
+            "name": "Bulgaria",
+            "definition": ""
+          },
+          {
+            "id": 36,
+            "name": "Burkina Faso",
+            "definition": ""
+          },
+          {
+            "id": 37,
+            "name": "Burundi",
+            "definition": ""
+          },
+          {
+            "id": 38,
+            "name": "Cambodia",
+            "definition": ""
+          },
+          {
+            "id": 39,
+            "name": "Cameroon",
+            "definition": ""
+          },
+          {
+            "id": 40,
+            "name": "Canada",
+            "definition": ""
+          },
+          {
+            "id": 41,
+            "name": "Cape Verde",
+            "definition": ""
+          },
+          {
+            "id": 42,
+            "name": "Cayman Islands",
+            "definition": ""
+          },
+          {
+            "id": 43,
+            "name": "Central African Republic",
+            "definition": ""
+          },
+          {
+            "id": 44,
+            "name": "Chad",
+            "definition": ""
+          },
+          {
+            "id": 45,
+            "name": "Chile",
+            "definition": ""
+          },
+          {
+            "id": 46,
+            "name": "China",
+            "definition": ""
+          },
+          {
+            "id": 47,
+            "name": "Christmas Island",
+            "definition": ""
+          },
+          {
+            "id": 48,
+            "name": "Cocos (Keeling) Islands",
+            "definition": ""
+          },
+          {
+            "id": 49,
+            "name": "Colombia",
+            "definition": ""
+          },
+          {
+            "id": 50,
+            "name": "Comoros",
+            "definition": ""
+          },
+          {
+            "id": 51,
+            "name": "Congo",
+            "definition": ""
+          },
+          {
+            "id": 52,
+            "name": "Congo, the Democratic Republic of the",
+            "definition": ""
+          },
+          {
+            "id": 53,
+            "name": "Cook Islands",
+            "definition": ""
+          },
+          {
+            "id": 54,
+            "name": "Costa Rica",
+            "definition": ""
+          },
+          {
+            "id": 55,
+            "name": "Croatia",
+            "definition": ""
+          },
+          {
+            "id": 56,
+            "name": "Cuba",
+            "definition": ""
+          },
+          {
+            "id": 57,
+            "name": "Curaçao",
+            "definition": ""
+          },
+          {
+            "id": 58,
+            "name": "Cyprus",
+            "definition": ""
+          },
+          {
+            "id": 59,
+            "name": "Czech Republic",
+            "definition": ""
+          },
+          {
+            "id": 60,
+            "name": "Côte d'Ivoire",
+            "definition": ""
+          },
+          {
+            "id": 61,
+            "name": "Denmark",
+            "definition": ""
+          },
+          {
+            "id": 62,
+            "name": "Djibouti",
+            "definition": ""
+          },
+          {
+            "id": 63,
+            "name": "Dominica",
+            "definition": ""
+          },
+          {
+            "id": 64,
+            "name": "Dominican Republic",
+            "definition": ""
+          },
+          {
+            "id": 65,
+            "name": "Ecuador",
+            "definition": ""
+          },
+          {
+            "id": 66,
+            "name": "Egypt",
+            "definition": ""
+          },
+          {
+            "id": 67,
+            "name": "El Salvador",
+            "definition": ""
+          },
+          {
+            "id": 68,
+            "name": "Equatorial Guinea",
+            "definition": ""
+          },
+          {
+            "id": 69,
+            "name": "Eritrea",
+            "definition": ""
+          },
+          {
+            "id": 70,
+            "name": "Estonia",
+            "definition": ""
+          },
+          {
+            "id": 71,
+            "name": "Ethiopia",
+            "definition": ""
+          },
+          {
+            "id": 72,
+            "name": "Falkland Islands (Malvinas)",
+            "definition": ""
+          },
+          {
+            "id": 73,
+            "name": "Faroe Islands",
+            "definition": ""
+          },
+          {
+            "id": 74,
+            "name": "Fiji",
+            "definition": ""
+          },
+          {
+            "id": 75,
+            "name": "Finland",
+            "definition": ""
+          },
+          {
+            "id": 76,
+            "name": "France",
+            "definition": ""
+          },
+          {
+            "id": 77,
+            "name": "French Guiana",
+            "definition": ""
+          },
+          {
+            "id": 78,
+            "name": "French Polynesia",
+            "definition": ""
+          },
+          {
+            "id": 79,
+            "name": "French Southern Territories",
+            "definition": ""
+          },
+          {
+            "id": 80,
+            "name": "Gabon",
+            "definition": ""
+          },
+          {
+            "id": 81,
+            "name": "Gambia",
+            "definition": ""
+          },
+          {
+            "id": 82,
+            "name": "Georgia",
+            "definition": ""
+          },
+          {
+            "id": 83,
+            "name": "Germany",
+            "definition": ""
+          },
+          {
+            "id": 84,
+            "name": "Ghana",
+            "definition": ""
+          },
+          {
+            "id": 85,
+            "name": "Gibraltar",
+            "definition": ""
+          },
+          {
+            "id": 86,
+            "name": "Greece",
+            "definition": ""
+          },
+          {
+            "id": 87,
+            "name": "Greenland",
+            "definition": ""
+          },
+          {
+            "id": 88,
+            "name": "Grenada",
+            "definition": ""
+          },
+          {
+            "id": 89,
+            "name": "Guadeloupe",
+            "definition": ""
+          },
+          {
+            "id": 90,
+            "name": "Guam",
+            "definition": ""
+          },
+          {
+            "id": 91,
+            "name": "Guatemala",
+            "definition": ""
+          },
+          {
+            "id": 92,
+            "name": "Guernsey",
+            "definition": ""
+          },
+          {
+            "id": 93,
+            "name": "Guinea",
+            "definition": ""
+          },
+          {
+            "id": 94,
+            "name": "Guinea-Bissau",
+            "definition": ""
+          },
+          {
+            "id": 95,
+            "name": "Guyana",
+            "definition": ""
+          },
+          {
+            "id": 96,
+            "name": "Haiti",
+            "definition": ""
+          },
+          {
+            "id": 97,
+            "name": "Heard Island and McDonald Islands",
+            "definition": ""
+          },
+          {
+            "id": 98,
+            "name": "Holy See (Vatican City State)",
+            "definition": ""
+          },
+          {
+            "id": 99,
+            "name": "Honduras",
+            "definition": ""
+          },
+          {
+            "id": 100,
+            "name": "Hong Kong",
+            "definition": ""
+          },
+          {
+            "id": 101,
+            "name": "Hungary",
+            "definition": ""
+          },
+          {
+            "id": 102,
+            "name": "Iceland",
+            "definition": ""
+          },
+          {
+            "id": 103,
+            "name": "India",
+            "definition": ""
+          },
+          {
+            "id": 104,
+            "name": "Indonesia",
+            "definition": ""
+          },
+          {
+            "id": 105,
+            "name": "Iran, Islamic Republic of",
+            "definition": ""
+          },
+          {
+            "id": 106,
+            "name": "Iraq",
+            "definition": ""
+          },
+          {
+            "id": 107,
+            "name": "Ireland",
+            "definition": ""
+          },
+          {
+            "id": 108,
+            "name": "Isle of Man",
+            "definition": ""
+          },
+          {
+            "id": 109,
+            "name": "Israel",
+            "definition": ""
+          },
+          {
+            "id": 110,
+            "name": "Italy",
+            "definition": ""
+          },
+          {
+            "id": 111,
+            "name": "Jamaica",
+            "definition": ""
+          },
+          {
+            "id": 112,
+            "name": "Japan",
+            "definition": ""
+          },
+          {
+            "id": 113,
+            "name": "Jersey",
+            "definition": ""
+          },
+          {
+            "id": 114,
+            "name": "Jordan",
+            "definition": ""
+          },
+          {
+            "id": 115,
+            "name": "Kazakhstan",
+            "definition": ""
+          },
+          {
+            "id": 116,
+            "name": "Kenya",
+            "definition": ""
+          },
+          {
+            "id": 117,
+            "name": "Kiribati",
+            "definition": ""
+          },
+          {
+            "id": 118,
+            "name": "Korea, Democratic People's Republic of",
+            "definition": ""
+          },
+          {
+            "id": 119,
+            "name": "Korea, Republic of",
+            "definition": ""
+          },
+          {
+            "id": 120,
+            "name": "Kuwait",
+            "definition": ""
+          },
+          {
+            "id": 121,
+            "name": "Kyrgyzstan",
+            "definition": ""
+          },
+          {
+            "id": 122,
+            "name": "Lao People's Democratic Republic",
+            "definition": ""
+          },
+          {
+            "id": 123,
+            "name": "Latvia",
+            "definition": ""
+          },
+          {
+            "id": 124,
+            "name": "Lebanon",
+            "definition": ""
+          },
+          {
+            "id": 125,
+            "name": "Lesotho",
+            "definition": ""
+          },
+          {
+            "id": 126,
+            "name": "Liberia",
+            "definition": ""
+          },
+          {
+            "id": 127,
+            "name": "Libya",
+            "definition": ""
+          },
+          {
+            "id": 128,
+            "name": "Liechtenstein",
+            "definition": ""
+          },
+          {
+            "id": 129,
+            "name": "Lithuania",
+            "definition": ""
+          },
+          {
+            "id": 130,
+            "name": "Luxembourg",
+            "definition": ""
+          },
+          {
+            "id": 131,
+            "name": "Macao",
+            "definition": ""
+          },
+          {
+            "id": 132,
+            "name": "Macedonia, the Former Yugoslav Republic of",
+            "definition": ""
+          },
+          {
+            "id": 133,
+            "name": "Madagascar",
+            "definition": ""
+          },
+          {
+            "id": 134,
+            "name": "Malawi",
+            "definition": ""
+          },
+          {
+            "id": 135,
+            "name": "Malaysia",
+            "definition": ""
+          },
+          {
+            "id": 136,
+            "name": "Maldives",
+            "definition": ""
+          },
+          {
+            "id": 137,
+            "name": "Mali",
+            "definition": ""
+          },
+          {
+            "id": 138,
+            "name": "Malta",
+            "definition": ""
+          },
+          {
+            "id": 139,
+            "name": "Marshall Islands",
+            "definition": ""
+          },
+          {
+            "id": 140,
+            "name": "Martinique",
+            "definition": ""
+          },
+          {
+            "id": 141,
+            "name": "Mauritania",
+            "definition": ""
+          },
+          {
+            "id": 142,
+            "name": "Mauritius",
+            "definition": ""
+          },
+          {
+            "id": 143,
+            "name": "Mayotte",
+            "definition": ""
+          },
+          {
+            "id": 144,
+            "name": "Mexico",
+            "definition": ""
+          },
+          {
+            "id": 145,
+            "name": "Micronesia, Federated States of",
+            "definition": ""
+          },
+          {
+            "id": 146,
+            "name": "Moldova, Republic of",
+            "definition": ""
+          },
+          {
+            "id": 147,
+            "name": "Monaco",
+            "definition": ""
+          },
+          {
+            "id": 148,
+            "name": "Mongolia",
+            "definition": ""
+          },
+          {
+            "id": 149,
+            "name": "Montenegro",
+            "definition": ""
+          },
+          {
+            "id": 150,
+            "name": "Montserrat",
+            "definition": ""
+          },
+          {
+            "id": 151,
+            "name": "Morocco",
+            "definition": ""
+          },
+          {
+            "id": 152,
+            "name": "Mozambique",
+            "definition": ""
+          },
+          {
+            "id": 153,
+            "name": "Myanmar",
+            "definition": ""
+          },
+          {
+            "id": 154,
+            "name": "Namibia",
+            "definition": ""
+          },
+          {
+            "id": 155,
+            "name": "Nauru",
+            "definition": ""
+          },
+          {
+            "id": 156,
+            "name": "Nepal",
+            "definition": ""
+          },
+          {
+            "id": 157,
+            "name": "Netherlands",
+            "definition": ""
+          },
+          {
+            "id": 158,
+            "name": "New Caledonia",
+            "definition": ""
+          },
+          {
+            "id": 159,
+            "name": "New Zealand",
+            "definition": ""
+          },
+          {
+            "id": 160,
+            "name": "Nicaragua",
+            "definition": ""
+          },
+          {
+            "id": 161,
+            "name": "Niger",
+            "definition": ""
+          },
+          {
+            "id": 162,
+            "name": "Nigeria",
+            "definition": ""
+          },
+          {
+            "id": 163,
+            "name": "Niue",
+            "definition": ""
+          },
+          {
+            "id": 164,
+            "name": "Norfolk Island",
+            "definition": ""
+          },
+          {
+            "id": 165,
+            "name": "Northern Mariana Islands",
+            "definition": ""
+          },
+          {
+            "id": 166,
+            "name": "Norway",
+            "definition": ""
+          },
+          {
+            "id": 167,
+            "name": "Oman",
+            "definition": ""
+          },
+          {
+            "id": 168,
+            "name": "Pakistan",
+            "definition": ""
+          },
+          {
+            "id": 169,
+            "name": "Palau",
+            "definition": ""
+          },
+          {
+            "id": 170,
+            "name": "Palestine, State of",
+            "definition": ""
+          },
+          {
+            "id": 171,
+            "name": "Panama",
+            "definition": ""
+          },
+          {
+            "id": 172,
+            "name": "Papua New Guinea",
+            "definition": ""
+          },
+          {
+            "id": 173,
+            "name": "Paraguay",
+            "definition": ""
+          },
+          {
+            "id": 174,
+            "name": "Peru",
+            "definition": ""
+          },
+          {
+            "id": 175,
+            "name": "Philippines",
+            "definition": ""
+          },
+          {
+            "id": 176,
+            "name": "Pitcairn",
+            "definition": ""
+          },
+          {
+            "id": 177,
+            "name": "Poland",
+            "definition": ""
+          },
+          {
+            "id": 178,
+            "name": "Portugal",
+            "definition": ""
+          },
+          {
+            "id": 179,
+            "name": "Puerto Rico",
+            "definition": ""
+          },
+          {
+            "id": 180,
+            "name": "Qatar",
+            "definition": ""
+          },
+          {
+            "id": 181,
+            "name": "Romania",
+            "definition": ""
+          },
+          {
+            "id": 182,
+            "name": "Russian Federation",
+            "definition": ""
+          },
+          {
+            "id": 183,
+            "name": "Rwanda",
+            "definition": ""
+          },
+          {
+            "id": 184,
+            "name": "Réunion",
+            "definition": ""
+          },
+          {
+            "id": 185,
+            "name": "Saint Barthélemy",
+            "definition": ""
+          },
+          {
+            "id": 186,
+            "name": "Saint Helena, Ascension and Tristan da Cunha",
+            "definition": ""
+          },
+          {
+            "id": 187,
+            "name": "Saint Kitts and Nevis",
+            "definition": ""
+          },
+          {
+            "id": 188,
+            "name": "Saint Lucia",
+            "definition": ""
+          },
+          {
+            "id": 189,
+            "name": "Saint Martin (French part)",
+            "definition": ""
+          },
+          {
+            "id": 190,
+            "name": "Saint Pierre and Miquelon",
+            "definition": ""
+          },
+          {
+            "id": 191,
+            "name": "Saint Vincent and the Grenadines",
+            "definition": ""
+          },
+          {
+            "id": 192,
+            "name": "Samoa",
+            "definition": ""
+          },
+          {
+            "id": 193,
+            "name": "San Marino",
+            "definition": ""
+          },
+          {
+            "id": 194,
+            "name": "Sao Tome and Principe",
+            "definition": ""
+          },
+          {
+            "id": 195,
+            "name": "Saudi Arabia",
+            "definition": ""
+          },
+          {
+            "id": 196,
+            "name": "Senegal",
+            "definition": ""
+          },
+          {
+            "id": 197,
+            "name": "Serbia",
+            "definition": ""
+          },
+          {
+            "id": 198,
+            "name": "Seychelles",
+            "definition": ""
+          },
+          {
+            "id": 199,
+            "name": "Sierra Leone",
+            "definition": ""
+          },
+          {
+            "id": 200,
+            "name": "Singapore",
+            "definition": ""
+          },
+          {
+            "id": 201,
+            "name": "Sint Maarten (Dutch part)",
+            "definition": ""
+          },
+          {
+            "id": 202,
+            "name": "Slovakia",
+            "definition": ""
+          },
+          {
+            "id": 203,
+            "name": "Slovenia",
+            "definition": ""
+          },
+          {
+            "id": 204,
+            "name": "Solomon Islands",
+            "definition": ""
+          },
+          {
+            "id": 205,
+            "name": "Somalia",
+            "definition": ""
+          },
+          {
+            "id": 206,
+            "name": "South Africa",
+            "definition": ""
+          },
+          {
+            "id": 207,
+            "name": "South Georgia and the South Sandwich Islands",
+            "definition": ""
+          },
+          {
+            "id": 208,
+            "name": "South Sudan",
+            "definition": ""
+          },
+          {
+            "id": 209,
+            "name": "Spain",
+            "definition": ""
+          },
+          {
+            "id": 210,
+            "name": "Sri Lanka",
+            "definition": ""
+          },
+          {
+            "id": 211,
+            "name": "Sudan",
+            "definition": ""
+          },
+          {
+            "id": 212,
+            "name": "Suriname",
+            "definition": ""
+          },
+          {
+            "id": 213,
+            "name": "Svalbard and Jan Mayen",
+            "definition": ""
+          },
+          {
+            "id": 214,
+            "name": "Swaziland",
+            "definition": ""
+          },
+          {
+            "id": 215,
+            "name": "Sweden",
+            "definition": ""
+          },
+          {
+            "id": 216,
+            "name": "Switzerland",
+            "definition": ""
+          },
+          {
+            "id": 217,
+            "name": "Syrian Arab Republic",
+            "definition": ""
+          },
+          {
+            "id": 218,
+            "name": "Taiwan, Province of China",
+            "definition": ""
+          },
+          {
+            "id": 219,
+            "name": "Tajikistan",
+            "definition": ""
+          },
+          {
+            "id": 220,
+            "name": "Tanzania, United Republic of",
+            "definition": ""
+          },
+          {
+            "id": 221,
+            "name": "Thailand",
+            "definition": ""
+          },
+          {
+            "id": 222,
+            "name": "Timor-Leste",
+            "definition": ""
+          },
+          {
+            "id": 223,
+            "name": "Togo",
+            "definition": ""
+          },
+          {
+            "id": 224,
+            "name": "Tokelau",
+            "definition": ""
+          },
+          {
+            "id": 225,
+            "name": "Tonga",
+            "definition": ""
+          },
+          {
+            "id": 226,
+            "name": "Trinidad and Tobago",
+            "definition": ""
+          },
+          {
+            "id": 227,
+            "name": "Tunisia",
+            "definition": ""
+          },
+          {
+            "id": 228,
+            "name": "Turkey",
+            "definition": ""
+          },
+          {
+            "id": 229,
+            "name": "Turkmenistan",
+            "definition": ""
+          },
+          {
+            "id": 230,
+            "name": "Turks and Caicos Islands",
+            "definition": ""
+          },
+          {
+            "id": 231,
+            "name": "Tuvalu",
+            "definition": ""
+          },
+          {
+            "id": 232,
+            "name": "Uganda",
+            "definition": ""
+          },
+          {
+            "id": 233,
+            "name": "Ukraine",
+            "definition": ""
+          },
+          {
+            "id": 234,
+            "name": "United Arab Emirates",
+            "definition": ""
+          },
+          {
+            "id": 235,
+            "name": "United Kingdom",
+            "definition": ""
+          },
+          {
+            "id": 236,
+            "name": "United States",
+            "definition": ""
+          },
+          {
+            "id": 237,
+            "name": "United States Minor Outlying Islands",
+            "definition": ""
+          },
+          {
+            "id": 238,
+            "name": "Uruguay",
+            "definition": ""
+          },
+          {
+            "id": 239,
+            "name": "Uzbekistan",
+            "definition": ""
+          },
+          {
+            "id": 240,
+            "name": "Vanuatu",
+            "definition": ""
+          },
+          {
+            "id": 241,
+            "name": "Venezuela, Bolivarian Republic of",
+            "definition": ""
+          },
+          {
+            "id": 242,
+            "name": "Viet Nam",
+            "definition": ""
+          },
+          {
+            "id": 243,
+            "name": "Virgin Islands, British",
+            "definition": ""
+          },
+          {
+            "id": 244,
+            "name": "Virgin Islands, U.S.",
+            "definition": ""
+          },
+          {
+            "id": 245,
+            "name": "Wallis and Futuna",
+            "definition": ""
+          },
+          {
+            "id": 246,
+            "name": "Western Sahara",
+            "definition": ""
+          },
+          {
+            "id": 247,
+            "name": "Yemen",
+            "definition": ""
+          },
+          {
+            "id": 248,
+            "name": "Zambia",
+            "definition": ""
+          },
+          {
+            "id": 249,
+            "name": "Zimbabwe",
+            "definition": ""
+          },
+          {
+            "id": 250,
+            "name": "Åland Islands",
+            "definition": ""
+          }
+        ]
+      },
+      "id.thegrid.tgs-007.entities.leiNumber": {
+        "parameter_id": "id.thegrid.tgs-007.entities.leiNumber",
+        "description": "The Legal Entity Identifier (LEI) code assigned to the Entity by the Global Legal Entity Identifier Foundation (GLEIF), if applicable.",
+        "is_enum": "false"
+      },
+      "id.thegrid.tgs-007.socials.socialType": {
+        "parameter_id": "id.thegrid.tgs-007.socials.socialType",
+        "description": "The specific social media platform the URL belongs to (e.g. Twitter, Facebook, Discord). Refer to the standardized list of social media platforms.",
+        "is_enum": "true",
+        "possible_values": [
+          {
+            "id": 0,
+            "name": "-",
+            "definition": "not_set"
+          },
+          {
+            "id": 1,
+            "name": "Twitter / X",
+            "definition": "Twitter social networking service"
+          },
+          {
+            "id": 3,
+            "name": "Discord",
+            "definition": "Link to Discord chat service, looks something like https://discord.gg/%handler%"
+          },
+          {
+            "id": 4,
+            "name": "Facebook",
+            "definition": "Facebook social networking service"
+          },
+          {
+            "id": 6,
+            "name": "LinkedIn",
+            "definition": "LinkedIn professional networking service"
+          },
+          {
+            "id": 7,
+            "name": "Telegram",
+            "definition": "Telegram messaging link (like https://t.me/...)"
+          },
+          {
+            "id": 361,
+            "name": "Warpcast",
+            "definition": "Warpcast service"
+          },
+          {
+            "id": 747,
+            "name": "GitHub",
+            "definition": "GitHub profile"
+          },
+          {
+            "id": 748,
+            "name": "GitLab",
+            "definition": "GitLab profile"
+          },
+          {
+            "id": 1783,
+            "name": "Reddit",
+            "definition": "Reddit discussion forum (subreddit)"
+          },
+          {
+            "id": 1879,
+            "name": "Instagram",
+            "definition": "Instagram photo sharing service"
+          },
+          {
+            "id": 2331,
+            "name": "Substack",
+            "definition": "Blogs at substack.com"
+          },
+          {
+            "id": 2338,
+            "name": "YouTube",
+            "definition": "YouTube video channel"
+          },
+          {
+            "id": 4157,
+            "name": "TikTok",
+            "definition": "TikTok account"
+          }
+        ]
+      },
+      "id.thegrid.tgs-007.socials.name": {
+        "parameter_id": "id.thegrid.tgs-007.socials.name",
+        "description": "The name or handle associated with the Profile's social media account on the specified platform. This should match the name displayed on the social media profile page.",
+        "is_enum": "false"
+      },
+      "id.thegrid.tgs-007.tags.name": {
+        "parameter_id": "id.thegrid.tgs-007.tags.name",
+        "description": "The name of a tag which is a reference to something. This something is defined by its description and type. ",
+        "is_enum": "false"
+      },
+      "id.thegrid.tgs-007.tags.tagTypes": {
+        "parameter_id": "id.thegrid.tgs-007.tags.tagTypes",
+        "description": "A reference to a connected table that  contains a type. A type of tag provides some context as to what a tag is and also contains a description.",
+        "is_enum": "true",
+        "possible_values": [
+          {
+            "id": 0,
+            "name": "-",
+            "definition": "not set"
+          },
+          {
+            "id": 1,
+            "name": "Event",
+            "definition": "some event or conference"
+          },
+          {
+            "id": 2,
+            "name": "Community",
+            "definition": "some community"
+          },
+          {
+            "id": 3,
+            "name": "Tech",
+            "definition": "profiles united by tech used"
+          },
+          {
+            "id": 4,
+            "name": "Geography",
+            "definition": "example is like country or city"
+          },
+          {
+            "id": 7,
+            "name": "Paradigm",
+            "definition": "A tag that can catch certain 'Paradigms' within the Grids data"
+          }
+        ]
+      },
+      "id.thegrid.tgs-007.tags.description": {
+        "parameter_id": "id.thegrid.tgs-007.tags.description",
+        "description": "A description of this tag which provides a short explanation over what this unique tag is about",
+        "is_enum": "false"
+      },
+      "id.thegrid.tgs-007.smartContractDeployments.deploymentTypes": {
+        "parameter_id": "id.thegrid.tgs-007.smartContractDeployments.deploymentTypes",
+        "description": "Categorizes the type of deployment based on the smart contract’s main purpose. For example, if the contract is primarily used to mint an asset, it will be tagged as ‘mint’.\n",
+        "is_enum": "true",
+        "possible_values": [
+          {
+            "id": 0,
+            "name": "not set",
+            "definition": ""
+          },
+          {
+            "id": 3,
+            "name": "Mint",
+            "definition": "A deployment that creates and manages assets on chain "
+          },
+          {
+            "id": 4,
+            "name": "Pool",
+            "definition": "A deployment that makes up a pool, usually in a DEX"
+          },
+          {
+            "id": 5,
+            "name": "General",
+            "definition": "A general smart contract deployment"
+          }
+        ]
+      },
+      "id.thegrid.tgs-007.smartContractDeployments.deployedOnId": {
+        "parameter_id": "id.thegrid.tgs-007.smartContractDeployments.deployedOnId",
+        "description": "Specifies which blockchain a smart contract is deployed on. If a product or asset does not have a smart contract, meaning it is not deployed on any blockchain, leave this field blank. ",
+        "is_enum": "false"
+      },
+      "id.thegrid.tgs-007.smartContractDeployments.assetStandards": {
+        "parameter_id": "id.thegrid.tgs-007.smartContractDeployments.assetStandards",
+        "description": "The technical standard or protocol specification that the smart contract implements. If the standard cannot be identified, leave this field blank.",
+        "is_enum": "true",
+        "possible_values": [
+          {
+            "id": 0,
+            "name": "-",
+            "definition": "not set"
+          },
+          {
+            "id": 1,
+            "name": "ERC-20",
+            "definition": "A standard for fungible tokens on the Ethereum blockchain, defining a common set of rules for token implementation to ensure compatibility across the ecosystem."
+          },
+          {
+            "id": 2,
+            "name": "BEP-20",
+            "definition": "BEP20 tokens are fungible tokens, based on the popular ERC-20 standard from Ethereum, designed for use on the Binance Smart Chain.f "
+          },
+          {
+            "id": 4,
+            "name": "SPL",
+            "definition": "The Solana Program Library token standard, used for creating both fungible and non-fungible tokens on the Solana blockchain, offering high speed and low transaction costs."
+          },
+          {
+            "id": 1664,
+            "name": "ERC-721",
+            "definition": "A standard for non-fungible tokens on the Ethereum blockchain, allowing for the creation of unique digital assets with distinct properties and ownership rights."
+          },
+          {
+            "id": 1974,
+            "name": "ERC-1155",
+            "definition": "A multi-token standard on Ethereum that allows for the creation of both fungible and non-fungible tokens within a single smart contract."
+          },
+          {
+            "id": 1986,
+            "name": "TRC-20",
+            "definition": "The TRON blockchain's equivalent of ERC-20, used for creating fungible tokens on the TRON network."
+          },
+          {
+            "id": 1987,
+            "name": "ASA",
+            "definition": "Algorand Standard Asset - Algorand's native token standard that supports both fungible and non-fungible tokens."
+          },
+          {
+            "id": 1988,
+            "name": "FA2",
+            "definition": "Financial Application 2 - Tezos blockchain's unified token contract interface for all token types."
+          },
+          {
+            "id": 1989,
+            "name": "ERC-777",
+            "definition": "An improved version of the ERC-20 standard on Ethereum, offering additional features like operator management and hooks."
+          },
+          {
+            "id": 1990,
+            "name": "BEP-2",
+            "definition": "The original token standard for the Binance Chain (not to be confused with Binance Smart Chain)."
+          },
+          {
+            "id": 1991,
+            "name": "Cosmos SDK",
+            "definition": "While not a token standard per se, it's a framework used by many Cosmos-based blockchains to create their native tokens."
+          },
+          {
+            "id": 1992,
+            "name": "ERC-4626",
+            "definition": "A standard for tokenized vaults on Ethereum, commonly used in DeFi applications."
+          },
+          {
+            "id": 1993,
+            "name": "PSP22",
+            "definition": "The primary fungible token standard on the Polkadot and Kusama ecosystems."
+          },
+          {
+            "id": 1994,
+            "name": "spl-token-2022",
+            "definition": "Solana Token 2022 - An upgraded version of the original SPL token standard. The Solana Token 2022 program introduces several new features and improvements over the original SPL token standard, aiming to provide more flexibility and functionality for token"
+          }
+        ]
+      },
+      "id.thegrid.tgs-007.smartContracts.deploymentId": {
+        "parameter_id": "id.thegrid.tgs-007.smartContracts.deploymentId",
+        "description": "The Deployment ID links individual smart contracts to their parent deployment record. A deployment can contain multiple related smart contracts (like a protocol's core contracts), but each blockchain deployment must have its own unique deployment record.\n",
+        "is_enum": "false"
+      },
+      "id.thegrid.tgs-007.smartContracts.name": {
+        "parameter_id": "id.thegrid.tgs-007.smartContracts.name",
+        "description": "The official identifier or label for the smart contract as used in project documentation and blockchain explorers. If no name is given, leave it blank.",
+        "is_enum": "false"
+      },
+      "id.thegrid.tgs-007.smartContracts.address": {
+        "parameter_id": "id.thegrid.tgs-007.smartContracts.address",
+        "description": "The unique blockchain address where the smart contract is deployed. Format must match the relevant blockchain's address structure.\n",
+        "is_enum": "false"
+      },
+      "id.thegrid.tgs-007.smartContracts.deploymentDate": {
+        "parameter_id": "id.thegrid.tgs-007.smartContracts.deploymentDate",
+        "description": "The date when the smart contract was deployed to the blockchain. Use ISO 8601 format (YYYY-MM-DD). Note: This will be automated in the future. \n",
+        "is_enum": "false"
+      },
+      "id.thegrid.tgs-007.urls.urlType": {
+        "parameter_id": "id.thegrid.tgs-007.urls.urlType",
+        "description": "Categorizes the purpose and content of a URL based on its table group in the TGS. The URL type must align with both the content it links to and the context of its parameter group (Profile/Product/Asset/Entity/Social).",
+        "is_enum": "true",
+        "possible_values": [
+          {
+            "id": 0,
+            "name": "-",
+            "definition": "(not set)"
+          },
+          {
+            "id": 2,
+            "name": "Main",
+            "definition": "This is the main URL that is used by the profiles table"
+          },
+          {
+            "id": 3,
+            "name": "Blog",
+            "definition": "Links to blogs"
+          },
+          {
+            "id": 4,
+            "name": "Documentation",
+            "definition": "Link to most informative documentation link. Normally the homepage of the docs area or subdomain of a website (Note documentation is used in profile, assets, products, deployments)"
+          },
+          {
+            "id": 5,
+            "name": "Whitepaper",
+            "definition": "Links to whitepapers, this may often be a PDF link"
+          },
+          {
+            "id": 6,
+            "name": "Product",
+            "definition": "The main URL of a product, the best place to access this product."
+          },
+          {
+            "id": 7,
+            "name": "Entity",
+            "definition": "The official URL of the entity"
+          },
+          {
+            "id": 8,
+            "name": "Social",
+            "definition": "A catch-all for social media links"
+          }
+        ]
+      },
+      "id.thegrid.tgs-007.urls.url": {
+        "parameter_id": "id.thegrid.tgs-007.urls.url",
+        "description": "This is a URL that links to different types, it must always start with a \"http://\" or \"https://\". ",
+        "is_enum": "false"
+      },
+      "id.thegrid.tgs-007.productAssetRelationships.product": {
+        "parameter_id": "id.thegrid.tgs-007.productAssetRelationships.product",
+        "description": "",
+        "is_enum": "false"
+      },
+      "id.thegrid.tgs-007.productAssetRelationships.asset": {
+        "parameter_id": "id.thegrid.tgs-007.productAssetRelationships.asset",
+        "description": "",
+        "is_enum": "false"
+      }
+    },
+    "response_info": {
+      "metadata": {
+        "tgs_version": "id.thegrid.tgs-007",
+        "json_generation": "29/11/2024",
+        "csv_last_modified": "29/11/2024"
+      },
+      "developer_mode": false,
+      "execution_time": "2 ms",
+      "code_version": "ffc1fa73878cf6fe6203590712e9357fe15240d6"
+    }
+  }
