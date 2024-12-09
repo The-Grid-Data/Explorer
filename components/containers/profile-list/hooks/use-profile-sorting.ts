@@ -1,12 +1,12 @@
-import { Mysql8_Order_By } from '@/lib/graphql/generated-graphql';
+import { OrderBy } from '@/lib/graphql/generated-graphql';
 import { useState } from 'react';
 
 export type Sorting = ReturnType<typeof useProfileSorting>;
 
 export const useProfileSorting = () => {
   const [sortBy, setSortBy] = useState<string>('id');
-  const [sortOrder, setSortOrder] = useState<Mysql8_Order_By>(
-    Mysql8_Order_By.Asc
+  const [sortOrder, setSortOrder] = useState<OrderBy>(
+    OrderBy.Asc
   );
 
   const toQuerySortByFields = () => generateOrderByQuery(sortBy, sortOrder);
@@ -24,7 +24,7 @@ export const useProfileSorting = () => {
   };
 };
 
-const generateOrderByQuery = (sortBy: string, sortOrder: Mysql8_Order_By) => {
+const generateOrderByQuery = (sortBy: string, sortOrder: OrderBy) => {
   if (!sortBy) return [];
 
   const parts = sortBy.split('.');

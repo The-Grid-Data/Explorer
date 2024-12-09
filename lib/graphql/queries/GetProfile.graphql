@@ -1,52 +1,17 @@
-query GetProfile($where: profiles_bool_exp) {
-  profiles(limit: 1, offset: 0, where: $where) {
+query getProfile($where: CProfileInfosBoolExp) {
+  profileInfos(limit: 1, offset: 0, where: $where) {
+    tagLine
+    rootId
+    profileTypeId
+    profileStatusId
+    profileSectorId
     name
     logo
     id
     foundingDate
     descriptionShort
     descriptionLong
-    profileSectorId
-    profileStatusId
-    profileTypeId
-    tagLine
-    urlBlog
-    urlDocumentation
-    urlMain
-    urlWhitepaper
-    socials {
-      url
-      socialTypeId
-      profileId
-      name
-      id
-      socialType {
-        id
-        name
-      }
-    }
-    assets {
-      id
-      ticker
-      shortDescription
-      urlToAssetDocs
-      name
-      icon
-      address
-      deployedOnProductId
-      assetTypeId
-      assetType {
-        id
-        name
-      }
-      assetDeployedOnProductId {
-        name
-        profile {
-          slug
-        }
-      }
-    }
-    profileType {
+    profileSector {
       name
       id
       definition
@@ -56,108 +21,193 @@ query GetProfile($where: profiles_bool_exp) {
       id
       definition
     }
-    profileSector {
+    profileType {
       name
       id
       definition
     }
-    products {
-      urlToProduct
-      descriptionShort
-      id
-      isMainProduct
-      launchDate
-      name
-      productAddress
-      productStatusId
-      productType {
-        name
-      }
-      productStatus {
-        name
-      }
-      supportsProducts {
-        supports {
-          name
-          profile {
-            slug
-          }
-        }
-      }
-      asset {
-        name
-        id
-        icon
-        deployedOnProductId
-        assetTypeId
-        assetStandardId
-        address
-        urlToAssetDocs
-        ticker
-        profileId
-        shortDescription
-      }
-      mainAsset {
-        urlToAssetDocs
-        ticker
-        profileId
-        shortDescription
-        name
-      }
-      productDeployedOnProduct {
-        name
-        launchDate
-        descriptionShort
-        deployedOnProductId
-        urlToProduct
-        profile {
-          slug
-        }
-      }
-      supportedByProducts {
-        supports {
-          name
-          id
-        }
-        product {
-          name
-          id
-        }
-      }
-    }
-    mainProduct: products(where: { isMainProduct: { _eq: 1 } }, limit: 1) {
-      name
-      productType {
-        name
-      }
-    }
-    entities {
-      tradeName
-      profileId
-      urlToEntity
-      name
-      localRegistrationNumber
-      leiNumber
-      dateOfIncorporation
-      countryId
-      address
-      country {
-        code
-        name
-      }
-      id
-      entityType {
+    urls {
+      url
+      urlType {
         name
         id
         definition
       }
-      parentEntityId
-      taxIdentificationNumber
     }
-    profileTags {
-      tag {
+    root {
+      urlMain
+      slug
+      assets {
+        ticker
+        rootId
         name
         id
+        icon
+        description
+        assetTypeId
+        assetStatusId
+        assetType {
+          definition
+          id
+          name
+        }
+        assetStatus {
+          name
+          id
+          definition
+        }
+        assetDeployments {
+          id
+          deploymentId
+          assetId
+          smartContractDeployment {
+            id
+            deployedOnProduct {
+              id
+              name
+              root {
+                slug
+              }
+            }
+            assetStandard {
+              id
+            }
+            smartContracts {
+              name
+              id
+              deploymentId
+              deploymentDate
+              address
+            }
+            deploymentType {
+              name
+              id
+              definition
+            }
+          }
+        }
+        urls {
+          url
+          urlType {
+            name
+            id
+            definition
+          }
+        }
+      }
+      socials {
+        name
+        socialType {
+          name
+        }
+        urls {
+          url
+        }
+      }
+      products {
+        rootId
+        productTypeId
+        productStatusId
+        name
+        launchDate
+        isMainProduct
+        id
+        description
+        productType {
+          name
+          id
+          definition
+        }
+        productStatus {
+          name
+          id
+          definition
+        }
+        productDeployments {
+          smartContractDeployment {
+            deployedOnProduct {
+              id
+              name
+              root {
+                slug
+              }
+            }
+            assetStandard {
+              id
+            }
+            deploymentType {
+              name
+            }
+            smartContracts {
+              name
+              id
+              deploymentDate
+              address
+              deploymentId
+            }
+            isOfStandardId
+            id
+          }
+        }
+        supportsProducts {
+          supportsProduct {
+            name
+            id
+            root {
+              slug
+            }
+          }
+        }
+        urls {
+          url
+          urlType {
+            name
+            id
+            definition
+          }
+        }
+      }
+      entities {
+        name
+        tradeName
+        taxIdentificationNumber
+        localRegistrationNumber
+        leiNumber
+        id
+        dateOfIncorporation
+        address
+        entityType {
+          name
+          id
+          definition
+        }
+        country {
+          name
+          id
+          code
+        }
+        urls {
+          url
+          urlType {
+            name
+            id
+            definition
+          }
+        }
+      }
+      profileTags {
+        tag {
+          name
+          id
+        }
+      }
+    }
+    mainProduct: root {
+      products(where: { isMainProduct: { _eq: "1" } }, limit: 1) {
+        name
+        productType {
+          name
+        }
       }
     }
   }
