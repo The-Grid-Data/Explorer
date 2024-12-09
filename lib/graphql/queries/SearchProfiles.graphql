@@ -4,7 +4,12 @@ query SearchProfiles(
   $limit: Int
   $offset: Int
 ) {
-  profileInfos(limit: $limit, offset: $offset, where: $where) {
+  profileInfos(
+    limit: $limit
+    offset: $offset
+    where: $where
+    order_by: $order_by
+  ) {
     name
     logo
     id
@@ -13,6 +18,7 @@ query SearchProfiles(
     profileTypeId
     profileStatusId
     profileSectorId
+    foundingDate
     profileSector {
       name
       id

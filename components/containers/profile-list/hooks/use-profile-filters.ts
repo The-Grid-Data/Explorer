@@ -9,8 +9,6 @@ import {
   parseAsString
 } from 'nuqs';
 import { useFilter } from './use-filter';
-import { siteConfig } from '@/lib/site-config';
-import { useState } from 'react';
 import { isNotEmpty } from '@/lib/utils/is-not-empty';
 
 export type Filters = ReturnType<typeof useProfileFilters>;
@@ -39,7 +37,6 @@ export const useProfileFilters = () => {
     },
     { clearOnDefault: true, throttleMs: 1000 }
   );
-  const [tags, setTags] = useState<number[] | null>(queryParams.tags);
 
   const { data, isLoading } = useGetFiltersOptionsQuery(undefined, {
     placeholderData: prevData => prevData
@@ -50,7 +47,7 @@ export const useProfileFilters = () => {
    *************************************/
   const productTypesFilter = useFilter<number>({
     options: data?.productTypes
-      ?.filter(item => item.name)
+      ?.filter(item => item.name?.trim())
       .map(item => ({
         value: item.id,
         label: item.name,
@@ -69,10 +66,7 @@ export const useProfileFilters = () => {
     })),
     type: 'multiselect',
     initialValue: queryParams.tags,
-    onChange: newValue => {
-      setQueryParams({ tags: newValue });
-      setTags(newValue);
-    }
+    onChange: newValue => setQueryParams({ tags: newValue })
   });
 
   /*************************************
@@ -317,7 +311,9 @@ export const useProfileFilters = () => {
           productStatus: { id: { _in: productStatusFilter.value } }
         }),
         ...(isNotEmpty(productDeployedOnFilter.value) && {
-          deployedOnProductId: { _in: productDeployedOnFilter.value }
+          productDeployments: {
+            deploymentId: { _in: productDeployedOnFilter.value }
+          }
         }),
         ...(isNotEmpty(productSupportsFilter.value) && {
           supportsProducts: {
@@ -340,8 +336,10 @@ export const useProfileFilters = () => {
           ticker: { _in: assetTickerFilter.value }
         }),
         ...(isNotEmpty(assetDeployedOnFilter.value) && {
-          assetDeployedOnProductId: {
-            id: { _in: assetDeployedOnFilter.value }
+          assetDeployments: {
+            smartContractDeployment: {
+              deployedOnId: { _in: assetDeployedOnFilter.value }
+            }
           }
         }),
         ...(isNotEmpty(assetStandardFilter.value) && {
@@ -376,21 +374,21 @@ export const useProfileFilters = () => {
         //  * PRODUCT FILTERS
         //  *************************************/
         ...(Object.keys(productConditions).length > 0 && {
-          products: productConditions
+          root: { products: productConditions }
         }),
 
         /*************************************
          * ASSET FILTERS
          *************************************/
         ...(Object.keys(assetConditions).length > 0 && {
-          assets: assetConditions
+          root: { assets: assetConditions }
         }),
 
         // /*************************************
         //  * ENTITY FILTERS
         //  *************************************/
         ...(Object.keys(entityConditions).length > 0 && {
-          entities: entityConditions
+          root: { entities: entityConditions }
         }),
 
         /*************************************

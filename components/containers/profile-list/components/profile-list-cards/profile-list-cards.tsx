@@ -15,9 +15,9 @@ export const ProfileListCards = () => {
   const { ref: fetchNextPageTriggerRef, inView } = useInView({ threshold: 1 });
   const limit = query?.limit ?? defaultLimit;
 
-  const { data, isFetching, isError, fetchNextPage } =
+  const { data, isFetching, isError, fetchNextPage, error, failureReason } =
     useInfiniteSearchProfilesQuery(debouncedQuery, {
-      // placeholderData: previousData => previousData,
+      placeholderData: previousData => previousData,
       initialPageParam: {
         limit,
         offset: 0

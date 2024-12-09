@@ -14,6 +14,7 @@ import {
   extractUrls,
   UrlTypeIconLinks
 } from '@/components/containers/url-type-icon/url-type-icon-list';
+import { useProfileFiltersContext } from '@/providers/filters-provider';
 
 export type Profile = NonNullable<SearchProfilesQuery['profileInfos']>[number];
 
@@ -23,6 +24,7 @@ export type ProfileCardCardProps = {
 
 export const ProfileCard = ({ profile }: ProfileCardCardProps) => {
   const validLogoUrl = profile.logo && profile.logo.startsWith('https://');
+  const { filters } = useProfileFiltersContext();
 
   return (
     <div className="ml-4">
@@ -75,13 +77,25 @@ export const ProfileCard = ({ profile }: ProfileCardCardProps) => {
         </div>
         <div className="flex flex-col gap-2 p-4 lg:pt-14">
           <div className="flex flex-wrap gap-2">
-            {/* <ProfileCardFeature
-              label="Sector"
-              value={profile.profileSector?.name}
-            /> */}
             <ProfileCardFeature
               label="Profile type"
               value={profile.profileType?.name}
+              active={filters.profileTypeFilter.active}
+            />
+            <ProfileCardFeature
+              label="Profile Sector"
+              value={profile.profileSector?.name}
+              active={filters.profileSectorsFilter.active}
+            />
+            <ProfileCardFeature
+              label="Profile Status"
+              value={profile.profileStatus?.name}
+              active={filters.profileSectorsFilter.active}
+            />
+            <ProfileCardFeature
+              label="Profile Founding Date"
+              value={profile.foundingDate}
+              active={filters.profileFoundingDateFilter.active}
             />
             <ProfileCardFeature
               label="Main Product Type"
@@ -98,12 +112,26 @@ export const ProfileCard = ({ profile }: ProfileCardCardProps) => {
                 profile.root?.assets?.map(asset => asset.ticker).join(', ')
               }
             />
+            <ProfileCardFeature
+              label="Product types"
+              value={profile.root?.products
+                ?.map(product => product.productType?.name)
+                .join(', ')}
+              active={filters.productTypesFilter.active}
+            />
           </div>
           <div className="space-y-2">
             <ProfileCardDataPoint label="Tagline" value={profile.tagLine} />
             <ProfileCardDataPoint
               label="Short Description"
               value={profile.descriptionShort}
+            />
+            <ProfileCardDataPoint
+              label="Tags"
+              value={profile.root?.profileTags
+                ?.map(tag => tag?.tag?.name)
+                .join(', ')}
+              active={filters.tagsFilter.active}
             />
           </div>
         </div>

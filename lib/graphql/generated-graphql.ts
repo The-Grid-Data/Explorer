@@ -3184,6 +3184,7 @@ export type SearchProfilesQuery = {
     profileTypeId: any;
     profileStatusId: any;
     profileSectorId: any;
+    foundingDate?: any | null;
     profileSector?: {
       __typename?: 'CProfileSectors';
       name: any;
@@ -3761,7 +3762,7 @@ export const useInfiniteGetProfileQuery = <
 
 export const SearchProfilesDocument = `
     query SearchProfiles($order_by: [CProfileInfosOrderBy!], $where: CProfileInfosBoolExp, $limit: Int, $offset: Int) {
-  profileInfos(limit: $limit, offset: $offset, where: $where) {
+  profileInfos(limit: $limit, offset: $offset, where: $where, order_by: $order_by) {
     name
     logo
     id
@@ -3770,6 +3771,7 @@ export const SearchProfilesDocument = `
     profileTypeId
     profileStatusId
     profileSectorId
+    foundingDate
     profileSector {
       name
       id
