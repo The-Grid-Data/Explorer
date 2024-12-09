@@ -74,7 +74,6 @@ const getDefaultWhereFilter = (): CProfileInfosBoolExp => {
 export const withDefaultWhereFilter = (
   where: SearchProfilesQueryVariables['where'] = {}
 ) => {
-  console.log('where', where);
   const defaultFilter = getDefaultWhereFilter();
   return Object.keys(defaultFilter).length
     ? { ...where, ...defaultFilter }
