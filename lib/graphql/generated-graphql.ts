@@ -2794,6 +2794,7 @@ export type GetFiltersOptionsQueryVariables = Exact<{
   supportsProductsWhere?: InputMaybe<CSupportsProductsBoolExp>;
   deployedOnProductsWhere?: InputMaybe<CProductsBoolExp>;
   productTypesWhere?: InputMaybe<CProductTypesBoolExp>;
+  productTypesFilterInput?: InputMaybe<CProductsFilterInput>;
   tagsWhere?: InputMaybe<CTagsBoolExp>;
 }>;
 
@@ -2822,6 +2823,7 @@ export type GetFiltersOptionsQuery = {
     name: any;
     id: any;
     definition: any;
+    ProductsAggregate: { __typename?: 'CProductsAggExp'; _count: number };
   }> | null;
   productStatuses?: Array<{
     __typename?: 'CProductStatuses';
@@ -2870,6 +2872,7 @@ export type GetFiltersOptionsQuery = {
     name: any;
     id: any;
     description: any;
+    ProfileTagsAggregate: { __typename?: 'CProfileTagsAggExp'; _count: number };
   }> | null;
 };
 
@@ -3244,6 +3247,12 @@ export type SearchProfilesQuery = {
       products?: Array<{
         __typename?: 'CProducts';
         name: any;
+        productStatus?: {
+          __typename?: 'CProductStatuses';
+          name: any;
+          id: any;
+          definition: any;
+        } | null;
         productType?: {
           __typename?: 'CProductTypes';
           name: any;
@@ -3256,7 +3265,7 @@ export type SearchProfilesQuery = {
 };
 
 export const GetFiltersOptionsDocument = `
-    query getFiltersOptions($supportsProductsWhere: CSupportsProductsBoolExp = {}, $deployedOnProductsWhere: CProductsBoolExp = {}, $productTypesWhere: CProductTypesBoolExp = {}, $tagsWhere: CTagsBoolExp = {}) {
+    query getFiltersOptions($supportsProductsWhere: CSupportsProductsBoolExp = {}, $deployedOnProductsWhere: CProductsBoolExp = {}, $productTypesWhere: CProductTypesBoolExp = {}, $productTypesFilterInput: CProductsFilterInput = {}, $tagsWhere: CTagsBoolExp = {}) {
   profileTypes {
     name
     id
@@ -3276,6 +3285,9 @@ export const GetFiltersOptionsDocument = `
     name
     id
     definition
+    ProductsAggregate(filter_input: $productTypesFilterInput) {
+      _count
+    }
   }
   productStatuses {
     definition
@@ -3324,6 +3336,9 @@ export const GetFiltersOptionsDocument = `
     name
     id
     description
+    ProfileTagsAggregate {
+      _count
+    }
   }
 }
     `;
@@ -3826,8 +3841,13 @@ export const SearchProfilesDocument = `
           id
         }
       }
-      products(where: {isMainProduct: {_eq: "1"}}, limit: 1) {
+      products {
         name
+        productStatus {
+          name
+          id
+          definition
+        }
         productType {
           name
           id

@@ -73,8 +73,13 @@ query SearchProfiles(
           id
         }
       }
-      products(where: { isMainProduct: { _eq: "1" } }, limit: 1) {
+      products {
         name
+        productStatus {
+          name
+          id
+          definition
+        }
         productType {
           name
           id

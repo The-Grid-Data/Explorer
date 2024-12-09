@@ -2,6 +2,7 @@ query getFiltersOptions(
   $supportsProductsWhere: CSupportsProductsBoolExp = {}
   $deployedOnProductsWhere: CProductsBoolExp = {}
   $productTypesWhere: CProductTypesBoolExp = {}
+  $productTypesFilterInput: CProductsFilterInput = {}
   $tagsWhere: CTagsBoolExp = {}
 ) {
   ###
@@ -29,6 +30,9 @@ query getFiltersOptions(
     name
     id
     definition
+    ProductsAggregate(filter_input: $productTypesFilterInput) {
+      _count
+    }
   }
   productStatuses {
     definition
@@ -86,5 +90,8 @@ query getFiltersOptions(
     name
     id
     description
+    ProfileTagsAggregate {
+      _count
+    }
   }
 }

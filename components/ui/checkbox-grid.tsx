@@ -14,6 +14,7 @@ type Option<T extends string | number> = {
   value: T;
   label: string;
   description?: string | null;
+  disabled?: boolean;
 };
 
 export type CheckboxGridProps<T extends string | number> = {
@@ -75,6 +76,7 @@ export default function CheckboxGrid<T extends string | number>({
                     <Tooltip>
                       <TooltipTrigger asChild>
                         <Button
+                          disabled={option.disabled}
                           variant={
                             selected?.includes(option.value)
                               ? 'outline'

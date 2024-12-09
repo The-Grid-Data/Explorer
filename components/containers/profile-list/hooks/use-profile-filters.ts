@@ -1,4 +1,7 @@
 import {
+  CAssetsBoolExp,
+  CEntitiesBoolExp,
+  CProductsBoolExp,
   SearchProfilesQueryVariables,
   useGetFiltersOptionsQuery
 } from '@/lib/graphql/generated-graphql';
@@ -10,6 +13,8 @@ import {
 } from 'nuqs';
 import { useFilter } from './use-filter';
 import { isNotEmpty } from '@/lib/utils/is-not-empty';
+import { useState } from 'react';
+import { siteConfig } from '@/lib/site-config';
 
 export type Filters = ReturnType<typeof useProfileFilters>;
 
@@ -38,9 +43,45 @@ export const useProfileFilters = () => {
     { clearOnDefault: true, throttleMs: 1000 }
   );
 
-  const { data, isLoading } = useGetFiltersOptionsQuery(undefined, {
-    placeholderData: prevData => prevData
-  });
+  const [tags, setTags] = useState<number[] | null>(queryParams.tags);
+  const [productTypeIds, setProductTypeIds] = useState<number[] | null>(
+    queryParams.productTypes
+  );
+
+  const { data, isLoading } = useGetFiltersOptionsQuery(
+    {
+      supportsProductsWhere: {
+        ...(isNotEmpty(siteConfig.blockchainIds) && {
+          supportsProductId: { _in: siteConfig.blockchainIds }
+        })
+      },
+      productTypesFilterInput: {
+        where: {
+          ...(isNotEmpty(tags) && {
+            root: { profileTags: { tagId: { _in: tags } } }
+          }),
+          ...(isNotEmpty(productTypeIds) && {
+            productTypeId: { _in: productTypeIds }
+          })
+        }
+      },
+      deployedOnProductsWhere: {
+        ...(isNotEmpty(siteConfig.blockchainIds) && {
+          deployedOnProductId: { _in: siteConfig.blockchainIds }
+        }),
+        _or: [
+          {
+            ...(isNotEmpty(siteConfig.blockchainProductTypeIds) && {
+              productTypeId: {
+                _in: siteConfig.blockchainProductTypeIds
+              }
+            })
+          }
+        ]
+      }
+    },
+    { placeholderData: prevData => prevData }
+  );
 
   /*************************************
    * CHECKBOX GRID FILTERS
@@ -50,23 +91,30 @@ export const useProfileFilters = () => {
       ?.filter(item => item.name?.trim())
       .map(item => ({
         value: item.id,
-        label: item.name,
-        description: item.definition
+        label: `${item.name} (${item.ProductsAggregate?._count})`,
+        description: item.definition,
+        disabled: !Boolean(item.ProductsAggregate?._count)
       })),
     type: 'multiselect',
     initialValue: queryParams.productTypes,
-    onChange: newValue => setQueryParams({ productTypes: newValue })
+    onChange: newValue => {
+      setQueryParams({ productTypes: newValue });
+      setProductTypeIds(newValue);
+    }
   });
 
   const tagsFilter = useFilter<number>({
     options: data?.tags?.map(item => ({
       value: item.id,
-      label: item.name,
+      label: `${item.name} (${item.ProfileTagsAggregate?._count})`,
       description: item.description
     })),
     type: 'multiselect',
     initialValue: queryParams.tags,
-    onChange: newValue => setQueryParams({ tags: newValue })
+    onChange: newValue => {
+      setQueryParams({ tags: newValue });
+      setTags(newValue);
+    }
   });
 
   /*************************************
@@ -266,6 +314,7 @@ export const useProfileFilters = () => {
     onChange: newValue => setQueryParams({ entityCountry: newValue })
   });
 
+  // @ts-ignore
   const toQueryWhereFields: () => SearchProfilesQueryVariables['where'] =
     () => {
       const searchConditions = isNotEmpty(searchFilter?.value)
@@ -326,13 +375,14 @@ export const useProfileFilters = () => {
             _lte: productLaunchDateFilter.value[1]
           }
         })
-      };
+      } satisfies CProductsBoolExp;
 
       const assetConditions = {
         ...(isNotEmpty(assetTypeFilter.value) && {
           assetTypeId: { _in: assetTypeFilter.value }
         }),
         ...(isNotEmpty(assetTickerFilter.value) && {
+          // @ts-ignore
           ticker: { _in: assetTickerFilter.value }
         }),
         ...(isNotEmpty(assetDeployedOnFilter.value) && {
@@ -345,7 +395,7 @@ export const useProfileFilters = () => {
         ...(isNotEmpty(assetStandardFilter.value) && {
           assetStandardId: { _in: assetStandardFilter.value }
         })
-      };
+      } satisfies CAssetsBoolExp;
 
       const entityConditions = {
         ...(isNotEmpty(entityTypeFilter.value) && {
@@ -357,7 +407,7 @@ export const useProfileFilters = () => {
         ...(isNotEmpty(entityCountryFilter.value) && {
           countryId: { _in: entityCountryFilter.value }
         })
-      };
+      } satisfies CEntitiesBoolExp;
 
       return {
         /*************************************
@@ -370,33 +420,35 @@ export const useProfileFilters = () => {
          *************************************/
         ...(Object.keys(profileConditions).length > 0 && profileConditions),
 
-        // /*************************************
-        //  * PRODUCT FILTERS
-        //  *************************************/
-        ...(Object.keys(productConditions).length > 0 && {
-          root: { products: productConditions }
-        }),
+        root: {
+          /*************************************
+           * PRODUCT FILTERS
+           *************************************/
+          ...(Object.keys(productConditions).length > 0 && {
+            products: productConditions
+          }),
 
-        /*************************************
-         * ASSET FILTERS
-         *************************************/
-        ...(Object.keys(assetConditions).length > 0 && {
-          root: { assets: assetConditions }
-        }),
+          /*************************************
+           * ASSET FILTERS
+           *************************************/
+          ...(Object.keys(assetConditions).length > 0 && {
+            assets: assetConditions
+          }),
 
-        // /*************************************
-        //  * ENTITY FILTERS
-        //  *************************************/
-        ...(Object.keys(entityConditions).length > 0 && {
-          root: { entities: entityConditions }
-        }),
+          /*************************************
+           * ENTITY FILTERS
+           *************************************/
+          ...(Object.keys(entityConditions).length > 0 && {
+            entities: entityConditions
+          }),
 
-        /*************************************
-         * TAGS FILTERS
-         *************************************/
-        ...(isNotEmpty(tagsFilter.value) && {
-          root: { profileTags: { tagId: { _in: tagsFilter.value } } }
-        })
+          /*************************************
+           * TAGS FILTERS
+           *************************************/
+          ...(isNotEmpty(tagsFilter.value) && {
+            profileTags: { tagId: { _in: tagsFilter.value } }
+          })
+        }
       };
     };
 

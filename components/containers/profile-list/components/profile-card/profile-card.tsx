@@ -116,6 +116,7 @@ export const ProfileCard = ({ profile }: ProfileCardCardProps) => {
               label="Product types"
               value={profile.root?.products
                 ?.map(product => product.productType?.name)
+                .filter(Boolean)
                 .join(', ')}
               active={filters.productTypesFilter.active}
             />
@@ -130,6 +131,7 @@ export const ProfileCard = ({ profile }: ProfileCardCardProps) => {
               label="Tags"
               value={profile.root?.profileTags
                 ?.map(tag => tag?.tag?.name)
+                .filter(Boolean)
                 .join(', ')}
               active={filters.tagsFilter.active}
             />
