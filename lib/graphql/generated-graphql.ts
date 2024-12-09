@@ -2894,30 +2894,6 @@ export type GetOrderByFieldsQuery = {
         inputFields?: Array<{
           __typename?: '__InputValue';
           name: string;
-          type: {
-            __typename?: '__Type';
-            name?: string | null;
-            kind: __TypeKind;
-            inputFields?: Array<{
-              __typename?: '__InputValue';
-              name: string;
-              type: {
-                __typename?: '__Type';
-                name?: string | null;
-                kind: __TypeKind;
-                ofType?: {
-                  __typename?: '__Type';
-                  name?: string | null;
-                  kind: __TypeKind;
-                } | null;
-              };
-            }> | null;
-            ofType?: {
-              __typename?: '__Type';
-              name?: string | null;
-              kind: __TypeKind;
-            } | null;
-          };
         }> | null;
         ofType?: {
           __typename?: '__Type';
@@ -3415,25 +3391,6 @@ export const GetOrderByFieldsDocument = `
       type {
         inputFields {
           name
-          type {
-            inputFields {
-              name
-              type {
-                name
-                kind
-                ofType {
-                  name
-                  kind
-                }
-              }
-            }
-            name
-            kind
-            ofType {
-              name
-              kind
-            }
-          }
         }
         name
         kind

@@ -28,7 +28,7 @@ export const UrlTypeIconLinks = ({ urls }: UrlTypeIconLinksProps) => {
 
 type URL = {
   url: any;
-  UrlType?: {
+  urlType?: {
     name: any;
   } | null;
 };
@@ -36,18 +36,18 @@ type URL = {
 export const extractUrls = (urls?: URL[] | null): SocialUrlType[] => {
   return (
     urls
-      ?.filter(url => url.UrlType?.name)
+      ?.filter(url => url.urlType?.name)
       .map(url => ({
         url: url.url,
-        type: url.UrlType!.name
+        type: url.urlType!.name
       })) ?? []
   );
 };
 
 type SocialURL = {
   name: any;
-  SocialType?: { name: any } | null;
-  Urls?: { url: any }[] | null;
+  socialType?: { name: any } | null;
+  urls?: { url: any }[] | null;
 };
 
 export const extractSocialUrls = (
@@ -56,9 +56,9 @@ export const extractSocialUrls = (
   return (
     socialUrls?.flatMap(
       item =>
-        item.Urls?.map(urlObj => ({
+        item.urls?.map(urlObj => ({
           url: urlObj.url,
-          type: item.SocialType?.name
+          type: item.socialType?.name
         })) ?? []
     ) ?? []
   );

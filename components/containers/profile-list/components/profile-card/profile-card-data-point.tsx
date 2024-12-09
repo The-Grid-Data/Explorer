@@ -11,7 +11,7 @@ export const ProfileCardDataPoint = ({
   value,
   active
 }: ProfileCardDataPointProps) => (
-  <div className="flex flex-col items-start md:flex-row">
+  <div className="flex flex-col items-baseline md:flex-row">
     <div
       className={cn(
         'text w-full shrink-0 rounded border border-primary bg-primary p-1 px-2 text-xs text-muted md:w-fit',

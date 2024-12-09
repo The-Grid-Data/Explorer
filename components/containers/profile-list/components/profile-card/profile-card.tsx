@@ -113,14 +113,6 @@ export const ProfileCard = ({ profile }: ProfileCardCardProps) => {
                 profile.root?.assets?.map(asset => asset.ticker).join(', ')
               }
             />
-            <ProfileCardFeature
-              label="Product types"
-              value={profile.root?.products
-                ?.map(product => product.productType?.name)
-                .filter(Boolean)
-                .join(', ')}
-              active={filters.productTypesFilter.active}
-            />
           </div>
           <div className="space-y-2">
             <ProfileCardDataPoint label="Tagline" value={profile.tagLine} />
@@ -135,6 +127,14 @@ export const ProfileCard = ({ profile }: ProfileCardCardProps) => {
                 .filter(Boolean)
                 .join(', ')}
               active={filters.tagsFilter.active}
+            />
+            <ProfileCardDataPoint
+              label="Product types"
+              value={profile.root?.products
+                ?.map(product => product.productType?.name)
+                .filter(Boolean)
+                .join(', ')}
+              active={filters.productTypesFilter.active}
             />
           </div>
         </div>
