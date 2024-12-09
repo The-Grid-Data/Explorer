@@ -90,7 +90,7 @@ export const ProfileCard = ({ profile }: ProfileCardCardProps) => {
             <ProfileCardFeature
               label="Profile Status"
               value={profile.profileStatus?.name}
-              active={filters.profileSectorsFilter.active}
+              active={filters.profileStatusesFilter.active}
             />
             <ProfileCardFeature
               label="Profile Founding Date"
@@ -100,11 +100,6 @@ export const ProfileCard = ({ profile }: ProfileCardCardProps) => {
             <ProfileCardFeature
               label="Main Product Type"
               value={profile.mainProduct?.products?.at(0)?.productType?.name}
-            />
-            <ProfileCardFeature
-              label="Status"
-              value={profile.profileStatus?.name}
-              active={filters.profileStatusesFilter.active}
             />
             <ProfileCardFeature
               label="Issued Assets"
