@@ -104,6 +104,7 @@ export const ProfileCard = ({ profile }: ProfileCardCardProps) => {
             <ProfileCardFeature
               label="Status"
               value={profile.profileStatus?.name}
+              active={filters.profileStatusesFilter.active}
             />
             <ProfileCardFeature
               label="Issued Assets"
