@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/button';
 import Image from 'next/image';
 import { siteConfig } from '@/lib/site-config';
 import { ToggleThemeButton } from './toggle-theme-button';
+import { useTheme } from 'next-themes';
 
 const learnMoreButton = (
   <Link
@@ -46,13 +47,19 @@ const cloneRepoButton = (
 );
 
 export const Header = () => {
+  const { theme } = useTheme();
+  console.log(theme);
   return (
     <header className="container flex w-full items-center py-4">
       <div className="w-full items-center justify-start">
         <Link href="/" className="flex items-center">
           <Image
             alt="The grid logo"
-            src={siteConfig.logoSrc}
+            src={
+              theme === 'dark'
+                ? siteConfig.logoSrc.dark
+                : siteConfig.logoSrc.light
+            }
             width={160}
             height={1200}
           />

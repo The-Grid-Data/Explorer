@@ -2793,10 +2793,10 @@ export enum __TypeKind {
 export type GetFiltersOptionsQueryVariables = Exact<{
   supportsProductsWhere?: InputMaybe<CSupportsProductsBoolExp>;
   deployedOnProductsWhere?: InputMaybe<CProductsBoolExp>;
-  productTypesWhere?: InputMaybe<CProductTypesBoolExp>;
   productTypesFilterInput?: InputMaybe<CProductsFilterInput>;
   tagsWhere?: InputMaybe<CTagsBoolExp>;
   tagsFilterInput?: InputMaybe<CProfileTagsFilterInput>;
+  profileSectorsFilterInput?: InputMaybe<CProfileInfosFilterInput>;
 }>;
 
 export type GetFiltersOptionsQuery = {
@@ -2818,6 +2818,10 @@ export type GetFiltersOptionsQuery = {
     name: any;
     id: any;
     definition: any;
+    ProfileInfosAggregate: {
+      __typename?: 'CProfileInfosAggExp';
+      _count: number;
+    };
   }> | null;
   productTypes?: Array<{
     __typename?: 'CProductTypes';
@@ -3242,7 +3246,7 @@ export type SearchProfilesQuery = {
 };
 
 export const GetFiltersOptionsDocument = `
-    query getFiltersOptions($supportsProductsWhere: CSupportsProductsBoolExp = {}, $deployedOnProductsWhere: CProductsBoolExp = {}, $productTypesWhere: CProductTypesBoolExp = {}, $productTypesFilterInput: CProductsFilterInput = {}, $tagsWhere: CTagsBoolExp = {}, $tagsFilterInput: CProfileTagsFilterInput = {}) {
+    query getFiltersOptions($supportsProductsWhere: CSupportsProductsBoolExp = {}, $deployedOnProductsWhere: CProductsBoolExp = {}, $productTypesFilterInput: CProductsFilterInput = {}, $tagsWhere: CTagsBoolExp = {}, $tagsFilterInput: CProfileTagsFilterInput = {}, $profileSectorsFilterInput: CProfileInfosFilterInput = {}) {
   profileTypes {
     name
     id
@@ -3257,8 +3261,11 @@ export const GetFiltersOptionsDocument = `
     name
     id
     definition
+    ProfileInfosAggregate(filter_input: $profileSectorsFilterInput) {
+      _count
+    }
   }
-  productTypes(where: $productTypesWhere) {
+  productTypes {
     name
     id
     definition

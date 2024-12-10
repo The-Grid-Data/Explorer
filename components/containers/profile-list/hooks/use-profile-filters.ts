@@ -13,7 +13,6 @@ import {
 } from 'nuqs';
 import { useFilter } from './use-filter';
 import { isNotEmpty } from '@/lib/utils/is-not-empty';
-import { useState } from 'react';
 import { siteConfig } from '@/lib/site-config';
 
 export type Filters = ReturnType<typeof useProfileFilters>;
@@ -43,11 +42,6 @@ export const useProfileFilters = () => {
     { clearOnDefault: true, throttleMs: 1000 }
   );
 
-  const [tags, setTags] = useState<number[] | null>(queryParams.tags);
-  const [productTypeIds, setProductTypeIds] = useState<number[] | null>(
-    queryParams.productTypes
-  );
-
   const { data, isLoading } = useGetFiltersOptionsQuery(
     {
       supportsProductsWhere: {
@@ -57,23 +51,44 @@ export const useProfileFilters = () => {
       },
       productTypesFilterInput: {
         where: {
-          ...(isNotEmpty(tags) && {
-            root: { profileTags: { tagId: { _in: tags } } }
-          }),
-          ...(isNotEmpty(productTypeIds) && {
-            productTypeId: { _in: productTypeIds }
-          })
+          root: {
+            ...(isNotEmpty(queryParams.tags) && {
+              profileTags: { tagId: { _in: queryParams.tags } }
+            }),
+            ...(isNotEmpty(queryParams.productTypes) && {
+              products: { productTypeId: { _in: queryParams.productTypes } }
+            }),
+            ...(isNotEmpty(queryParams.profileSectors) && {
+              profileInfos: {
+                profileSector: { id: { _in: queryParams.profileSectors } }
+              }
+            })
+          }
+        }
+      },
+      profileSectorsFilterInput: {
+        where: {
+          root: {
+            ...(isNotEmpty(queryParams.tags) && {
+              profileTags: { tagId: { _in: queryParams.tags } }
+            }),
+            ...(isNotEmpty(queryParams.productTypes) && {
+              products: { productTypeId: { _in: queryParams.productTypes } }
+            })
+          }
         }
       },
       tagsFilterInput: {
         where: {
           root: {
-            ...(isNotEmpty(productTypeIds) && {
-              profileInfos: { profileType: { id: { _in: productTypeIds } } }
+            ...(isNotEmpty(queryParams.productTypes) && {
+              products: { productTypeId: { _in: queryParams.productTypes } }
+            }),
+            ...(isNotEmpty(queryParams.profileSectors) && {
+              profileInfos: {
+                profileSector: { id: { _in: queryParams.profileSectors } }
+              }
             })
-            // ...(isNotEmpty(tags) && {
-            //   profileTags: { tagId: { _in: tags } }
-            // })
           }
         }
       },
@@ -101,33 +116,29 @@ export const useProfileFilters = () => {
   const productTypesFilter = useFilter<number>({
     options: data?.productTypes
       ?.filter(item => item.name?.trim())
+      ?.filter(item => Boolean(item.productsAggregate?._count))
       .map(item => ({
         value: item.id,
         label: `${item.name} (${item.productsAggregate?._count})`,
-        description: item.definition,
-        disabled: !Boolean(item.productsAggregate?._count)
+        description: item.definition
       })),
     type: 'multiselect',
     initialValue: queryParams.productTypes,
-    onChange: newValue => {
-      setQueryParams({ productTypes: newValue });
-      setProductTypeIds(newValue);
-    }
+    onChange: newValue => setQueryParams({ productTypes: newValue })
   });
 
   const tagsFilter = useFilter<number>({
-    options: data?.tags?.map(item => ({
-      value: item.id,
-      label: `${item.name} (${item.profileTagsAggregate?._count})`,
-      description: item.description,
-      disabled: !Boolean(item.profileTagsAggregate?._count)
-    })),
+    options: data?.tags
+      ?.filter(item => Boolean(item.profileTagsAggregate?._count))
+      .map(item => ({
+        value: item.id,
+        label: `${item.name} (${item.profileTagsAggregate?._count})`,
+        description: item.description,
+        disabled: !Boolean(item.profileTagsAggregate?._count)
+      })),
     type: 'multiselect',
     initialValue: queryParams.tags,
-    onChange: newValue => {
-      setQueryParams({ tags: newValue });
-      setTags(newValue);
-    }
+    onChange: newValue => setQueryParams({ tags: newValue })
   });
 
   /*************************************
@@ -165,11 +176,14 @@ export const useProfileFilters = () => {
   });
 
   const profileSectorsFilter = useFilter<number>({
-    options: data?.profileSectors?.map(item => ({
-      value: item.id,
-      label: item.name,
-      description: item.definition
-    })),
+    options: data?.profileSectors
+      ?.filter(item => item.name?.trim())
+      ?.filter(item => Boolean(item.ProfileInfosAggregate?._count))
+      .map(item => ({
+        value: item.id,
+        label: `${item.name} (${item.ProfileInfosAggregate?._count})`,
+        description: item.definition
+      })),
     type: 'multiselect',
     initialValue: queryParams.profileSectors,
     onChange: newValue => setQueryParams({ profileSectors: newValue })

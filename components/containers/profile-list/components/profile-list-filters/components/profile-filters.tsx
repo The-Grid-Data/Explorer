@@ -20,15 +20,6 @@ export const ProfileFilters = ({
       />
 
       <ComboBox
-        label="Profile Sector"
-        selected={filters.profileSectorsFilter.value}
-        onChange={options => {
-          filters.profileSectorsFilter.setValue(options);
-        }}
-        options={filters.profileSectorsFilter.options}
-      />
-
-      <ComboBox
         label="Profile Status"
         selected={filters.profileStatusesFilter.value}
         onChange={options => {
