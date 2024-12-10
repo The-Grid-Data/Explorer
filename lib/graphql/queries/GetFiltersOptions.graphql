@@ -4,6 +4,7 @@ query getFiltersOptions(
   $productTypesWhere: CProductTypesBoolExp = {}
   $productTypesFilterInput: CProductsFilterInput = {}
   $tagsWhere: CTagsBoolExp = {}
+  $tagsFilterInput: CProfileTagsFilterInput = {}
 ) {
   ###
   # Profile filters
@@ -30,7 +31,7 @@ query getFiltersOptions(
     name
     id
     definition
-    ProductsAggregate(filter_input: $productTypesFilterInput) {
+    productsAggregate(filter_input: $productTypesFilterInput) {
       _count
     }
   }
@@ -90,7 +91,7 @@ query getFiltersOptions(
     name
     id
     description
-    ProfileTagsAggregate {
+    profileTagsAggregate(filter_input: $tagsFilterInput) {
       _count
     }
   }

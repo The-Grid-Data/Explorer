@@ -65,6 +65,18 @@ export const useProfileFilters = () => {
           })
         }
       },
+      tagsFilterInput: {
+        where: {
+          root: {
+            ...(isNotEmpty(productTypeIds) && {
+              profileInfos: { profileType: { id: { _in: productTypeIds } } }
+            })
+            // ...(isNotEmpty(tags) && {
+            //   profileTags: { tagId: { _in: tags } }
+            // })
+          }
+        }
+      },
       deployedOnProductsWhere: {
         ...(isNotEmpty(siteConfig.blockchainIds) && {
           deployedOnProductId: { _in: siteConfig.blockchainIds }
@@ -91,9 +103,9 @@ export const useProfileFilters = () => {
       ?.filter(item => item.name?.trim())
       .map(item => ({
         value: item.id,
-        label: `${item.name} (${item.ProductsAggregate?._count})`,
+        label: `${item.name} (${item.productsAggregate?._count})`,
         description: item.definition,
-        disabled: !Boolean(item.ProductsAggregate?._count)
+        disabled: !Boolean(item.productsAggregate?._count)
       })),
     type: 'multiselect',
     initialValue: queryParams.productTypes,
@@ -106,8 +118,9 @@ export const useProfileFilters = () => {
   const tagsFilter = useFilter<number>({
     options: data?.tags?.map(item => ({
       value: item.id,
-      label: `${item.name} (${item.ProfileTagsAggregate?._count})`,
-      description: item.description
+      label: `${item.name} (${item.profileTagsAggregate?._count})`,
+      description: item.description,
+      disabled: !Boolean(item.profileTagsAggregate?._count)
     })),
     type: 'multiselect',
     initialValue: queryParams.tags,

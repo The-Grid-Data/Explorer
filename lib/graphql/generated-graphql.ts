@@ -913,15 +913,11 @@ export type CProductDeploymentsOrderBy = {
 
 export type CProductStatuses = {
   __typename?: 'CProductStatuses';
-  ProductsAggregate: CProductsAggExp;
   definition: Scalars['String2']['output'];
   id: Scalars['Int2']['output'];
   name: Scalars['String2']['output'];
   products?: Maybe<Array<CProducts>>;
-};
-
-export type CProductStatusesProductsAggregateArgs = {
-  filter_input?: InputMaybe<CProductsFilterInput>;
+  productsAggregate: CProductsAggExp;
 };
 
 export type CProductStatusesProductsArgs = {
@@ -929,6 +925,10 @@ export type CProductStatusesProductsArgs = {
   offset?: InputMaybe<Scalars['Int']['input']>;
   order_by?: InputMaybe<Array<CProductsOrderBy>>;
   where?: InputMaybe<CProductsBoolExp>;
+};
+
+export type CProductStatusesProductsAggregateArgs = {
+  filter_input?: InputMaybe<CProductsFilterInput>;
 };
 
 export type CProductStatusesAggExp = {
@@ -964,15 +964,11 @@ export type CProductStatusesOrderBy = {
 
 export type CProductTypes = {
   __typename?: 'CProductTypes';
-  ProductsAggregate: CProductsAggExp;
   definition: Scalars['String2']['output'];
   id: Scalars['Int2']['output'];
   name: Scalars['String2']['output'];
   products?: Maybe<Array<CProducts>>;
-};
-
-export type CProductTypesProductsAggregateArgs = {
-  filter_input?: InputMaybe<CProductsFilterInput>;
+  productsAggregate: CProductsAggExp;
 };
 
 export type CProductTypesProductsArgs = {
@@ -980,6 +976,10 @@ export type CProductTypesProductsArgs = {
   offset?: InputMaybe<Scalars['Int']['input']>;
   order_by?: InputMaybe<Array<CProductsOrderBy>>;
   where?: InputMaybe<CProductsBoolExp>;
+};
+
+export type CProductTypesProductsAggregateArgs = {
+  filter_input?: InputMaybe<CProductsFilterInput>;
 };
 
 export type CProductTypesAggExp = {
@@ -1915,17 +1915,13 @@ export type CTagTypesOrderBy = {
 
 export type CTags = {
   __typename?: 'CTags';
-  ProfileTagsAggregate: CProfileTagsAggExp;
   description: Scalars['String2']['output'];
   id: Scalars['Int2']['output'];
   name: Scalars['String2']['output'];
   profileTags?: Maybe<Array<CProfileTags>>;
+  profileTagsAggregate: CProfileTagsAggExp;
   tagType?: Maybe<CTagTypes>;
   tagTypeId: Scalars['Int2']['output'];
-};
-
-export type CTagsProfileTagsAggregateArgs = {
-  filter_input?: InputMaybe<CProfileTagsFilterInput>;
 };
 
 export type CTagsProfileTagsArgs = {
@@ -1933,6 +1929,10 @@ export type CTagsProfileTagsArgs = {
   offset?: InputMaybe<Scalars['Int']['input']>;
   order_by?: InputMaybe<Array<CProfileTagsOrderBy>>;
   where?: InputMaybe<CProfileTagsBoolExp>;
+};
+
+export type CTagsProfileTagsAggregateArgs = {
+  filter_input?: InputMaybe<CProfileTagsFilterInput>;
 };
 
 export type CTagsAggExp = {
@@ -2796,6 +2796,7 @@ export type GetFiltersOptionsQueryVariables = Exact<{
   productTypesWhere?: InputMaybe<CProductTypesBoolExp>;
   productTypesFilterInput?: InputMaybe<CProductsFilterInput>;
   tagsWhere?: InputMaybe<CTagsBoolExp>;
+  tagsFilterInput?: InputMaybe<CProfileTagsFilterInput>;
 }>;
 
 export type GetFiltersOptionsQuery = {
@@ -2823,7 +2824,7 @@ export type GetFiltersOptionsQuery = {
     name: any;
     id: any;
     definition: any;
-    ProductsAggregate: { __typename?: 'CProductsAggExp'; _count: number };
+    productsAggregate: { __typename?: 'CProductsAggExp'; _count: number };
   }> | null;
   productStatuses?: Array<{
     __typename?: 'CProductStatuses';
@@ -2872,7 +2873,7 @@ export type GetFiltersOptionsQuery = {
     name: any;
     id: any;
     description: any;
-    ProfileTagsAggregate: { __typename?: 'CProfileTagsAggExp'; _count: number };
+    profileTagsAggregate: { __typename?: 'CProfileTagsAggExp'; _count: number };
   }> | null;
 };
 
@@ -3241,7 +3242,7 @@ export type SearchProfilesQuery = {
 };
 
 export const GetFiltersOptionsDocument = `
-    query getFiltersOptions($supportsProductsWhere: CSupportsProductsBoolExp = {}, $deployedOnProductsWhere: CProductsBoolExp = {}, $productTypesWhere: CProductTypesBoolExp = {}, $productTypesFilterInput: CProductsFilterInput = {}, $tagsWhere: CTagsBoolExp = {}) {
+    query getFiltersOptions($supportsProductsWhere: CSupportsProductsBoolExp = {}, $deployedOnProductsWhere: CProductsBoolExp = {}, $productTypesWhere: CProductTypesBoolExp = {}, $productTypesFilterInput: CProductsFilterInput = {}, $tagsWhere: CTagsBoolExp = {}, $tagsFilterInput: CProfileTagsFilterInput = {}) {
   profileTypes {
     name
     id
@@ -3261,7 +3262,7 @@ export const GetFiltersOptionsDocument = `
     name
     id
     definition
-    ProductsAggregate(filter_input: $productTypesFilterInput) {
+    productsAggregate(filter_input: $productTypesFilterInput) {
       _count
     }
   }
@@ -3312,7 +3313,7 @@ export const GetFiltersOptionsDocument = `
     name
     id
     description
-    ProfileTagsAggregate {
+    profileTagsAggregate(filter_input: $tagsFilterInput) {
       _count
     }
   }

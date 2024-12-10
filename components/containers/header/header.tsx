@@ -8,6 +8,7 @@ import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
 import { siteConfig } from '@/lib/site-config';
+import { ToggleThemeButton } from './toggle-theme-button';
 
 const learnMoreButton = (
   <Link
@@ -62,6 +63,7 @@ export const Header = () => {
         {learnMoreButton}
         {claimProfileButton}
         {cloneRepoButton}
+        <ToggleThemeButton />
       </div>
       <Sheet>
         <SheetTrigger asChild className="flex w-full items-center justify-end">
