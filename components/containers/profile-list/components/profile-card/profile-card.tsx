@@ -62,8 +62,8 @@ export const ProfileCard = ({ profile }: ProfileCardCardProps) => {
               <div className="w-fit flex-1">
                 <UrlTypeIconLinks
                   urls={[
-                    ...extractUrls(profile.urls),
-                    ...extractSocialUrls(profile.root?.socials)
+                    extractUrls(profile.urls),
+                    extractSocialUrls(profile.root?.socials)
                   ]}
                 />
               </div>

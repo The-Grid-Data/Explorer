@@ -34,7 +34,7 @@ query SearchProfiles(
       id
       definition
     }
-    urls {
+    urls(order_by: { urlTypeId: Asc }) {
       url
       urlType {
         name
@@ -63,7 +63,7 @@ query SearchProfiles(
         socialType {
           name
         }
-        urls {
+        urls(order_by: { urlTypeId: Asc }) {
           url
         }
       }

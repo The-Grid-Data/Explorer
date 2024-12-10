@@ -3499,7 +3499,7 @@ export const GetProfileDocument = `
       id
       definition
     }
-    urls {
+    urls(order_by: {urlTypeId: Asc}) {
       url
       urlType {
         name
@@ -3559,7 +3559,7 @@ export const GetProfileDocument = `
             }
           }
         }
-        urls {
+        urls(order_by: {urlTypeId: Asc}) {
           url
           urlType {
             name
@@ -3573,7 +3573,7 @@ export const GetProfileDocument = `
         socialType {
           name
         }
-        urls {
+        urls(order_by: {urlTypeId: Asc}) {
           url
         }
       }
@@ -3631,7 +3631,7 @@ export const GetProfileDocument = `
             }
           }
         }
-        urls {
+        urls(order_by: {urlTypeId: Asc}) {
           url
           urlType {
             name
@@ -3767,7 +3767,7 @@ export const SearchProfilesDocument = `
       id
       definition
     }
-    urls {
+    urls(order_by: {urlTypeId: Asc}) {
       url
       urlType {
         name
@@ -3796,7 +3796,7 @@ export const SearchProfilesDocument = `
         socialType {
           name
         }
-        urls {
+        urls(order_by: {urlTypeId: Asc}) {
           url
         }
       }

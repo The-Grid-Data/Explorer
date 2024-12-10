@@ -7,6 +7,7 @@ import {
   extractUrls,
   UrlTypeIconLinks
 } from '@/components/containers/url-type-icon/url-type-icon-list';
+import { Separator } from '@/components/ui/separator';
 
 export type Profile = NonNullable<GetProfileQuery['profileInfos']>[number];
 export type Entity = NonNullable<
@@ -23,8 +24,15 @@ export const EntityCard = ({ entity }: EntityCardProps) => {
       title={
         <div className="flex items-center gap-2">
           <CardTitle>{entity.name}</CardTitle>
-
-          <UrlTypeIconLinks urls={extractUrls(entity.urls)} />
+          {entity.urls && (
+            <>
+              <Separator
+                className="mx-2 h-[10px] rounded-lg border-[1px]"
+                orientation="vertical"
+              />
+              <UrlTypeIconLinks urls={[extractUrls(entity.urls)]} />
+            </>
+          )}
         </div>
       }
       dataPoints={[

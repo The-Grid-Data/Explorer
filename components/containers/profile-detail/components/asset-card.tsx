@@ -37,11 +37,15 @@ export const AssetCard = ({ asset }: AssetCardProps) => {
             </AvatarFallback>
           </Avatar>
           <CardTitle>{asset.name}</CardTitle>
-          <Separator
-            className="mx-2 h-[10px] rounded-lg border-[1px]"
-            orientation="vertical"
-          />
-          <UrlTypeIconLinks urls={extractUrls(asset.urls)} />
+          {asset.urls && (
+            <>
+              <Separator
+                className="mx-2 h-[10px] rounded-lg border-[1px]"
+                orientation="vertical"
+              />
+              <UrlTypeIconLinks urls={[extractUrls(asset.urls)]} />
+            </>
+          )}
         </div>
       }
       description={asset.description || 'No description available'}

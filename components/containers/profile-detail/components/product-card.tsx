@@ -30,11 +30,15 @@ export const ProductCard = ({ product }: ProductCardCardProps) => {
       title={
         <div className="flex items-center gap-2">
           <CardTitle>{product.name}</CardTitle>
-          <Separator
-            className="mx-2 h-[10px] rounded-lg border-[1px]"
-            orientation="vertical"
-          />
-          <UrlTypeIconLinks urls={extractUrls(product.urls)} />
+          {product.urls && (
+            <>
+              <Separator
+                className="mx-2 h-[10px] rounded-lg border-[1px]"
+                orientation="vertical"
+              />
+              <UrlTypeIconLinks urls={[extractUrls(product.urls)]} />
+            </>
+          )}
         </div>
       }
       description={product.description || 'No description available'}

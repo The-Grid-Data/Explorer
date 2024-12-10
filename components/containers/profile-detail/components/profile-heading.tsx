@@ -46,8 +46,8 @@ export const ProfileHeading = ({
             <h3 className="text-5xl font-bold">{profile.name}</h3>
             <UrlTypeIconLinks
               urls={[
-                ...extractUrls(profile.urls),
-                ...extractSocialUrls(profile.root?.socials)
+                extractUrls(profile.urls),
+                extractSocialUrls(profile.root?.socials)
               ]}
             />
           </div>
