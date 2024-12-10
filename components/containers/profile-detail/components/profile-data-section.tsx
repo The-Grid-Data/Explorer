@@ -1,7 +1,5 @@
 'use client';
 
-import { Separator } from '@/components/ui/separator';
-
 import { PropsWithChildren, ReactNode } from 'react';
 
 export type ProfileDataSectionProps = PropsWithChildren<{

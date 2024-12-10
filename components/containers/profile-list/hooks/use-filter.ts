@@ -4,6 +4,7 @@ type Options<T> = Array<{
   label: string;
   value: T;
   description?: string | null;
+  disabled?: boolean;
 }>;
 
 // Define the types for search and select filter props

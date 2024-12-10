@@ -7,7 +7,8 @@ import {
 } from '@/components/ui/select';
 import {
   __TypeKind,
-  Mysql8_Order_By,
+  GetOrderByFieldsQuery,
+  OrderBy,
   useGetOrderByFieldsQuery
 } from '@/lib/graphql/generated-graphql';
 import { Sorting } from '../../hooks/use-profile-sorting';
@@ -17,7 +18,7 @@ import { useProfileSortingContext } from '@/providers/sorting-provider';
 
 const ProfileListSortingComponent = () => {
   const { data } = useGetOrderByFieldsQuery({
-    name: 'profiles_order_by'
+    name: 'CProfileInfosOrderBy'
   });
 
   const { sorting } = useProfileSortingContext();
@@ -51,15 +52,15 @@ const ProfileListSortingComponent = () => {
         <Select
           value={sorting.sortOrder}
           onValueChange={value => {
-            sorting.setSortOrder(value as Mysql8_Order_By);
+            sorting.setSortOrder(value as OrderBy);
           }}
         >
           <SelectTrigger className="w-full md:w-[130px]">
             <SelectValue placeholder="Sort order" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value={Mysql8_Order_By.Asc}>Ascending</SelectItem>
-            <SelectItem value={Mysql8_Order_By.Desc}>Descending</SelectItem>
+            <SelectItem value={OrderBy.Asc}>Ascending</SelectItem>
+            <SelectItem value={OrderBy.Desc}>Descending</SelectItem>
           </SelectContent>
         </Select>
       </div>
@@ -98,55 +99,6 @@ const extractOrderByOptions = (data?: GetOrderByFieldsQuery): string[] => {
 
     return 0;
   });
-};
-
-export type GetOrderByFieldsQuery = {
-  __typename?: 'query_root';
-  __type?: {
-    __typename?: '__Type';
-    inputFields?: Array<{
-      __typename?: '__InputValue';
-      name: string;
-      type: {
-        __typename?: '__Type';
-        name?: string | null;
-        kind: __TypeKind;
-        inputFields?: Array<{
-          __typename?: '__InputValue';
-          name: string;
-          type: {
-            __typename?: '__Type';
-            name?: string | null;
-            kind: __TypeKind;
-            inputFields?: Array<{
-              __typename?: '__InputValue';
-              name: string;
-              type: {
-                __typename?: '__Type';
-                name?: string | null;
-                kind: __TypeKind;
-                ofType?: {
-                  __typename?: '__Type';
-                  name?: string | null;
-                  kind: __TypeKind;
-                } | null;
-              };
-            }> | null;
-            ofType?: {
-              __typename?: '__Type';
-              name?: string | null;
-              kind: __TypeKind;
-            } | null;
-          };
-        }> | null;
-        ofType?: {
-          __typename?: '__Type';
-          name?: string | null;
-          kind: __TypeKind;
-        } | null;
-      };
-    }> | null;
-  } | null;
 };
 
 export const ProfileListSorting = memo(ProfileListSortingComponent);

@@ -8,7 +8,7 @@ import { paths } from '@/lib/routes/paths';
 import { GetProfileQuery } from '@/lib/graphql/generated-graphql';
 import { TagIcon } from 'lucide-react';
 
-export type Profile = GetProfileQuery['profiles'][0];
+export type Profile = NonNullable<GetProfileQuery['profileInfos']>[number];
 
 export type OverviewSectionProps = {
   profile: Profile;
@@ -22,7 +22,7 @@ export const OverviewSection = ({ profile }: OverviewSectionProps) => {
   }[] = [
     {
       label: 'Sector',
-      value: profile.profileSector?.name
+      value: profile?.profileSector?.name
     },
     {
       label: 'Profile type',
@@ -30,7 +30,7 @@ export const OverviewSection = ({ profile }: OverviewSectionProps) => {
     },
     {
       label: 'Main Product Type',
-      value: profile.mainProduct.at(0)?.productType?.name
+      value: profile.mainProduct?.products?.at(0)?.productType?.name
     },
     {
       label: 'Status',
@@ -39,24 +39,24 @@ export const OverviewSection = ({ profile }: OverviewSectionProps) => {
     {
       label: 'Issued Assets',
       value:
-        Boolean(profile.assets.length) &&
-        profile.assets.map(asset => asset.ticker).join(', ')
+        Boolean(profile.root?.assets?.length) &&
+        profile.root?.assets?.map(asset => asset.ticker).join(', ')
     },
     {
       label: 'Tags',
-      value: Boolean(profile.profileTags.length) ? (
+      value: Boolean(profile.root?.profileTags?.length) ? (
         <div className="flex flex-wrap gap-1">
-          {profile.profileTags.map(tag => (
+          {profile.root?.profileTags?.map(tag => (
             <Link
-              key={tag.tag.id}
-              href={`${paths.base}?tags=${tag.tag.id}`}
+              key={tag.tag?.id}
+              href={`${paths.base}?tags=${tag.tag?.id}`}
               className="text-sm font-semibold text-primary hover:text-primary/60"
             >
               <Badge
                 variant="secondary"
                 className="flex w-fit items-center gap-2"
               >
-                <TagIcon size={16} /> {tag.tag.name}
+                <TagIcon size={16} /> {tag.tag?.name}
               </Badge>
             </Link>
           ))}

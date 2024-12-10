@@ -1,6 +1,6 @@
 export const siteConfig = {
   pageTitle: 'The Grid | Data Explorer',
-  verifiedTagId: null,
+  verifiedTagId: 7,
   logoSrc: '/thegrid-logo.svg',
   pageDescription:
     'Powering Discoverability of Assets, Products, and Services in Web3.',

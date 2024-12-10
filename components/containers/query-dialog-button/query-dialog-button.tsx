@@ -84,7 +84,7 @@ export const CodeSection = ({
     <div className="flex w-full flex-1 flex-col gap-2">
       <h3 className="flex-1 text-sm font-semibold">{title}</h3>
       <Separator />
-      <ScrollArea className="h-fit max-h-[200px] min-w-[100%] overflow-auto bg-slate-100">
+      <ScrollArea className="h-fit max-h-[200px] min-w-[100%] overflow-auto bg-primary/5">
         <pre className="text whitespace-wrap w-full text-wrap p-4 text-xs">
           {content}
         </pre>
