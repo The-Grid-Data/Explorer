@@ -2,7 +2,7 @@
 
 import { GetProfileQuery } from '@/lib/graphql/generated-graphql';
 import { paths } from '@/lib/routes/paths';
-import { ProfileDataCard } from './profile-data-card';
+import { ProfileDataCard, ProfileDataCardProps } from './profile-data-card';
 import { Package, Link2 } from 'lucide-react';
 import { DeepLinkBadge } from '@/components/ui/deep-link-badge';
 import { InlineDataPoint } from './inline-data-point';
@@ -22,11 +22,13 @@ export type Product = NonNullable<
 >[number];
 export type ProductCardCardProps = {
   product: Product;
+  variant?: ProfileDataCardProps['variant'];
 };
 
-export const ProductCard = ({ product }: ProductCardCardProps) => {
+export const ProductCard = ({ product, variant }: ProductCardCardProps) => {
   return (
     <ProfileDataCard
+      variant={variant}
       title={
         <div className="flex items-center gap-2">
           <CardTitle>{product.name}</CardTitle>

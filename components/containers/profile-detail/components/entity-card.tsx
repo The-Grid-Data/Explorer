@@ -1,7 +1,7 @@
 'use client';
 
 import { GetProfileQuery } from '@/lib/graphql/generated-graphql';
-import { ProfileDataCard } from './profile-data-card';
+import { ProfileDataCard, ProfileDataCardProps } from './profile-data-card';
 import { CardTitle } from '@/components/ui/card';
 import {
   extractUrls,
@@ -16,11 +16,13 @@ export type Entity = NonNullable<
 
 export type EntityCardProps = {
   entity: Entity;
+  variant?: ProfileDataCardProps['variant'];
 };
 
-export const EntityCard = ({ entity }: EntityCardProps) => {
+export const EntityCard = ({ entity, variant }: EntityCardProps) => {
   return (
     <ProfileDataCard
+      variant={variant}
       title={
         <div className="flex items-center gap-2">
           <CardTitle>{entity.name}</CardTitle>

@@ -1,3 +1,7 @@
+#import "./AssetFields.fragment.graphql"
+#import "./ProductsFields.fragment.graphql"
+#import "./EntitiesFields.fragment.graphql"
+
 query SearchProfiles(
   $order_by: [CProfileInfosOrderBy!]
   $where: CProfileInfosBoolExp
@@ -73,19 +77,9 @@ query SearchProfiles(
           id
         }
       }
-      products {
-        name
-        productStatus {
-          name
-          id
-          definition
-        }
-        productType {
-          name
-          id
-          definition
-        }
-      }
+      ...AssetFields
+      ...ProductFields
+      ...EntityFields
     }
   }
 }

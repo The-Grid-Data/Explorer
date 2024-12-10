@@ -1,0 +1,65 @@
+fragment ProductFields on CRoots {
+  products {
+    rootId
+    productTypeId
+    productStatusId
+    name
+    launchDate
+    isMainProduct
+    id
+    description
+    productType {
+      name
+      id
+      definition
+    }
+    productStatus {
+      name
+      id
+      definition
+    }
+    productDeployments {
+      smartContractDeployment {
+        deployedOnProduct {
+          id
+          name
+          root {
+            slug
+          }
+        }
+        assetStandard {
+          id
+        }
+        deploymentType {
+          name
+        }
+        smartContracts {
+          name
+          id
+          deploymentDate
+          address
+          deploymentId
+        }
+        isOfStandardId
+        id
+      }
+    }
+    supportsProducts {
+      supportsProduct {
+        name
+        id
+        root {
+          slug
+        }
+      }
+    }
+    urls(order_by: { urlTypeId: Asc }) {
+      url
+      urlType {
+        name
+        id
+        definition
+      }
+    }
+  }
+}

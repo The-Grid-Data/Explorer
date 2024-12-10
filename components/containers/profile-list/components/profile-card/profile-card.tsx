@@ -15,6 +15,11 @@ import {
   UrlTypeIconLinks
 } from '@/components/containers/url-type-icon/url-type-icon-list';
 import { useProfileFiltersContext } from '@/providers/filters-provider';
+import { Banknote, Building2, Package } from 'lucide-react';
+import { ItemWithSheet } from '@/components/containers/profile-detail/components/Item-with-sheet';
+import { ProductCard } from '@/components/containers/profile-detail/components/product-card';
+import { AssetCard } from '@/components/containers/profile-detail/components/asset-card';
+import { EntityCard } from '@/components/containers/profile-detail/components/entity-card';
 
 export type Profile = NonNullable<SearchProfilesQuery['profileInfos']>[number];
 
@@ -123,14 +128,109 @@ export const ProfileCard = ({ profile }: ProfileCardCardProps) => {
                 .join(', ')}
               active={filters.tagsFilter.active}
             />
-            <ProfileCardDataPoint
+            {/* <ProfileCardDataPoint
               label="Product types"
               value={profile.root?.products
                 ?.map(product => product.productType?.name)
                 .filter(Boolean)
                 .join(', ')}
               active={filters.productTypesFilter.active}
-            />
+            /> */}
+            <ProfileCardDataPoint
+              label="Products"
+              active={[
+                filters.productTypesFilter.active,
+                filters.productDeployedOnFilter.active,
+                filters.productLaunchDateFilter.active,
+                filters.productStatusFilter.active,
+                filters.productSupportsFilter.active
+              ].some(value => value)}
+              className="items-start"
+            >
+              <div className="flex h-full flex-wrap gap-2">
+                {profile.root?.products?.length ? (
+                  profile.root.products.map(product => (
+                    <ItemWithSheet
+                      key={product.id}
+                      trigger={
+                        <Badge
+                          variant="secondary"
+                          className="flex w-fit items-center gap-2 hover:cursor-pointer"
+                        >
+                          <Package size={16} /> {product.name}
+                        </Badge>
+                      }
+                      content={
+                        <ProductCard variant="fluid" product={product} />
+                      }
+                    />
+                  ))
+                ) : (
+                  <span className="mt-1 text-sm">-</span>
+                )}
+              </div>
+            </ProfileCardDataPoint>
+            <ProfileCardDataPoint
+              label="Assets"
+              active={[
+                filters.assetDeployedOnFilter.active,
+                filters.assetStandardFilter.active,
+                filters.assetTickerFilter.active,
+                filters.assetTypeFilter.active
+              ].some(value => value)}
+              className="items-start"
+            >
+              <div className="flex h-full flex-wrap gap-2">
+                {profile.root?.assets?.length ? (
+                  profile.root.assets.map(asset => (
+                    <ItemWithSheet
+                      key={asset.id}
+                      trigger={
+                        <Badge
+                          variant="secondary"
+                          className="flex w-fit items-center gap-2 hover:cursor-pointer"
+                        >
+                          <Banknote size={16} /> {asset.name}
+                        </Badge>
+                      }
+                      content={<AssetCard variant="fluid" asset={asset} />}
+                    />
+                  ))
+                ) : (
+                  <span className="mt-1 text-sm">-</span>
+                )}
+              </div>
+            </ProfileCardDataPoint>
+            <ProfileCardDataPoint
+              label="Entities"
+              active={[
+                filters.entityCountryFilter.active,
+                filters.entityNameFilter.active,
+                filters.entityTypeFilter.active
+              ].some(value => value)}
+              className="items-start"
+            >
+              <div className="flex h-full flex-wrap gap-2">
+                {profile.root?.entities?.length ? (
+                  profile.root.entities.map(entity => (
+                    <ItemWithSheet
+                      key={entity.id}
+                      trigger={
+                        <Badge
+                          variant="secondary"
+                          className="flex w-fit items-center gap-2 hover:cursor-pointer"
+                        >
+                          <Building2 size={16} /> {entity.name}
+                        </Badge>
+                      }
+                      content={<EntityCard variant="fluid" entity={entity} />}
+                    />
+                  ))
+                ) : (
+                  <span className="mt-1 text-sm">-</span>
+                )}
+              </div>
+            </ProfileCardDataPoint>
           </div>
         </div>
       </div>

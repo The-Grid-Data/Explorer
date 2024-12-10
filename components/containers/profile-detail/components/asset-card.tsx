@@ -2,7 +2,7 @@
 
 import { GetProfileQuery } from '@/lib/graphql/generated-graphql';
 import { paths } from '@/lib/routes/paths';
-import { ProfileDataCard } from './profile-data-card';
+import { ProfileDataCard, ProfileDataCardProps } from './profile-data-card';
 import { Package } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Separator } from '@radix-ui/react-separator';
@@ -19,11 +19,13 @@ export type Profile = NonNullable<GetProfileQuery['profileInfos']>[number];
 export type Asset = NonNullable<NonNullable<Profile['root']>['assets']>[number];
 export type AssetCardProps = {
   asset: Asset;
+  variant?: ProfileDataCardProps['variant'];
 };
 
-export const AssetCard = ({ asset }: AssetCardProps) => {
+export const AssetCard = ({ asset, variant }: AssetCardProps) => {
   return (
     <ProfileDataCard
+      variant={variant}
       title={
         <div className="flex items-center gap-2">
           <Avatar className="h-[20px] w-[20px] rounded-xl">

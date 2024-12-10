@@ -9,6 +9,7 @@ import {
 } from '@/components/ui/card';
 import { ReactNode } from 'react';
 import { InlineDataPoint } from './inline-data-point';
+import { cn } from '@/lib/utils';
 
 export type DataPoint = {
   label: string;
@@ -22,15 +23,22 @@ export type ProfileDataCardProps = {
   title: string | ReactNode;
   description?: string;
   dataPoints: DataPoint[];
+  variant?: 'default' | 'fluid';
 };
 
 export const ProfileDataCard = ({
   title,
   description,
-  dataPoints
+  dataPoints,
+  variant = 'default'
 }: ProfileDataCardProps) => {
   return (
-    <Card>
+    <div
+      className={cn(
+        variant === 'default' &&
+          'rounded-xl border bg-card text-card-foreground shadow'
+      )}
+    >
       <CardHeader>
         {typeof title === 'string' ? <CardTitle>{title}</CardTitle> : title}
         <CardDescription>{description}</CardDescription>
@@ -42,6 +50,6 @@ export const ProfileDataCard = ({
           ))}
         </div>
       </CardContent>
-    </Card>
+    </div>
   );
 };

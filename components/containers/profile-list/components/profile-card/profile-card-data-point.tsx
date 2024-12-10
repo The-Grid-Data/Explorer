@@ -1,17 +1,22 @@
 import { cn } from '@/lib/utils';
+import { ReactNode } from 'react';
 
 export type ProfileCardDataPointProps = {
   label: string;
   value?: string | false;
   active?: boolean;
+  children?: ReactNode;
+  className?: string;
 };
 
 export const ProfileCardDataPoint = ({
   label,
   value,
-  active
+  active,
+  children,
+  className
 }: ProfileCardDataPointProps) => (
-  <div className="flex flex-col items-baseline md:flex-row">
+  <div className={cn('flex flex-col items-baseline md:flex-row', className)}>
     <div
       className={cn(
         'text w-full shrink-0 rounded border border-primary bg-primary p-1 px-2 text-xs text-muted dark:border-secondary dark:bg-secondary dark:bg-secondary dark:text-primary md:w-fit',
@@ -20,6 +25,8 @@ export const ProfileCardDataPoint = ({
     >
       {label}:
     </div>
-    <span className="text ml-1 w-full text-sm">{value || '-'}</span>
+    <div className="ml-1 flex flex-col items-start">
+      {children || <span className="text w-full text-sm">{value || '-'}</span>}
+    </div>
   </div>
 );

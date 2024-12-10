@@ -6,6 +6,7 @@ import {
 } from '@/components/ui/tooltip';
 import { Badge } from '@/components/ui/badge';
 import { Link2 } from 'lucide-react';
+import { CopyButton } from '@/components/ui/copy-button';
 
 type ContractAddressBadgeProps = {
   smartContracts:
@@ -27,17 +28,27 @@ export const ContractAddressesBadge = ({
     return '-';
   }
 
+  const formatAddress = (address: string, length: number = 5) => {
+    if (!address) return '-';
+    return `${address.slice(0, length)}...${address.slice(-length)}`;
+  };
+
   return contracts.map(contract => (
     <div key={contract.address} className="flex w-full gap-2">
       <TooltipProvider>
         <Tooltip>
-          <TooltipTrigger className="w-full hover:cursor-text">
+          <TooltipTrigger className="hover:cursor-text">
             <Badge
               variant="secondary"
-              className="flex w-full max-w-full gap-2 font-mono text-xs hover:cursor-text"
+              className="flex gap-2 font-mono text-xs hover:cursor-text"
             >
               <Link2 size={16} className="flex-shrink-0" />
-              <span className="truncate">{contract.address || '-'}</span>
+              <CopyButton value={contract.address}>
+                <span className="truncate">
+                  {formatAddress(contract.address, 6)}
+                </span>
+                <CopyButton className="ml-2" value={contract.address} />
+              </CopyButton>
             </Badge>
           </TooltipTrigger>
           <TooltipContent>

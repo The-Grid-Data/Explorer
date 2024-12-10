@@ -2790,6 +2790,111 @@ export enum __TypeKind {
   NonNull = 'NON_NULL'
 }
 
+export type AssetFieldsFragment = {
+  __typename?: 'CRoots';
+  assets?: Array<{
+    __typename?: 'CAssets';
+    ticker: any;
+    rootId: any;
+    name: any;
+    id: any;
+    icon: any;
+    description: any;
+    assetTypeId: any;
+    assetStatusId: any;
+    assetType?: {
+      __typename?: 'CAssetTypes';
+      definition: any;
+      id: any;
+      name: any;
+    } | null;
+    assetStatus?: {
+      __typename?: 'CAssetStatuses';
+      name: any;
+      id: any;
+      definition: any;
+    } | null;
+    assetDeployments?: Array<{
+      __typename?: 'CAssetDeployments';
+      id: any;
+      deploymentId: any;
+      assetId: any;
+      smartContractDeployment?: {
+        __typename?: 'CSmartContractDeployments';
+        id: any;
+        deployedOnProduct?: {
+          __typename?: 'CProducts';
+          id: any;
+          name: any;
+          root?: { __typename?: 'CRoots'; slug: any } | null;
+        } | null;
+        assetStandard?: { __typename?: 'CAssetStandards'; id: any } | null;
+        smartContracts?: Array<{
+          __typename?: 'CSmartContracts';
+          name: any;
+          id: any;
+          deploymentId?: any | null;
+          deploymentDate?: any | null;
+          address: any;
+        }> | null;
+        deploymentType?: {
+          __typename?: 'CDeploymentTypes';
+          name: any;
+          id: any;
+          definition: any;
+        } | null;
+      } | null;
+    }> | null;
+    urls?: Array<{
+      __typename?: 'AssetUrls';
+      url: any;
+      urlType?: {
+        __typename?: 'CUrlTypes';
+        name: any;
+        id: any;
+        definition: any;
+      } | null;
+    }> | null;
+  }> | null;
+};
+
+export type EntityFieldsFragment = {
+  __typename?: 'CRoots';
+  entities?: Array<{
+    __typename?: 'CEntities';
+    name: any;
+    tradeName: any;
+    taxIdentificationNumber: any;
+    localRegistrationNumber: any;
+    leiNumber: any;
+    id: any;
+    dateOfIncorporation?: any | null;
+    address: any;
+    entityType?: {
+      __typename?: 'CEntityTypes';
+      name: any;
+      id: any;
+      definition: any;
+    } | null;
+    country?: {
+      __typename?: 'CCountries';
+      name: any;
+      id: any;
+      code: any;
+    } | null;
+    urls?: Array<{
+      __typename?: 'EntityUrls';
+      url: any;
+      urlType?: {
+        __typename?: 'CUrlTypes';
+        name: any;
+        id: any;
+        definition: any;
+      } | null;
+    }> | null;
+  }> | null;
+};
+
 export type GetFiltersOptionsQueryVariables = Exact<{
   supportsProductsWhere?: InputMaybe<CSupportsProductsBoolExp>;
   deployedOnProductsWhere?: InputMaybe<CProductsBoolExp>;
@@ -2961,6 +3066,16 @@ export type GetProfileQuery = {
       __typename?: 'CRoots';
       urlMain: any;
       slug: any;
+      socials?: Array<{
+        __typename?: 'CSocials';
+        name: any;
+        socialType?: { __typename?: 'CSocialTypes'; name: any } | null;
+        urls?: Array<{ __typename?: 'SocialUrls'; url: any }> | null;
+      }> | null;
+      profileTags?: Array<{
+        __typename?: 'CProfileTags';
+        tag?: { __typename?: 'CTags'; name: any; id: any } | null;
+      }> | null;
       assets?: Array<{
         __typename?: 'CAssets';
         ticker: any;
@@ -3024,12 +3139,6 @@ export type GetProfileQuery = {
             definition: any;
           } | null;
         }> | null;
-      }> | null;
-      socials?: Array<{
-        __typename?: 'CSocials';
-        name: any;
-        socialType?: { __typename?: 'CSocialTypes'; name: any } | null;
-        urls?: Array<{ __typename?: 'SocialUrls'; url: any }> | null;
       }> | null;
       products?: Array<{
         __typename?: 'CProducts';
@@ -3133,10 +3242,6 @@ export type GetProfileQuery = {
           } | null;
         }> | null;
       }> | null;
-      profileTags?: Array<{
-        __typename?: 'CProfileTags';
-        tag?: { __typename?: 'CTags'; name: any; id: any } | null;
-      }> | null;
     } | null;
     mainProduct?: {
       __typename?: 'CRoots';
@@ -3146,6 +3251,76 @@ export type GetProfileQuery = {
         productType?: { __typename?: 'CProductTypes'; name: any } | null;
       }> | null;
     } | null;
+  }> | null;
+};
+
+export type ProductFieldsFragment = {
+  __typename?: 'CRoots';
+  products?: Array<{
+    __typename?: 'CProducts';
+    rootId: any;
+    productTypeId: any;
+    productStatusId: any;
+    name: any;
+    launchDate?: any | null;
+    isMainProduct?: any | null;
+    id: any;
+    description: any;
+    productType?: {
+      __typename?: 'CProductTypes';
+      name: any;
+      id: any;
+      definition: any;
+    } | null;
+    productStatus?: {
+      __typename?: 'CProductStatuses';
+      name: any;
+      id: any;
+      definition: any;
+    } | null;
+    productDeployments?: Array<{
+      __typename?: 'CProductDeployments';
+      smartContractDeployment?: {
+        __typename?: 'CSmartContractDeployments';
+        isOfStandardId?: any | null;
+        id: any;
+        deployedOnProduct?: {
+          __typename?: 'CProducts';
+          id: any;
+          name: any;
+          root?: { __typename?: 'CRoots'; slug: any } | null;
+        } | null;
+        assetStandard?: { __typename?: 'CAssetStandards'; id: any } | null;
+        deploymentType?: { __typename?: 'CDeploymentTypes'; name: any } | null;
+        smartContracts?: Array<{
+          __typename?: 'CSmartContracts';
+          name: any;
+          id: any;
+          deploymentDate?: any | null;
+          address: any;
+          deploymentId?: any | null;
+        }> | null;
+      } | null;
+    }> | null;
+    supportsProducts?: Array<{
+      __typename?: 'CSupportsProducts';
+      supportsProduct?: {
+        __typename?: 'CProducts';
+        name: any;
+        id: any;
+        root?: { __typename?: 'CRoots'; slug: any } | null;
+      } | null;
+    }> | null;
+    urls?: Array<{
+      __typename?: 'ProductUrls';
+      url: any;
+      urlType?: {
+        __typename?: 'CUrlTypes';
+        name: any;
+        id: any;
+        definition: any;
+      } | null;
+    }> | null;
   }> | null;
 };
 
@@ -3214,6 +3389,64 @@ export type SearchProfilesQuery = {
         ticker: any;
         name: any;
         id: any;
+        rootId: any;
+        icon: any;
+        description: any;
+        assetTypeId: any;
+        assetStatusId: any;
+        assetType?: {
+          __typename?: 'CAssetTypes';
+          definition: any;
+          id: any;
+          name: any;
+        } | null;
+        assetStatus?: {
+          __typename?: 'CAssetStatuses';
+          name: any;
+          id: any;
+          definition: any;
+        } | null;
+        assetDeployments?: Array<{
+          __typename?: 'CAssetDeployments';
+          id: any;
+          deploymentId: any;
+          assetId: any;
+          smartContractDeployment?: {
+            __typename?: 'CSmartContractDeployments';
+            id: any;
+            deployedOnProduct?: {
+              __typename?: 'CProducts';
+              id: any;
+              name: any;
+              root?: { __typename?: 'CRoots'; slug: any } | null;
+            } | null;
+            assetStandard?: { __typename?: 'CAssetStandards'; id: any } | null;
+            smartContracts?: Array<{
+              __typename?: 'CSmartContracts';
+              name: any;
+              id: any;
+              deploymentId?: any | null;
+              deploymentDate?: any | null;
+              address: any;
+            }> | null;
+            deploymentType?: {
+              __typename?: 'CDeploymentTypes';
+              name: any;
+              id: any;
+              definition: any;
+            } | null;
+          } | null;
+        }> | null;
+        urls?: Array<{
+          __typename?: 'AssetUrls';
+          url: any;
+          urlType?: {
+            __typename?: 'CUrlTypes';
+            name: any;
+            id: any;
+            definition: any;
+          } | null;
+        }> | null;
       }> | null;
       socials?: Array<{
         __typename?: 'CSocials';
@@ -3227,24 +3460,271 @@ export type SearchProfilesQuery = {
       }> | null;
       products?: Array<{
         __typename?: 'CProducts';
+        rootId: any;
+        productTypeId: any;
+        productStatusId: any;
         name: any;
-        productStatus?: {
-          __typename?: 'CProductStatuses';
-          name: any;
-          id: any;
-          definition: any;
-        } | null;
+        launchDate?: any | null;
+        isMainProduct?: any | null;
+        id: any;
+        description: any;
         productType?: {
           __typename?: 'CProductTypes';
           name: any;
           id: any;
           definition: any;
         } | null;
+        productStatus?: {
+          __typename?: 'CProductStatuses';
+          name: any;
+          id: any;
+          definition: any;
+        } | null;
+        productDeployments?: Array<{
+          __typename?: 'CProductDeployments';
+          smartContractDeployment?: {
+            __typename?: 'CSmartContractDeployments';
+            isOfStandardId?: any | null;
+            id: any;
+            deployedOnProduct?: {
+              __typename?: 'CProducts';
+              id: any;
+              name: any;
+              root?: { __typename?: 'CRoots'; slug: any } | null;
+            } | null;
+            assetStandard?: { __typename?: 'CAssetStandards'; id: any } | null;
+            deploymentType?: {
+              __typename?: 'CDeploymentTypes';
+              name: any;
+            } | null;
+            smartContracts?: Array<{
+              __typename?: 'CSmartContracts';
+              name: any;
+              id: any;
+              deploymentDate?: any | null;
+              address: any;
+              deploymentId?: any | null;
+            }> | null;
+          } | null;
+        }> | null;
+        supportsProducts?: Array<{
+          __typename?: 'CSupportsProducts';
+          supportsProduct?: {
+            __typename?: 'CProducts';
+            name: any;
+            id: any;
+            root?: { __typename?: 'CRoots'; slug: any } | null;
+          } | null;
+        }> | null;
+        urls?: Array<{
+          __typename?: 'ProductUrls';
+          url: any;
+          urlType?: {
+            __typename?: 'CUrlTypes';
+            name: any;
+            id: any;
+            definition: any;
+          } | null;
+        }> | null;
+      }> | null;
+      entities?: Array<{
+        __typename?: 'CEntities';
+        name: any;
+        tradeName: any;
+        taxIdentificationNumber: any;
+        localRegistrationNumber: any;
+        leiNumber: any;
+        id: any;
+        dateOfIncorporation?: any | null;
+        address: any;
+        entityType?: {
+          __typename?: 'CEntityTypes';
+          name: any;
+          id: any;
+          definition: any;
+        } | null;
+        country?: {
+          __typename?: 'CCountries';
+          name: any;
+          id: any;
+          code: any;
+        } | null;
+        urls?: Array<{
+          __typename?: 'EntityUrls';
+          url: any;
+          urlType?: {
+            __typename?: 'CUrlTypes';
+            name: any;
+            id: any;
+            definition: any;
+          } | null;
+        }> | null;
       }> | null;
     } | null;
   }> | null;
 };
 
+export const AssetFieldsFragmentDoc = `
+    fragment AssetFields on CRoots {
+  assets {
+    ticker
+    rootId
+    name
+    id
+    icon
+    description
+    assetTypeId
+    assetStatusId
+    assetType {
+      definition
+      id
+      name
+    }
+    assetStatus {
+      name
+      id
+      definition
+    }
+    assetDeployments {
+      id
+      deploymentId
+      assetId
+      smartContractDeployment {
+        id
+        deployedOnProduct {
+          id
+          name
+          root {
+            slug
+          }
+        }
+        assetStandard {
+          id
+        }
+        smartContracts {
+          name
+          id
+          deploymentId
+          deploymentDate
+          address
+        }
+        deploymentType {
+          name
+          id
+          definition
+        }
+      }
+    }
+    urls(order_by: {urlTypeId: Asc}) {
+      url
+      urlType {
+        name
+        id
+        definition
+      }
+    }
+  }
+}
+    `;
+export const EntityFieldsFragmentDoc = `
+    fragment EntityFields on CRoots {
+  entities {
+    name
+    tradeName
+    taxIdentificationNumber
+    localRegistrationNumber
+    leiNumber
+    id
+    dateOfIncorporation
+    address
+    entityType {
+      name
+      id
+      definition
+    }
+    country {
+      name
+      id
+      code
+    }
+    urls {
+      url
+      urlType {
+        name
+        id
+        definition
+      }
+    }
+  }
+}
+    `;
+export const ProductFieldsFragmentDoc = `
+    fragment ProductFields on CRoots {
+  products {
+    rootId
+    productTypeId
+    productStatusId
+    name
+    launchDate
+    isMainProduct
+    id
+    description
+    productType {
+      name
+      id
+      definition
+    }
+    productStatus {
+      name
+      id
+      definition
+    }
+    productDeployments {
+      smartContractDeployment {
+        deployedOnProduct {
+          id
+          name
+          root {
+            slug
+          }
+        }
+        assetStandard {
+          id
+        }
+        deploymentType {
+          name
+        }
+        smartContracts {
+          name
+          id
+          deploymentDate
+          address
+          deploymentId
+        }
+        isOfStandardId
+        id
+      }
+    }
+    supportsProducts {
+      supportsProduct {
+        name
+        id
+        root {
+          slug
+        }
+      }
+    }
+    urls(order_by: {urlTypeId: Asc}) {
+      url
+      urlType {
+        name
+        id
+        definition
+      }
+    }
+  }
+}
+    `;
 export const GetFiltersOptionsDocument = `
     query getFiltersOptions($supportsProductsWhere: CSupportsProductsBoolExp = {}, $deployedOnProductsWhere: CProductsBoolExp = {}, $productTypesFilterInput: CProductsFilterInput = {}, $tagsWhere: CTagsBoolExp = {}, $tagsFilterInput: CProfileTagsFilterInput = {}, $profileSectorsFilterInput: CProfileInfosFilterInput = {}) {
   profileTypes {
@@ -3510,64 +3990,6 @@ export const GetProfileDocument = `
     root {
       urlMain
       slug
-      assets {
-        ticker
-        rootId
-        name
-        id
-        icon
-        description
-        assetTypeId
-        assetStatusId
-        assetType {
-          definition
-          id
-          name
-        }
-        assetStatus {
-          name
-          id
-          definition
-        }
-        assetDeployments {
-          id
-          deploymentId
-          assetId
-          smartContractDeployment {
-            id
-            deployedOnProduct {
-              id
-              name
-              root {
-                slug
-              }
-            }
-            assetStandard {
-              id
-            }
-            smartContracts {
-              name
-              id
-              deploymentId
-              deploymentDate
-              address
-            }
-            deploymentType {
-              name
-              id
-              definition
-            }
-          }
-        }
-        urls(order_by: {urlTypeId: Asc}) {
-          url
-          urlType {
-            name
-            id
-            definition
-          }
-        }
-      }
       socials {
         name
         socialType {
@@ -3577,97 +3999,9 @@ export const GetProfileDocument = `
           url
         }
       }
-      products {
-        rootId
-        productTypeId
-        productStatusId
-        name
-        launchDate
-        isMainProduct
-        id
-        description
-        productType {
-          name
-          id
-          definition
-        }
-        productStatus {
-          name
-          id
-          definition
-        }
-        productDeployments {
-          smartContractDeployment {
-            deployedOnProduct {
-              id
-              name
-              root {
-                slug
-              }
-            }
-            assetStandard {
-              id
-            }
-            deploymentType {
-              name
-            }
-            smartContracts {
-              name
-              id
-              deploymentDate
-              address
-              deploymentId
-            }
-            isOfStandardId
-            id
-          }
-        }
-        supportsProducts {
-          supportsProduct {
-            name
-            id
-            root {
-              slug
-            }
-          }
-        }
-        urls(order_by: {urlTypeId: Asc}) {
-          url
-          urlType {
-            name
-            id
-            definition
-          }
-        }
-      }
-      entities {
-        name
-        tradeName
-        taxIdentificationNumber
-        localRegistrationNumber
-        leiNumber
-        id
-        dateOfIncorporation
-        address
-        entityType {
-          name
-          id
-          definition
-        }
-        country {
-          name
-          id
-          code
-        }
-        urls {
-          url
-          urlType {
-            name
-            id
-            definition
-          }
-        }
-      }
+      ...AssetFields
+      ...ProductFields
+      ...EntityFields
       profileTags {
         tag {
           name
@@ -3685,7 +4019,9 @@ export const GetProfileDocument = `
     }
   }
 }
-    `;
+    ${AssetFieldsFragmentDoc}
+${ProductFieldsFragmentDoc}
+${EntityFieldsFragmentDoc}`;
 
 export const useGetProfileQuery = <TData = GetProfileQuery, TError = unknown>(
   variables?: GetProfileQueryVariables,
@@ -3806,23 +4142,15 @@ export const SearchProfilesDocument = `
           id
         }
       }
-      products {
-        name
-        productStatus {
-          name
-          id
-          definition
-        }
-        productType {
-          name
-          id
-          definition
-        }
-      }
+      ...AssetFields
+      ...ProductFields
+      ...EntityFields
     }
   }
 }
-    `;
+    ${AssetFieldsFragmentDoc}
+${ProductFieldsFragmentDoc}
+${EntityFieldsFragmentDoc}`;
 
 export const useSearchProfilesQuery = <
   TData = SearchProfilesQuery,
