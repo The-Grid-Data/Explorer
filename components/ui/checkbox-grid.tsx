@@ -14,7 +14,7 @@ type Option<T extends string | number> = {
   value: T;
   label: string;
   description?: string | null;
-  count?: string | null;
+  count?: string | number | null;
   disabled?: boolean;
 };
 
