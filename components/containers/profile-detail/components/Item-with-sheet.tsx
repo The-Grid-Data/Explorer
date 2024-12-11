@@ -33,7 +33,7 @@ export const ItemWithSheet = ({ trigger, content }: ItemWithSheetProps) => {
       <SheetContent
         onOpenAutoFocus={event => event.preventDefault()}
         side="bottom"
-        className="h-[80vh] pt-12 lg:h-[60vh]"
+        className="m-0 h-[80vh] p-0 lg:h-[60vh]"
       >
         <ScrollArea className="h-full overflow-scroll">{content}</ScrollArea>
       </SheetContent>
