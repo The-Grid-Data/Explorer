@@ -1,4 +1,3 @@
-import { Badge } from '@/components/ui/badge';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import {
   Tooltip,
@@ -6,6 +5,7 @@ import {
   TooltipProvider,
   TooltipTrigger
 } from '@/components/ui/tooltip';
+import { ScrollArea } from '@radix-ui/react-scroll-area';
 import { useState, ReactNode } from 'react';
 
 type ItemWithSheetProps = {
@@ -33,9 +33,9 @@ export const ItemWithSheet = ({ trigger, content }: ItemWithSheetProps) => {
       <SheetContent
         onOpenAutoFocus={event => event.preventDefault()}
         side="bottom"
-        className="mt-0 p-0"
+        className="h-[80vh] pt-12 lg:h-[60vh]"
       >
-        {content}
+        <ScrollArea className="h-full overflow-scroll">{content}</ScrollArea>
       </SheetContent>
     </Sheet>
   );

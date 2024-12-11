@@ -25,7 +25,7 @@ export const ProfileCardDataPoint = ({
     >
       {label}:
     </div>
-    <div className="ml-1 flex flex-col items-start">
+    <div className="ml-1 flex flex-col items-start pt-2 lg:pt-0">
       {children || <span className="text w-full text-sm">{value || '-'}</span>}
     </div>
   </div>

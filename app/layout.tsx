@@ -22,12 +22,12 @@ export const metadata: Metadata = {
   description: siteConfig.pageDescription
 };
 
-// export const viewport: Viewport = {
-//   initialScale: 1,
-//   width: 'device-width',
-//   maximumScale: 1,
-//   viewportFit: 'cover'
-// };
+export const viewport: Viewport = {
+  initialScale: 1,
+  width: 'device-width',
+  maximumScale: 1,
+  viewportFit: 'cover'
+};
 
 export default function Layout({ children }: TLayout) {
   return (
