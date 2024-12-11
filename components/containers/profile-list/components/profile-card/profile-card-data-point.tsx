@@ -19,7 +19,7 @@ export const ProfileCardDataPoint = ({
   <div className={cn('flex flex-col items-baseline md:flex-row', className)}>
     <div
       className={cn(
-        'text w-full shrink-0 rounded border border-primary bg-primary p-1 px-2 text-xs text-muted dark:border-secondary dark:bg-secondary dark:bg-secondary dark:text-primary md:w-fit',
+        'text w-full shrink-0 rounded border border-primary bg-primary p-1 px-2 text-xs text-muted dark:border-secondary dark:bg-primary-foreground dark:text-primary dark:text-primary md:w-fit',
         active && 'bg-orange-400 font-medium text-primary dark:bg-orange-400'
       )}
     >

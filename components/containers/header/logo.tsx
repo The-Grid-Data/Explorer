@@ -27,7 +27,7 @@ export const Logo = () => {
       alt="The grid logo"
       src={siteConfig.logoSrc[currentTheme as keyof typeof siteConfig.logoSrc]}
       width={160}
-      height={1200}
+      height={50}
     />
   );
 };
