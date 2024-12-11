@@ -8,14 +8,14 @@ import { useTheme } from 'next-themes';
 import { Skeleton } from '@/components/ui/skeleton';
 
 export const Logo = () => {
-  const { theme } = useTheme();
+  const { resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     setMounted(true);
   }, []);
 
-  const currentTheme = theme || 'dark';
+  const currentTheme = resolvedTheme || 'dark';
 
   if (!mounted) {
     // Prevents mismatch by not rendering until client-side
