@@ -35,12 +35,12 @@ export const ProfileCard = ({ profile }: ProfileCardCardProps) => {
     <div className="ml-4">
       <div className="relative mt-20 rounded-lg border-2 border-primary bg-card text-card-foreground shadow-sm dark:border-secondary">
         <div className="relative -mt-16 flex w-full flex-col items-start gap-3 lg:absolute lg:-top-16 lg:left-[-24px] lg:mt-0 lg:flex-row">
-          <div className="border-1 -ml-6 w-fit shrink-0 rounded-xl border-2 border-primary bg-white shadow-lg hover:scale-105 dark:border-secondary lg:ml-0">
+          <div className="border-1 -ml-6 w-fit shrink-0 rounded-xl border-2 border-primary bg-white shadow-lg hover:scale-105 dark:border-secondary dark:bg-secondary lg:ml-0">
             <Link href={paths.profile.detail(profile.root?.slug)}>
               <Avatar className="h-[100px] w-[160px] min-w-[120px] rounded-xl p-2">
                 {validLogoUrl && (
                   <AvatarImage
-                    className="object-scale-down"
+                    className="object-scale-down dark:brightness-0 dark:invert dark:saturate-100 dark:filter"
                     src={profile.logo}
                     alt={profile.name}
                   />
