@@ -6,9 +6,7 @@ import { SiGithub } from 'react-icons/si';
 
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
-import { siteConfig } from '@/lib/site-config';
 import { ToggleThemeButton } from './toggle-theme-button';
-import { useTheme } from 'next-themes';
 import { Logo } from './logo';
 
 const learnMoreButton = (
