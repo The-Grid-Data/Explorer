@@ -61,7 +61,7 @@ export const ProfileCard = ({ profile }: ProfileCardCardProps) => {
                 </h3>
                 {profile.root?.profileTags?.find(
                   tag => tag.tag?.id === siteConfig.verifiedTagId
-                ) && <Badge className="w-fit">Verified</Badge>}
+                ) && <Badge className="w-fit">Claimed</Badge>}
               </Link>
             </div>
             <div className="flex flex-col gap-4 lg:mr-[-16px] lg:flex-row">
