@@ -28,13 +28,11 @@ export type Incremental<T> =
 
 function fetcher<TData, TVariables>(query: string, variables?: TVariables) {
   return async (): Promise<TData> => {
-    const res = await fetch(
-      'https://maximum-grackle-73.hasura.app/v1/graphql',
-      {
-        method: 'POST',
-        body: JSON.stringify({ query, variables })
-      }
-    );
+    const res = await fetch('https://beta.node.thegrid.id/graphql', {
+      method: 'POST',
+      ...{ headers: { 'Content-Type': 'application/json' } },
+      body: JSON.stringify({ query, variables })
+    });
 
     const json = await res.json();
 
@@ -54,2227 +52,2638 @@ export type Scalars = {
   Boolean: { input: boolean; output: boolean };
   Int: { input: number; output: number };
   Float: { input: number; output: number };
-  date: { input: any; output: any };
+  Date1: { input: any; output: any };
+  Float2: { input: any; output: any };
+  Int2: { input: any; output: any };
+  String2: { input: any; output: any };
 };
 
-/** Boolean expression to compare columns of type "Int". All fields are combined with logical 'AND'. */
-export type Int_Mysql8_Comparison_Exp = {
-  _eq?: InputMaybe<Scalars['Int']['input']>;
-  _gt?: InputMaybe<Scalars['Int']['input']>;
-  _gte?: InputMaybe<Scalars['Int']['input']>;
-  _in?: InputMaybe<Array<Scalars['Int']['input']>>;
-  _is_null?: InputMaybe<Scalars['Boolean']['input']>;
-  _lt?: InputMaybe<Scalars['Int']['input']>;
-  _lte?: InputMaybe<Scalars['Int']['input']>;
-  _neq?: InputMaybe<Scalars['Int']['input']>;
-  _nin?: InputMaybe<Array<Scalars['Int']['input']>>;
+export type AssetUrls = {
+  __typename?: 'AssetUrls';
+  id: Scalars['Int2']['output'];
+  rowId: Scalars['Int2']['output'];
+  tableId: Scalars['Int2']['output'];
+  url: Scalars['String2']['output'];
+  urlType?: Maybe<CUrlTypes>;
+  urlTypeId: Scalars['Int2']['output'];
 };
 
-/** Boolean expression to compare columns of type "String". All fields are combined with logical 'AND'. */
-export type String_Mysql8_Comparison_Exp = {
-  _eq?: InputMaybe<Scalars['String']['input']>;
-  _gt?: InputMaybe<Scalars['String']['input']>;
-  _gte?: InputMaybe<Scalars['String']['input']>;
-  _ilike?: InputMaybe<Scalars['String']['input']>;
-  _in?: InputMaybe<Array<Scalars['String']['input']>>;
-  _is_null?: InputMaybe<Scalars['Boolean']['input']>;
-  _like?: InputMaybe<Scalars['String']['input']>;
-  _lt?: InputMaybe<Scalars['String']['input']>;
-  _lte?: InputMaybe<Scalars['String']['input']>;
-  _neq?: InputMaybe<Scalars['String']['input']>;
-  _nin?: InputMaybe<Array<Scalars['String']['input']>>;
-  contains?: InputMaybe<Scalars['String']['input']>;
+export type AssetUrlsBoolExp = {
+  _and?: InputMaybe<Array<AssetUrlsBoolExp>>;
+  _not?: InputMaybe<AssetUrlsBoolExp>;
+  _or?: InputMaybe<Array<AssetUrlsBoolExp>>;
+  id?: InputMaybe<IntBoolExp1>;
+  rowId?: InputMaybe<IntBoolExp1>;
+  tableId?: InputMaybe<IntBoolExp1>;
+  url?: InputMaybe<StringBoolExp1>;
+  urlType?: InputMaybe<CUrlTypesBoolExp>;
+  urlTypeId?: InputMaybe<IntBoolExp1>;
 };
 
-export type AssetStandardSupport = {
-  __typename?: 'assetStandardSupport';
-  /** An array relationship */
-  assets: Array<Assets>;
-  definition: Scalars['String']['output'];
-  id: Scalars['Int']['output'];
-  name: Scalars['String']['output'];
+export type AssetUrlsOrderBy = {
+  id?: InputMaybe<OrderBy>;
+  rowId?: InputMaybe<OrderBy>;
+  tableId?: InputMaybe<OrderBy>;
+  url?: InputMaybe<OrderBy>;
+  urlType?: InputMaybe<CUrlTypesOrderBy>;
+  urlTypeId?: InputMaybe<OrderBy>;
 };
 
-export type AssetStandardSupportAssetsArgs = {
+export type CAssetDeployments = {
+  __typename?: 'CAssetDeployments';
+  asset?: Maybe<CAssets>;
+  assetId: Scalars['Int2']['output'];
+  deploymentId: Scalars['Int2']['output'];
+  id: Scalars['Int2']['output'];
+  smartContractDeployment?: Maybe<CSmartContractDeployments>;
+};
+
+export type CAssetDeploymentsAggExp = {
+  __typename?: 'CAssetDeploymentsAggExp';
+  _count: Scalars['Int']['output'];
+  assetId: IntAggExp1;
+  deploymentId: IntAggExp1;
+  id: IntAggExp1;
+};
+
+export type CAssetDeploymentsBoolExp = {
+  _and?: InputMaybe<Array<CAssetDeploymentsBoolExp>>;
+  _not?: InputMaybe<CAssetDeploymentsBoolExp>;
+  _or?: InputMaybe<Array<CAssetDeploymentsBoolExp>>;
+  asset?: InputMaybe<CAssetsBoolExp>;
+  assetId?: InputMaybe<IntBoolExp1>;
+  deploymentId?: InputMaybe<IntBoolExp1>;
+  id?: InputMaybe<IntBoolExp1>;
+  smartContractDeployment?: InputMaybe<CSmartContractDeploymentsBoolExp>;
+};
+
+export type CAssetDeploymentsFilterInput = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Assets_Order_By>>;
-  where?: InputMaybe<Assets_Bool_Exp>;
+  order_by?: InputMaybe<Array<CAssetDeploymentsOrderBy>>;
+  where?: InputMaybe<CAssetDeploymentsBoolExp>;
 };
 
-/** Boolean expression to filter rows from the table "assetStandardSupport". All fields are combined with a logical 'AND'. */
-export type AssetStandardSupport_Bool_Exp = {
-  _and?: InputMaybe<Array<AssetStandardSupport_Bool_Exp>>;
-  _not?: InputMaybe<AssetStandardSupport_Bool_Exp>;
-  _or?: InputMaybe<Array<AssetStandardSupport_Bool_Exp>>;
-  assets?: InputMaybe<Assets_Bool_Exp>;
-  definition?: InputMaybe<String_Mysql8_Comparison_Exp>;
-  id?: InputMaybe<Int_Mysql8_Comparison_Exp>;
-  name?: InputMaybe<String_Mysql8_Comparison_Exp>;
+export type CAssetDeploymentsOrderBy = {
+  asset?: InputMaybe<CAssetsOrderBy>;
+  assetId?: InputMaybe<OrderBy>;
+  deploymentId?: InputMaybe<OrderBy>;
+  id?: InputMaybe<OrderBy>;
+  smartContractDeployment?: InputMaybe<CSmartContractDeploymentsOrderBy>;
 };
 
-/** Ordering options when selecting data from "assetStandardSupport". */
-export type AssetStandardSupport_Order_By = {
-  assets_aggregate?: InputMaybe<Assets_Aggregate_Order_By>;
-  definition?: InputMaybe<Mysql8_Order_By>;
-  id?: InputMaybe<Mysql8_Order_By>;
-  name?: InputMaybe<Mysql8_Order_By>;
+export type CAssetStandards = {
+  __typename?: 'CAssetStandards';
+  definition: Scalars['String2']['output'];
+  /** - TBD renamed to assetStandards */
+  id: Scalars['Int2']['output'];
+  name: Scalars['String2']['output'];
+  smartContractDeployments?: Maybe<Array<CSmartContractDeployments>>;
+  smartContractDeploymentsAggregate: CSmartContractDeploymentsAggExp;
 };
 
-export type AssetType = {
-  __typename?: 'assetType';
-  /** An array relationship */
-  assetType: Array<Assets>;
-  definition: Scalars['String']['output'];
-  id: Scalars['Int']['output'];
-  name: Scalars['String']['output'];
-};
-
-export type AssetTypeAssetTypeArgs = {
+export type CAssetStandardsSmartContractDeploymentsArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Assets_Order_By>>;
-  where?: InputMaybe<Assets_Bool_Exp>;
+  order_by?: InputMaybe<Array<CSmartContractDeploymentsOrderBy>>;
+  where?: InputMaybe<CSmartContractDeploymentsBoolExp>;
 };
 
-/** Boolean expression to filter rows from the table "assetType". All fields are combined with a logical 'AND'. */
-export type AssetType_Bool_Exp = {
-  _and?: InputMaybe<Array<AssetType_Bool_Exp>>;
-  _not?: InputMaybe<AssetType_Bool_Exp>;
-  _or?: InputMaybe<Array<AssetType_Bool_Exp>>;
-  assetType?: InputMaybe<Assets_Bool_Exp>;
-  definition?: InputMaybe<String_Mysql8_Comparison_Exp>;
-  id?: InputMaybe<Int_Mysql8_Comparison_Exp>;
-  name?: InputMaybe<String_Mysql8_Comparison_Exp>;
+export type CAssetStandardsSmartContractDeploymentsAggregateArgs = {
+  filter_input?: InputMaybe<CSmartContractDeploymentsFilterInput>;
 };
 
-/** Ordering options when selecting data from "assetType". */
-export type AssetType_Order_By = {
-  assetType_aggregate?: InputMaybe<Assets_Aggregate_Order_By>;
-  definition?: InputMaybe<Mysql8_Order_By>;
-  id?: InputMaybe<Mysql8_Order_By>;
-  name?: InputMaybe<Mysql8_Order_By>;
+export type CAssetStandardsAggExp = {
+  __typename?: 'CAssetStandardsAggExp';
+  _count: Scalars['Int']['output'];
+  definition: StringAggExp1;
+  id: IntAggExp1;
+  name: StringAggExp1;
 };
 
-export type Assets = {
-  __typename?: 'assets';
-  address: Scalars['String']['output'];
-  /** An object relationship */
-  assetDeployedOnProductId?: Maybe<Products>;
-  assetStandardId?: Maybe<Scalars['Int']['output']>;
-  /** An object relationship */
-  assetStandardSupport?: Maybe<AssetStandardSupport>;
-  /** An object relationship */
-  assetType?: Maybe<AssetType>;
-  assetTypeId?: Maybe<Scalars['Int']['output']>;
-  deployedOnProductId?: Maybe<Scalars['Int']['output']>;
-  icon: Scalars['String']['output'];
-  id: Scalars['Int']['output'];
-  name: Scalars['String']['output'];
-  /** An array relationship */
-  products: Array<Products>;
-  /** An object relationship */
-  profile?: Maybe<Profiles>;
-  profileId?: Maybe<Scalars['Int']['output']>;
-  shortDescription: Scalars['String']['output'];
-  ticker: Scalars['String']['output'];
-  urlToAssetDocs: Scalars['String']['output'];
+export type CAssetStandardsBoolExp = {
+  _and?: InputMaybe<Array<CAssetStandardsBoolExp>>;
+  _not?: InputMaybe<CAssetStandardsBoolExp>;
+  _or?: InputMaybe<Array<CAssetStandardsBoolExp>>;
+  definition?: InputMaybe<StringBoolExp1>;
+  id?: InputMaybe<IntBoolExp1>;
+  name?: InputMaybe<StringBoolExp1>;
+  smartContractDeployments?: InputMaybe<CSmartContractDeploymentsBoolExp>;
 };
 
-export type AssetsProductsArgs = {
+export type CAssetStandardsFilterInput = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Products_Order_By>>;
-  where?: InputMaybe<Products_Bool_Exp>;
+  order_by?: InputMaybe<Array<CAssetStandardsOrderBy>>;
+  where?: InputMaybe<CAssetStandardsBoolExp>;
 };
 
-/** order by aggregate values of table "assets" */
-export type Assets_Aggregate_Order_By = {
-  avg?: InputMaybe<Assets_Avg_Order_By>;
-  count?: InputMaybe<Mysql8_Order_By>;
-  max?: InputMaybe<Assets_Max_Order_By>;
-  min?: InputMaybe<Assets_Min_Order_By>;
-  stddev_pop?: InputMaybe<Assets_Stddev_Pop_Order_By>;
-  stddev_samp?: InputMaybe<Assets_Stddev_Samp_Order_By>;
-  sum?: InputMaybe<Assets_Sum_Order_By>;
-  var_pop?: InputMaybe<Assets_Var_Pop_Order_By>;
-  var_samp?: InputMaybe<Assets_Var_Samp_Order_By>;
+export type CAssetStandardsOrderBy = {
+  definition?: InputMaybe<OrderBy>;
+  id?: InputMaybe<OrderBy>;
+  name?: InputMaybe<OrderBy>;
 };
 
-/** order by avg() on columns of table "assets" */
-export type Assets_Avg_Order_By = {
-  assetStandardId?: InputMaybe<Mysql8_Order_By>;
-  assetTypeId?: InputMaybe<Mysql8_Order_By>;
-  deployedOnProductId?: InputMaybe<Mysql8_Order_By>;
-  id?: InputMaybe<Mysql8_Order_By>;
-  profileId?: InputMaybe<Mysql8_Order_By>;
+export type CAssetStatuses = {
+  __typename?: 'CAssetStatuses';
+  assets?: Maybe<Array<CAssets>>;
+  assetsAggregate: CAssetsAggExp;
+  definition: Scalars['String2']['output'];
+  id: Scalars['Int2']['output'];
+  name: Scalars['String2']['output'];
 };
 
-/** Boolean expression to filter rows from the table "assets". All fields are combined with a logical 'AND'. */
-export type Assets_Bool_Exp = {
-  _and?: InputMaybe<Array<Assets_Bool_Exp>>;
-  _not?: InputMaybe<Assets_Bool_Exp>;
-  _or?: InputMaybe<Array<Assets_Bool_Exp>>;
-  address?: InputMaybe<String_Mysql8_Comparison_Exp>;
-  assetDeployedOnProductId?: InputMaybe<Products_Bool_Exp>;
-  assetStandardId?: InputMaybe<Int_Mysql8_Comparison_Exp>;
-  assetStandardSupport?: InputMaybe<AssetStandardSupport_Bool_Exp>;
-  assetType?: InputMaybe<AssetType_Bool_Exp>;
-  assetTypeId?: InputMaybe<Int_Mysql8_Comparison_Exp>;
-  deployedOnProductId?: InputMaybe<Int_Mysql8_Comparison_Exp>;
-  icon?: InputMaybe<String_Mysql8_Comparison_Exp>;
-  id?: InputMaybe<Int_Mysql8_Comparison_Exp>;
-  name?: InputMaybe<String_Mysql8_Comparison_Exp>;
-  products?: InputMaybe<Products_Bool_Exp>;
-  profile?: InputMaybe<Profiles_Bool_Exp>;
-  profileId?: InputMaybe<Int_Mysql8_Comparison_Exp>;
-  shortDescription?: InputMaybe<String_Mysql8_Comparison_Exp>;
-  ticker?: InputMaybe<String_Mysql8_Comparison_Exp>;
-  urlToAssetDocs?: InputMaybe<String_Mysql8_Comparison_Exp>;
-};
-
-/** order by max() on columns of table "assets" */
-export type Assets_Max_Order_By = {
-  address?: InputMaybe<Mysql8_Order_By>;
-  assetStandardId?: InputMaybe<Mysql8_Order_By>;
-  assetTypeId?: InputMaybe<Mysql8_Order_By>;
-  deployedOnProductId?: InputMaybe<Mysql8_Order_By>;
-  icon?: InputMaybe<Mysql8_Order_By>;
-  id?: InputMaybe<Mysql8_Order_By>;
-  name?: InputMaybe<Mysql8_Order_By>;
-  profileId?: InputMaybe<Mysql8_Order_By>;
-  shortDescription?: InputMaybe<Mysql8_Order_By>;
-  ticker?: InputMaybe<Mysql8_Order_By>;
-  urlToAssetDocs?: InputMaybe<Mysql8_Order_By>;
-};
-
-/** order by min() on columns of table "assets" */
-export type Assets_Min_Order_By = {
-  address?: InputMaybe<Mysql8_Order_By>;
-  assetStandardId?: InputMaybe<Mysql8_Order_By>;
-  assetTypeId?: InputMaybe<Mysql8_Order_By>;
-  deployedOnProductId?: InputMaybe<Mysql8_Order_By>;
-  icon?: InputMaybe<Mysql8_Order_By>;
-  id?: InputMaybe<Mysql8_Order_By>;
-  name?: InputMaybe<Mysql8_Order_By>;
-  profileId?: InputMaybe<Mysql8_Order_By>;
-  shortDescription?: InputMaybe<Mysql8_Order_By>;
-  ticker?: InputMaybe<Mysql8_Order_By>;
-  urlToAssetDocs?: InputMaybe<Mysql8_Order_By>;
-};
-
-/** Ordering options when selecting data from "assets". */
-export type Assets_Order_By = {
-  address?: InputMaybe<Mysql8_Order_By>;
-  assetDeployedOnProductId?: InputMaybe<Products_Order_By>;
-  assetStandardId?: InputMaybe<Mysql8_Order_By>;
-  assetStandardSupport?: InputMaybe<AssetStandardSupport_Order_By>;
-  assetType?: InputMaybe<AssetType_Order_By>;
-  assetTypeId?: InputMaybe<Mysql8_Order_By>;
-  deployedOnProductId?: InputMaybe<Mysql8_Order_By>;
-  icon?: InputMaybe<Mysql8_Order_By>;
-  id?: InputMaybe<Mysql8_Order_By>;
-  name?: InputMaybe<Mysql8_Order_By>;
-  products_aggregate?: InputMaybe<Products_Aggregate_Order_By>;
-  profile?: InputMaybe<Profiles_Order_By>;
-  profileId?: InputMaybe<Mysql8_Order_By>;
-  shortDescription?: InputMaybe<Mysql8_Order_By>;
-  ticker?: InputMaybe<Mysql8_Order_By>;
-  urlToAssetDocs?: InputMaybe<Mysql8_Order_By>;
-};
-
-/** order by stddev_pop() on columns of table "assets" */
-export type Assets_Stddev_Pop_Order_By = {
-  assetStandardId?: InputMaybe<Mysql8_Order_By>;
-  assetTypeId?: InputMaybe<Mysql8_Order_By>;
-  deployedOnProductId?: InputMaybe<Mysql8_Order_By>;
-  id?: InputMaybe<Mysql8_Order_By>;
-  profileId?: InputMaybe<Mysql8_Order_By>;
-};
-
-/** order by stddev_samp() on columns of table "assets" */
-export type Assets_Stddev_Samp_Order_By = {
-  assetStandardId?: InputMaybe<Mysql8_Order_By>;
-  assetTypeId?: InputMaybe<Mysql8_Order_By>;
-  deployedOnProductId?: InputMaybe<Mysql8_Order_By>;
-  id?: InputMaybe<Mysql8_Order_By>;
-  profileId?: InputMaybe<Mysql8_Order_By>;
-};
-
-/** order by sum() on columns of table "assets" */
-export type Assets_Sum_Order_By = {
-  assetStandardId?: InputMaybe<Mysql8_Order_By>;
-  assetTypeId?: InputMaybe<Mysql8_Order_By>;
-  deployedOnProductId?: InputMaybe<Mysql8_Order_By>;
-  id?: InputMaybe<Mysql8_Order_By>;
-  profileId?: InputMaybe<Mysql8_Order_By>;
-};
-
-/** order by var_pop() on columns of table "assets" */
-export type Assets_Var_Pop_Order_By = {
-  assetStandardId?: InputMaybe<Mysql8_Order_By>;
-  assetTypeId?: InputMaybe<Mysql8_Order_By>;
-  deployedOnProductId?: InputMaybe<Mysql8_Order_By>;
-  id?: InputMaybe<Mysql8_Order_By>;
-  profileId?: InputMaybe<Mysql8_Order_By>;
-};
-
-/** order by var_samp() on columns of table "assets" */
-export type Assets_Var_Samp_Order_By = {
-  assetStandardId?: InputMaybe<Mysql8_Order_By>;
-  assetTypeId?: InputMaybe<Mysql8_Order_By>;
-  deployedOnProductId?: InputMaybe<Mysql8_Order_By>;
-  id?: InputMaybe<Mysql8_Order_By>;
-  profileId?: InputMaybe<Mysql8_Order_By>;
-};
-
-export type Countries = {
-  __typename?: 'countries';
-  code: Scalars['String']['output'];
-  /** An array relationship */
-  entities: Array<Entities>;
-  id: Scalars['Int']['output'];
-  name: Scalars['String']['output'];
-};
-
-export type CountriesEntitiesArgs = {
+export type CAssetStatusesAssetsArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Entities_Order_By>>;
-  where?: InputMaybe<Entities_Bool_Exp>;
+  order_by?: InputMaybe<Array<CAssetsOrderBy>>;
+  where?: InputMaybe<CAssetsBoolExp>;
 };
 
-/** Boolean expression to filter rows from the table "countries". All fields are combined with a logical 'AND'. */
-export type Countries_Bool_Exp = {
-  _and?: InputMaybe<Array<Countries_Bool_Exp>>;
-  _not?: InputMaybe<Countries_Bool_Exp>;
-  _or?: InputMaybe<Array<Countries_Bool_Exp>>;
-  code?: InputMaybe<String_Mysql8_Comparison_Exp>;
-  entities?: InputMaybe<Entities_Bool_Exp>;
-  id?: InputMaybe<Int_Mysql8_Comparison_Exp>;
-  name?: InputMaybe<String_Mysql8_Comparison_Exp>;
+export type CAssetStatusesAssetsAggregateArgs = {
+  filter_input?: InputMaybe<CAssetsFilterInput>;
 };
 
-/** Ordering options when selecting data from "countries". */
-export type Countries_Order_By = {
-  code?: InputMaybe<Mysql8_Order_By>;
-  entities_aggregate?: InputMaybe<Entities_Aggregate_Order_By>;
-  id?: InputMaybe<Mysql8_Order_By>;
-  name?: InputMaybe<Mysql8_Order_By>;
+export type CAssetStatusesAggExp = {
+  __typename?: 'CAssetStatusesAggExp';
+  _count: Scalars['Int']['output'];
+  definition: StringAggExp1;
+  id: IntAggExp1;
+  name: StringAggExp1;
 };
 
-/** Boolean expression to compare columns of type "date". All fields are combined with logical 'AND'. */
-export type Date_Mysql8_Comparison_Exp = {
-  _eq?: InputMaybe<Scalars['date']['input']>;
-  _gt?: InputMaybe<Scalars['date']['input']>;
-  _gte?: InputMaybe<Scalars['date']['input']>;
-  _in?: InputMaybe<Array<Scalars['date']['input']>>;
-  _is_null?: InputMaybe<Scalars['Boolean']['input']>;
-  _lt?: InputMaybe<Scalars['date']['input']>;
-  _lte?: InputMaybe<Scalars['date']['input']>;
-  _neq?: InputMaybe<Scalars['date']['input']>;
-  _nin?: InputMaybe<Array<Scalars['date']['input']>>;
+export type CAssetStatusesBoolExp = {
+  _and?: InputMaybe<Array<CAssetStatusesBoolExp>>;
+  _not?: InputMaybe<CAssetStatusesBoolExp>;
+  _or?: InputMaybe<Array<CAssetStatusesBoolExp>>;
+  assets?: InputMaybe<CAssetsBoolExp>;
+  definition?: InputMaybe<StringBoolExp1>;
+  id?: InputMaybe<IntBoolExp1>;
+  name?: InputMaybe<StringBoolExp1>;
 };
 
-export type Entities = {
-  __typename?: 'entities';
-  address: Scalars['String']['output'];
-  /** An object relationship */
-  country?: Maybe<Countries>;
-  countryId?: Maybe<Scalars['Int']['output']>;
-  dateOfIncorporation?: Maybe<Scalars['date']['output']>;
-  /** An array relationship */
-  entities: Array<Entities>;
-  /** An object relationship */
-  entity?: Maybe<Entities>;
-  /** An object relationship */
-  entityType?: Maybe<EntityTypes>;
-  entityTypeId?: Maybe<Scalars['Int']['output']>;
-  id: Scalars['Int']['output'];
-  leiNumber: Scalars['String']['output'];
-  localRegistrationNumber: Scalars['String']['output'];
-  name: Scalars['String']['output'];
-  parentEntityId?: Maybe<Scalars['Int']['output']>;
-  /** An object relationship */
-  profile: Profiles;
-  profileId: Scalars['Int']['output'];
-  taxIdentificationNumber: Scalars['String']['output'];
-  tradeName: Scalars['String']['output'];
-  urlToEntity: Scalars['String']['output'];
-};
-
-export type EntitiesEntitiesArgs = {
+export type CAssetStatusesFilterInput = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Entities_Order_By>>;
-  where?: InputMaybe<Entities_Bool_Exp>;
+  order_by?: InputMaybe<Array<CAssetStatusesOrderBy>>;
+  where?: InputMaybe<CAssetStatusesBoolExp>;
 };
 
-/** order by aggregate values of table "entities" */
-export type Entities_Aggregate_Order_By = {
-  avg?: InputMaybe<Entities_Avg_Order_By>;
-  count?: InputMaybe<Mysql8_Order_By>;
-  max?: InputMaybe<Entities_Max_Order_By>;
-  min?: InputMaybe<Entities_Min_Order_By>;
-  stddev_pop?: InputMaybe<Entities_Stddev_Pop_Order_By>;
-  stddev_samp?: InputMaybe<Entities_Stddev_Samp_Order_By>;
-  sum?: InputMaybe<Entities_Sum_Order_By>;
-  var_pop?: InputMaybe<Entities_Var_Pop_Order_By>;
-  var_samp?: InputMaybe<Entities_Var_Samp_Order_By>;
+export type CAssetStatusesOrderBy = {
+  definition?: InputMaybe<OrderBy>;
+  id?: InputMaybe<OrderBy>;
+  name?: InputMaybe<OrderBy>;
 };
 
-/** order by avg() on columns of table "entities" */
-export type Entities_Avg_Order_By = {
-  countryId?: InputMaybe<Mysql8_Order_By>;
-  entityTypeId?: InputMaybe<Mysql8_Order_By>;
-  id?: InputMaybe<Mysql8_Order_By>;
-  parentEntityId?: InputMaybe<Mysql8_Order_By>;
-  profileId?: InputMaybe<Mysql8_Order_By>;
+export type CAssetSupportTypes = {
+  __typename?: 'CAssetSupportTypes';
+  definition: Scalars['String2']['output'];
+  id: Scalars['Int2']['output'];
+  name: Scalars['String2']['output'];
+  productAssetRelationships?: Maybe<Array<CProductAssetRelationships>>;
+  productAssetRelationshipsAggregate: CProductAssetRelationshipsAggExp;
 };
 
-/** Boolean expression to filter rows from the table "entities". All fields are combined with a logical 'AND'. */
-export type Entities_Bool_Exp = {
-  _and?: InputMaybe<Array<Entities_Bool_Exp>>;
-  _not?: InputMaybe<Entities_Bool_Exp>;
-  _or?: InputMaybe<Array<Entities_Bool_Exp>>;
-  address?: InputMaybe<String_Mysql8_Comparison_Exp>;
-  country?: InputMaybe<Countries_Bool_Exp>;
-  countryId?: InputMaybe<Int_Mysql8_Comparison_Exp>;
-  dateOfIncorporation?: InputMaybe<Date_Mysql8_Comparison_Exp>;
-  entities?: InputMaybe<Entities_Bool_Exp>;
-  entity?: InputMaybe<Entities_Bool_Exp>;
-  entityType?: InputMaybe<EntityTypes_Bool_Exp>;
-  entityTypeId?: InputMaybe<Int_Mysql8_Comparison_Exp>;
-  id?: InputMaybe<Int_Mysql8_Comparison_Exp>;
-  leiNumber?: InputMaybe<String_Mysql8_Comparison_Exp>;
-  localRegistrationNumber?: InputMaybe<String_Mysql8_Comparison_Exp>;
-  name?: InputMaybe<String_Mysql8_Comparison_Exp>;
-  parentEntityId?: InputMaybe<Int_Mysql8_Comparison_Exp>;
-  profile?: InputMaybe<Profiles_Bool_Exp>;
-  profileId?: InputMaybe<Int_Mysql8_Comparison_Exp>;
-  taxIdentificationNumber?: InputMaybe<String_Mysql8_Comparison_Exp>;
-  tradeName?: InputMaybe<String_Mysql8_Comparison_Exp>;
-  urlToEntity?: InputMaybe<String_Mysql8_Comparison_Exp>;
-};
-
-/** order by max() on columns of table "entities" */
-export type Entities_Max_Order_By = {
-  address?: InputMaybe<Mysql8_Order_By>;
-  countryId?: InputMaybe<Mysql8_Order_By>;
-  entityTypeId?: InputMaybe<Mysql8_Order_By>;
-  id?: InputMaybe<Mysql8_Order_By>;
-  leiNumber?: InputMaybe<Mysql8_Order_By>;
-  localRegistrationNumber?: InputMaybe<Mysql8_Order_By>;
-  name?: InputMaybe<Mysql8_Order_By>;
-  parentEntityId?: InputMaybe<Mysql8_Order_By>;
-  profileId?: InputMaybe<Mysql8_Order_By>;
-  taxIdentificationNumber?: InputMaybe<Mysql8_Order_By>;
-  tradeName?: InputMaybe<Mysql8_Order_By>;
-  urlToEntity?: InputMaybe<Mysql8_Order_By>;
-};
-
-/** order by min() on columns of table "entities" */
-export type Entities_Min_Order_By = {
-  address?: InputMaybe<Mysql8_Order_By>;
-  countryId?: InputMaybe<Mysql8_Order_By>;
-  entityTypeId?: InputMaybe<Mysql8_Order_By>;
-  id?: InputMaybe<Mysql8_Order_By>;
-  leiNumber?: InputMaybe<Mysql8_Order_By>;
-  localRegistrationNumber?: InputMaybe<Mysql8_Order_By>;
-  name?: InputMaybe<Mysql8_Order_By>;
-  parentEntityId?: InputMaybe<Mysql8_Order_By>;
-  profileId?: InputMaybe<Mysql8_Order_By>;
-  taxIdentificationNumber?: InputMaybe<Mysql8_Order_By>;
-  tradeName?: InputMaybe<Mysql8_Order_By>;
-  urlToEntity?: InputMaybe<Mysql8_Order_By>;
-};
-
-/** Ordering options when selecting data from "entities". */
-export type Entities_Order_By = {
-  address?: InputMaybe<Mysql8_Order_By>;
-  country?: InputMaybe<Countries_Order_By>;
-  countryId?: InputMaybe<Mysql8_Order_By>;
-  dateOfIncorporation?: InputMaybe<Mysql8_Order_By>;
-  entities_aggregate?: InputMaybe<Entities_Aggregate_Order_By>;
-  entity?: InputMaybe<Entities_Order_By>;
-  entityType?: InputMaybe<EntityTypes_Order_By>;
-  entityTypeId?: InputMaybe<Mysql8_Order_By>;
-  id?: InputMaybe<Mysql8_Order_By>;
-  leiNumber?: InputMaybe<Mysql8_Order_By>;
-  localRegistrationNumber?: InputMaybe<Mysql8_Order_By>;
-  name?: InputMaybe<Mysql8_Order_By>;
-  parentEntityId?: InputMaybe<Mysql8_Order_By>;
-  profile?: InputMaybe<Profiles_Order_By>;
-  profileId?: InputMaybe<Mysql8_Order_By>;
-  taxIdentificationNumber?: InputMaybe<Mysql8_Order_By>;
-  tradeName?: InputMaybe<Mysql8_Order_By>;
-  urlToEntity?: InputMaybe<Mysql8_Order_By>;
-};
-
-/** order by stddev_pop() on columns of table "entities" */
-export type Entities_Stddev_Pop_Order_By = {
-  countryId?: InputMaybe<Mysql8_Order_By>;
-  entityTypeId?: InputMaybe<Mysql8_Order_By>;
-  id?: InputMaybe<Mysql8_Order_By>;
-  parentEntityId?: InputMaybe<Mysql8_Order_By>;
-  profileId?: InputMaybe<Mysql8_Order_By>;
-};
-
-/** order by stddev_samp() on columns of table "entities" */
-export type Entities_Stddev_Samp_Order_By = {
-  countryId?: InputMaybe<Mysql8_Order_By>;
-  entityTypeId?: InputMaybe<Mysql8_Order_By>;
-  id?: InputMaybe<Mysql8_Order_By>;
-  parentEntityId?: InputMaybe<Mysql8_Order_By>;
-  profileId?: InputMaybe<Mysql8_Order_By>;
-};
-
-/** order by sum() on columns of table "entities" */
-export type Entities_Sum_Order_By = {
-  countryId?: InputMaybe<Mysql8_Order_By>;
-  entityTypeId?: InputMaybe<Mysql8_Order_By>;
-  id?: InputMaybe<Mysql8_Order_By>;
-  parentEntityId?: InputMaybe<Mysql8_Order_By>;
-  profileId?: InputMaybe<Mysql8_Order_By>;
-};
-
-/** order by var_pop() on columns of table "entities" */
-export type Entities_Var_Pop_Order_By = {
-  countryId?: InputMaybe<Mysql8_Order_By>;
-  entityTypeId?: InputMaybe<Mysql8_Order_By>;
-  id?: InputMaybe<Mysql8_Order_By>;
-  parentEntityId?: InputMaybe<Mysql8_Order_By>;
-  profileId?: InputMaybe<Mysql8_Order_By>;
-};
-
-/** order by var_samp() on columns of table "entities" */
-export type Entities_Var_Samp_Order_By = {
-  countryId?: InputMaybe<Mysql8_Order_By>;
-  entityTypeId?: InputMaybe<Mysql8_Order_By>;
-  id?: InputMaybe<Mysql8_Order_By>;
-  parentEntityId?: InputMaybe<Mysql8_Order_By>;
-  profileId?: InputMaybe<Mysql8_Order_By>;
-};
-
-export type EntityTypes = {
-  __typename?: 'entityTypes';
-  definition: Scalars['String']['output'];
-  /** An array relationship */
-  entities: Array<Entities>;
-  id: Scalars['Int']['output'];
-  name: Scalars['String']['output'];
-};
-
-export type EntityTypesEntitiesArgs = {
+export type CAssetSupportTypesProductAssetRelationshipsArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Entities_Order_By>>;
-  where?: InputMaybe<Entities_Bool_Exp>;
+  order_by?: InputMaybe<Array<CProductAssetRelationshipsOrderBy>>;
+  where?: InputMaybe<CProductAssetRelationshipsBoolExp>;
 };
 
-/** Boolean expression to filter rows from the table "entityTypes". All fields are combined with a logical 'AND'. */
-export type EntityTypes_Bool_Exp = {
-  _and?: InputMaybe<Array<EntityTypes_Bool_Exp>>;
-  _not?: InputMaybe<EntityTypes_Bool_Exp>;
-  _or?: InputMaybe<Array<EntityTypes_Bool_Exp>>;
-  definition?: InputMaybe<String_Mysql8_Comparison_Exp>;
-  entities?: InputMaybe<Entities_Bool_Exp>;
-  id?: InputMaybe<Int_Mysql8_Comparison_Exp>;
-  name?: InputMaybe<String_Mysql8_Comparison_Exp>;
+export type CAssetSupportTypesProductAssetRelationshipsAggregateArgs = {
+  filter_input?: InputMaybe<CProductAssetRelationshipsFilterInput>;
 };
 
-/** Ordering options when selecting data from "entityTypes". */
-export type EntityTypes_Order_By = {
-  definition?: InputMaybe<Mysql8_Order_By>;
-  entities_aggregate?: InputMaybe<Entities_Aggregate_Order_By>;
-  id?: InputMaybe<Mysql8_Order_By>;
-  name?: InputMaybe<Mysql8_Order_By>;
+export type CAssetSupportTypesAggExp = {
+  __typename?: 'CAssetSupportTypesAggExp';
+  _count: Scalars['Int']['output'];
+  definition: StringAggExp1;
+  id: IntAggExp1;
+  name: StringAggExp1;
 };
 
-/** column ordering options */
-export enum Mysql8_Order_By {
-  /** in ascending order */
-  Asc = 'asc',
-  /** in descending order */
-  Desc = 'desc'
-}
-
-export type ProductStatus = {
-  __typename?: 'productStatus';
-  definition: Scalars['String']['output'];
-  id: Scalars['Int']['output'];
-  name: Scalars['String']['output'];
-  /** An array relationship */
-  products: Array<Products>;
+export type CAssetSupportTypesBoolExp = {
+  _and?: InputMaybe<Array<CAssetSupportTypesBoolExp>>;
+  _not?: InputMaybe<CAssetSupportTypesBoolExp>;
+  _or?: InputMaybe<Array<CAssetSupportTypesBoolExp>>;
+  definition?: InputMaybe<StringBoolExp1>;
+  id?: InputMaybe<IntBoolExp1>;
+  name?: InputMaybe<StringBoolExp1>;
+  productAssetRelationships?: InputMaybe<CProductAssetRelationshipsBoolExp>;
 };
 
-export type ProductStatusProductsArgs = {
+export type CAssetSupportTypesFilterInput = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Products_Order_By>>;
-  where?: InputMaybe<Products_Bool_Exp>;
+  order_by?: InputMaybe<Array<CAssetSupportTypesOrderBy>>;
+  where?: InputMaybe<CAssetSupportTypesBoolExp>;
 };
 
-/** Boolean expression to filter rows from the table "productStatus". All fields are combined with a logical 'AND'. */
-export type ProductStatus_Bool_Exp = {
-  _and?: InputMaybe<Array<ProductStatus_Bool_Exp>>;
-  _not?: InputMaybe<ProductStatus_Bool_Exp>;
-  _or?: InputMaybe<Array<ProductStatus_Bool_Exp>>;
-  definition?: InputMaybe<String_Mysql8_Comparison_Exp>;
-  id?: InputMaybe<Int_Mysql8_Comparison_Exp>;
-  name?: InputMaybe<String_Mysql8_Comparison_Exp>;
-  products?: InputMaybe<Products_Bool_Exp>;
+export type CAssetSupportTypesOrderBy = {
+  definition?: InputMaybe<OrderBy>;
+  id?: InputMaybe<OrderBy>;
+  name?: InputMaybe<OrderBy>;
 };
 
-/** Ordering options when selecting data from "productStatus". */
-export type ProductStatus_Order_By = {
-  definition?: InputMaybe<Mysql8_Order_By>;
-  id?: InputMaybe<Mysql8_Order_By>;
-  name?: InputMaybe<Mysql8_Order_By>;
-  products_aggregate?: InputMaybe<Products_Aggregate_Order_By>;
+export type CAssetTypes = {
+  __typename?: 'CAssetTypes';
+  assets?: Maybe<Array<CAssets>>;
+  assetsAggregate: CAssetsAggExp;
+  definition: Scalars['String2']['output'];
+  /** Rename to assetTypes */
+  id: Scalars['Int2']['output'];
+  name: Scalars['String2']['output'];
 };
 
-/** Table mapping product support relationships */
-export type ProductSupports = {
-  __typename?: 'productSupports';
-  /** Unique identifier for each support relationship */
-  id: Scalars['Int']['output'];
-  /** An object relationship */
-  product: Products;
-  /** Identifier of the product providing support */
-  productId: Scalars['Int']['output'];
-  /** An object relationship */
-  supports: Products;
-  /** Identifier of the product being supported */
-  supportsProductId: Scalars['Int']['output'];
-};
-
-/** order by aggregate values of table "productSupports" */
-export type ProductSupports_Aggregate_Order_By = {
-  avg?: InputMaybe<ProductSupports_Avg_Order_By>;
-  count?: InputMaybe<Mysql8_Order_By>;
-  max?: InputMaybe<ProductSupports_Max_Order_By>;
-  min?: InputMaybe<ProductSupports_Min_Order_By>;
-  stddev_pop?: InputMaybe<ProductSupports_Stddev_Pop_Order_By>;
-  stddev_samp?: InputMaybe<ProductSupports_Stddev_Samp_Order_By>;
-  sum?: InputMaybe<ProductSupports_Sum_Order_By>;
-  var_pop?: InputMaybe<ProductSupports_Var_Pop_Order_By>;
-  var_samp?: InputMaybe<ProductSupports_Var_Samp_Order_By>;
-};
-
-/** order by avg() on columns of table "productSupports" */
-export type ProductSupports_Avg_Order_By = {
-  /** Unique identifier for each support relationship */
-  id?: InputMaybe<Mysql8_Order_By>;
-  /** Identifier of the product providing support */
-  productId?: InputMaybe<Mysql8_Order_By>;
-  /** Identifier of the product being supported */
-  supportsProductId?: InputMaybe<Mysql8_Order_By>;
-};
-
-/** Boolean expression to filter rows from the table "productSupports". All fields are combined with a logical 'AND'. */
-export type ProductSupports_Bool_Exp = {
-  _and?: InputMaybe<Array<ProductSupports_Bool_Exp>>;
-  _not?: InputMaybe<ProductSupports_Bool_Exp>;
-  _or?: InputMaybe<Array<ProductSupports_Bool_Exp>>;
-  id?: InputMaybe<Int_Mysql8_Comparison_Exp>;
-  product?: InputMaybe<Products_Bool_Exp>;
-  productId?: InputMaybe<Int_Mysql8_Comparison_Exp>;
-  supports?: InputMaybe<Products_Bool_Exp>;
-  supportsProductId?: InputMaybe<Int_Mysql8_Comparison_Exp>;
-};
-
-/** order by max() on columns of table "productSupports" */
-export type ProductSupports_Max_Order_By = {
-  /** Unique identifier for each support relationship */
-  id?: InputMaybe<Mysql8_Order_By>;
-  /** Identifier of the product providing support */
-  productId?: InputMaybe<Mysql8_Order_By>;
-  /** Identifier of the product being supported */
-  supportsProductId?: InputMaybe<Mysql8_Order_By>;
-};
-
-/** order by min() on columns of table "productSupports" */
-export type ProductSupports_Min_Order_By = {
-  /** Unique identifier for each support relationship */
-  id?: InputMaybe<Mysql8_Order_By>;
-  /** Identifier of the product providing support */
-  productId?: InputMaybe<Mysql8_Order_By>;
-  /** Identifier of the product being supported */
-  supportsProductId?: InputMaybe<Mysql8_Order_By>;
-};
-
-/** Ordering options when selecting data from "productSupports". */
-export type ProductSupports_Order_By = {
-  id?: InputMaybe<Mysql8_Order_By>;
-  product?: InputMaybe<Products_Order_By>;
-  productId?: InputMaybe<Mysql8_Order_By>;
-  supports?: InputMaybe<Products_Order_By>;
-  supportsProductId?: InputMaybe<Mysql8_Order_By>;
-};
-
-/** order by stddev_pop() on columns of table "productSupports" */
-export type ProductSupports_Stddev_Pop_Order_By = {
-  /** Unique identifier for each support relationship */
-  id?: InputMaybe<Mysql8_Order_By>;
-  /** Identifier of the product providing support */
-  productId?: InputMaybe<Mysql8_Order_By>;
-  /** Identifier of the product being supported */
-  supportsProductId?: InputMaybe<Mysql8_Order_By>;
-};
-
-/** order by stddev_samp() on columns of table "productSupports" */
-export type ProductSupports_Stddev_Samp_Order_By = {
-  /** Unique identifier for each support relationship */
-  id?: InputMaybe<Mysql8_Order_By>;
-  /** Identifier of the product providing support */
-  productId?: InputMaybe<Mysql8_Order_By>;
-  /** Identifier of the product being supported */
-  supportsProductId?: InputMaybe<Mysql8_Order_By>;
-};
-
-/** order by sum() on columns of table "productSupports" */
-export type ProductSupports_Sum_Order_By = {
-  /** Unique identifier for each support relationship */
-  id?: InputMaybe<Mysql8_Order_By>;
-  /** Identifier of the product providing support */
-  productId?: InputMaybe<Mysql8_Order_By>;
-  /** Identifier of the product being supported */
-  supportsProductId?: InputMaybe<Mysql8_Order_By>;
-};
-
-/** order by var_pop() on columns of table "productSupports" */
-export type ProductSupports_Var_Pop_Order_By = {
-  /** Unique identifier for each support relationship */
-  id?: InputMaybe<Mysql8_Order_By>;
-  /** Identifier of the product providing support */
-  productId?: InputMaybe<Mysql8_Order_By>;
-  /** Identifier of the product being supported */
-  supportsProductId?: InputMaybe<Mysql8_Order_By>;
-};
-
-/** order by var_samp() on columns of table "productSupports" */
-export type ProductSupports_Var_Samp_Order_By = {
-  /** Unique identifier for each support relationship */
-  id?: InputMaybe<Mysql8_Order_By>;
-  /** Identifier of the product providing support */
-  productId?: InputMaybe<Mysql8_Order_By>;
-  /** Identifier of the product being supported */
-  supportsProductId?: InputMaybe<Mysql8_Order_By>;
-};
-
-export type ProductTypes = {
-  __typename?: 'productTypes';
-  definition: Scalars['String']['output'];
-  id: Scalars['Int']['output'];
-  name: Scalars['String']['output'];
-  /** An array relationship */
-  products: Array<Products>;
-};
-
-export type ProductTypesProductsArgs = {
+export type CAssetTypesAssetsArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Products_Order_By>>;
-  where?: InputMaybe<Products_Bool_Exp>;
+  order_by?: InputMaybe<Array<CAssetsOrderBy>>;
+  where?: InputMaybe<CAssetsBoolExp>;
 };
 
-/** Boolean expression to filter rows from the table "productTypes". All fields are combined with a logical 'AND'. */
-export type ProductTypes_Bool_Exp = {
-  _and?: InputMaybe<Array<ProductTypes_Bool_Exp>>;
-  _not?: InputMaybe<ProductTypes_Bool_Exp>;
-  _or?: InputMaybe<Array<ProductTypes_Bool_Exp>>;
-  definition?: InputMaybe<String_Mysql8_Comparison_Exp>;
-  id?: InputMaybe<Int_Mysql8_Comparison_Exp>;
-  name?: InputMaybe<String_Mysql8_Comparison_Exp>;
-  products?: InputMaybe<Products_Bool_Exp>;
+export type CAssetTypesAssetsAggregateArgs = {
+  filter_input?: InputMaybe<CAssetsFilterInput>;
 };
 
-/** Ordering options when selecting data from "productTypes". */
-export type ProductTypes_Order_By = {
-  definition?: InputMaybe<Mysql8_Order_By>;
-  id?: InputMaybe<Mysql8_Order_By>;
-  name?: InputMaybe<Mysql8_Order_By>;
-  products_aggregate?: InputMaybe<Products_Aggregate_Order_By>;
+export type CAssetTypesAggExp = {
+  __typename?: 'CAssetTypesAggExp';
+  _count: Scalars['Int']['output'];
+  definition: StringAggExp1;
+  id: IntAggExp1;
+  name: StringAggExp1;
 };
 
-export type Products = {
-  __typename?: 'products';
-  /** An object relationship */
-  asset?: Maybe<Assets>;
-  /** An array relationship */
-  assetDeployedOnProduct: Array<Assets>;
-  deployedOnProductId?: Maybe<Scalars['Int']['output']>;
-  descriptionShort: Scalars['String']['output'];
-  id: Scalars['Int']['output'];
-  isMainProduct: Scalars['Int']['output'];
-  launchDate?: Maybe<Scalars['date']['output']>;
-  /** An object relationship */
-  mainAsset?: Maybe<Assets>;
-  mainAssetId?: Maybe<Scalars['Int']['output']>;
-  name: Scalars['String']['output'];
-  /** An object relationship */
-  product?: Maybe<Products>;
-  productAddress: Scalars['String']['output'];
-  /** An object relationship */
-  productDeployedOnProduct?: Maybe<Products>;
-  /** An object relationship */
-  productStatus: ProductStatus;
-  productStatusId: Scalars['Int']['output'];
-  /** An object relationship */
-  productType: ProductTypes;
-  productTypeId: Scalars['Int']['output'];
-  /** An array relationship */
-  products: Array<Products>;
-  /** An object relationship */
-  profile?: Maybe<Profiles>;
-  profileId?: Maybe<Scalars['Int']['output']>;
-  /** An array relationship */
-  supportedByProducts: Array<ProductSupports>;
-  /** An array relationship */
-  supportsProducts: Array<ProductSupports>;
-  urlToProduct: Scalars['String']['output'];
+export type CAssetTypesBoolExp = {
+  _and?: InputMaybe<Array<CAssetTypesBoolExp>>;
+  _not?: InputMaybe<CAssetTypesBoolExp>;
+  _or?: InputMaybe<Array<CAssetTypesBoolExp>>;
+  assets?: InputMaybe<CAssetsBoolExp>;
+  definition?: InputMaybe<StringBoolExp1>;
+  id?: InputMaybe<IntBoolExp1>;
+  name?: InputMaybe<StringBoolExp1>;
 };
 
-export type ProductsAssetDeployedOnProductArgs = {
+export type CAssetTypesFilterInput = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Assets_Order_By>>;
-  where?: InputMaybe<Assets_Bool_Exp>;
+  order_by?: InputMaybe<Array<CAssetTypesOrderBy>>;
+  where?: InputMaybe<CAssetTypesBoolExp>;
 };
 
-export type ProductsProductsArgs = {
+export type CAssetTypesOrderBy = {
+  definition?: InputMaybe<OrderBy>;
+  id?: InputMaybe<OrderBy>;
+  name?: InputMaybe<OrderBy>;
+};
+
+export type CAssets = {
+  __typename?: 'CAssets';
+  assetDeployments?: Maybe<Array<CAssetDeployments>>;
+  assetDeploymentsAggregate: CAssetDeploymentsAggExp;
+  assetStatus?: Maybe<CAssetStatuses>;
+  assetStatusId: Scalars['Int2']['output'];
+  assetType?: Maybe<CAssetTypes>;
+  assetTypeId: Scalars['Int2']['output'];
+  derivativeAssets?: Maybe<Array<CDerivativeAssets>>;
+  derivativeAssetsAggregate: CDerivativeAssetsAggExp;
+  derivativeAssetsByBaseAssetId?: Maybe<Array<CDerivativeAssets>>;
+  derivativeAssetsByBaseAssetIdAggregate: CDerivativeAssetsAggExp;
+  description: Scalars['String2']['output'];
+  icon: Scalars['String2']['output'];
+  id: Scalars['Int2']['output'];
+  name: Scalars['String2']['output'];
+  productAssetRelationships?: Maybe<Array<CProductAssetRelationships>>;
+  productAssetRelationshipsAggregate: CProductAssetRelationshipsAggExp;
+  root?: Maybe<CRoots>;
+  rootId: Scalars['Int2']['output'];
+  ticker: Scalars['String2']['output'];
+  urls?: Maybe<Array<AssetUrls>>;
+};
+
+export type CAssetsAssetDeploymentsArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Products_Order_By>>;
-  where?: InputMaybe<Products_Bool_Exp>;
+  order_by?: InputMaybe<Array<CAssetDeploymentsOrderBy>>;
+  where?: InputMaybe<CAssetDeploymentsBoolExp>;
 };
 
-export type ProductsSupportedByProductsArgs = {
+export type CAssetsAssetDeploymentsAggregateArgs = {
+  filter_input?: InputMaybe<CAssetDeploymentsFilterInput>;
+};
+
+export type CAssetsDerivativeAssetsArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<ProductSupports_Order_By>>;
-  where?: InputMaybe<ProductSupports_Bool_Exp>;
+  order_by?: InputMaybe<Array<CDerivativeAssetsOrderBy>>;
+  where?: InputMaybe<CDerivativeAssetsBoolExp>;
 };
 
-export type ProductsSupportsProductsArgs = {
+export type CAssetsDerivativeAssetsAggregateArgs = {
+  filter_input?: InputMaybe<CDerivativeAssetsFilterInput>;
+};
+
+export type CAssetsDerivativeAssetsByBaseAssetIdArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<ProductSupports_Order_By>>;
-  where?: InputMaybe<ProductSupports_Bool_Exp>;
+  order_by?: InputMaybe<Array<CDerivativeAssetsOrderBy>>;
+  where?: InputMaybe<CDerivativeAssetsBoolExp>;
 };
 
-/** order by aggregate values of table "products" */
-export type Products_Aggregate_Order_By = {
-  avg?: InputMaybe<Products_Avg_Order_By>;
-  count?: InputMaybe<Mysql8_Order_By>;
-  max?: InputMaybe<Products_Max_Order_By>;
-  min?: InputMaybe<Products_Min_Order_By>;
-  stddev_pop?: InputMaybe<Products_Stddev_Pop_Order_By>;
-  stddev_samp?: InputMaybe<Products_Stddev_Samp_Order_By>;
-  sum?: InputMaybe<Products_Sum_Order_By>;
-  var_pop?: InputMaybe<Products_Var_Pop_Order_By>;
-  var_samp?: InputMaybe<Products_Var_Samp_Order_By>;
+export type CAssetsDerivativeAssetsByBaseAssetIdAggregateArgs = {
+  filter_input?: InputMaybe<CDerivativeAssetsFilterInput>;
 };
 
-/** order by avg() on columns of table "products" */
-export type Products_Avg_Order_By = {
-  deployedOnProductId?: InputMaybe<Mysql8_Order_By>;
-  id?: InputMaybe<Mysql8_Order_By>;
-  isMainProduct?: InputMaybe<Mysql8_Order_By>;
-  mainAssetId?: InputMaybe<Mysql8_Order_By>;
-  productStatusId?: InputMaybe<Mysql8_Order_By>;
-  productTypeId?: InputMaybe<Mysql8_Order_By>;
-  profileId?: InputMaybe<Mysql8_Order_By>;
-};
-
-/** Boolean expression to filter rows from the table "products". All fields are combined with a logical 'AND'. */
-export type Products_Bool_Exp = {
-  _and?: InputMaybe<Array<Products_Bool_Exp>>;
-  _not?: InputMaybe<Products_Bool_Exp>;
-  _or?: InputMaybe<Array<Products_Bool_Exp>>;
-  asset?: InputMaybe<Assets_Bool_Exp>;
-  assetDeployedOnProduct?: InputMaybe<Assets_Bool_Exp>;
-  deployedOnProductId?: InputMaybe<Int_Mysql8_Comparison_Exp>;
-  descriptionShort?: InputMaybe<String_Mysql8_Comparison_Exp>;
-  id?: InputMaybe<Int_Mysql8_Comparison_Exp>;
-  isMainProduct?: InputMaybe<Int_Mysql8_Comparison_Exp>;
-  launchDate?: InputMaybe<Date_Mysql8_Comparison_Exp>;
-  mainAsset?: InputMaybe<Assets_Bool_Exp>;
-  mainAssetId?: InputMaybe<Int_Mysql8_Comparison_Exp>;
-  name?: InputMaybe<String_Mysql8_Comparison_Exp>;
-  product?: InputMaybe<Products_Bool_Exp>;
-  productAddress?: InputMaybe<String_Mysql8_Comparison_Exp>;
-  productDeployedOnProduct?: InputMaybe<Products_Bool_Exp>;
-  productStatus?: InputMaybe<ProductStatus_Bool_Exp>;
-  productStatusId?: InputMaybe<Int_Mysql8_Comparison_Exp>;
-  productType?: InputMaybe<ProductTypes_Bool_Exp>;
-  productTypeId?: InputMaybe<Int_Mysql8_Comparison_Exp>;
-  products?: InputMaybe<Products_Bool_Exp>;
-  profile?: InputMaybe<Profiles_Bool_Exp>;
-  profileId?: InputMaybe<Int_Mysql8_Comparison_Exp>;
-  supportedByProducts?: InputMaybe<ProductSupports_Bool_Exp>;
-  supportsProducts?: InputMaybe<ProductSupports_Bool_Exp>;
-  urlToProduct?: InputMaybe<String_Mysql8_Comparison_Exp>;
-};
-
-/** order by max() on columns of table "products" */
-export type Products_Max_Order_By = {
-  deployedOnProductId?: InputMaybe<Mysql8_Order_By>;
-  descriptionShort?: InputMaybe<Mysql8_Order_By>;
-  id?: InputMaybe<Mysql8_Order_By>;
-  isMainProduct?: InputMaybe<Mysql8_Order_By>;
-  mainAssetId?: InputMaybe<Mysql8_Order_By>;
-  name?: InputMaybe<Mysql8_Order_By>;
-  productAddress?: InputMaybe<Mysql8_Order_By>;
-  productStatusId?: InputMaybe<Mysql8_Order_By>;
-  productTypeId?: InputMaybe<Mysql8_Order_By>;
-  profileId?: InputMaybe<Mysql8_Order_By>;
-  urlToProduct?: InputMaybe<Mysql8_Order_By>;
-};
-
-/** order by min() on columns of table "products" */
-export type Products_Min_Order_By = {
-  deployedOnProductId?: InputMaybe<Mysql8_Order_By>;
-  descriptionShort?: InputMaybe<Mysql8_Order_By>;
-  id?: InputMaybe<Mysql8_Order_By>;
-  isMainProduct?: InputMaybe<Mysql8_Order_By>;
-  mainAssetId?: InputMaybe<Mysql8_Order_By>;
-  name?: InputMaybe<Mysql8_Order_By>;
-  productAddress?: InputMaybe<Mysql8_Order_By>;
-  productStatusId?: InputMaybe<Mysql8_Order_By>;
-  productTypeId?: InputMaybe<Mysql8_Order_By>;
-  profileId?: InputMaybe<Mysql8_Order_By>;
-  urlToProduct?: InputMaybe<Mysql8_Order_By>;
-};
-
-/** Ordering options when selecting data from "products". */
-export type Products_Order_By = {
-  asset?: InputMaybe<Assets_Order_By>;
-  assetDeployedOnProduct_aggregate?: InputMaybe<Assets_Aggregate_Order_By>;
-  deployedOnProductId?: InputMaybe<Mysql8_Order_By>;
-  descriptionShort?: InputMaybe<Mysql8_Order_By>;
-  id?: InputMaybe<Mysql8_Order_By>;
-  isMainProduct?: InputMaybe<Mysql8_Order_By>;
-  launchDate?: InputMaybe<Mysql8_Order_By>;
-  mainAsset?: InputMaybe<Assets_Order_By>;
-  mainAssetId?: InputMaybe<Mysql8_Order_By>;
-  name?: InputMaybe<Mysql8_Order_By>;
-  product?: InputMaybe<Products_Order_By>;
-  productAddress?: InputMaybe<Mysql8_Order_By>;
-  productDeployedOnProduct?: InputMaybe<Products_Order_By>;
-  productStatus?: InputMaybe<ProductStatus_Order_By>;
-  productStatusId?: InputMaybe<Mysql8_Order_By>;
-  productType?: InputMaybe<ProductTypes_Order_By>;
-  productTypeId?: InputMaybe<Mysql8_Order_By>;
-  products_aggregate?: InputMaybe<Products_Aggregate_Order_By>;
-  profile?: InputMaybe<Profiles_Order_By>;
-  profileId?: InputMaybe<Mysql8_Order_By>;
-  supportedByProducts_aggregate?: InputMaybe<ProductSupports_Aggregate_Order_By>;
-  supportsProducts_aggregate?: InputMaybe<ProductSupports_Aggregate_Order_By>;
-  urlToProduct?: InputMaybe<Mysql8_Order_By>;
-};
-
-/** order by stddev_pop() on columns of table "products" */
-export type Products_Stddev_Pop_Order_By = {
-  deployedOnProductId?: InputMaybe<Mysql8_Order_By>;
-  id?: InputMaybe<Mysql8_Order_By>;
-  isMainProduct?: InputMaybe<Mysql8_Order_By>;
-  mainAssetId?: InputMaybe<Mysql8_Order_By>;
-  productStatusId?: InputMaybe<Mysql8_Order_By>;
-  productTypeId?: InputMaybe<Mysql8_Order_By>;
-  profileId?: InputMaybe<Mysql8_Order_By>;
-};
-
-/** order by stddev_samp() on columns of table "products" */
-export type Products_Stddev_Samp_Order_By = {
-  deployedOnProductId?: InputMaybe<Mysql8_Order_By>;
-  id?: InputMaybe<Mysql8_Order_By>;
-  isMainProduct?: InputMaybe<Mysql8_Order_By>;
-  mainAssetId?: InputMaybe<Mysql8_Order_By>;
-  productStatusId?: InputMaybe<Mysql8_Order_By>;
-  productTypeId?: InputMaybe<Mysql8_Order_By>;
-  profileId?: InputMaybe<Mysql8_Order_By>;
-};
-
-/** order by sum() on columns of table "products" */
-export type Products_Sum_Order_By = {
-  deployedOnProductId?: InputMaybe<Mysql8_Order_By>;
-  id?: InputMaybe<Mysql8_Order_By>;
-  isMainProduct?: InputMaybe<Mysql8_Order_By>;
-  mainAssetId?: InputMaybe<Mysql8_Order_By>;
-  productStatusId?: InputMaybe<Mysql8_Order_By>;
-  productTypeId?: InputMaybe<Mysql8_Order_By>;
-  profileId?: InputMaybe<Mysql8_Order_By>;
-};
-
-/** order by var_pop() on columns of table "products" */
-export type Products_Var_Pop_Order_By = {
-  deployedOnProductId?: InputMaybe<Mysql8_Order_By>;
-  id?: InputMaybe<Mysql8_Order_By>;
-  isMainProduct?: InputMaybe<Mysql8_Order_By>;
-  mainAssetId?: InputMaybe<Mysql8_Order_By>;
-  productStatusId?: InputMaybe<Mysql8_Order_By>;
-  productTypeId?: InputMaybe<Mysql8_Order_By>;
-  profileId?: InputMaybe<Mysql8_Order_By>;
-};
-
-/** order by var_samp() on columns of table "products" */
-export type Products_Var_Samp_Order_By = {
-  deployedOnProductId?: InputMaybe<Mysql8_Order_By>;
-  id?: InputMaybe<Mysql8_Order_By>;
-  isMainProduct?: InputMaybe<Mysql8_Order_By>;
-  mainAssetId?: InputMaybe<Mysql8_Order_By>;
-  productStatusId?: InputMaybe<Mysql8_Order_By>;
-  productTypeId?: InputMaybe<Mysql8_Order_By>;
-  profileId?: InputMaybe<Mysql8_Order_By>;
-};
-
-export type ProfileSectors = {
-  __typename?: 'profileSectors';
-  definition: Scalars['String']['output'];
-  id: Scalars['Int']['output'];
-  name: Scalars['String']['output'];
-  /** An array relationship */
-  profiles: Array<Profiles>;
-};
-
-export type ProfileSectorsProfilesArgs = {
+export type CAssetsProductAssetRelationshipsArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Profiles_Order_By>>;
-  where?: InputMaybe<Profiles_Bool_Exp>;
+  order_by?: InputMaybe<Array<CProductAssetRelationshipsOrderBy>>;
+  where?: InputMaybe<CProductAssetRelationshipsBoolExp>;
 };
 
-/** Boolean expression to filter rows from the table "profileSectors". All fields are combined with a logical 'AND'. */
-export type ProfileSectors_Bool_Exp = {
-  _and?: InputMaybe<Array<ProfileSectors_Bool_Exp>>;
-  _not?: InputMaybe<ProfileSectors_Bool_Exp>;
-  _or?: InputMaybe<Array<ProfileSectors_Bool_Exp>>;
-  definition?: InputMaybe<String_Mysql8_Comparison_Exp>;
-  id?: InputMaybe<Int_Mysql8_Comparison_Exp>;
-  name?: InputMaybe<String_Mysql8_Comparison_Exp>;
-  profiles?: InputMaybe<Profiles_Bool_Exp>;
+export type CAssetsProductAssetRelationshipsAggregateArgs = {
+  filter_input?: InputMaybe<CProductAssetRelationshipsFilterInput>;
 };
 
-/** Ordering options when selecting data from "profileSectors". */
-export type ProfileSectors_Order_By = {
-  definition?: InputMaybe<Mysql8_Order_By>;
-  id?: InputMaybe<Mysql8_Order_By>;
-  name?: InputMaybe<Mysql8_Order_By>;
-  profiles_aggregate?: InputMaybe<Profiles_Aggregate_Order_By>;
-};
-
-export type ProfileStatuses = {
-  __typename?: 'profileStatuses';
-  definition: Scalars['String']['output'];
-  id: Scalars['Int']['output'];
-  name: Scalars['String']['output'];
-  /** An array relationship */
-  profiles: Array<Profiles>;
-};
-
-export type ProfileStatusesProfilesArgs = {
+export type CAssetsUrlsArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Profiles_Order_By>>;
-  where?: InputMaybe<Profiles_Bool_Exp>;
+  order_by?: InputMaybe<Array<AssetUrlsOrderBy>>;
+  where?: InputMaybe<AssetUrlsBoolExp>;
 };
 
-/** Boolean expression to filter rows from the table "profileStatuses". All fields are combined with a logical 'AND'. */
-export type ProfileStatuses_Bool_Exp = {
-  _and?: InputMaybe<Array<ProfileStatuses_Bool_Exp>>;
-  _not?: InputMaybe<ProfileStatuses_Bool_Exp>;
-  _or?: InputMaybe<Array<ProfileStatuses_Bool_Exp>>;
-  definition?: InputMaybe<String_Mysql8_Comparison_Exp>;
-  id?: InputMaybe<Int_Mysql8_Comparison_Exp>;
-  name?: InputMaybe<String_Mysql8_Comparison_Exp>;
-  profiles?: InputMaybe<Profiles_Bool_Exp>;
+export type CAssetsAggExp = {
+  __typename?: 'CAssetsAggExp';
+  _count: Scalars['Int']['output'];
+  assetStatusId: IntAggExp1;
+  assetTypeId: IntAggExp1;
+  description: StringAggExp1;
+  icon: StringAggExp1;
+  id: IntAggExp1;
+  name: StringAggExp1;
+  rootId: IntAggExp1;
+  ticker: StringAggExp1;
 };
 
-/** Ordering options when selecting data from "profileStatuses". */
-export type ProfileStatuses_Order_By = {
-  definition?: InputMaybe<Mysql8_Order_By>;
-  id?: InputMaybe<Mysql8_Order_By>;
-  name?: InputMaybe<Mysql8_Order_By>;
-  profiles_aggregate?: InputMaybe<Profiles_Aggregate_Order_By>;
+export type CAssetsBoolExp = {
+  _and?: InputMaybe<Array<CAssetsBoolExp>>;
+  _not?: InputMaybe<CAssetsBoolExp>;
+  _or?: InputMaybe<Array<CAssetsBoolExp>>;
+  assetDeployments?: InputMaybe<CAssetDeploymentsBoolExp>;
+  assetStatus?: InputMaybe<CAssetStatusesBoolExp>;
+  assetStatusId?: InputMaybe<IntBoolExp1>;
+  assetType?: InputMaybe<CAssetTypesBoolExp>;
+  assetTypeId?: InputMaybe<IntBoolExp1>;
+  derivativeAssets?: InputMaybe<CDerivativeAssetsBoolExp>;
+  derivativeAssetsByBaseAssetId?: InputMaybe<CDerivativeAssetsBoolExp>;
+  description?: InputMaybe<StringBoolExp1>;
+  icon?: InputMaybe<StringBoolExp1>;
+  id?: InputMaybe<IntBoolExp1>;
+  name?: InputMaybe<StringBoolExp1>;
+  productAssetRelationships?: InputMaybe<CProductAssetRelationshipsBoolExp>;
+  root?: InputMaybe<CRootsBoolExp>;
+  rootId?: InputMaybe<IntBoolExp1>;
+  ticker?: InputMaybe<StringBoolExp1>;
+};
+
+export type CAssetsFilterInput = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<CAssetsOrderBy>>;
+  where?: InputMaybe<CAssetsBoolExp>;
+};
+
+export type CAssetsOrderBy = {
+  assetStatus?: InputMaybe<CAssetStatusesOrderBy>;
+  assetStatusId?: InputMaybe<OrderBy>;
+  assetType?: InputMaybe<CAssetTypesOrderBy>;
+  assetTypeId?: InputMaybe<OrderBy>;
+  description?: InputMaybe<OrderBy>;
+  icon?: InputMaybe<OrderBy>;
+  id?: InputMaybe<OrderBy>;
+  name?: InputMaybe<OrderBy>;
+  root?: InputMaybe<CRootsOrderBy>;
+  rootId?: InputMaybe<OrderBy>;
+  ticker?: InputMaybe<OrderBy>;
+};
+
+export type CCoreTableNames = {
+  __typename?: 'CCoreTableNames';
+  UrlsAggregate: CUrlsAggExp;
+  id: Scalars['Int2']['output'];
+  tableName: Scalars['String2']['output'];
+  urls?: Maybe<Array<CUrls>>;
+};
+
+export type CCoreTableNamesUrlsAggregateArgs = {
+  filter_input?: InputMaybe<CUrlsFilterInput>;
+};
+
+export type CCoreTableNamesUrlsArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<CUrlsOrderBy>>;
+  where?: InputMaybe<CUrlsBoolExp>;
+};
+
+export type CCoreTableNamesAggExp = {
+  __typename?: 'CCoreTableNamesAggExp';
+  _count: Scalars['Int']['output'];
+  id: IntAggExp1;
+  tableName: StringAggExp1;
+};
+
+export type CCoreTableNamesBoolExp = {
+  _and?: InputMaybe<Array<CCoreTableNamesBoolExp>>;
+  _not?: InputMaybe<CCoreTableNamesBoolExp>;
+  _or?: InputMaybe<Array<CCoreTableNamesBoolExp>>;
+  id?: InputMaybe<IntBoolExp1>;
+  tableName?: InputMaybe<StringBoolExp1>;
+  urls?: InputMaybe<CUrlsBoolExp>;
+};
+
+export type CCoreTableNamesFilterInput = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<CCoreTableNamesOrderBy>>;
+  where?: InputMaybe<CCoreTableNamesBoolExp>;
+};
+
+export type CCoreTableNamesOrderBy = {
+  id?: InputMaybe<OrderBy>;
+  tableName?: InputMaybe<OrderBy>;
+};
+
+export type CCountries = {
+  __typename?: 'CCountries';
+  EntitiesAggregate: CEntitiesAggExp;
+  code: Scalars['String2']['output'];
+  entities?: Maybe<Array<CEntities>>;
+  id: Scalars['Int2']['output'];
+  name: Scalars['String2']['output'];
+};
+
+export type CCountriesEntitiesAggregateArgs = {
+  filter_input?: InputMaybe<CEntitiesFilterInput>;
+};
+
+export type CCountriesEntitiesArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<CEntitiesOrderBy>>;
+  where?: InputMaybe<CEntitiesBoolExp>;
+};
+
+export type CCountriesAggExp = {
+  __typename?: 'CCountriesAggExp';
+  _count: Scalars['Int']['output'];
+  code: StringAggExp1;
+  id: IntAggExp1;
+  name: StringAggExp1;
+};
+
+export type CCountriesBoolExp = {
+  _and?: InputMaybe<Array<CCountriesBoolExp>>;
+  _not?: InputMaybe<CCountriesBoolExp>;
+  _or?: InputMaybe<Array<CCountriesBoolExp>>;
+  code?: InputMaybe<StringBoolExp1>;
+  entities?: InputMaybe<CEntitiesBoolExp>;
+  id?: InputMaybe<IntBoolExp1>;
+  name?: InputMaybe<StringBoolExp1>;
+};
+
+export type CCountriesFilterInput = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<CCountriesOrderBy>>;
+  where?: InputMaybe<CCountriesBoolExp>;
+};
+
+export type CCountriesOrderBy = {
+  code?: InputMaybe<OrderBy>;
+  id?: InputMaybe<OrderBy>;
+  name?: InputMaybe<OrderBy>;
+};
+
+export type CDeploymentTypes = {
+  __typename?: 'CDeploymentTypes';
+  definition: Scalars['String2']['output'];
+  id: Scalars['Int2']['output'];
+  name: Scalars['String2']['output'];
+  smartContractDeployments?: Maybe<Array<CSmartContractDeployments>>;
+  smartContractDeploymentsAggregate: CSmartContractDeploymentsAggExp;
+};
+
+export type CDeploymentTypesSmartContractDeploymentsArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<CSmartContractDeploymentsOrderBy>>;
+  where?: InputMaybe<CSmartContractDeploymentsBoolExp>;
+};
+
+export type CDeploymentTypesSmartContractDeploymentsAggregateArgs = {
+  filter_input?: InputMaybe<CSmartContractDeploymentsFilterInput>;
+};
+
+export type CDeploymentTypesAggExp = {
+  __typename?: 'CDeploymentTypesAggExp';
+  _count: Scalars['Int']['output'];
+  definition: StringAggExp1;
+  id: IntAggExp1;
+  name: StringAggExp1;
+};
+
+export type CDeploymentTypesBoolExp = {
+  _and?: InputMaybe<Array<CDeploymentTypesBoolExp>>;
+  _not?: InputMaybe<CDeploymentTypesBoolExp>;
+  _or?: InputMaybe<Array<CDeploymentTypesBoolExp>>;
+  definition?: InputMaybe<StringBoolExp1>;
+  id?: InputMaybe<IntBoolExp1>;
+  name?: InputMaybe<StringBoolExp1>;
+  smartContractDeployments?: InputMaybe<CSmartContractDeploymentsBoolExp>;
+};
+
+export type CDeploymentTypesFilterInput = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<CDeploymentTypesOrderBy>>;
+  where?: InputMaybe<CDeploymentTypesBoolExp>;
+};
+
+export type CDeploymentTypesOrderBy = {
+  definition?: InputMaybe<OrderBy>;
+  id?: InputMaybe<OrderBy>;
+  name?: InputMaybe<OrderBy>;
+};
+
+export type CDerivativeAssets = {
+  __typename?: 'CDerivativeAssets';
+  asset?: Maybe<CAssets>;
+  assetByBaseAssetId?: Maybe<CAssets>;
+  baseAssetId: Scalars['Int2']['output'];
+  derivativeAssetId: Scalars['Int2']['output'];
+  id: Scalars['Int2']['output'];
+};
+
+export type CDerivativeAssetsAggExp = {
+  __typename?: 'CDerivativeAssetsAggExp';
+  _count: Scalars['Int']['output'];
+  baseAssetId: IntAggExp1;
+  derivativeAssetId: IntAggExp1;
+  id: IntAggExp1;
+};
+
+export type CDerivativeAssetsBoolExp = {
+  _and?: InputMaybe<Array<CDerivativeAssetsBoolExp>>;
+  _not?: InputMaybe<CDerivativeAssetsBoolExp>;
+  _or?: InputMaybe<Array<CDerivativeAssetsBoolExp>>;
+  asset?: InputMaybe<CAssetsBoolExp>;
+  assetByBaseAssetId?: InputMaybe<CAssetsBoolExp>;
+  baseAssetId?: InputMaybe<IntBoolExp1>;
+  derivativeAssetId?: InputMaybe<IntBoolExp1>;
+  id?: InputMaybe<IntBoolExp1>;
+};
+
+export type CDerivativeAssetsFilterInput = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<CDerivativeAssetsOrderBy>>;
+  where?: InputMaybe<CDerivativeAssetsBoolExp>;
+};
+
+export type CDerivativeAssetsOrderBy = {
+  asset?: InputMaybe<CAssetsOrderBy>;
+  assetByBaseAssetId?: InputMaybe<CAssetsOrderBy>;
+  baseAssetId?: InputMaybe<OrderBy>;
+  derivativeAssetId?: InputMaybe<OrderBy>;
+  id?: InputMaybe<OrderBy>;
+};
+
+export type CEntities = {
+  __typename?: 'CEntities';
+  address: Scalars['String2']['output'];
+  country?: Maybe<CCountries>;
+  countryId: Scalars['Int2']['output'];
+  dateOfIncorporation?: Maybe<Scalars['Date1']['output']>;
+  entities?: Maybe<Array<CEntities>>;
+  entitiesAggregate: CEntitiesAggExp;
+  entity?: Maybe<CEntities>;
+  entityType?: Maybe<CEntityTypes>;
+  entityTypeId: Scalars['Int2']['output'];
+  id: Scalars['Int2']['output'];
+  leiNumber: Scalars['String2']['output'];
+  localRegistrationNumber: Scalars['String2']['output'];
+  name: Scalars['String2']['output'];
+  parentEntityId?: Maybe<Scalars['Int2']['output']>;
+  root?: Maybe<CRoots>;
+  rootId: Scalars['Int2']['output'];
+  taxIdentificationNumber: Scalars['String2']['output'];
+  tradeName: Scalars['String2']['output'];
+  urls?: Maybe<Array<EntityUrls>>;
+};
+
+export type CEntitiesEntitiesArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<CEntitiesOrderBy>>;
+  where?: InputMaybe<CEntitiesBoolExp>;
+};
+
+export type CEntitiesEntitiesAggregateArgs = {
+  filter_input?: InputMaybe<CEntitiesFilterInput>;
+};
+
+export type CEntitiesUrlsArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<EntityUrlsOrderBy>>;
+  where?: InputMaybe<EntityUrlsBoolExp>;
+};
+
+export type CEntitiesAggExp = {
+  __typename?: 'CEntitiesAggExp';
+  _count: Scalars['Int']['output'];
+  address: StringAggExp1;
+  countryId: IntAggExp1;
+  dateOfIncorporation: DateAggExp1;
+  entityTypeId: IntAggExp1;
+  id: IntAggExp1;
+  leiNumber: StringAggExp1;
+  localRegistrationNumber: StringAggExp1;
+  name: StringAggExp1;
+  parentEntityId: IntAggExp1;
+  rootId: IntAggExp1;
+  taxIdentificationNumber: StringAggExp1;
+  tradeName: StringAggExp1;
+};
+
+export type CEntitiesBoolExp = {
+  _and?: InputMaybe<Array<CEntitiesBoolExp>>;
+  _not?: InputMaybe<CEntitiesBoolExp>;
+  _or?: InputMaybe<Array<CEntitiesBoolExp>>;
+  address?: InputMaybe<StringBoolExp1>;
+  country?: InputMaybe<CCountriesBoolExp>;
+  countryId?: InputMaybe<IntBoolExp1>;
+  dateOfIncorporation?: InputMaybe<DateBoolExp1>;
+  entities?: InputMaybe<CEntitiesBoolExp>;
+  entity?: InputMaybe<CEntitiesBoolExp>;
+  entityType?: InputMaybe<CEntityTypesBoolExp>;
+  entityTypeId?: InputMaybe<IntBoolExp1>;
+  id?: InputMaybe<IntBoolExp1>;
+  leiNumber?: InputMaybe<StringBoolExp1>;
+  localRegistrationNumber?: InputMaybe<StringBoolExp1>;
+  name?: InputMaybe<StringBoolExp1>;
+  parentEntityId?: InputMaybe<IntBoolExp1>;
+  root?: InputMaybe<CRootsBoolExp>;
+  rootId?: InputMaybe<IntBoolExp1>;
+  taxIdentificationNumber?: InputMaybe<StringBoolExp1>;
+  tradeName?: InputMaybe<StringBoolExp1>;
+};
+
+export type CEntitiesFilterInput = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<CEntitiesOrderBy>>;
+  where?: InputMaybe<CEntitiesBoolExp>;
+};
+
+export type CEntitiesOrderBy = {
+  address?: InputMaybe<OrderBy>;
+  country?: InputMaybe<CCountriesOrderBy>;
+  countryId?: InputMaybe<OrderBy>;
+  dateOfIncorporation?: InputMaybe<OrderBy>;
+  entity?: InputMaybe<CEntitiesOrderBy>;
+  entityType?: InputMaybe<CEntityTypesOrderBy>;
+  entityTypeId?: InputMaybe<OrderBy>;
+  id?: InputMaybe<OrderBy>;
+  leiNumber?: InputMaybe<OrderBy>;
+  localRegistrationNumber?: InputMaybe<OrderBy>;
+  name?: InputMaybe<OrderBy>;
+  parentEntityId?: InputMaybe<OrderBy>;
+  root?: InputMaybe<CRootsOrderBy>;
+  rootId?: InputMaybe<OrderBy>;
+  taxIdentificationNumber?: InputMaybe<OrderBy>;
+  tradeName?: InputMaybe<OrderBy>;
+};
+
+export type CEntityTypes = {
+  __typename?: 'CEntityTypes';
+  definition: Scalars['String2']['output'];
+  entities?: Maybe<Array<CEntities>>;
+  entitiesAggregate: CEntitiesAggExp;
+  id: Scalars['Int2']['output'];
+  name: Scalars['String2']['output'];
+};
+
+export type CEntityTypesEntitiesArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<CEntitiesOrderBy>>;
+  where?: InputMaybe<CEntitiesBoolExp>;
+};
+
+export type CEntityTypesEntitiesAggregateArgs = {
+  filter_input?: InputMaybe<CEntitiesFilterInput>;
+};
+
+export type CEntityTypesAggExp = {
+  __typename?: 'CEntityTypesAggExp';
+  _count: Scalars['Int']['output'];
+  definition: StringAggExp1;
+  id: IntAggExp1;
+  name: StringAggExp1;
+};
+
+export type CEntityTypesBoolExp = {
+  _and?: InputMaybe<Array<CEntityTypesBoolExp>>;
+  _not?: InputMaybe<CEntityTypesBoolExp>;
+  _or?: InputMaybe<Array<CEntityTypesBoolExp>>;
+  definition?: InputMaybe<StringBoolExp1>;
+  entities?: InputMaybe<CEntitiesBoolExp>;
+  id?: InputMaybe<IntBoolExp1>;
+  name?: InputMaybe<StringBoolExp1>;
+};
+
+export type CEntityTypesFilterInput = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<CEntityTypesOrderBy>>;
+  where?: InputMaybe<CEntityTypesBoolExp>;
+};
+
+export type CEntityTypesOrderBy = {
+  definition?: InputMaybe<OrderBy>;
+  id?: InputMaybe<OrderBy>;
+  name?: InputMaybe<OrderBy>;
+};
+
+export type CProductAssetRelationships = {
+  __typename?: 'CProductAssetRelationships';
+  asset?: Maybe<CAssets>;
+  assetId: Scalars['Int2']['output'];
+  assetSupportType?: Maybe<CAssetSupportTypes>;
+  id: Scalars['Int2']['output'];
+  product?: Maybe<CProducts>;
+  productId: Scalars['Int2']['output'];
+  typeOfSupportId: Scalars['Int2']['output'];
+};
+
+export type CProductAssetRelationshipsAggExp = {
+  __typename?: 'CProductAssetRelationshipsAggExp';
+  _count: Scalars['Int']['output'];
+  assetId: IntAggExp1;
+  id: IntAggExp1;
+  productId: IntAggExp1;
+  typeOfSupportId: IntAggExp1;
+};
+
+export type CProductAssetRelationshipsBoolExp = {
+  _and?: InputMaybe<Array<CProductAssetRelationshipsBoolExp>>;
+  _not?: InputMaybe<CProductAssetRelationshipsBoolExp>;
+  _or?: InputMaybe<Array<CProductAssetRelationshipsBoolExp>>;
+  asset?: InputMaybe<CAssetsBoolExp>;
+  assetId?: InputMaybe<IntBoolExp1>;
+  assetSupportType?: InputMaybe<CAssetSupportTypesBoolExp>;
+  id?: InputMaybe<IntBoolExp1>;
+  product?: InputMaybe<CProductsBoolExp>;
+  productId?: InputMaybe<IntBoolExp1>;
+  typeOfSupportId?: InputMaybe<IntBoolExp1>;
+};
+
+export type CProductAssetRelationshipsFilterInput = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<CProductAssetRelationshipsOrderBy>>;
+  where?: InputMaybe<CProductAssetRelationshipsBoolExp>;
+};
+
+export type CProductAssetRelationshipsOrderBy = {
+  asset?: InputMaybe<CAssetsOrderBy>;
+  assetId?: InputMaybe<OrderBy>;
+  assetSupportType?: InputMaybe<CAssetSupportTypesOrderBy>;
+  id?: InputMaybe<OrderBy>;
+  product?: InputMaybe<CProductsOrderBy>;
+  productId?: InputMaybe<OrderBy>;
+  typeOfSupportId?: InputMaybe<OrderBy>;
+};
+
+export type CProductDeployments = {
+  __typename?: 'CProductDeployments';
+  deploymentId: Scalars['Int2']['output'];
+  id: Scalars['Int2']['output'];
+  product?: Maybe<CProducts>;
+  productId: Scalars['Int2']['output'];
+  smartContractDeployment?: Maybe<CSmartContractDeployments>;
+};
+
+export type CProductDeploymentsAggExp = {
+  __typename?: 'CProductDeploymentsAggExp';
+  _count: Scalars['Int']['output'];
+  deploymentId: IntAggExp1;
+  id: IntAggExp1;
+  productId: IntAggExp1;
+};
+
+export type CProductDeploymentsBoolExp = {
+  _and?: InputMaybe<Array<CProductDeploymentsBoolExp>>;
+  _not?: InputMaybe<CProductDeploymentsBoolExp>;
+  _or?: InputMaybe<Array<CProductDeploymentsBoolExp>>;
+  deploymentId?: InputMaybe<IntBoolExp1>;
+  id?: InputMaybe<IntBoolExp1>;
+  product?: InputMaybe<CProductsBoolExp>;
+  productId?: InputMaybe<IntBoolExp1>;
+  smartContractDeployment?: InputMaybe<CSmartContractDeploymentsBoolExp>;
+};
+
+export type CProductDeploymentsFilterInput = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<CProductDeploymentsOrderBy>>;
+  where?: InputMaybe<CProductDeploymentsBoolExp>;
+};
+
+export type CProductDeploymentsOrderBy = {
+  deploymentId?: InputMaybe<OrderBy>;
+  id?: InputMaybe<OrderBy>;
+  product?: InputMaybe<CProductsOrderBy>;
+  productId?: InputMaybe<OrderBy>;
+  smartContractDeployment?: InputMaybe<CSmartContractDeploymentsOrderBy>;
+};
+
+export type CProductStatuses = {
+  __typename?: 'CProductStatuses';
+  definition: Scalars['String2']['output'];
+  id: Scalars['Int2']['output'];
+  name: Scalars['String2']['output'];
+  products?: Maybe<Array<CProducts>>;
+  productsAggregate: CProductsAggExp;
+};
+
+export type CProductStatusesProductsArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<CProductsOrderBy>>;
+  where?: InputMaybe<CProductsBoolExp>;
+};
+
+export type CProductStatusesProductsAggregateArgs = {
+  filter_input?: InputMaybe<CProductsFilterInput>;
+};
+
+export type CProductStatusesAggExp = {
+  __typename?: 'CProductStatusesAggExp';
+  _count: Scalars['Int']['output'];
+  definition: StringAggExp1;
+  id: IntAggExp1;
+  name: StringAggExp1;
+};
+
+export type CProductStatusesBoolExp = {
+  _and?: InputMaybe<Array<CProductStatusesBoolExp>>;
+  _not?: InputMaybe<CProductStatusesBoolExp>;
+  _or?: InputMaybe<Array<CProductStatusesBoolExp>>;
+  definition?: InputMaybe<StringBoolExp1>;
+  id?: InputMaybe<IntBoolExp1>;
+  name?: InputMaybe<StringBoolExp1>;
+  products?: InputMaybe<CProductsBoolExp>;
+};
+
+export type CProductStatusesFilterInput = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<CProductStatusesOrderBy>>;
+  where?: InputMaybe<CProductStatusesBoolExp>;
+};
+
+export type CProductStatusesOrderBy = {
+  definition?: InputMaybe<OrderBy>;
+  id?: InputMaybe<OrderBy>;
+  name?: InputMaybe<OrderBy>;
+};
+
+export type CProductTypes = {
+  __typename?: 'CProductTypes';
+  definition: Scalars['String2']['output'];
+  id: Scalars['Int2']['output'];
+  name: Scalars['String2']['output'];
+  products?: Maybe<Array<CProducts>>;
+  productsAggregate: CProductsAggExp;
+};
+
+export type CProductTypesProductsArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<CProductsOrderBy>>;
+  where?: InputMaybe<CProductsBoolExp>;
+};
+
+export type CProductTypesProductsAggregateArgs = {
+  filter_input?: InputMaybe<CProductsFilterInput>;
+};
+
+export type CProductTypesAggExp = {
+  __typename?: 'CProductTypesAggExp';
+  _count: Scalars['Int']['output'];
+  definition: StringAggExp1;
+  id: IntAggExp1;
+  name: StringAggExp1;
+};
+
+export type CProductTypesBoolExp = {
+  _and?: InputMaybe<Array<CProductTypesBoolExp>>;
+  _not?: InputMaybe<CProductTypesBoolExp>;
+  _or?: InputMaybe<Array<CProductTypesBoolExp>>;
+  definition?: InputMaybe<StringBoolExp1>;
+  id?: InputMaybe<IntBoolExp1>;
+  name?: InputMaybe<StringBoolExp1>;
+  products?: InputMaybe<CProductsBoolExp>;
+};
+
+export type CProductTypesFilterInput = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<CProductTypesOrderBy>>;
+  where?: InputMaybe<CProductTypesBoolExp>;
+};
+
+export type CProductTypesOrderBy = {
+  definition?: InputMaybe<OrderBy>;
+  id?: InputMaybe<OrderBy>;
+  name?: InputMaybe<OrderBy>;
+};
+
+export type CProducts = {
+  __typename?: 'CProducts';
+  description: Scalars['String2']['output'];
+  id: Scalars['Int2']['output'];
+  isMainProduct?: Maybe<Scalars['Int2']['output']>;
+  launchDate?: Maybe<Scalars['Date1']['output']>;
+  name: Scalars['String2']['output'];
+  productAssetRelationships?: Maybe<Array<CProductAssetRelationships>>;
+  productAssetRelationshipsAggregate: CProductAssetRelationshipsAggExp;
+  productDeployments?: Maybe<Array<CProductDeployments>>;
+  productDeploymentsAggregate: CProductDeploymentsAggExp;
+  productStatus?: Maybe<CProductStatuses>;
+  productStatusId: Scalars['Int2']['output'];
+  productType?: Maybe<CProductTypes>;
+  productTypeId: Scalars['Int2']['output'];
+  root?: Maybe<CRoots>;
+  rootId: Scalars['Int2']['output'];
+  smartContractDeployments?: Maybe<Array<CSmartContractDeployments>>;
+  smartContractDeploymentsAggregate: CSmartContractDeploymentsAggExp;
+  supportsProducts?: Maybe<Array<CSupportsProducts>>;
+  supportsProductsAggregate: CSupportsProductsAggExp;
+  supportsProductsBySupportsProductId?: Maybe<Array<CSupportsProducts>>;
+  supportsProductsBySupportsProductIdAggregate: CSupportsProductsAggExp;
+  urls?: Maybe<Array<ProductUrls>>;
+};
+
+export type CProductsProductAssetRelationshipsArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<CProductAssetRelationshipsOrderBy>>;
+  where?: InputMaybe<CProductAssetRelationshipsBoolExp>;
+};
+
+export type CProductsProductAssetRelationshipsAggregateArgs = {
+  filter_input?: InputMaybe<CProductAssetRelationshipsFilterInput>;
+};
+
+export type CProductsProductDeploymentsArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<CProductDeploymentsOrderBy>>;
+  where?: InputMaybe<CProductDeploymentsBoolExp>;
+};
+
+export type CProductsProductDeploymentsAggregateArgs = {
+  filter_input?: InputMaybe<CProductDeploymentsFilterInput>;
+};
+
+export type CProductsSmartContractDeploymentsArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<CSmartContractDeploymentsOrderBy>>;
+  where?: InputMaybe<CSmartContractDeploymentsBoolExp>;
+};
+
+export type CProductsSmartContractDeploymentsAggregateArgs = {
+  filter_input?: InputMaybe<CSmartContractDeploymentsFilterInput>;
+};
+
+export type CProductsSupportsProductsArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<CSupportsProductsOrderBy>>;
+  where?: InputMaybe<CSupportsProductsBoolExp>;
+};
+
+export type CProductsSupportsProductsAggregateArgs = {
+  filter_input?: InputMaybe<CSupportsProductsFilterInput>;
+};
+
+export type CProductsSupportsProductsBySupportsProductIdArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<CSupportsProductsOrderBy>>;
+  where?: InputMaybe<CSupportsProductsBoolExp>;
+};
+
+export type CProductsSupportsProductsBySupportsProductIdAggregateArgs = {
+  filter_input?: InputMaybe<CSupportsProductsFilterInput>;
+};
+
+export type CProductsUrlsArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<ProductUrlsOrderBy>>;
+  where?: InputMaybe<ProductUrlsBoolExp>;
+};
+
+export type CProductsAggExp = {
+  __typename?: 'CProductsAggExp';
+  _count: Scalars['Int']['output'];
+  description: StringAggExp1;
+  id: IntAggExp1;
+  isMainProduct: IntAggExp1;
+  launchDate: DateAggExp1;
+  name: StringAggExp1;
+  productStatusId: IntAggExp1;
+  productTypeId: IntAggExp1;
+  rootId: IntAggExp1;
+};
+
+export type CProductsBoolExp = {
+  _and?: InputMaybe<Array<CProductsBoolExp>>;
+  _not?: InputMaybe<CProductsBoolExp>;
+  _or?: InputMaybe<Array<CProductsBoolExp>>;
+  description?: InputMaybe<StringBoolExp1>;
+  id?: InputMaybe<IntBoolExp1>;
+  isMainProduct?: InputMaybe<IntBoolExp1>;
+  launchDate?: InputMaybe<DateBoolExp1>;
+  name?: InputMaybe<StringBoolExp1>;
+  productAssetRelationships?: InputMaybe<CProductAssetRelationshipsBoolExp>;
+  productDeployments?: InputMaybe<CProductDeploymentsBoolExp>;
+  productStatus?: InputMaybe<CProductStatusesBoolExp>;
+  productStatusId?: InputMaybe<IntBoolExp1>;
+  productType?: InputMaybe<CProductTypesBoolExp>;
+  productTypeId?: InputMaybe<IntBoolExp1>;
+  root?: InputMaybe<CRootsBoolExp>;
+  rootId?: InputMaybe<IntBoolExp1>;
+  smartContractDeployments?: InputMaybe<CSmartContractDeploymentsBoolExp>;
+  supportsProducts?: InputMaybe<CSupportsProductsBoolExp>;
+  supportsProductsBySupportsProductId?: InputMaybe<CSupportsProductsBoolExp>;
+};
+
+export type CProductsFilterInput = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<CProductsOrderBy>>;
+  where?: InputMaybe<CProductsBoolExp>;
+};
+
+export type CProductsOrderBy = {
+  description?: InputMaybe<OrderBy>;
+  id?: InputMaybe<OrderBy>;
+  isMainProduct?: InputMaybe<OrderBy>;
+  launchDate?: InputMaybe<OrderBy>;
+  name?: InputMaybe<OrderBy>;
+  productStatus?: InputMaybe<CProductStatusesOrderBy>;
+  productStatusId?: InputMaybe<OrderBy>;
+  productType?: InputMaybe<CProductTypesOrderBy>;
+  productTypeId?: InputMaybe<OrderBy>;
+  root?: InputMaybe<CRootsOrderBy>;
+  rootId?: InputMaybe<OrderBy>;
+};
+
+export type CProfileInfos = {
+  __typename?: 'CProfileInfos';
+  descriptionLong: Scalars['String2']['output'];
+  descriptionShort: Scalars['String2']['output'];
+  foundingDate?: Maybe<Scalars['Date1']['output']>;
+  id: Scalars['Int2']['output'];
+  logo: Scalars['String2']['output'];
+  name: Scalars['String2']['output'];
+  profileSector?: Maybe<CProfileSectors>;
+  profileSectorId: Scalars['Int2']['output'];
+  profileStatus?: Maybe<CProfileStatuses>;
+  profileStatusId: Scalars['Int2']['output'];
+  profileType?: Maybe<CProfileTypes>;
+  profileTypeId: Scalars['Int2']['output'];
+  root?: Maybe<CRoots>;
+  rootId: Scalars['Int2']['output'];
+  /** Self promotion field */
+  tagLine: Scalars['String2']['output'];
+  urls?: Maybe<Array<ProfileInfoUrls>>;
+};
+
+export type CProfileInfosUrlsArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<ProfileInfoUrlsOrderBy>>;
+  where?: InputMaybe<ProfileInfoUrlsBoolExp>;
+};
+
+export type CProfileInfosAggExp = {
+  __typename?: 'CProfileInfosAggExp';
+  _count: Scalars['Int']['output'];
+  descriptionLong: StringAggExp1;
+  descriptionShort: StringAggExp1;
+  foundingDate: DateAggExp1;
+  id: IntAggExp1;
+  logo: StringAggExp1;
+  name: StringAggExp1;
+  profileSectorId: IntAggExp1;
+  profileStatusId: IntAggExp1;
+  profileTypeId: IntAggExp1;
+  rootId: IntAggExp1;
+  tagLine: StringAggExp1;
+};
+
+export type CProfileInfosBoolExp = {
+  _and?: InputMaybe<Array<CProfileInfosBoolExp>>;
+  _not?: InputMaybe<CProfileInfosBoolExp>;
+  _or?: InputMaybe<Array<CProfileInfosBoolExp>>;
+  descriptionLong?: InputMaybe<StringBoolExp1>;
+  descriptionShort?: InputMaybe<StringBoolExp1>;
+  foundingDate?: InputMaybe<DateBoolExp1>;
+  id?: InputMaybe<IntBoolExp1>;
+  logo?: InputMaybe<StringBoolExp1>;
+  name?: InputMaybe<StringBoolExp1>;
+  profileSector?: InputMaybe<CProfileSectorsBoolExp>;
+  profileSectorId?: InputMaybe<IntBoolExp1>;
+  profileStatus?: InputMaybe<CProfileStatusesBoolExp>;
+  profileStatusId?: InputMaybe<IntBoolExp1>;
+  profileType?: InputMaybe<CProfileTypesBoolExp>;
+  profileTypeId?: InputMaybe<IntBoolExp1>;
+  root?: InputMaybe<CRootsBoolExp>;
+  rootId?: InputMaybe<IntBoolExp1>;
+  tagLine?: InputMaybe<StringBoolExp1>;
+  urls?: InputMaybe<ProfileInfoUrlsBoolExp>;
+};
+
+export type CProfileInfosFilterInput = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<CProfileInfosOrderBy>>;
+  where?: InputMaybe<CProfileInfosBoolExp>;
+};
+
+export type CProfileInfosOrderBy = {
+  descriptionLong?: InputMaybe<OrderBy>;
+  descriptionShort?: InputMaybe<OrderBy>;
+  foundingDate?: InputMaybe<OrderBy>;
+  id?: InputMaybe<OrderBy>;
+  logo?: InputMaybe<OrderBy>;
+  name?: InputMaybe<OrderBy>;
+  profileSector?: InputMaybe<CProfileSectorsOrderBy>;
+  profileSectorId?: InputMaybe<OrderBy>;
+  profileStatus?: InputMaybe<CProfileStatusesOrderBy>;
+  profileStatusId?: InputMaybe<OrderBy>;
+  profileType?: InputMaybe<CProfileTypesOrderBy>;
+  profileTypeId?: InputMaybe<OrderBy>;
+  root?: InputMaybe<CRootsOrderBy>;
+  rootId?: InputMaybe<OrderBy>;
+  tagLine?: InputMaybe<OrderBy>;
+};
+
+export type CProfileSectors = {
+  __typename?: 'CProfileSectors';
+  ProfileInfosAggregate: CProfileInfosAggExp;
+  definition: Scalars['String2']['output'];
+  id: Scalars['Int2']['output'];
+  name: Scalars['String2']['output'];
+  profileInfos?: Maybe<Array<CProfileInfos>>;
+};
+
+export type CProfileSectorsProfileInfosAggregateArgs = {
+  filter_input?: InputMaybe<CProfileInfosFilterInput>;
+};
+
+export type CProfileSectorsProfileInfosArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<CProfileInfosOrderBy>>;
+  where?: InputMaybe<CProfileInfosBoolExp>;
+};
+
+export type CProfileSectorsAggExp = {
+  __typename?: 'CProfileSectorsAggExp';
+  _count: Scalars['Int']['output'];
+  definition: StringAggExp1;
+  id: IntAggExp1;
+  name: StringAggExp1;
+};
+
+export type CProfileSectorsBoolExp = {
+  _and?: InputMaybe<Array<CProfileSectorsBoolExp>>;
+  _not?: InputMaybe<CProfileSectorsBoolExp>;
+  _or?: InputMaybe<Array<CProfileSectorsBoolExp>>;
+  definition?: InputMaybe<StringBoolExp1>;
+  id?: InputMaybe<IntBoolExp1>;
+  name?: InputMaybe<StringBoolExp1>;
+  profileInfos?: InputMaybe<CProfileInfosBoolExp>;
+};
+
+export type CProfileSectorsFilterInput = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<CProfileSectorsOrderBy>>;
+  where?: InputMaybe<CProfileSectorsBoolExp>;
+};
+
+export type CProfileSectorsOrderBy = {
+  definition?: InputMaybe<OrderBy>;
+  id?: InputMaybe<OrderBy>;
+  name?: InputMaybe<OrderBy>;
+};
+
+export type CProfileStatuses = {
+  __typename?: 'CProfileStatuses';
+  definition: Scalars['String2']['output'];
+  id: Scalars['Int2']['output'];
+  name: Scalars['String2']['output'];
+  profileInfos?: Maybe<Array<CProfileInfos>>;
+  profileInfosAggregate: CProfileInfosAggExp;
+};
+
+export type CProfileStatusesProfileInfosArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<CProfileInfosOrderBy>>;
+  where?: InputMaybe<CProfileInfosBoolExp>;
+};
+
+export type CProfileStatusesProfileInfosAggregateArgs = {
+  filter_input?: InputMaybe<CProfileInfosFilterInput>;
+};
+
+export type CProfileStatusesAggExp = {
+  __typename?: 'CProfileStatusesAggExp';
+  _count: Scalars['Int']['output'];
+  definition: StringAggExp1;
+  id: IntAggExp1;
+  name: StringAggExp1;
+};
+
+export type CProfileStatusesBoolExp = {
+  _and?: InputMaybe<Array<CProfileStatusesBoolExp>>;
+  _not?: InputMaybe<CProfileStatusesBoolExp>;
+  _or?: InputMaybe<Array<CProfileStatusesBoolExp>>;
+  definition?: InputMaybe<StringBoolExp1>;
+  id?: InputMaybe<IntBoolExp1>;
+  name?: InputMaybe<StringBoolExp1>;
+  profileInfos?: InputMaybe<CProfileInfosBoolExp>;
+};
+
+export type CProfileStatusesFilterInput = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<CProfileStatusesOrderBy>>;
+  where?: InputMaybe<CProfileStatusesBoolExp>;
+};
+
+export type CProfileStatusesOrderBy = {
+  definition?: InputMaybe<OrderBy>;
+  id?: InputMaybe<OrderBy>;
+  name?: InputMaybe<OrderBy>;
 };
 
 /**   */
-export type ProfileTags = {
-  __typename?: 'profileTags';
+export type CProfileTags = {
+  __typename?: 'CProfileTags';
   /**   */
-  id: Scalars['Int']['output'];
-  /** An object relationship */
-  profile: Profiles;
+  id: Scalars['Int2']['output'];
+  root?: Maybe<CRoots>;
   /**   */
-  profileId: Scalars['Int']['output'];
-  /** An object relationship */
-  tag: Tags;
+  rootId: Scalars['Int2']['output'];
+  tag?: Maybe<CTags>;
   /**   */
-  tagId: Scalars['Int']['output'];
+  tagId: Scalars['Int2']['output'];
 };
 
-/** order by aggregate values of table "profileTags" */
-export type ProfileTags_Aggregate_Order_By = {
-  avg?: InputMaybe<ProfileTags_Avg_Order_By>;
-  count?: InputMaybe<Mysql8_Order_By>;
-  max?: InputMaybe<ProfileTags_Max_Order_By>;
-  min?: InputMaybe<ProfileTags_Min_Order_By>;
-  stddev_pop?: InputMaybe<ProfileTags_Stddev_Pop_Order_By>;
-  stddev_samp?: InputMaybe<ProfileTags_Stddev_Samp_Order_By>;
-  sum?: InputMaybe<ProfileTags_Sum_Order_By>;
-  var_pop?: InputMaybe<ProfileTags_Var_Pop_Order_By>;
-  var_samp?: InputMaybe<ProfileTags_Var_Samp_Order_By>;
+export type CProfileTagsAggExp = {
+  __typename?: 'CProfileTagsAggExp';
+  _count: Scalars['Int']['output'];
+  id: IntAggExp1;
+  rootId: IntAggExp1;
+  tagId: IntAggExp1;
 };
 
-/** order by avg() on columns of table "profileTags" */
-export type ProfileTags_Avg_Order_By = {
-  /**   */
-  id?: InputMaybe<Mysql8_Order_By>;
-  /**   */
-  profileId?: InputMaybe<Mysql8_Order_By>;
-  /**   */
-  tagId?: InputMaybe<Mysql8_Order_By>;
+export type CProfileTagsBoolExp = {
+  _and?: InputMaybe<Array<CProfileTagsBoolExp>>;
+  _not?: InputMaybe<CProfileTagsBoolExp>;
+  _or?: InputMaybe<Array<CProfileTagsBoolExp>>;
+  id?: InputMaybe<IntBoolExp1>;
+  root?: InputMaybe<CRootsBoolExp>;
+  rootId?: InputMaybe<IntBoolExp1>;
+  tag?: InputMaybe<CTagsBoolExp>;
+  tagId?: InputMaybe<IntBoolExp1>;
 };
 
-/** Boolean expression to filter rows from the table "profileTags". All fields are combined with a logical 'AND'. */
-export type ProfileTags_Bool_Exp = {
-  _and?: InputMaybe<Array<ProfileTags_Bool_Exp>>;
-  _not?: InputMaybe<ProfileTags_Bool_Exp>;
-  _or?: InputMaybe<Array<ProfileTags_Bool_Exp>>;
-  id?: InputMaybe<Int_Mysql8_Comparison_Exp>;
-  profile?: InputMaybe<Profiles_Bool_Exp>;
-  profileId?: InputMaybe<Int_Mysql8_Comparison_Exp>;
-  tag?: InputMaybe<Tags_Bool_Exp>;
-  tagId?: InputMaybe<Int_Mysql8_Comparison_Exp>;
-};
-
-/** order by max() on columns of table "profileTags" */
-export type ProfileTags_Max_Order_By = {
-  /**   */
-  id?: InputMaybe<Mysql8_Order_By>;
-  /**   */
-  profileId?: InputMaybe<Mysql8_Order_By>;
-  /**   */
-  tagId?: InputMaybe<Mysql8_Order_By>;
-};
-
-/** order by min() on columns of table "profileTags" */
-export type ProfileTags_Min_Order_By = {
-  /**   */
-  id?: InputMaybe<Mysql8_Order_By>;
-  /**   */
-  profileId?: InputMaybe<Mysql8_Order_By>;
-  /**   */
-  tagId?: InputMaybe<Mysql8_Order_By>;
-};
-
-/** Ordering options when selecting data from "profileTags". */
-export type ProfileTags_Order_By = {
-  id?: InputMaybe<Mysql8_Order_By>;
-  profile?: InputMaybe<Profiles_Order_By>;
-  profileId?: InputMaybe<Mysql8_Order_By>;
-  tag?: InputMaybe<Tags_Order_By>;
-  tagId?: InputMaybe<Mysql8_Order_By>;
-};
-
-/** order by stddev_pop() on columns of table "profileTags" */
-export type ProfileTags_Stddev_Pop_Order_By = {
-  /**   */
-  id?: InputMaybe<Mysql8_Order_By>;
-  /**   */
-  profileId?: InputMaybe<Mysql8_Order_By>;
-  /**   */
-  tagId?: InputMaybe<Mysql8_Order_By>;
-};
-
-/** order by stddev_samp() on columns of table "profileTags" */
-export type ProfileTags_Stddev_Samp_Order_By = {
-  /**   */
-  id?: InputMaybe<Mysql8_Order_By>;
-  /**   */
-  profileId?: InputMaybe<Mysql8_Order_By>;
-  /**   */
-  tagId?: InputMaybe<Mysql8_Order_By>;
-};
-
-/** order by sum() on columns of table "profileTags" */
-export type ProfileTags_Sum_Order_By = {
-  /**   */
-  id?: InputMaybe<Mysql8_Order_By>;
-  /**   */
-  profileId?: InputMaybe<Mysql8_Order_By>;
-  /**   */
-  tagId?: InputMaybe<Mysql8_Order_By>;
-};
-
-/** order by var_pop() on columns of table "profileTags" */
-export type ProfileTags_Var_Pop_Order_By = {
-  /**   */
-  id?: InputMaybe<Mysql8_Order_By>;
-  /**   */
-  profileId?: InputMaybe<Mysql8_Order_By>;
-  /**   */
-  tagId?: InputMaybe<Mysql8_Order_By>;
-};
-
-/** order by var_samp() on columns of table "profileTags" */
-export type ProfileTags_Var_Samp_Order_By = {
-  /**   */
-  id?: InputMaybe<Mysql8_Order_By>;
-  /**   */
-  profileId?: InputMaybe<Mysql8_Order_By>;
-  /**   */
-  tagId?: InputMaybe<Mysql8_Order_By>;
-};
-
-export type ProfileTypes = {
-  __typename?: 'profileTypes';
-  definition: Scalars['String']['output'];
-  id: Scalars['Int']['output'];
-  name: Scalars['String']['output'];
-  /** An array relationship */
-  profiles: Array<Profiles>;
-};
-
-export type ProfileTypesProfilesArgs = {
+export type CProfileTagsFilterInput = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Profiles_Order_By>>;
-  where?: InputMaybe<Profiles_Bool_Exp>;
+  order_by?: InputMaybe<Array<CProfileTagsOrderBy>>;
+  where?: InputMaybe<CProfileTagsBoolExp>;
 };
 
-/** Boolean expression to filter rows from the table "profileTypes". All fields are combined with a logical 'AND'. */
-export type ProfileTypes_Bool_Exp = {
-  _and?: InputMaybe<Array<ProfileTypes_Bool_Exp>>;
-  _not?: InputMaybe<ProfileTypes_Bool_Exp>;
-  _or?: InputMaybe<Array<ProfileTypes_Bool_Exp>>;
-  definition?: InputMaybe<String_Mysql8_Comparison_Exp>;
-  id?: InputMaybe<Int_Mysql8_Comparison_Exp>;
-  name?: InputMaybe<String_Mysql8_Comparison_Exp>;
-  profiles?: InputMaybe<Profiles_Bool_Exp>;
+export type CProfileTagsOrderBy = {
+  id?: InputMaybe<OrderBy>;
+  root?: InputMaybe<CRootsOrderBy>;
+  rootId?: InputMaybe<OrderBy>;
+  tag?: InputMaybe<CTagsOrderBy>;
+  tagId?: InputMaybe<OrderBy>;
 };
 
-/** Ordering options when selecting data from "profileTypes". */
-export type ProfileTypes_Order_By = {
-  definition?: InputMaybe<Mysql8_Order_By>;
-  id?: InputMaybe<Mysql8_Order_By>;
-  name?: InputMaybe<Mysql8_Order_By>;
-  profiles_aggregate?: InputMaybe<Profiles_Aggregate_Order_By>;
+export type CProfileTypes = {
+  __typename?: 'CProfileTypes';
+  definition: Scalars['String2']['output'];
+  id: Scalars['Int2']['output'];
+  name: Scalars['String2']['output'];
+  profileInfos?: Maybe<Array<CProfileInfos>>;
+  profileInfosAggregate: CProfileInfosAggExp;
 };
 
-export type Profiles = {
-  __typename?: 'profiles';
-  /** An array relationship */
-  assets: Array<Assets>;
-  descriptionLong: Scalars['String']['output'];
-  descriptionShort: Scalars['String']['output'];
-  /** An array relationship */
-  entities: Array<Entities>;
-  foundingDate?: Maybe<Scalars['date']['output']>;
-  id: Scalars['Int']['output'];
-  logo: Scalars['String']['output'];
-  name: Scalars['String']['output'];
-  /** An array relationship */
-  products: Array<Products>;
-  /** An object relationship */
-  profileSector: ProfileSectors;
-  profileSectorId: Scalars['Int']['output'];
-  /** An object relationship */
-  profileStatus: ProfileStatuses;
-  profileStatusId: Scalars['Int']['output'];
-  /** An array relationship */
-  profileTags: Array<ProfileTags>;
-  /** An object relationship */
-  profileType: ProfileTypes;
-  profileTypeId: Scalars['Int']['output'];
-  slug: Scalars['String']['output'];
-  /** An array relationship */
-  socials: Array<Socials>;
-  /** Self promotion field */
-  tagLine: Scalars['String']['output'];
-  urlBlog: Scalars['String']['output'];
-  urlDocumentation: Scalars['String']['output'];
-  urlMain: Scalars['String']['output'];
-  urlWhitepaper: Scalars['String']['output'];
-};
-
-export type ProfilesAssetsArgs = {
+export type CProfileTypesProfileInfosArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Assets_Order_By>>;
-  where?: InputMaybe<Assets_Bool_Exp>;
+  order_by?: InputMaybe<Array<CProfileInfosOrderBy>>;
+  where?: InputMaybe<CProfileInfosBoolExp>;
 };
 
-export type ProfilesEntitiesArgs = {
+export type CProfileTypesProfileInfosAggregateArgs = {
+  filter_input?: InputMaybe<CProfileInfosFilterInput>;
+};
+
+export type CProfileTypesAggExp = {
+  __typename?: 'CProfileTypesAggExp';
+  _count: Scalars['Int']['output'];
+  definition: StringAggExp1;
+  id: IntAggExp1;
+  name: StringAggExp1;
+};
+
+export type CProfileTypesBoolExp = {
+  _and?: InputMaybe<Array<CProfileTypesBoolExp>>;
+  _not?: InputMaybe<CProfileTypesBoolExp>;
+  _or?: InputMaybe<Array<CProfileTypesBoolExp>>;
+  definition?: InputMaybe<StringBoolExp1>;
+  id?: InputMaybe<IntBoolExp1>;
+  name?: InputMaybe<StringBoolExp1>;
+  profileInfos?: InputMaybe<CProfileInfosBoolExp>;
+};
+
+export type CProfileTypesFilterInput = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Entities_Order_By>>;
-  where?: InputMaybe<Entities_Bool_Exp>;
+  order_by?: InputMaybe<Array<CProfileTypesOrderBy>>;
+  where?: InputMaybe<CProfileTypesBoolExp>;
 };
 
-export type ProfilesProductsArgs = {
+export type CProfileTypesOrderBy = {
+  definition?: InputMaybe<OrderBy>;
+  id?: InputMaybe<OrderBy>;
+  name?: InputMaybe<OrderBy>;
+};
+
+export type CRoots = {
+  __typename?: 'CRoots';
+  assets?: Maybe<Array<CAssets>>;
+  assetsAggregate: CAssetsAggExp;
+  entities?: Maybe<Array<CEntities>>;
+  entitiesAggregate: CEntitiesAggExp;
+  id: Scalars['Int2']['output'];
+  products?: Maybe<Array<CProducts>>;
+  productsAggregate: CProductsAggExp;
+  profileInfos?: Maybe<Array<CProfileInfos>>;
+  profileInfosAggregate: CProfileInfosAggExp;
+  profileTags?: Maybe<Array<CProfileTags>>;
+  profileTagsAggregate: CProfileTagsAggExp;
+  slug: Scalars['String2']['output'];
+  socials?: Maybe<Array<CSocials>>;
+  socialsAggregate: CSocialsAggExp;
+  urlMain: Scalars['String2']['output'];
+};
+
+export type CRootsAssetsArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Products_Order_By>>;
-  where?: InputMaybe<Products_Bool_Exp>;
+  order_by?: InputMaybe<Array<CAssetsOrderBy>>;
+  where?: InputMaybe<CAssetsBoolExp>;
 };
 
-export type ProfilesProfileTagsArgs = {
+export type CRootsAssetsAggregateArgs = {
+  filter_input?: InputMaybe<CAssetsFilterInput>;
+};
+
+export type CRootsEntitiesArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<ProfileTags_Order_By>>;
-  where?: InputMaybe<ProfileTags_Bool_Exp>;
+  order_by?: InputMaybe<Array<CEntitiesOrderBy>>;
+  where?: InputMaybe<CEntitiesBoolExp>;
 };
 
-export type ProfilesSocialsArgs = {
+export type CRootsEntitiesAggregateArgs = {
+  filter_input?: InputMaybe<CEntitiesFilterInput>;
+};
+
+export type CRootsProductsArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Socials_Order_By>>;
-  where?: InputMaybe<Socials_Bool_Exp>;
+  order_by?: InputMaybe<Array<CProductsOrderBy>>;
+  where?: InputMaybe<CProductsBoolExp>;
 };
 
-/** order by aggregate values of table "profiles" */
-export type Profiles_Aggregate_Order_By = {
-  avg?: InputMaybe<Profiles_Avg_Order_By>;
-  count?: InputMaybe<Mysql8_Order_By>;
-  max?: InputMaybe<Profiles_Max_Order_By>;
-  min?: InputMaybe<Profiles_Min_Order_By>;
-  stddev_pop?: InputMaybe<Profiles_Stddev_Pop_Order_By>;
-  stddev_samp?: InputMaybe<Profiles_Stddev_Samp_Order_By>;
-  sum?: InputMaybe<Profiles_Sum_Order_By>;
-  var_pop?: InputMaybe<Profiles_Var_Pop_Order_By>;
-  var_samp?: InputMaybe<Profiles_Var_Samp_Order_By>;
+export type CRootsProductsAggregateArgs = {
+  filter_input?: InputMaybe<CProductsFilterInput>;
 };
 
-/** order by avg() on columns of table "profiles" */
-export type Profiles_Avg_Order_By = {
-  id?: InputMaybe<Mysql8_Order_By>;
-  profileSectorId?: InputMaybe<Mysql8_Order_By>;
-  profileStatusId?: InputMaybe<Mysql8_Order_By>;
-  profileTypeId?: InputMaybe<Mysql8_Order_By>;
-};
-
-/** Boolean expression to filter rows from the table "profiles". All fields are combined with a logical 'AND'. */
-export type Profiles_Bool_Exp = {
-  _and?: InputMaybe<Array<Profiles_Bool_Exp>>;
-  _not?: InputMaybe<Profiles_Bool_Exp>;
-  _or?: InputMaybe<Array<Profiles_Bool_Exp>>;
-  assets?: InputMaybe<Assets_Bool_Exp>;
-  descriptionLong?: InputMaybe<String_Mysql8_Comparison_Exp>;
-  descriptionShort?: InputMaybe<String_Mysql8_Comparison_Exp>;
-  entities?: InputMaybe<Entities_Bool_Exp>;
-  foundingDate?: InputMaybe<Date_Mysql8_Comparison_Exp>;
-  id?: InputMaybe<Int_Mysql8_Comparison_Exp>;
-  logo?: InputMaybe<String_Mysql8_Comparison_Exp>;
-  name?: InputMaybe<String_Mysql8_Comparison_Exp>;
-  products?: InputMaybe<Products_Bool_Exp>;
-  profileSector?: InputMaybe<ProfileSectors_Bool_Exp>;
-  profileSectorId?: InputMaybe<Int_Mysql8_Comparison_Exp>;
-  profileStatus?: InputMaybe<ProfileStatuses_Bool_Exp>;
-  profileStatusId?: InputMaybe<Int_Mysql8_Comparison_Exp>;
-  profileTags?: InputMaybe<ProfileTags_Bool_Exp>;
-  profileType?: InputMaybe<ProfileTypes_Bool_Exp>;
-  profileTypeId?: InputMaybe<Int_Mysql8_Comparison_Exp>;
-  slug?: InputMaybe<String_Mysql8_Comparison_Exp>;
-  socials?: InputMaybe<Socials_Bool_Exp>;
-  tagLine?: InputMaybe<String_Mysql8_Comparison_Exp>;
-  urlBlog?: InputMaybe<String_Mysql8_Comparison_Exp>;
-  urlDocumentation?: InputMaybe<String_Mysql8_Comparison_Exp>;
-  urlMain?: InputMaybe<String_Mysql8_Comparison_Exp>;
-  urlWhitepaper?: InputMaybe<String_Mysql8_Comparison_Exp>;
-};
-
-/** order by max() on columns of table "profiles" */
-export type Profiles_Max_Order_By = {
-  descriptionLong?: InputMaybe<Mysql8_Order_By>;
-  descriptionShort?: InputMaybe<Mysql8_Order_By>;
-  id?: InputMaybe<Mysql8_Order_By>;
-  logo?: InputMaybe<Mysql8_Order_By>;
-  name?: InputMaybe<Mysql8_Order_By>;
-  profileSectorId?: InputMaybe<Mysql8_Order_By>;
-  profileStatusId?: InputMaybe<Mysql8_Order_By>;
-  profileTypeId?: InputMaybe<Mysql8_Order_By>;
-  slug?: InputMaybe<Mysql8_Order_By>;
-  /** Self promotion field */
-  tagLine?: InputMaybe<Mysql8_Order_By>;
-  urlBlog?: InputMaybe<Mysql8_Order_By>;
-  urlDocumentation?: InputMaybe<Mysql8_Order_By>;
-  urlMain?: InputMaybe<Mysql8_Order_By>;
-  urlWhitepaper?: InputMaybe<Mysql8_Order_By>;
-};
-
-/** order by min() on columns of table "profiles" */
-export type Profiles_Min_Order_By = {
-  descriptionLong?: InputMaybe<Mysql8_Order_By>;
-  descriptionShort?: InputMaybe<Mysql8_Order_By>;
-  id?: InputMaybe<Mysql8_Order_By>;
-  logo?: InputMaybe<Mysql8_Order_By>;
-  name?: InputMaybe<Mysql8_Order_By>;
-  profileSectorId?: InputMaybe<Mysql8_Order_By>;
-  profileStatusId?: InputMaybe<Mysql8_Order_By>;
-  profileTypeId?: InputMaybe<Mysql8_Order_By>;
-  slug?: InputMaybe<Mysql8_Order_By>;
-  /** Self promotion field */
-  tagLine?: InputMaybe<Mysql8_Order_By>;
-  urlBlog?: InputMaybe<Mysql8_Order_By>;
-  urlDocumentation?: InputMaybe<Mysql8_Order_By>;
-  urlMain?: InputMaybe<Mysql8_Order_By>;
-  urlWhitepaper?: InputMaybe<Mysql8_Order_By>;
-};
-
-/** Ordering options when selecting data from "profiles". */
-export type Profiles_Order_By = {
-  assets_aggregate?: InputMaybe<Assets_Aggregate_Order_By>;
-  descriptionLong?: InputMaybe<Mysql8_Order_By>;
-  descriptionShort?: InputMaybe<Mysql8_Order_By>;
-  entities_aggregate?: InputMaybe<Entities_Aggregate_Order_By>;
-  foundingDate?: InputMaybe<Mysql8_Order_By>;
-  id?: InputMaybe<Mysql8_Order_By>;
-  logo?: InputMaybe<Mysql8_Order_By>;
-  name?: InputMaybe<Mysql8_Order_By>;
-  products_aggregate?: InputMaybe<Products_Aggregate_Order_By>;
-  profileSector?: InputMaybe<ProfileSectors_Order_By>;
-  profileSectorId?: InputMaybe<Mysql8_Order_By>;
-  profileStatus?: InputMaybe<ProfileStatuses_Order_By>;
-  profileStatusId?: InputMaybe<Mysql8_Order_By>;
-  profileTags_aggregate?: InputMaybe<ProfileTags_Aggregate_Order_By>;
-  profileType?: InputMaybe<ProfileTypes_Order_By>;
-  profileTypeId?: InputMaybe<Mysql8_Order_By>;
-  slug?: InputMaybe<Mysql8_Order_By>;
-  socials_aggregate?: InputMaybe<Socials_Aggregate_Order_By>;
-  tagLine?: InputMaybe<Mysql8_Order_By>;
-  urlBlog?: InputMaybe<Mysql8_Order_By>;
-  urlDocumentation?: InputMaybe<Mysql8_Order_By>;
-  urlMain?: InputMaybe<Mysql8_Order_By>;
-  urlWhitepaper?: InputMaybe<Mysql8_Order_By>;
-};
-
-/** order by stddev_pop() on columns of table "profiles" */
-export type Profiles_Stddev_Pop_Order_By = {
-  id?: InputMaybe<Mysql8_Order_By>;
-  profileSectorId?: InputMaybe<Mysql8_Order_By>;
-  profileStatusId?: InputMaybe<Mysql8_Order_By>;
-  profileTypeId?: InputMaybe<Mysql8_Order_By>;
-};
-
-/** order by stddev_samp() on columns of table "profiles" */
-export type Profiles_Stddev_Samp_Order_By = {
-  id?: InputMaybe<Mysql8_Order_By>;
-  profileSectorId?: InputMaybe<Mysql8_Order_By>;
-  profileStatusId?: InputMaybe<Mysql8_Order_By>;
-  profileTypeId?: InputMaybe<Mysql8_Order_By>;
-};
-
-/** order by sum() on columns of table "profiles" */
-export type Profiles_Sum_Order_By = {
-  id?: InputMaybe<Mysql8_Order_By>;
-  profileSectorId?: InputMaybe<Mysql8_Order_By>;
-  profileStatusId?: InputMaybe<Mysql8_Order_By>;
-  profileTypeId?: InputMaybe<Mysql8_Order_By>;
-};
-
-/** order by var_pop() on columns of table "profiles" */
-export type Profiles_Var_Pop_Order_By = {
-  id?: InputMaybe<Mysql8_Order_By>;
-  profileSectorId?: InputMaybe<Mysql8_Order_By>;
-  profileStatusId?: InputMaybe<Mysql8_Order_By>;
-  profileTypeId?: InputMaybe<Mysql8_Order_By>;
-};
-
-/** order by var_samp() on columns of table "profiles" */
-export type Profiles_Var_Samp_Order_By = {
-  id?: InputMaybe<Mysql8_Order_By>;
-  profileSectorId?: InputMaybe<Mysql8_Order_By>;
-  profileStatusId?: InputMaybe<Mysql8_Order_By>;
-  profileTypeId?: InputMaybe<Mysql8_Order_By>;
-};
-
-export type Query_Root = {
-  __typename?: 'query_root';
-  /** fetch data from the table: "assetStandardSupport" */
-  assetStandardSupport: Array<AssetStandardSupport>;
-  /** fetch data from the table: "assetStandardSupport" using primary key columns */
-  assetStandardSupport_by_pk?: Maybe<AssetStandardSupport>;
-  /** fetch data from the table: "assetType" */
-  assetType: Array<AssetType>;
-  /** fetch data from the table: "assetType" using primary key columns */
-  assetType_by_pk?: Maybe<AssetType>;
-  /** An array relationship */
-  assets: Array<Assets>;
-  /** fetch data from the table: "assets" using primary key columns */
-  assets_by_pk?: Maybe<Assets>;
-  /** fetch data from the table: "countries" */
-  countries: Array<Countries>;
-  /** fetch data from the table: "countries" using primary key columns */
-  countries_by_pk?: Maybe<Countries>;
-  /** An array relationship */
-  entities: Array<Entities>;
-  /** fetch data from the table: "entities" using primary key columns */
-  entities_by_pk?: Maybe<Entities>;
-  /** fetch data from the table: "entityTypes" */
-  entityTypes: Array<EntityTypes>;
-  /** fetch data from the table: "entityTypes" using primary key columns */
-  entityTypes_by_pk?: Maybe<EntityTypes>;
-  /** fetch data from the table: "productStatus" */
-  productStatus: Array<ProductStatus>;
-  /** fetch data from the table: "productStatus" using primary key columns */
-  productStatus_by_pk?: Maybe<ProductStatus>;
-  /** fetch data from the table: "productSupports" */
-  productSupports: Array<ProductSupports>;
-  /** fetch data from the table: "productSupports" using primary key columns */
-  productSupports_by_pk?: Maybe<ProductSupports>;
-  /** fetch data from the table: "productTypes" */
-  productTypes: Array<ProductTypes>;
-  /** fetch data from the table: "productTypes" using primary key columns */
-  productTypes_by_pk?: Maybe<ProductTypes>;
-  /** An array relationship */
-  products: Array<Products>;
-  /** fetch data from the table: "products" using primary key columns */
-  products_by_pk?: Maybe<Products>;
-  /** fetch data from the table: "profileSectors" */
-  profileSectors: Array<ProfileSectors>;
-  /** fetch data from the table: "profileSectors" using primary key columns */
-  profileSectors_by_pk?: Maybe<ProfileSectors>;
-  /** fetch data from the table: "profileStatuses" */
-  profileStatuses: Array<ProfileStatuses>;
-  /** fetch data from the table: "profileStatuses" using primary key columns */
-  profileStatuses_by_pk?: Maybe<ProfileStatuses>;
-  /** An array relationship */
-  profileTags: Array<ProfileTags>;
-  /** fetch data from the table: "profileTags" using primary key columns */
-  profileTags_by_pk?: Maybe<ProfileTags>;
-  /** fetch data from the table: "profileTypes" */
-  profileTypes: Array<ProfileTypes>;
-  /** fetch data from the table: "profileTypes" using primary key columns */
-  profileTypes_by_pk?: Maybe<ProfileTypes>;
-  /** An array relationship */
-  profiles: Array<Profiles>;
-  /** fetch data from the table: "profiles" using primary key columns */
-  profiles_by_pk?: Maybe<Profiles>;
-  /** fetch data from the table: "socialTypes" */
-  socialTypes: Array<SocialTypes>;
-  /** fetch data from the table: "socialTypes" using primary key columns */
-  socialTypes_by_pk?: Maybe<SocialTypes>;
-  /** An array relationship */
-  socials: Array<Socials>;
-  /** fetch data from the table: "socials" using primary key columns */
-  socials_by_pk?: Maybe<Socials>;
-  /** fetch data from the table: "tagTypes" */
-  tagTypes: Array<TagTypes>;
-  /** fetch data from the table: "tagTypes" using primary key columns */
-  tagTypes_by_pk?: Maybe<TagTypes>;
-  /** fetch data from the table: "tags" */
-  tags: Array<Tags>;
-  /** fetch data from the table: "tags" using primary key columns */
-  tags_by_pk?: Maybe<Tags>;
-};
-
-export type Query_RootAssetStandardSupportArgs = {
+export type CRootsProfileInfosArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<AssetStandardSupport_Order_By>>;
-  where?: InputMaybe<AssetStandardSupport_Bool_Exp>;
+  order_by?: InputMaybe<Array<CProfileInfosOrderBy>>;
+  where?: InputMaybe<CProfileInfosBoolExp>;
 };
 
-export type Query_RootAssetStandardSupport_By_PkArgs = {
-  id: Scalars['Int']['input'];
+export type CRootsProfileInfosAggregateArgs = {
+  filter_input?: InputMaybe<CProfileInfosFilterInput>;
 };
 
-export type Query_RootAssetTypeArgs = {
+export type CRootsProfileTagsArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<AssetType_Order_By>>;
-  where?: InputMaybe<AssetType_Bool_Exp>;
+  order_by?: InputMaybe<Array<CProfileTagsOrderBy>>;
+  where?: InputMaybe<CProfileTagsBoolExp>;
 };
 
-export type Query_RootAssetType_By_PkArgs = {
-  id: Scalars['Int']['input'];
+export type CRootsProfileTagsAggregateArgs = {
+  filter_input?: InputMaybe<CProfileTagsFilterInput>;
 };
 
-export type Query_RootAssetsArgs = {
+export type CRootsSocialsArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Assets_Order_By>>;
-  where?: InputMaybe<Assets_Bool_Exp>;
+  order_by?: InputMaybe<Array<CSocialsOrderBy>>;
+  where?: InputMaybe<CSocialsBoolExp>;
 };
 
-export type Query_RootAssets_By_PkArgs = {
-  id: Scalars['Int']['input'];
+export type CRootsSocialsAggregateArgs = {
+  filter_input?: InputMaybe<CSocialsFilterInput>;
 };
 
-export type Query_RootCountriesArgs = {
+export type CRootsAggExp = {
+  __typename?: 'CRootsAggExp';
+  _count: Scalars['Int']['output'];
+  id: IntAggExp1;
+  slug: StringAggExp1;
+  urlMain: StringAggExp1;
+};
+
+export type CRootsBoolExp = {
+  _and?: InputMaybe<Array<CRootsBoolExp>>;
+  _not?: InputMaybe<CRootsBoolExp>;
+  _or?: InputMaybe<Array<CRootsBoolExp>>;
+  assets?: InputMaybe<CAssetsBoolExp>;
+  entities?: InputMaybe<CEntitiesBoolExp>;
+  id?: InputMaybe<IntBoolExp1>;
+  products?: InputMaybe<CProductsBoolExp>;
+  profileInfos?: InputMaybe<CProfileInfosBoolExp>;
+  profileTags?: InputMaybe<CProfileTagsBoolExp>;
+  slug?: InputMaybe<StringBoolExp1>;
+  socials?: InputMaybe<CSocialsBoolExp>;
+  urlMain?: InputMaybe<StringBoolExp1>;
+};
+
+export type CRootsFilterInput = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Countries_Order_By>>;
-  where?: InputMaybe<Countries_Bool_Exp>;
+  order_by?: InputMaybe<Array<CRootsOrderBy>>;
+  where?: InputMaybe<CRootsBoolExp>;
 };
 
-export type Query_RootCountries_By_PkArgs = {
-  id: Scalars['Int']['input'];
+export type CRootsOrderBy = {
+  id?: InputMaybe<OrderBy>;
+  slug?: InputMaybe<OrderBy>;
+  urlMain?: InputMaybe<OrderBy>;
 };
 
-export type Query_RootEntitiesArgs = {
+export type CSmartContractDeployments = {
+  __typename?: 'CSmartContractDeployments';
+  assetDeployments?: Maybe<Array<CAssetDeployments>>;
+  assetDeploymentsAggregate: CAssetDeploymentsAggExp;
+  assetStandard?: Maybe<CAssetStandards>;
+  deployedOnId?: Maybe<Scalars['Int2']['output']>;
+  deployedOnProduct?: Maybe<CProducts>;
+  deploymentType?: Maybe<CDeploymentTypes>;
+  deploymentTypeId: Scalars['Int2']['output'];
+  id: Scalars['Int2']['output'];
+  isOfStandardId?: Maybe<Scalars['Int2']['output']>;
+  productDeployments?: Maybe<Array<CProductDeployments>>;
+  productDeploymentsAggregate: CProductDeploymentsAggExp;
+  smartContracts?: Maybe<Array<CSmartContracts>>;
+  smartContractsAggregate: CSmartContractsAggExp;
+};
+
+export type CSmartContractDeploymentsAssetDeploymentsArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Entities_Order_By>>;
-  where?: InputMaybe<Entities_Bool_Exp>;
+  order_by?: InputMaybe<Array<CAssetDeploymentsOrderBy>>;
+  where?: InputMaybe<CAssetDeploymentsBoolExp>;
 };
 
-export type Query_RootEntities_By_PkArgs = {
-  id: Scalars['Int']['input'];
+export type CSmartContractDeploymentsAssetDeploymentsAggregateArgs = {
+  filter_input?: InputMaybe<CAssetDeploymentsFilterInput>;
 };
 
-export type Query_RootEntityTypesArgs = {
+export type CSmartContractDeploymentsProductDeploymentsArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<EntityTypes_Order_By>>;
-  where?: InputMaybe<EntityTypes_Bool_Exp>;
+  order_by?: InputMaybe<Array<CProductDeploymentsOrderBy>>;
+  where?: InputMaybe<CProductDeploymentsBoolExp>;
 };
 
-export type Query_RootEntityTypes_By_PkArgs = {
-  id: Scalars['Int']['input'];
+export type CSmartContractDeploymentsProductDeploymentsAggregateArgs = {
+  filter_input?: InputMaybe<CProductDeploymentsFilterInput>;
 };
 
-export type Query_RootProductStatusArgs = {
+export type CSmartContractDeploymentsSmartContractsArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<ProductStatus_Order_By>>;
-  where?: InputMaybe<ProductStatus_Bool_Exp>;
+  order_by?: InputMaybe<Array<CSmartContractsOrderBy>>;
+  where?: InputMaybe<CSmartContractsBoolExp>;
 };
 
-export type Query_RootProductStatus_By_PkArgs = {
-  id: Scalars['Int']['input'];
+export type CSmartContractDeploymentsSmartContractsAggregateArgs = {
+  filter_input?: InputMaybe<CSmartContractsFilterInput>;
 };
 
-export type Query_RootProductSupportsArgs = {
+export type CSmartContractDeploymentsAggExp = {
+  __typename?: 'CSmartContractDeploymentsAggExp';
+  _count: Scalars['Int']['output'];
+  deployedOnId: IntAggExp1;
+  deploymentTypeId: IntAggExp1;
+  id: IntAggExp1;
+  isOfStandardId: IntAggExp1;
+};
+
+export type CSmartContractDeploymentsBoolExp = {
+  _and?: InputMaybe<Array<CSmartContractDeploymentsBoolExp>>;
+  _not?: InputMaybe<CSmartContractDeploymentsBoolExp>;
+  _or?: InputMaybe<Array<CSmartContractDeploymentsBoolExp>>;
+  assetDeployments?: InputMaybe<CAssetDeploymentsBoolExp>;
+  assetStandard?: InputMaybe<CAssetStandardsBoolExp>;
+  deployedOnId?: InputMaybe<IntBoolExp1>;
+  deployedOnProduct?: InputMaybe<CProductsBoolExp>;
+  deploymentType?: InputMaybe<CDeploymentTypesBoolExp>;
+  deploymentTypeId?: InputMaybe<IntBoolExp1>;
+  id?: InputMaybe<IntBoolExp1>;
+  isOfStandardId?: InputMaybe<IntBoolExp1>;
+  productDeployments?: InputMaybe<CProductDeploymentsBoolExp>;
+  smartContracts?: InputMaybe<CSmartContractsBoolExp>;
+};
+
+export type CSmartContractDeploymentsFilterInput = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<ProductSupports_Order_By>>;
-  where?: InputMaybe<ProductSupports_Bool_Exp>;
+  order_by?: InputMaybe<Array<CSmartContractDeploymentsOrderBy>>;
+  where?: InputMaybe<CSmartContractDeploymentsBoolExp>;
 };
 
-export type Query_RootProductSupports_By_PkArgs = {
-  id: Scalars['Int']['input'];
+export type CSmartContractDeploymentsOrderBy = {
+  assetStandard?: InputMaybe<CAssetStandardsOrderBy>;
+  deployedOnId?: InputMaybe<OrderBy>;
+  deployedOnProduct?: InputMaybe<CProductsOrderBy>;
+  deploymentType?: InputMaybe<CDeploymentTypesOrderBy>;
+  deploymentTypeId?: InputMaybe<OrderBy>;
+  id?: InputMaybe<OrderBy>;
+  isOfStandardId?: InputMaybe<OrderBy>;
 };
 
-export type Query_RootProductTypesArgs = {
+export type CSmartContracts = {
+  __typename?: 'CSmartContracts';
+  address: Scalars['String2']['output'];
+  deploymentDate?: Maybe<Scalars['Date1']['output']>;
+  deploymentId?: Maybe<Scalars['Int2']['output']>;
+  id: Scalars['Int2']['output'];
+  name: Scalars['String2']['output'];
+  smartContractDeployment?: Maybe<CSmartContractDeployments>;
+};
+
+export type CSmartContractsAggExp = {
+  __typename?: 'CSmartContractsAggExp';
+  _count: Scalars['Int']['output'];
+  address: StringAggExp1;
+  deploymentDate: DateAggExp1;
+  deploymentId: IntAggExp1;
+  id: IntAggExp1;
+  name: StringAggExp1;
+};
+
+export type CSmartContractsBoolExp = {
+  _and?: InputMaybe<Array<CSmartContractsBoolExp>>;
+  _not?: InputMaybe<CSmartContractsBoolExp>;
+  _or?: InputMaybe<Array<CSmartContractsBoolExp>>;
+  address?: InputMaybe<StringBoolExp1>;
+  deploymentDate?: InputMaybe<DateBoolExp1>;
+  deploymentId?: InputMaybe<IntBoolExp1>;
+  id?: InputMaybe<IntBoolExp1>;
+  name?: InputMaybe<StringBoolExp1>;
+  smartContractDeployment?: InputMaybe<CSmartContractDeploymentsBoolExp>;
+};
+
+export type CSmartContractsFilterInput = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<ProductTypes_Order_By>>;
-  where?: InputMaybe<ProductTypes_Bool_Exp>;
+  order_by?: InputMaybe<Array<CSmartContractsOrderBy>>;
+  where?: InputMaybe<CSmartContractsBoolExp>;
 };
 
-export type Query_RootProductTypes_By_PkArgs = {
-  id: Scalars['Int']['input'];
+export type CSmartContractsOrderBy = {
+  address?: InputMaybe<OrderBy>;
+  deploymentDate?: InputMaybe<OrderBy>;
+  deploymentId?: InputMaybe<OrderBy>;
+  id?: InputMaybe<OrderBy>;
+  name?: InputMaybe<OrderBy>;
+  smartContractDeployment?: InputMaybe<CSmartContractDeploymentsOrderBy>;
 };
 
-export type Query_RootProductsArgs = {
+export type CSocialTypes = {
+  __typename?: 'CSocialTypes';
+  definition: Scalars['String2']['output'];
+  id: Scalars['Int2']['output'];
+  name: Scalars['String2']['output'];
+  socials?: Maybe<Array<CSocials>>;
+  socialsAggregate: CSocialsAggExp;
+};
+
+export type CSocialTypesSocialsArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Products_Order_By>>;
-  where?: InputMaybe<Products_Bool_Exp>;
+  order_by?: InputMaybe<Array<CSocialsOrderBy>>;
+  where?: InputMaybe<CSocialsBoolExp>;
 };
 
-export type Query_RootProducts_By_PkArgs = {
-  id: Scalars['Int']['input'];
+export type CSocialTypesSocialsAggregateArgs = {
+  filter_input?: InputMaybe<CSocialsFilterInput>;
 };
 
-export type Query_RootProfileSectorsArgs = {
+export type CSocialTypesAggExp = {
+  __typename?: 'CSocialTypesAggExp';
+  _count: Scalars['Int']['output'];
+  definition: StringAggExp1;
+  id: IntAggExp1;
+  name: StringAggExp1;
+};
+
+export type CSocialTypesBoolExp = {
+  _and?: InputMaybe<Array<CSocialTypesBoolExp>>;
+  _not?: InputMaybe<CSocialTypesBoolExp>;
+  _or?: InputMaybe<Array<CSocialTypesBoolExp>>;
+  definition?: InputMaybe<StringBoolExp1>;
+  id?: InputMaybe<IntBoolExp1>;
+  name?: InputMaybe<StringBoolExp1>;
+  socials?: InputMaybe<CSocialsBoolExp>;
+};
+
+export type CSocialTypesFilterInput = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<ProfileSectors_Order_By>>;
-  where?: InputMaybe<ProfileSectors_Bool_Exp>;
+  order_by?: InputMaybe<Array<CSocialTypesOrderBy>>;
+  where?: InputMaybe<CSocialTypesBoolExp>;
 };
 
-export type Query_RootProfileSectors_By_PkArgs = {
-  id: Scalars['Int']['input'];
+export type CSocialTypesOrderBy = {
+  definition?: InputMaybe<OrderBy>;
+  id?: InputMaybe<OrderBy>;
+  name?: InputMaybe<OrderBy>;
 };
 
-export type Query_RootProfileStatusesArgs = {
+export type CSocials = {
+  __typename?: 'CSocials';
+  id: Scalars['Int2']['output'];
+  name: Scalars['String2']['output'];
+  root?: Maybe<CRoots>;
+  rootId: Scalars['Int2']['output'];
+  socialType?: Maybe<CSocialTypes>;
+  socialTypeId: Scalars['Int2']['output'];
+  urls?: Maybe<Array<SocialUrls>>;
+};
+
+export type CSocialsUrlsArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<ProfileStatuses_Order_By>>;
-  where?: InputMaybe<ProfileStatuses_Bool_Exp>;
+  order_by?: InputMaybe<Array<SocialUrlsOrderBy>>;
+  where?: InputMaybe<SocialUrlsBoolExp>;
 };
 
-export type Query_RootProfileStatuses_By_PkArgs = {
-  id: Scalars['Int']['input'];
+export type CSocialsAggExp = {
+  __typename?: 'CSocialsAggExp';
+  _count: Scalars['Int']['output'];
+  id: IntAggExp1;
+  name: StringAggExp1;
+  rootId: IntAggExp1;
+  socialTypeId: IntAggExp1;
 };
 
-export type Query_RootProfileTagsArgs = {
+export type CSocialsBoolExp = {
+  _and?: InputMaybe<Array<CSocialsBoolExp>>;
+  _not?: InputMaybe<CSocialsBoolExp>;
+  _or?: InputMaybe<Array<CSocialsBoolExp>>;
+  id?: InputMaybe<IntBoolExp1>;
+  name?: InputMaybe<StringBoolExp1>;
+  root?: InputMaybe<CRootsBoolExp>;
+  rootId?: InputMaybe<IntBoolExp1>;
+  socialType?: InputMaybe<CSocialTypesBoolExp>;
+  socialTypeId?: InputMaybe<IntBoolExp1>;
+};
+
+export type CSocialsFilterInput = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<ProfileTags_Order_By>>;
-  where?: InputMaybe<ProfileTags_Bool_Exp>;
+  order_by?: InputMaybe<Array<CSocialsOrderBy>>;
+  where?: InputMaybe<CSocialsBoolExp>;
 };
 
-export type Query_RootProfileTags_By_PkArgs = {
-  id: Scalars['Int']['input'];
+export type CSocialsOrderBy = {
+  id?: InputMaybe<OrderBy>;
+  name?: InputMaybe<OrderBy>;
+  root?: InputMaybe<CRootsOrderBy>;
+  rootId?: InputMaybe<OrderBy>;
+  socialType?: InputMaybe<CSocialTypesOrderBy>;
+  socialTypeId?: InputMaybe<OrderBy>;
 };
 
-export type Query_RootProfileTypesArgs = {
+/** Table mapping product support relationships */
+export type CSupportsProducts = {
+  __typename?: 'CSupportsProducts';
+  /** Unique identifier for each support relationship */
+  id: Scalars['Int2']['output'];
+  product?: Maybe<CProducts>;
+  /** Identifier of the product providing support */
+  productId: Scalars['Int2']['output'];
+  supportsProduct?: Maybe<CProducts>;
+  /** Identifier of the product being supported */
+  supportsProductId: Scalars['Int2']['output'];
+};
+
+export type CSupportsProductsAggExp = {
+  __typename?: 'CSupportsProductsAggExp';
+  _count: Scalars['Int']['output'];
+  id: IntAggExp1;
+  productId: IntAggExp1;
+  supportsProductId: IntAggExp1;
+};
+
+export type CSupportsProductsBoolExp = {
+  _and?: InputMaybe<Array<CSupportsProductsBoolExp>>;
+  _not?: InputMaybe<CSupportsProductsBoolExp>;
+  _or?: InputMaybe<Array<CSupportsProductsBoolExp>>;
+  id?: InputMaybe<IntBoolExp1>;
+  product?: InputMaybe<CProductsBoolExp>;
+  productId?: InputMaybe<IntBoolExp1>;
+  supportsProduct?: InputMaybe<CProductsBoolExp>;
+  supportsProductId?: InputMaybe<IntBoolExp1>;
+};
+
+export type CSupportsProductsFilterInput = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<ProfileTypes_Order_By>>;
-  where?: InputMaybe<ProfileTypes_Bool_Exp>;
+  order_by?: InputMaybe<Array<CSupportsProductsOrderBy>>;
+  where?: InputMaybe<CSupportsProductsBoolExp>;
 };
 
-export type Query_RootProfileTypes_By_PkArgs = {
-  id: Scalars['Int']['input'];
+export type CSupportsProductsOrderBy = {
+  id?: InputMaybe<OrderBy>;
+  product?: InputMaybe<CProductsOrderBy>;
+  productId?: InputMaybe<OrderBy>;
+  supportsProduct?: InputMaybe<CProductsOrderBy>;
+  supportsProductId?: InputMaybe<OrderBy>;
 };
 
-export type Query_RootProfilesArgs = {
+export type CTagTypes = {
+  __typename?: 'CTagTypes';
+  definition: Scalars['String2']['output'];
+  id: Scalars['Int2']['output'];
+  name: Scalars['String2']['output'];
+  tags?: Maybe<Array<CTags>>;
+  tagsAggregate: CTagsAggExp;
+};
+
+export type CTagTypesTagsArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Profiles_Order_By>>;
-  where?: InputMaybe<Profiles_Bool_Exp>;
+  order_by?: InputMaybe<Array<CTagsOrderBy>>;
+  where?: InputMaybe<CTagsBoolExp>;
 };
 
-export type Query_RootProfiles_By_PkArgs = {
-  id: Scalars['Int']['input'];
+export type CTagTypesTagsAggregateArgs = {
+  filter_input?: InputMaybe<CTagsFilterInput>;
 };
 
-export type Query_RootSocialTypesArgs = {
+export type CTagTypesAggExp = {
+  __typename?: 'CTagTypesAggExp';
+  _count: Scalars['Int']['output'];
+  definition: StringAggExp1;
+  id: IntAggExp1;
+  name: StringAggExp1;
+};
+
+export type CTagTypesBoolExp = {
+  _and?: InputMaybe<Array<CTagTypesBoolExp>>;
+  _not?: InputMaybe<CTagTypesBoolExp>;
+  _or?: InputMaybe<Array<CTagTypesBoolExp>>;
+  definition?: InputMaybe<StringBoolExp1>;
+  id?: InputMaybe<IntBoolExp1>;
+  name?: InputMaybe<StringBoolExp1>;
+  tags?: InputMaybe<CTagsBoolExp>;
+};
+
+export type CTagTypesFilterInput = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<SocialTypes_Order_By>>;
-  where?: InputMaybe<SocialTypes_Bool_Exp>;
+  order_by?: InputMaybe<Array<CTagTypesOrderBy>>;
+  where?: InputMaybe<CTagTypesBoolExp>;
 };
 
-export type Query_RootSocialTypes_By_PkArgs = {
-  id: Scalars['Int']['input'];
+export type CTagTypesOrderBy = {
+  definition?: InputMaybe<OrderBy>;
+  id?: InputMaybe<OrderBy>;
+  name?: InputMaybe<OrderBy>;
 };
 
-export type Query_RootSocialsArgs = {
+export type CTags = {
+  __typename?: 'CTags';
+  description: Scalars['String2']['output'];
+  id: Scalars['Int2']['output'];
+  name: Scalars['String2']['output'];
+  profileTags?: Maybe<Array<CProfileTags>>;
+  profileTagsAggregate: CProfileTagsAggExp;
+  tagType?: Maybe<CTagTypes>;
+  tagTypeId: Scalars['Int2']['output'];
+};
+
+export type CTagsProfileTagsArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Socials_Order_By>>;
-  where?: InputMaybe<Socials_Bool_Exp>;
+  order_by?: InputMaybe<Array<CProfileTagsOrderBy>>;
+  where?: InputMaybe<CProfileTagsBoolExp>;
 };
 
-export type Query_RootSocials_By_PkArgs = {
-  id: Scalars['Int']['input'];
+export type CTagsProfileTagsAggregateArgs = {
+  filter_input?: InputMaybe<CProfileTagsFilterInput>;
 };
 
-export type Query_RootTagTypesArgs = {
+export type CTagsAggExp = {
+  __typename?: 'CTagsAggExp';
+  _count: Scalars['Int']['output'];
+  description: StringAggExp1;
+  id: IntAggExp1;
+  name: StringAggExp1;
+  tagTypeId: IntAggExp1;
+};
+
+export type CTagsBoolExp = {
+  _and?: InputMaybe<Array<CTagsBoolExp>>;
+  _not?: InputMaybe<CTagsBoolExp>;
+  _or?: InputMaybe<Array<CTagsBoolExp>>;
+  description?: InputMaybe<StringBoolExp1>;
+  id?: InputMaybe<IntBoolExp1>;
+  name?: InputMaybe<StringBoolExp1>;
+  profileTags?: InputMaybe<CProfileTagsBoolExp>;
+  tagType?: InputMaybe<CTagTypesBoolExp>;
+  tagTypeId?: InputMaybe<IntBoolExp1>;
+};
+
+export type CTagsFilterInput = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<TagTypes_Order_By>>;
-  where?: InputMaybe<TagTypes_Bool_Exp>;
+  order_by?: InputMaybe<Array<CTagsOrderBy>>;
+  where?: InputMaybe<CTagsBoolExp>;
 };
 
-export type Query_RootTagTypes_By_PkArgs = {
-  id: Scalars['Int']['input'];
+export type CTagsOrderBy = {
+  description?: InputMaybe<OrderBy>;
+  id?: InputMaybe<OrderBy>;
+  name?: InputMaybe<OrderBy>;
+  tagType?: InputMaybe<CTagTypesOrderBy>;
+  tagTypeId?: InputMaybe<OrderBy>;
 };
 
-export type Query_RootTagsArgs = {
+export type CUrlTypes = {
+  __typename?: 'CUrlTypes';
+  definition: Scalars['String2']['output'];
+  id: Scalars['Int2']['output'];
+  name: Scalars['String2']['output'];
+  urls?: Maybe<Array<CUrls>>;
+  urlsAggregate: CUrlsAggExp;
+};
+
+export type CUrlTypesUrlsArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Tags_Order_By>>;
-  where?: InputMaybe<Tags_Bool_Exp>;
+  order_by?: InputMaybe<Array<CUrlsOrderBy>>;
+  where?: InputMaybe<CUrlsBoolExp>;
 };
 
-export type Query_RootTags_By_PkArgs = {
-  id: Scalars['Int']['input'];
+export type CUrlTypesUrlsAggregateArgs = {
+  filter_input?: InputMaybe<CUrlsFilterInput>;
 };
 
-export type SocialTypes = {
-  __typename?: 'socialTypes';
-  definition: Scalars['String']['output'];
-  id: Scalars['Int']['output'];
-  name: Scalars['String']['output'];
-  /** An array relationship */
-  socials: Array<Socials>;
+export type CUrlTypesAggExp = {
+  __typename?: 'CUrlTypesAggExp';
+  _count: Scalars['Int']['output'];
+  definition: StringAggExp1;
+  id: IntAggExp1;
+  name: StringAggExp1;
 };
 
-export type SocialTypesSocialsArgs = {
+export type CUrlTypesBoolExp = {
+  _and?: InputMaybe<Array<CUrlTypesBoolExp>>;
+  _not?: InputMaybe<CUrlTypesBoolExp>;
+  _or?: InputMaybe<Array<CUrlTypesBoolExp>>;
+  definition?: InputMaybe<StringBoolExp1>;
+  id?: InputMaybe<IntBoolExp1>;
+  name?: InputMaybe<StringBoolExp1>;
+  urls?: InputMaybe<CUrlsBoolExp>;
+};
+
+export type CUrlTypesFilterInput = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Socials_Order_By>>;
-  where?: InputMaybe<Socials_Bool_Exp>;
+  order_by?: InputMaybe<Array<CUrlTypesOrderBy>>;
+  where?: InputMaybe<CUrlTypesBoolExp>;
 };
 
-/** Boolean expression to filter rows from the table "socialTypes". All fields are combined with a logical 'AND'. */
-export type SocialTypes_Bool_Exp = {
-  _and?: InputMaybe<Array<SocialTypes_Bool_Exp>>;
-  _not?: InputMaybe<SocialTypes_Bool_Exp>;
-  _or?: InputMaybe<Array<SocialTypes_Bool_Exp>>;
-  definition?: InputMaybe<String_Mysql8_Comparison_Exp>;
-  id?: InputMaybe<Int_Mysql8_Comparison_Exp>;
-  name?: InputMaybe<String_Mysql8_Comparison_Exp>;
-  socials?: InputMaybe<Socials_Bool_Exp>;
+export type CUrlTypesOrderBy = {
+  definition?: InputMaybe<OrderBy>;
+  id?: InputMaybe<OrderBy>;
+  name?: InputMaybe<OrderBy>;
 };
 
-/** Ordering options when selecting data from "socialTypes". */
-export type SocialTypes_Order_By = {
-  definition?: InputMaybe<Mysql8_Order_By>;
-  id?: InputMaybe<Mysql8_Order_By>;
-  name?: InputMaybe<Mysql8_Order_By>;
-  socials_aggregate?: InputMaybe<Socials_Aggregate_Order_By>;
+export type CUrls = {
+  __typename?: 'CUrls';
+  coreTableName?: Maybe<CCoreTableNames>;
+  id: Scalars['Int2']['output'];
+  rowId: Scalars['Int2']['output'];
+  tableId: Scalars['Int2']['output'];
+  url: Scalars['String2']['output'];
+  urlType?: Maybe<CUrlTypes>;
+  urlTypeId: Scalars['Int2']['output'];
 };
 
-export type Socials = {
-  __typename?: 'socials';
-  id: Scalars['Int']['output'];
-  name: Scalars['String']['output'];
-  /** An object relationship */
-  profile: Profiles;
-  profileId: Scalars['Int']['output'];
-  /** An object relationship */
-  socialType?: Maybe<SocialTypes>;
-  socialTypeId?: Maybe<Scalars['Int']['output']>;
-  url: Scalars['String']['output'];
+export type CUrlsAggExp = {
+  __typename?: 'CUrlsAggExp';
+  _count: Scalars['Int']['output'];
+  id: IntAggExp1;
+  rowId: IntAggExp1;
+  tableId: IntAggExp1;
+  url: StringAggExp1;
+  urlTypeId: IntAggExp1;
 };
 
-/** order by aggregate values of table "socials" */
-export type Socials_Aggregate_Order_By = {
-  avg?: InputMaybe<Socials_Avg_Order_By>;
-  count?: InputMaybe<Mysql8_Order_By>;
-  max?: InputMaybe<Socials_Max_Order_By>;
-  min?: InputMaybe<Socials_Min_Order_By>;
-  stddev_pop?: InputMaybe<Socials_Stddev_Pop_Order_By>;
-  stddev_samp?: InputMaybe<Socials_Stddev_Samp_Order_By>;
-  sum?: InputMaybe<Socials_Sum_Order_By>;
-  var_pop?: InputMaybe<Socials_Var_Pop_Order_By>;
-  var_samp?: InputMaybe<Socials_Var_Samp_Order_By>;
+export type CUrlsBoolExp = {
+  _and?: InputMaybe<Array<CUrlsBoolExp>>;
+  _not?: InputMaybe<CUrlsBoolExp>;
+  _or?: InputMaybe<Array<CUrlsBoolExp>>;
+  coreTableName?: InputMaybe<CCoreTableNamesBoolExp>;
+  id?: InputMaybe<IntBoolExp1>;
+  rowId?: InputMaybe<IntBoolExp1>;
+  tableId?: InputMaybe<IntBoolExp1>;
+  url?: InputMaybe<StringBoolExp1>;
+  urlType?: InputMaybe<CUrlTypesBoolExp>;
+  urlTypeId?: InputMaybe<IntBoolExp1>;
 };
 
-/** order by avg() on columns of table "socials" */
-export type Socials_Avg_Order_By = {
-  id?: InputMaybe<Mysql8_Order_By>;
-  profileId?: InputMaybe<Mysql8_Order_By>;
-  socialTypeId?: InputMaybe<Mysql8_Order_By>;
-};
-
-/** Boolean expression to filter rows from the table "socials". All fields are combined with a logical 'AND'. */
-export type Socials_Bool_Exp = {
-  _and?: InputMaybe<Array<Socials_Bool_Exp>>;
-  _not?: InputMaybe<Socials_Bool_Exp>;
-  _or?: InputMaybe<Array<Socials_Bool_Exp>>;
-  id?: InputMaybe<Int_Mysql8_Comparison_Exp>;
-  name?: InputMaybe<String_Mysql8_Comparison_Exp>;
-  profile?: InputMaybe<Profiles_Bool_Exp>;
-  profileId?: InputMaybe<Int_Mysql8_Comparison_Exp>;
-  socialType?: InputMaybe<SocialTypes_Bool_Exp>;
-  socialTypeId?: InputMaybe<Int_Mysql8_Comparison_Exp>;
-  url?: InputMaybe<String_Mysql8_Comparison_Exp>;
-};
-
-/** order by max() on columns of table "socials" */
-export type Socials_Max_Order_By = {
-  id?: InputMaybe<Mysql8_Order_By>;
-  name?: InputMaybe<Mysql8_Order_By>;
-  profileId?: InputMaybe<Mysql8_Order_By>;
-  socialTypeId?: InputMaybe<Mysql8_Order_By>;
-  url?: InputMaybe<Mysql8_Order_By>;
-};
-
-/** order by min() on columns of table "socials" */
-export type Socials_Min_Order_By = {
-  id?: InputMaybe<Mysql8_Order_By>;
-  name?: InputMaybe<Mysql8_Order_By>;
-  profileId?: InputMaybe<Mysql8_Order_By>;
-  socialTypeId?: InputMaybe<Mysql8_Order_By>;
-  url?: InputMaybe<Mysql8_Order_By>;
-};
-
-/** Ordering options when selecting data from "socials". */
-export type Socials_Order_By = {
-  id?: InputMaybe<Mysql8_Order_By>;
-  name?: InputMaybe<Mysql8_Order_By>;
-  profile?: InputMaybe<Profiles_Order_By>;
-  profileId?: InputMaybe<Mysql8_Order_By>;
-  socialType?: InputMaybe<SocialTypes_Order_By>;
-  socialTypeId?: InputMaybe<Mysql8_Order_By>;
-  url?: InputMaybe<Mysql8_Order_By>;
-};
-
-/** order by stddev_pop() on columns of table "socials" */
-export type Socials_Stddev_Pop_Order_By = {
-  id?: InputMaybe<Mysql8_Order_By>;
-  profileId?: InputMaybe<Mysql8_Order_By>;
-  socialTypeId?: InputMaybe<Mysql8_Order_By>;
-};
-
-/** order by stddev_samp() on columns of table "socials" */
-export type Socials_Stddev_Samp_Order_By = {
-  id?: InputMaybe<Mysql8_Order_By>;
-  profileId?: InputMaybe<Mysql8_Order_By>;
-  socialTypeId?: InputMaybe<Mysql8_Order_By>;
-};
-
-/** order by sum() on columns of table "socials" */
-export type Socials_Sum_Order_By = {
-  id?: InputMaybe<Mysql8_Order_By>;
-  profileId?: InputMaybe<Mysql8_Order_By>;
-  socialTypeId?: InputMaybe<Mysql8_Order_By>;
-};
-
-/** order by var_pop() on columns of table "socials" */
-export type Socials_Var_Pop_Order_By = {
-  id?: InputMaybe<Mysql8_Order_By>;
-  profileId?: InputMaybe<Mysql8_Order_By>;
-  socialTypeId?: InputMaybe<Mysql8_Order_By>;
-};
-
-/** order by var_samp() on columns of table "socials" */
-export type Socials_Var_Samp_Order_By = {
-  id?: InputMaybe<Mysql8_Order_By>;
-  profileId?: InputMaybe<Mysql8_Order_By>;
-  socialTypeId?: InputMaybe<Mysql8_Order_By>;
-};
-
-export type Subscription_Root = {
-  __typename?: 'subscription_root';
-  /** fetch data from the table: "assetStandardSupport" */
-  assetStandardSupport: Array<AssetStandardSupport>;
-  /** fetch data from the table: "assetStandardSupport" using primary key columns */
-  assetStandardSupport_by_pk?: Maybe<AssetStandardSupport>;
-  /** fetch data from the table: "assetType" */
-  assetType: Array<AssetType>;
-  /** fetch data from the table: "assetType" using primary key columns */
-  assetType_by_pk?: Maybe<AssetType>;
-  /** An array relationship */
-  assets: Array<Assets>;
-  /** fetch data from the table: "assets" using primary key columns */
-  assets_by_pk?: Maybe<Assets>;
-  /** fetch data from the table: "countries" */
-  countries: Array<Countries>;
-  /** fetch data from the table: "countries" using primary key columns */
-  countries_by_pk?: Maybe<Countries>;
-  /** An array relationship */
-  entities: Array<Entities>;
-  /** fetch data from the table: "entities" using primary key columns */
-  entities_by_pk?: Maybe<Entities>;
-  /** fetch data from the table: "entityTypes" */
-  entityTypes: Array<EntityTypes>;
-  /** fetch data from the table: "entityTypes" using primary key columns */
-  entityTypes_by_pk?: Maybe<EntityTypes>;
-  /** fetch data from the table: "productStatus" */
-  productStatus: Array<ProductStatus>;
-  /** fetch data from the table: "productStatus" using primary key columns */
-  productStatus_by_pk?: Maybe<ProductStatus>;
-  /** fetch data from the table: "productSupports" */
-  productSupports: Array<ProductSupports>;
-  /** fetch data from the table: "productSupports" using primary key columns */
-  productSupports_by_pk?: Maybe<ProductSupports>;
-  /** fetch data from the table: "productTypes" */
-  productTypes: Array<ProductTypes>;
-  /** fetch data from the table: "productTypes" using primary key columns */
-  productTypes_by_pk?: Maybe<ProductTypes>;
-  /** An array relationship */
-  products: Array<Products>;
-  /** fetch data from the table: "products" using primary key columns */
-  products_by_pk?: Maybe<Products>;
-  /** fetch data from the table: "profileSectors" */
-  profileSectors: Array<ProfileSectors>;
-  /** fetch data from the table: "profileSectors" using primary key columns */
-  profileSectors_by_pk?: Maybe<ProfileSectors>;
-  /** fetch data from the table: "profileStatuses" */
-  profileStatuses: Array<ProfileStatuses>;
-  /** fetch data from the table: "profileStatuses" using primary key columns */
-  profileStatuses_by_pk?: Maybe<ProfileStatuses>;
-  /** An array relationship */
-  profileTags: Array<ProfileTags>;
-  /** fetch data from the table: "profileTags" using primary key columns */
-  profileTags_by_pk?: Maybe<ProfileTags>;
-  /** fetch data from the table: "profileTypes" */
-  profileTypes: Array<ProfileTypes>;
-  /** fetch data from the table: "profileTypes" using primary key columns */
-  profileTypes_by_pk?: Maybe<ProfileTypes>;
-  /** An array relationship */
-  profiles: Array<Profiles>;
-  /** fetch data from the table: "profiles" using primary key columns */
-  profiles_by_pk?: Maybe<Profiles>;
-  /** fetch data from the table: "socialTypes" */
-  socialTypes: Array<SocialTypes>;
-  /** fetch data from the table: "socialTypes" using primary key columns */
-  socialTypes_by_pk?: Maybe<SocialTypes>;
-  /** An array relationship */
-  socials: Array<Socials>;
-  /** fetch data from the table: "socials" using primary key columns */
-  socials_by_pk?: Maybe<Socials>;
-  /** fetch data from the table: "tagTypes" */
-  tagTypes: Array<TagTypes>;
-  /** fetch data from the table: "tagTypes" using primary key columns */
-  tagTypes_by_pk?: Maybe<TagTypes>;
-  /** fetch data from the table: "tags" */
-  tags: Array<Tags>;
-  /** fetch data from the table: "tags" using primary key columns */
-  tags_by_pk?: Maybe<Tags>;
-};
-
-export type Subscription_RootAssetStandardSupportArgs = {
+export type CUrlsFilterInput = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<AssetStandardSupport_Order_By>>;
-  where?: InputMaybe<AssetStandardSupport_Bool_Exp>;
+  order_by?: InputMaybe<Array<CUrlsOrderBy>>;
+  where?: InputMaybe<CUrlsBoolExp>;
 };
 
-export type Subscription_RootAssetStandardSupport_By_PkArgs = {
-  id: Scalars['Int']['input'];
+export type CUrlsOrderBy = {
+  coreTableName?: InputMaybe<CCoreTableNamesOrderBy>;
+  id?: InputMaybe<OrderBy>;
+  rowId?: InputMaybe<OrderBy>;
+  tableId?: InputMaybe<OrderBy>;
+  url?: InputMaybe<OrderBy>;
+  urlType?: InputMaybe<CUrlTypesOrderBy>;
+  urlTypeId?: InputMaybe<OrderBy>;
 };
 
-export type Subscription_RootAssetTypeArgs = {
+export type DateAggExp1 = {
+  __typename?: 'DateAggExp1';
+  _count: Scalars['Int']['output'];
+  _count_distinct: Scalars['Int']['output'];
+};
+
+export type DateBoolExp1 = {
+  _eq?: InputMaybe<Scalars['Date1']['input']>;
+  _gt?: InputMaybe<Scalars['Date1']['input']>;
+  _gte?: InputMaybe<Scalars['Date1']['input']>;
+  _is_null?: InputMaybe<Scalars['Boolean']['input']>;
+  _lt?: InputMaybe<Scalars['Date1']['input']>;
+  _lte?: InputMaybe<Scalars['Date1']['input']>;
+};
+
+export type EntityUrls = {
+  __typename?: 'EntityUrls';
+  id: Scalars['Int2']['output'];
+  rowId: Scalars['Int2']['output'];
+  tableId: Scalars['Int2']['output'];
+  url: Scalars['String2']['output'];
+  urlType?: Maybe<CUrlTypes>;
+  urlTypeId: Scalars['Int2']['output'];
+};
+
+export type EntityUrlsBoolExp = {
+  _and?: InputMaybe<Array<EntityUrlsBoolExp>>;
+  _not?: InputMaybe<EntityUrlsBoolExp>;
+  _or?: InputMaybe<Array<EntityUrlsBoolExp>>;
+  id?: InputMaybe<IntBoolExp1>;
+  rowId?: InputMaybe<IntBoolExp1>;
+  tableId?: InputMaybe<IntBoolExp1>;
+  url?: InputMaybe<StringBoolExp1>;
+  urlType?: InputMaybe<CUrlTypesBoolExp>;
+  urlTypeId?: InputMaybe<IntBoolExp1>;
+};
+
+export type EntityUrlsOrderBy = {
+  id?: InputMaybe<OrderBy>;
+  rowId?: InputMaybe<OrderBy>;
+  tableId?: InputMaybe<OrderBy>;
+  url?: InputMaybe<OrderBy>;
+  urlType?: InputMaybe<CUrlTypesOrderBy>;
+  urlTypeId?: InputMaybe<OrderBy>;
+};
+
+export type IntAggExp1 = {
+  __typename?: 'IntAggExp1';
+  _count: Scalars['Int']['output'];
+  _count_distinct: Scalars['Int']['output'];
+  avg: Scalars['Float2']['output'];
+  count: Scalars['Int2']['output'];
+  max: Scalars['Int2']['output'];
+  min: Scalars['Int2']['output'];
+  stddev_pop: Scalars['Float2']['output'];
+  stddev_samp: Scalars['Float2']['output'];
+  sum: Scalars['Int2']['output'];
+  var_pop: Scalars['Float2']['output'];
+  var_samp: Scalars['Float2']['output'];
+};
+
+export type IntBoolExp1 = {
+  _eq?: InputMaybe<Scalars['Int2']['input']>;
+  _gt?: InputMaybe<Scalars['Int2']['input']>;
+  _gte?: InputMaybe<Scalars['Int2']['input']>;
+  _in?: InputMaybe<Array<Scalars['Int2']['input']>>;
+  _is_null?: InputMaybe<Scalars['Boolean']['input']>;
+  _lt?: InputMaybe<Scalars['Int2']['input']>;
+  _lte?: InputMaybe<Scalars['Int2']['input']>;
+};
+
+export type Mutation = {
+  __typename?: 'Mutation';
+  _no_fields_accessible?: Maybe<Scalars['String']['output']>;
+};
+
+export enum OrderBy {
+  /** Sorts the data in ascending order */
+  Asc = 'Asc',
+  /** Sorts the data in descending order */
+  Desc = 'Desc'
+}
+
+export type ProductUrls = {
+  __typename?: 'ProductUrls';
+  id: Scalars['Int2']['output'];
+  rowId: Scalars['Int2']['output'];
+  tableId: Scalars['Int2']['output'];
+  url: Scalars['String2']['output'];
+  urlType?: Maybe<CUrlTypes>;
+  urlTypeId: Scalars['Int2']['output'];
+};
+
+export type ProductUrlsBoolExp = {
+  _and?: InputMaybe<Array<ProductUrlsBoolExp>>;
+  _not?: InputMaybe<ProductUrlsBoolExp>;
+  _or?: InputMaybe<Array<ProductUrlsBoolExp>>;
+  id?: InputMaybe<IntBoolExp1>;
+  rowId?: InputMaybe<IntBoolExp1>;
+  tableId?: InputMaybe<IntBoolExp1>;
+  url?: InputMaybe<StringBoolExp1>;
+  urlType?: InputMaybe<CUrlTypesBoolExp>;
+  urlTypeId?: InputMaybe<IntBoolExp1>;
+};
+
+export type ProductUrlsOrderBy = {
+  id?: InputMaybe<OrderBy>;
+  rowId?: InputMaybe<OrderBy>;
+  tableId?: InputMaybe<OrderBy>;
+  url?: InputMaybe<OrderBy>;
+  urlType?: InputMaybe<CUrlTypesOrderBy>;
+  urlTypeId?: InputMaybe<OrderBy>;
+};
+
+export type ProfileInfoUrls = {
+  __typename?: 'ProfileInfoUrls';
+  id: Scalars['Int2']['output'];
+  rowId: Scalars['Int2']['output'];
+  tableId: Scalars['Int2']['output'];
+  url: Scalars['String2']['output'];
+  urlType?: Maybe<CUrlTypes>;
+  urlTypeId: Scalars['Int2']['output'];
+};
+
+export type ProfileInfoUrlsBoolExp = {
+  _and?: InputMaybe<Array<ProfileInfoUrlsBoolExp>>;
+  _not?: InputMaybe<ProfileInfoUrlsBoolExp>;
+  _or?: InputMaybe<Array<ProfileInfoUrlsBoolExp>>;
+  id?: InputMaybe<IntBoolExp1>;
+  rowId?: InputMaybe<IntBoolExp1>;
+  tableId?: InputMaybe<IntBoolExp1>;
+  url?: InputMaybe<StringBoolExp1>;
+  urlType?: InputMaybe<CUrlTypesBoolExp>;
+  urlTypeId?: InputMaybe<IntBoolExp1>;
+};
+
+export type ProfileInfoUrlsOrderBy = {
+  id?: InputMaybe<OrderBy>;
+  rowId?: InputMaybe<OrderBy>;
+  tableId?: InputMaybe<OrderBy>;
+  url?: InputMaybe<OrderBy>;
+  urlType?: InputMaybe<CUrlTypesOrderBy>;
+  urlTypeId?: InputMaybe<OrderBy>;
+};
+
+export type Query = {
+  __typename?: 'Query';
+  assetDeployments?: Maybe<Array<CAssetDeployments>>;
+  assetDeploymentsAggregate?: Maybe<CAssetDeploymentsAggExp>;
+  assetStandards?: Maybe<Array<CAssetStandards>>;
+  assetStandardsAggregate?: Maybe<CAssetStandardsAggExp>;
+  assetStatuses?: Maybe<Array<CAssetStatuses>>;
+  assetStatusesAggregate?: Maybe<CAssetStatusesAggExp>;
+  assetSupportTypes?: Maybe<Array<CAssetSupportTypes>>;
+  assetSupportTypesAggregate?: Maybe<CAssetSupportTypesAggExp>;
+  assetTypes?: Maybe<Array<CAssetTypes>>;
+  assetTypesAggregate?: Maybe<CAssetTypesAggExp>;
+  assets?: Maybe<Array<CAssets>>;
+  assetsAggregate?: Maybe<CAssetsAggExp>;
+  coreTableNames?: Maybe<Array<CCoreTableNames>>;
+  coreTableNamesAggregate?: Maybe<CCoreTableNamesAggExp>;
+  countries?: Maybe<Array<CCountries>>;
+  countriesAggregate?: Maybe<CCountriesAggExp>;
+  deploymentTypes?: Maybe<Array<CDeploymentTypes>>;
+  deploymentTypesAggregate?: Maybe<CDeploymentTypesAggExp>;
+  derivativeAssets?: Maybe<Array<CDerivativeAssets>>;
+  derivativeAssetsAggregate?: Maybe<CDerivativeAssetsAggExp>;
+  entities?: Maybe<Array<CEntities>>;
+  entitiesAggregate?: Maybe<CEntitiesAggExp>;
+  entityTypes?: Maybe<Array<CEntityTypes>>;
+  entityTypesAggregate?: Maybe<CEntityTypesAggExp>;
+  productAssetRelationships?: Maybe<Array<CProductAssetRelationships>>;
+  productAssetRelationshipsAggregate?: Maybe<CProductAssetRelationshipsAggExp>;
+  productDeployments?: Maybe<Array<CProductDeployments>>;
+  productDeploymentsAggregate?: Maybe<CProductDeploymentsAggExp>;
+  productStatuses?: Maybe<Array<CProductStatuses>>;
+  productStatusesAggregate?: Maybe<CProductStatusesAggExp>;
+  productTypes?: Maybe<Array<CProductTypes>>;
+  productTypesAggregate?: Maybe<CProductTypesAggExp>;
+  products?: Maybe<Array<CProducts>>;
+  productsAggregate?: Maybe<CProductsAggExp>;
+  profileInfos?: Maybe<Array<CProfileInfos>>;
+  profileInfosAggregate?: Maybe<CProfileInfosAggExp>;
+  profileSectors?: Maybe<Array<CProfileSectors>>;
+  profileSectorsAggregate?: Maybe<CProfileSectorsAggExp>;
+  profileStatuses?: Maybe<Array<CProfileStatuses>>;
+  profileStatusesAggregate?: Maybe<CProfileStatusesAggExp>;
+  /** Selects multiple objects from the model. Model description:   */
+  profileTags?: Maybe<Array<CProfileTags>>;
+  profileTagsAggregate?: Maybe<CProfileTagsAggExp>;
+  profileTypes?: Maybe<Array<CProfileTypes>>;
+  profileTypesAggregate?: Maybe<CProfileTypesAggExp>;
+  roots?: Maybe<Array<CRoots>>;
+  rootsAggregate?: Maybe<CRootsAggExp>;
+  smartContractDeployments?: Maybe<Array<CSmartContractDeployments>>;
+  smartContractDeploymentsAggregate?: Maybe<CSmartContractDeploymentsAggExp>;
+  smartContracts?: Maybe<Array<CSmartContracts>>;
+  smartContractsAggregate?: Maybe<CSmartContractsAggExp>;
+  socialTypes?: Maybe<Array<CSocialTypes>>;
+  socialTypesAggregate?: Maybe<CSocialTypesAggExp>;
+  socials?: Maybe<Array<CSocials>>;
+  socialsAggregate?: Maybe<CSocialsAggExp>;
+  /** Selects multiple objects from the model. Model description: Table mapping product support relationships */
+  supportsProducts?: Maybe<Array<CSupportsProducts>>;
+  supportsProductsAggregate?: Maybe<CSupportsProductsAggExp>;
+  tagTypes?: Maybe<Array<CTagTypes>>;
+  tagTypesAggregate?: Maybe<CTagTypesAggExp>;
+  tags?: Maybe<Array<CTags>>;
+  tagsAggregate?: Maybe<CTagsAggExp>;
+  urlTypes?: Maybe<Array<CUrlTypes>>;
+  urlTypesAggregate?: Maybe<CUrlTypesAggExp>;
+  urls?: Maybe<Array<CUrls>>;
+  urlsAggregate?: Maybe<CUrlsAggExp>;
+};
+
+export type QueryAssetDeploymentsArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<AssetType_Order_By>>;
-  where?: InputMaybe<AssetType_Bool_Exp>;
+  order_by?: InputMaybe<Array<CAssetDeploymentsOrderBy>>;
+  where?: InputMaybe<CAssetDeploymentsBoolExp>;
 };
 
-export type Subscription_RootAssetType_By_PkArgs = {
-  id: Scalars['Int']['input'];
+export type QueryAssetDeploymentsAggregateArgs = {
+  filter_input?: InputMaybe<CAssetDeploymentsFilterInput>;
 };
 
-export type Subscription_RootAssetsArgs = {
+export type QueryAssetStandardsArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Assets_Order_By>>;
-  where?: InputMaybe<Assets_Bool_Exp>;
+  order_by?: InputMaybe<Array<CAssetStandardsOrderBy>>;
+  where?: InputMaybe<CAssetStandardsBoolExp>;
 };
 
-export type Subscription_RootAssets_By_PkArgs = {
-  id: Scalars['Int']['input'];
+export type QueryAssetStandardsAggregateArgs = {
+  filter_input?: InputMaybe<CAssetStandardsFilterInput>;
 };
 
-export type Subscription_RootCountriesArgs = {
+export type QueryAssetStatusesArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Countries_Order_By>>;
-  where?: InputMaybe<Countries_Bool_Exp>;
+  order_by?: InputMaybe<Array<CAssetStatusesOrderBy>>;
+  where?: InputMaybe<CAssetStatusesBoolExp>;
 };
 
-export type Subscription_RootCountries_By_PkArgs = {
-  id: Scalars['Int']['input'];
+export type QueryAssetStatusesAggregateArgs = {
+  filter_input?: InputMaybe<CAssetStatusesFilterInput>;
 };
 
-export type Subscription_RootEntitiesArgs = {
+export type QueryAssetSupportTypesArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Entities_Order_By>>;
-  where?: InputMaybe<Entities_Bool_Exp>;
+  order_by?: InputMaybe<Array<CAssetSupportTypesOrderBy>>;
+  where?: InputMaybe<CAssetSupportTypesBoolExp>;
 };
 
-export type Subscription_RootEntities_By_PkArgs = {
-  id: Scalars['Int']['input'];
+export type QueryAssetSupportTypesAggregateArgs = {
+  filter_input?: InputMaybe<CAssetSupportTypesFilterInput>;
 };
 
-export type Subscription_RootEntityTypesArgs = {
+export type QueryAssetTypesArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<EntityTypes_Order_By>>;
-  where?: InputMaybe<EntityTypes_Bool_Exp>;
+  order_by?: InputMaybe<Array<CAssetTypesOrderBy>>;
+  where?: InputMaybe<CAssetTypesBoolExp>;
 };
 
-export type Subscription_RootEntityTypes_By_PkArgs = {
-  id: Scalars['Int']['input'];
+export type QueryAssetTypesAggregateArgs = {
+  filter_input?: InputMaybe<CAssetTypesFilterInput>;
 };
 
-export type Subscription_RootProductStatusArgs = {
+export type QueryAssetsArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<ProductStatus_Order_By>>;
-  where?: InputMaybe<ProductStatus_Bool_Exp>;
+  order_by?: InputMaybe<Array<CAssetsOrderBy>>;
+  where?: InputMaybe<CAssetsBoolExp>;
 };
 
-export type Subscription_RootProductStatus_By_PkArgs = {
-  id: Scalars['Int']['input'];
+export type QueryAssetsAggregateArgs = {
+  filter_input?: InputMaybe<CAssetsFilterInput>;
 };
 
-export type Subscription_RootProductSupportsArgs = {
+export type QueryCoreTableNamesArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<ProductSupports_Order_By>>;
-  where?: InputMaybe<ProductSupports_Bool_Exp>;
+  order_by?: InputMaybe<Array<CCoreTableNamesOrderBy>>;
+  where?: InputMaybe<CCoreTableNamesBoolExp>;
 };
 
-export type Subscription_RootProductSupports_By_PkArgs = {
-  id: Scalars['Int']['input'];
+export type QueryCoreTableNamesAggregateArgs = {
+  filter_input?: InputMaybe<CCoreTableNamesFilterInput>;
 };
 
-export type Subscription_RootProductTypesArgs = {
+export type QueryCountriesArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<ProductTypes_Order_By>>;
-  where?: InputMaybe<ProductTypes_Bool_Exp>;
+  order_by?: InputMaybe<Array<CCountriesOrderBy>>;
+  where?: InputMaybe<CCountriesBoolExp>;
 };
 
-export type Subscription_RootProductTypes_By_PkArgs = {
-  id: Scalars['Int']['input'];
+export type QueryCountriesAggregateArgs = {
+  filter_input?: InputMaybe<CCountriesFilterInput>;
 };
 
-export type Subscription_RootProductsArgs = {
+export type QueryDeploymentTypesArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Products_Order_By>>;
-  where?: InputMaybe<Products_Bool_Exp>;
+  order_by?: InputMaybe<Array<CDeploymentTypesOrderBy>>;
+  where?: InputMaybe<CDeploymentTypesBoolExp>;
 };
 
-export type Subscription_RootProducts_By_PkArgs = {
-  id: Scalars['Int']['input'];
+export type QueryDeploymentTypesAggregateArgs = {
+  filter_input?: InputMaybe<CDeploymentTypesFilterInput>;
 };
 
-export type Subscription_RootProfileSectorsArgs = {
+export type QueryDerivativeAssetsArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<ProfileSectors_Order_By>>;
-  where?: InputMaybe<ProfileSectors_Bool_Exp>;
+  order_by?: InputMaybe<Array<CDerivativeAssetsOrderBy>>;
+  where?: InputMaybe<CDerivativeAssetsBoolExp>;
 };
 
-export type Subscription_RootProfileSectors_By_PkArgs = {
-  id: Scalars['Int']['input'];
+export type QueryDerivativeAssetsAggregateArgs = {
+  filter_input?: InputMaybe<CDerivativeAssetsFilterInput>;
 };
 
-export type Subscription_RootProfileStatusesArgs = {
+export type QueryEntitiesArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<ProfileStatuses_Order_By>>;
-  where?: InputMaybe<ProfileStatuses_Bool_Exp>;
+  order_by?: InputMaybe<Array<CEntitiesOrderBy>>;
+  where?: InputMaybe<CEntitiesBoolExp>;
 };
 
-export type Subscription_RootProfileStatuses_By_PkArgs = {
-  id: Scalars['Int']['input'];
+export type QueryEntitiesAggregateArgs = {
+  filter_input?: InputMaybe<CEntitiesFilterInput>;
 };
 
-export type Subscription_RootProfileTagsArgs = {
+export type QueryEntityTypesArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<ProfileTags_Order_By>>;
-  where?: InputMaybe<ProfileTags_Bool_Exp>;
+  order_by?: InputMaybe<Array<CEntityTypesOrderBy>>;
+  where?: InputMaybe<CEntityTypesBoolExp>;
 };
 
-export type Subscription_RootProfileTags_By_PkArgs = {
-  id: Scalars['Int']['input'];
+export type QueryEntityTypesAggregateArgs = {
+  filter_input?: InputMaybe<CEntityTypesFilterInput>;
 };
 
-export type Subscription_RootProfileTypesArgs = {
+export type QueryProductAssetRelationshipsArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<ProfileTypes_Order_By>>;
-  where?: InputMaybe<ProfileTypes_Bool_Exp>;
+  order_by?: InputMaybe<Array<CProductAssetRelationshipsOrderBy>>;
+  where?: InputMaybe<CProductAssetRelationshipsBoolExp>;
 };
 
-export type Subscription_RootProfileTypes_By_PkArgs = {
-  id: Scalars['Int']['input'];
+export type QueryProductAssetRelationshipsAggregateArgs = {
+  filter_input?: InputMaybe<CProductAssetRelationshipsFilterInput>;
 };
 
-export type Subscription_RootProfilesArgs = {
+export type QueryProductDeploymentsArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Profiles_Order_By>>;
-  where?: InputMaybe<Profiles_Bool_Exp>;
+  order_by?: InputMaybe<Array<CProductDeploymentsOrderBy>>;
+  where?: InputMaybe<CProductDeploymentsBoolExp>;
 };
 
-export type Subscription_RootProfiles_By_PkArgs = {
-  id: Scalars['Int']['input'];
+export type QueryProductDeploymentsAggregateArgs = {
+  filter_input?: InputMaybe<CProductDeploymentsFilterInput>;
 };
 
-export type Subscription_RootSocialTypesArgs = {
+export type QueryProductStatusesArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<SocialTypes_Order_By>>;
-  where?: InputMaybe<SocialTypes_Bool_Exp>;
+  order_by?: InputMaybe<Array<CProductStatusesOrderBy>>;
+  where?: InputMaybe<CProductStatusesBoolExp>;
 };
 
-export type Subscription_RootSocialTypes_By_PkArgs = {
-  id: Scalars['Int']['input'];
+export type QueryProductStatusesAggregateArgs = {
+  filter_input?: InputMaybe<CProductStatusesFilterInput>;
 };
 
-export type Subscription_RootSocialsArgs = {
+export type QueryProductTypesArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Socials_Order_By>>;
-  where?: InputMaybe<Socials_Bool_Exp>;
+  order_by?: InputMaybe<Array<CProductTypesOrderBy>>;
+  where?: InputMaybe<CProductTypesBoolExp>;
 };
 
-export type Subscription_RootSocials_By_PkArgs = {
-  id: Scalars['Int']['input'];
+export type QueryProductTypesAggregateArgs = {
+  filter_input?: InputMaybe<CProductTypesFilterInput>;
 };
 
-export type Subscription_RootTagTypesArgs = {
+export type QueryProductsArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<TagTypes_Order_By>>;
-  where?: InputMaybe<TagTypes_Bool_Exp>;
+  order_by?: InputMaybe<Array<CProductsOrderBy>>;
+  where?: InputMaybe<CProductsBoolExp>;
 };
 
-export type Subscription_RootTagTypes_By_PkArgs = {
-  id: Scalars['Int']['input'];
+export type QueryProductsAggregateArgs = {
+  filter_input?: InputMaybe<CProductsFilterInput>;
 };
 
-export type Subscription_RootTagsArgs = {
+export type QueryProfileInfosArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Tags_Order_By>>;
-  where?: InputMaybe<Tags_Bool_Exp>;
+  order_by?: InputMaybe<Array<CProfileInfosOrderBy>>;
+  where?: InputMaybe<CProfileInfosBoolExp>;
 };
 
-export type Subscription_RootTags_By_PkArgs = {
-  id: Scalars['Int']['input'];
+export type QueryProfileInfosAggregateArgs = {
+  filter_input?: InputMaybe<CProfileInfosFilterInput>;
 };
 
-export type TagTypes = {
-  __typename?: 'tagTypes';
-  definition: Scalars['String']['output'];
-  id: Scalars['Int']['output'];
-  name: Scalars['String']['output'];
-};
-
-/** Boolean expression to filter rows from the table "tagTypes". All fields are combined with a logical 'AND'. */
-export type TagTypes_Bool_Exp = {
-  _and?: InputMaybe<Array<TagTypes_Bool_Exp>>;
-  _not?: InputMaybe<TagTypes_Bool_Exp>;
-  _or?: InputMaybe<Array<TagTypes_Bool_Exp>>;
-  definition?: InputMaybe<String_Mysql8_Comparison_Exp>;
-  id?: InputMaybe<Int_Mysql8_Comparison_Exp>;
-  name?: InputMaybe<String_Mysql8_Comparison_Exp>;
-};
-
-/** Ordering options when selecting data from "tagTypes". */
-export type TagTypes_Order_By = {
-  definition?: InputMaybe<Mysql8_Order_By>;
-  id?: InputMaybe<Mysql8_Order_By>;
-  name?: InputMaybe<Mysql8_Order_By>;
-};
-
-export type Tags = {
-  __typename?: 'tags';
-  description: Scalars['String']['output'];
-  id: Scalars['Int']['output'];
-  name: Scalars['String']['output'];
-  /** An array relationship */
-  profileTags: Array<ProfileTags>;
-  tagTypeId?: Maybe<Scalars['Int']['output']>;
-};
-
-export type TagsProfileTagsArgs = {
+export type QueryProfileSectorsArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<ProfileTags_Order_By>>;
-  where?: InputMaybe<ProfileTags_Bool_Exp>;
+  order_by?: InputMaybe<Array<CProfileSectorsOrderBy>>;
+  where?: InputMaybe<CProfileSectorsBoolExp>;
 };
 
-/** Boolean expression to filter rows from the table "tags". All fields are combined with a logical 'AND'. */
-export type Tags_Bool_Exp = {
-  _and?: InputMaybe<Array<Tags_Bool_Exp>>;
-  _not?: InputMaybe<Tags_Bool_Exp>;
-  _or?: InputMaybe<Array<Tags_Bool_Exp>>;
-  description?: InputMaybe<String_Mysql8_Comparison_Exp>;
-  id?: InputMaybe<Int_Mysql8_Comparison_Exp>;
-  name?: InputMaybe<String_Mysql8_Comparison_Exp>;
-  profileTags?: InputMaybe<ProfileTags_Bool_Exp>;
-  tagTypeId?: InputMaybe<Int_Mysql8_Comparison_Exp>;
+export type QueryProfileSectorsAggregateArgs = {
+  filter_input?: InputMaybe<CProfileSectorsFilterInput>;
 };
 
-/** Ordering options when selecting data from "tags". */
-export type Tags_Order_By = {
-  description?: InputMaybe<Mysql8_Order_By>;
-  id?: InputMaybe<Mysql8_Order_By>;
-  name?: InputMaybe<Mysql8_Order_By>;
-  profileTags_aggregate?: InputMaybe<ProfileTags_Aggregate_Order_By>;
-  tagTypeId?: InputMaybe<Mysql8_Order_By>;
+export type QueryProfileStatusesArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<CProfileStatusesOrderBy>>;
+  where?: InputMaybe<CProfileStatusesBoolExp>;
+};
+
+export type QueryProfileStatusesAggregateArgs = {
+  filter_input?: InputMaybe<CProfileStatusesFilterInput>;
+};
+
+export type QueryProfileTagsArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<CProfileTagsOrderBy>>;
+  where?: InputMaybe<CProfileTagsBoolExp>;
+};
+
+export type QueryProfileTagsAggregateArgs = {
+  filter_input?: InputMaybe<CProfileTagsFilterInput>;
+};
+
+export type QueryProfileTypesArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<CProfileTypesOrderBy>>;
+  where?: InputMaybe<CProfileTypesBoolExp>;
+};
+
+export type QueryProfileTypesAggregateArgs = {
+  filter_input?: InputMaybe<CProfileTypesFilterInput>;
+};
+
+export type QueryRootsArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<CRootsOrderBy>>;
+  where?: InputMaybe<CRootsBoolExp>;
+};
+
+export type QueryRootsAggregateArgs = {
+  filter_input?: InputMaybe<CRootsFilterInput>;
+};
+
+export type QuerySmartContractDeploymentsArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<CSmartContractDeploymentsOrderBy>>;
+  where?: InputMaybe<CSmartContractDeploymentsBoolExp>;
+};
+
+export type QuerySmartContractDeploymentsAggregateArgs = {
+  filter_input?: InputMaybe<CSmartContractDeploymentsFilterInput>;
+};
+
+export type QuerySmartContractsArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<CSmartContractsOrderBy>>;
+  where?: InputMaybe<CSmartContractsBoolExp>;
+};
+
+export type QuerySmartContractsAggregateArgs = {
+  filter_input?: InputMaybe<CSmartContractsFilterInput>;
+};
+
+export type QuerySocialTypesArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<CSocialTypesOrderBy>>;
+  where?: InputMaybe<CSocialTypesBoolExp>;
+};
+
+export type QuerySocialTypesAggregateArgs = {
+  filter_input?: InputMaybe<CSocialTypesFilterInput>;
+};
+
+export type QuerySocialsArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<CSocialsOrderBy>>;
+  where?: InputMaybe<CSocialsBoolExp>;
+};
+
+export type QuerySocialsAggregateArgs = {
+  filter_input?: InputMaybe<CSocialsFilterInput>;
+};
+
+export type QuerySupportsProductsArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<CSupportsProductsOrderBy>>;
+  where?: InputMaybe<CSupportsProductsBoolExp>;
+};
+
+export type QuerySupportsProductsAggregateArgs = {
+  filter_input?: InputMaybe<CSupportsProductsFilterInput>;
+};
+
+export type QueryTagTypesArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<CTagTypesOrderBy>>;
+  where?: InputMaybe<CTagTypesBoolExp>;
+};
+
+export type QueryTagTypesAggregateArgs = {
+  filter_input?: InputMaybe<CTagTypesFilterInput>;
+};
+
+export type QueryTagsArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<CTagsOrderBy>>;
+  where?: InputMaybe<CTagsBoolExp>;
+};
+
+export type QueryTagsAggregateArgs = {
+  filter_input?: InputMaybe<CTagsFilterInput>;
+};
+
+export type QueryUrlTypesArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<CUrlTypesOrderBy>>;
+  where?: InputMaybe<CUrlTypesBoolExp>;
+};
+
+export type QueryUrlTypesAggregateArgs = {
+  filter_input?: InputMaybe<CUrlTypesFilterInput>;
+};
+
+export type QueryUrlsArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<CUrlsOrderBy>>;
+  where?: InputMaybe<CUrlsBoolExp>;
+};
+
+export type QueryUrlsAggregateArgs = {
+  filter_input?: InputMaybe<CUrlsFilterInput>;
+};
+
+export type SocialUrls = {
+  __typename?: 'SocialUrls';
+  id: Scalars['Int2']['output'];
+  rowId: Scalars['Int2']['output'];
+  tableId: Scalars['Int2']['output'];
+  url: Scalars['String2']['output'];
+  urlType?: Maybe<CUrlTypes>;
+  urlTypeId: Scalars['Int2']['output'];
+};
+
+export type SocialUrlsBoolExp = {
+  _and?: InputMaybe<Array<SocialUrlsBoolExp>>;
+  _not?: InputMaybe<SocialUrlsBoolExp>;
+  _or?: InputMaybe<Array<SocialUrlsBoolExp>>;
+  id?: InputMaybe<IntBoolExp1>;
+  rowId?: InputMaybe<IntBoolExp1>;
+  tableId?: InputMaybe<IntBoolExp1>;
+  url?: InputMaybe<StringBoolExp1>;
+  urlType?: InputMaybe<CUrlTypesBoolExp>;
+  urlTypeId?: InputMaybe<IntBoolExp1>;
+};
+
+export type SocialUrlsOrderBy = {
+  id?: InputMaybe<OrderBy>;
+  rowId?: InputMaybe<OrderBy>;
+  tableId?: InputMaybe<OrderBy>;
+  url?: InputMaybe<OrderBy>;
+  urlType?: InputMaybe<CUrlTypesOrderBy>;
+  urlTypeId?: InputMaybe<OrderBy>;
+};
+
+export type StringAggExp1 = {
+  __typename?: 'StringAggExp1';
+  _count: Scalars['Int']['output'];
+  _count_distinct: Scalars['Int']['output'];
+  max: Scalars['String2']['output'];
+  min: Scalars['String2']['output'];
+};
+
+export type StringBoolExp1 = {
+  _contains?: InputMaybe<Scalars['String2']['input']>;
+  _eq?: InputMaybe<Scalars['String2']['input']>;
+  _is_null?: InputMaybe<Scalars['Boolean']['input']>;
+  _like?: InputMaybe<Scalars['String2']['input']>;
 };
 
 /** One possible value for a given Enum. Enum values are unique values, not a placeholder for a string or numeric value. However an Enum value is returned in a JSON response as a string. */
@@ -2381,93 +2790,200 @@ export enum __TypeKind {
   NonNull = 'NON_NULL'
 }
 
+export type AssetFieldsFragment = {
+  __typename?: 'CRoots';
+  assets?: Array<{
+    __typename?: 'CAssets';
+    ticker: any;
+    rootId: any;
+    name: any;
+    id: any;
+    icon: any;
+    description: any;
+    assetTypeId: any;
+    assetStatusId: any;
+    assetType?: {
+      __typename?: 'CAssetTypes';
+      definition: any;
+      id: any;
+      name: any;
+    } | null;
+    assetStatus?: {
+      __typename?: 'CAssetStatuses';
+      name: any;
+      id: any;
+      definition: any;
+    } | null;
+    assetDeployments?: Array<{
+      __typename?: 'CAssetDeployments';
+      id: any;
+      deploymentId: any;
+      assetId: any;
+      smartContractDeployment?: {
+        __typename?: 'CSmartContractDeployments';
+        id: any;
+        deployedOnProduct?: {
+          __typename?: 'CProducts';
+          id: any;
+          name: any;
+          root?: { __typename?: 'CRoots'; slug: any } | null;
+        } | null;
+        assetStandard?: { __typename?: 'CAssetStandards'; id: any } | null;
+        smartContracts?: Array<{
+          __typename?: 'CSmartContracts';
+          name: any;
+          id: any;
+          deploymentId?: any | null;
+          deploymentDate?: any | null;
+          address: any;
+        }> | null;
+        deploymentType?: {
+          __typename?: 'CDeploymentTypes';
+          name: any;
+          id: any;
+          definition: any;
+        } | null;
+      } | null;
+    }> | null;
+    urls?: Array<{
+      __typename?: 'AssetUrls';
+      url: any;
+      urlType?: {
+        __typename?: 'CUrlTypes';
+        name: any;
+        id: any;
+        definition: any;
+      } | null;
+    }> | null;
+  }> | null;
+};
+
+export type EntityFieldsFragment = {
+  __typename?: 'CRoots';
+  entities?: Array<{
+    __typename?: 'CEntities';
+    name: any;
+    tradeName: any;
+    taxIdentificationNumber: any;
+    localRegistrationNumber: any;
+    leiNumber: any;
+    id: any;
+    dateOfIncorporation?: any | null;
+    address: any;
+    entityType?: {
+      __typename?: 'CEntityTypes';
+      name: any;
+      id: any;
+      definition: any;
+    } | null;
+    country?: {
+      __typename?: 'CCountries';
+      name: any;
+      id: any;
+      code: any;
+    } | null;
+    urls?: Array<{
+      __typename?: 'EntityUrls';
+      url: any;
+      urlType?: {
+        __typename?: 'CUrlTypes';
+        name: any;
+        id: any;
+        definition: any;
+      } | null;
+    }> | null;
+  }> | null;
+};
+
 export type GetFiltersOptionsQueryVariables = Exact<{
-  productSupportsWhere?: InputMaybe<ProductSupports_Bool_Exp>;
-  deployedOnProductsWhere?: InputMaybe<Products_Bool_Exp>;
-  productTypesWhere?: InputMaybe<ProductTypes_Bool_Exp>;
-  tagsWhere?: InputMaybe<Tags_Bool_Exp>;
+  supportsProductsWhere?: InputMaybe<CSupportsProductsBoolExp>;
+  deployedOnProductsWhere?: InputMaybe<CProductsBoolExp>;
+  productTypesFilterInput?: InputMaybe<CProductsFilterInput>;
+  tagsWhere?: InputMaybe<CTagsBoolExp>;
+  tagsFilterInput?: InputMaybe<CProfileTagsFilterInput>;
+  profileSectorsFilterInput?: InputMaybe<CProfileInfosFilterInput>;
 }>;
 
 export type GetFiltersOptionsQuery = {
-  __typename?: 'query_root';
-  profileTypes: Array<{
-    __typename?: 'profileTypes';
-    name: string;
-    id: number;
-    definition: string;
-  }>;
-  profileStatuses: Array<{
-    __typename?: 'profileStatuses';
-    name: string;
-    id: number;
-    definition: string;
-  }>;
-  profileSectors: Array<{
-    __typename?: 'profileSectors';
-    name: string;
-    id: number;
-    definition: string;
-  }>;
-  productTypes: Array<{
-    __typename?: 'productTypes';
-    name: string;
-    id: number;
-    definition: string;
-  }>;
-  productStatus: Array<{
-    __typename?: 'productStatus';
-    definition: string;
-    id: number;
-    name: string;
-  }>;
-  productSupports: Array<{
-    __typename?: 'productSupports';
-    supports: {
-      __typename?: 'products';
-      descriptionShort: string;
-      name: string;
-      id: number;
+  __typename?: 'Query';
+  profileTypes?: Array<{
+    __typename?: 'CProfileTypes';
+    name: any;
+    id: any;
+    definition: any;
+  }> | null;
+  profileStatuses?: Array<{
+    __typename?: 'CProfileStatuses';
+    name: any;
+    id: any;
+    definition: any;
+  }> | null;
+  profileSectors?: Array<{
+    __typename?: 'CProfileSectors';
+    name: any;
+    id: any;
+    definition: any;
+    ProfileInfosAggregate: {
+      __typename?: 'CProfileInfosAggExp';
+      _count: number;
     };
-  }>;
-  deployedOnProducts: Array<{
-    __typename?: 'products';
-    name: string;
-    id: number;
-    descriptionShort: string;
-  }>;
-  products: Array<{
-    __typename?: 'products';
-    name: string;
-    id: number;
-    descriptionShort: string;
-  }>;
-  assetStandardSupport: Array<{
-    __typename?: 'assetStandardSupport';
-    definition: string;
-    id: number;
-    name: string;
-  }>;
-  assetType: Array<{
-    __typename?: 'assetType';
-    name: string;
-    id: number;
-    definition: string;
-  }>;
-  assets: Array<{ __typename?: 'assets'; ticker: string }>;
-  entityTypes: Array<{
-    __typename?: 'entityTypes';
-    name: string;
-    id: number;
-    definition: string;
-  }>;
-  entities: Array<{ __typename?: 'entities'; name: string; id: number }>;
-  countries: Array<{ __typename?: 'countries'; name: string; id: number }>;
-  tags: Array<{
-    __typename?: 'tags';
-    name: string;
-    id: number;
-    description: string;
-  }>;
+  }> | null;
+  productTypes?: Array<{
+    __typename?: 'CProductTypes';
+    name: any;
+    id: any;
+    definition: any;
+    productsAggregate: { __typename?: 'CProductsAggExp'; _count: number };
+  }> | null;
+  productStatuses?: Array<{
+    __typename?: 'CProductStatuses';
+    definition: any;
+    id: any;
+    name: any;
+  }> | null;
+  supportsProducts?: Array<{
+    __typename?: 'CSupportsProducts';
+    supportsProduct?: {
+      __typename?: 'CProducts';
+      description: any;
+      name: any;
+      id: any;
+    } | null;
+  }> | null;
+  deployedOnProducts?: Array<{
+    __typename?: 'CProducts';
+    name: any;
+    id: any;
+    description: any;
+  }> | null;
+  assetStandards?: Array<{
+    __typename?: 'CAssetStandards';
+    definition: any;
+    id: any;
+    name: any;
+  }> | null;
+  assetTypes?: Array<{
+    __typename?: 'CAssetTypes';
+    name: any;
+    id: any;
+    definition: any;
+  }> | null;
+  assets?: Array<{ __typename?: 'CAssets'; ticker: any }> | null;
+  entityTypes?: Array<{
+    __typename?: 'CEntityTypes';
+    name: any;
+    id: any;
+    definition: any;
+  }> | null;
+  entities?: Array<{ __typename?: 'CEntities'; name: any; id: any }> | null;
+  countries?: Array<{ __typename?: 'CCountries'; name: any; id: any }> | null;
+  tags?: Array<{
+    __typename?: 'CTags';
+    name: any;
+    id: any;
+    description: any;
+    profileTagsAggregate: { __typename?: 'CProfileTagsAggExp'; _count: number };
+  }> | null;
 };
 
 export type GetOrderByFieldsQueryVariables = Exact<{
@@ -2475,7 +2991,7 @@ export type GetOrderByFieldsQueryVariables = Exact<{
 }>;
 
 export type GetOrderByFieldsQuery = {
-  __typename?: 'query_root';
+  __typename?: 'Query';
   __type?: {
     __typename?: '__Type';
     inputFields?: Array<{
@@ -2488,30 +3004,6 @@ export type GetOrderByFieldsQuery = {
         inputFields?: Array<{
           __typename?: '__InputValue';
           name: string;
-          type: {
-            __typename?: '__Type';
-            name?: string | null;
-            kind: __TypeKind;
-            inputFields?: Array<{
-              __typename?: '__InputValue';
-              name: string;
-              type: {
-                __typename?: '__Type';
-                name?: string | null;
-                kind: __TypeKind;
-                ofType?: {
-                  __typename?: '__Type';
-                  name?: string | null;
-                  kind: __TypeKind;
-                } | null;
-              };
-            }> | null;
-            ofType?: {
-              __typename?: '__Type';
-              name?: string | null;
-              kind: __TypeKind;
-            } | null;
-          };
         }> | null;
         ofType?: {
           __typename?: '__Type';
@@ -2524,208 +3016,717 @@ export type GetOrderByFieldsQuery = {
 };
 
 export type GetProfileQueryVariables = Exact<{
-  where?: InputMaybe<Profiles_Bool_Exp>;
+  where?: InputMaybe<CProfileInfosBoolExp>;
 }>;
 
 export type GetProfileQuery = {
-  __typename?: 'query_root';
-  profiles: Array<{
-    __typename?: 'profiles';
-    name: string;
-    logo: string;
-    id: number;
+  __typename?: 'Query';
+  profileInfos?: Array<{
+    __typename?: 'CProfileInfos';
+    tagLine: any;
+    rootId: any;
+    profileTypeId: any;
+    profileStatusId: any;
+    profileSectorId: any;
+    name: any;
+    logo: any;
+    id: any;
     foundingDate?: any | null;
-    descriptionShort: string;
-    descriptionLong: string;
-    profileSectorId: number;
-    profileStatusId: number;
-    profileTypeId: number;
-    tagLine: string;
-    urlBlog: string;
-    urlDocumentation: string;
-    urlMain: string;
-    urlWhitepaper: string;
-    socials: Array<{
-      __typename?: 'socials';
-      url: string;
-      socialTypeId?: number | null;
-      profileId: number;
-      name: string;
-      id: number;
-      socialType?: {
-        __typename?: 'socialTypes';
-        id: number;
-        name: string;
+    descriptionShort: any;
+    descriptionLong: any;
+    profileSector?: {
+      __typename?: 'CProfileSectors';
+      name: any;
+      id: any;
+      definition: any;
+    } | null;
+    profileStatus?: {
+      __typename?: 'CProfileStatuses';
+      name: any;
+      id: any;
+      definition: any;
+    } | null;
+    profileType?: {
+      __typename?: 'CProfileTypes';
+      name: any;
+      id: any;
+      definition: any;
+    } | null;
+    urls?: Array<{
+      __typename?: 'ProfileInfoUrls';
+      url: any;
+      urlType?: {
+        __typename?: 'CUrlTypes';
+        name: any;
+        id: any;
+        definition: any;
       } | null;
-    }>;
-    assets: Array<{
-      __typename?: 'assets';
-      id: number;
-      ticker: string;
-      shortDescription: string;
-      urlToAssetDocs: string;
-      name: string;
-      icon: string;
-      address: string;
-      deployedOnProductId?: number | null;
-      assetTypeId?: number | null;
-      assetType?: { __typename?: 'assetType'; id: number; name: string } | null;
-      assetDeployedOnProductId?: {
-        __typename?: 'products';
-        name: string;
-        profile?: { __typename?: 'profiles'; slug: string } | null;
-      } | null;
-    }>;
-    profileType: {
-      __typename?: 'profileTypes';
-      name: string;
-      id: number;
-      definition: string;
-    };
-    profileStatus: {
-      __typename?: 'profileStatuses';
-      name: string;
-      id: number;
-      definition: string;
-    };
-    profileSector: {
-      __typename?: 'profileSectors';
-      name: string;
-      id: number;
-      definition: string;
-    };
-    products: Array<{
-      __typename?: 'products';
-      urlToProduct: string;
-      descriptionShort: string;
-      id: number;
-      isMainProduct: number;
-      launchDate?: any | null;
-      name: string;
-      productAddress: string;
-      productStatusId: number;
-      productType: { __typename?: 'productTypes'; name: string };
-      productStatus: { __typename?: 'productStatus'; name: string };
-      supportsProducts: Array<{
-        __typename?: 'productSupports';
-        supports: {
-          __typename?: 'products';
-          name: string;
-          profile?: { __typename?: 'profiles'; slug: string } | null;
-        };
-      }>;
-      asset?: {
-        __typename?: 'assets';
-        name: string;
-        id: number;
-        icon: string;
-        deployedOnProductId?: number | null;
-        assetTypeId?: number | null;
-        assetStandardId?: number | null;
-        address: string;
-        urlToAssetDocs: string;
-        ticker: string;
-        profileId?: number | null;
-        shortDescription: string;
-      } | null;
-      mainAsset?: {
-        __typename?: 'assets';
-        urlToAssetDocs: string;
-        ticker: string;
-        profileId?: number | null;
-        shortDescription: string;
-        name: string;
-      } | null;
-      productDeployedOnProduct?: {
-        __typename?: 'products';
-        name: string;
+    }> | null;
+    root?: {
+      __typename?: 'CRoots';
+      urlMain: any;
+      slug: any;
+      socials?: Array<{
+        __typename?: 'CSocials';
+        name: any;
+        socialType?: { __typename?: 'CSocialTypes'; name: any } | null;
+        urls?: Array<{ __typename?: 'SocialUrls'; url: any }> | null;
+      }> | null;
+      profileTags?: Array<{
+        __typename?: 'CProfileTags';
+        tag?: { __typename?: 'CTags'; name: any; id: any } | null;
+      }> | null;
+      assets?: Array<{
+        __typename?: 'CAssets';
+        ticker: any;
+        rootId: any;
+        name: any;
+        id: any;
+        icon: any;
+        description: any;
+        assetTypeId: any;
+        assetStatusId: any;
+        assetType?: {
+          __typename?: 'CAssetTypes';
+          definition: any;
+          id: any;
+          name: any;
+        } | null;
+        assetStatus?: {
+          __typename?: 'CAssetStatuses';
+          name: any;
+          id: any;
+          definition: any;
+        } | null;
+        assetDeployments?: Array<{
+          __typename?: 'CAssetDeployments';
+          id: any;
+          deploymentId: any;
+          assetId: any;
+          smartContractDeployment?: {
+            __typename?: 'CSmartContractDeployments';
+            id: any;
+            deployedOnProduct?: {
+              __typename?: 'CProducts';
+              id: any;
+              name: any;
+              root?: { __typename?: 'CRoots'; slug: any } | null;
+            } | null;
+            assetStandard?: { __typename?: 'CAssetStandards'; id: any } | null;
+            smartContracts?: Array<{
+              __typename?: 'CSmartContracts';
+              name: any;
+              id: any;
+              deploymentId?: any | null;
+              deploymentDate?: any | null;
+              address: any;
+            }> | null;
+            deploymentType?: {
+              __typename?: 'CDeploymentTypes';
+              name: any;
+              id: any;
+              definition: any;
+            } | null;
+          } | null;
+        }> | null;
+        urls?: Array<{
+          __typename?: 'AssetUrls';
+          url: any;
+          urlType?: {
+            __typename?: 'CUrlTypes';
+            name: any;
+            id: any;
+            definition: any;
+          } | null;
+        }> | null;
+      }> | null;
+      products?: Array<{
+        __typename?: 'CProducts';
+        rootId: any;
+        productTypeId: any;
+        productStatusId: any;
+        name: any;
         launchDate?: any | null;
-        descriptionShort: string;
-        deployedOnProductId?: number | null;
-        urlToProduct: string;
-        profile?: { __typename?: 'profiles'; slug: string } | null;
+        isMainProduct?: any | null;
+        id: any;
+        description: any;
+        productType?: {
+          __typename?: 'CProductTypes';
+          name: any;
+          id: any;
+          definition: any;
+        } | null;
+        productStatus?: {
+          __typename?: 'CProductStatuses';
+          name: any;
+          id: any;
+          definition: any;
+        } | null;
+        productDeployments?: Array<{
+          __typename?: 'CProductDeployments';
+          smartContractDeployment?: {
+            __typename?: 'CSmartContractDeployments';
+            isOfStandardId?: any | null;
+            id: any;
+            deployedOnProduct?: {
+              __typename?: 'CProducts';
+              id: any;
+              name: any;
+              root?: { __typename?: 'CRoots'; slug: any } | null;
+            } | null;
+            assetStandard?: { __typename?: 'CAssetStandards'; id: any } | null;
+            deploymentType?: {
+              __typename?: 'CDeploymentTypes';
+              name: any;
+            } | null;
+            smartContracts?: Array<{
+              __typename?: 'CSmartContracts';
+              name: any;
+              id: any;
+              deploymentDate?: any | null;
+              address: any;
+              deploymentId?: any | null;
+            }> | null;
+          } | null;
+        }> | null;
+        supportsProducts?: Array<{
+          __typename?: 'CSupportsProducts';
+          supportsProduct?: {
+            __typename?: 'CProducts';
+            name: any;
+            id: any;
+            root?: { __typename?: 'CRoots'; slug: any } | null;
+          } | null;
+        }> | null;
+        urls?: Array<{
+          __typename?: 'ProductUrls';
+          url: any;
+          urlType?: {
+            __typename?: 'CUrlTypes';
+            name: any;
+            id: any;
+            definition: any;
+          } | null;
+        }> | null;
+      }> | null;
+      entities?: Array<{
+        __typename?: 'CEntities';
+        name: any;
+        tradeName: any;
+        taxIdentificationNumber: any;
+        localRegistrationNumber: any;
+        leiNumber: any;
+        id: any;
+        dateOfIncorporation?: any | null;
+        address: any;
+        entityType?: {
+          __typename?: 'CEntityTypes';
+          name: any;
+          id: any;
+          definition: any;
+        } | null;
+        country?: {
+          __typename?: 'CCountries';
+          name: any;
+          id: any;
+          code: any;
+        } | null;
+        urls?: Array<{
+          __typename?: 'EntityUrls';
+          url: any;
+          urlType?: {
+            __typename?: 'CUrlTypes';
+            name: any;
+            id: any;
+            definition: any;
+          } | null;
+        }> | null;
+      }> | null;
+    } | null;
+    mainProduct?: {
+      __typename?: 'CRoots';
+      products?: Array<{
+        __typename?: 'CProducts';
+        name: any;
+        productType?: { __typename?: 'CProductTypes'; name: any } | null;
+      }> | null;
+    } | null;
+  }> | null;
+};
+
+export type ProductFieldsFragment = {
+  __typename?: 'CRoots';
+  products?: Array<{
+    __typename?: 'CProducts';
+    rootId: any;
+    productTypeId: any;
+    productStatusId: any;
+    name: any;
+    launchDate?: any | null;
+    isMainProduct?: any | null;
+    id: any;
+    description: any;
+    productType?: {
+      __typename?: 'CProductTypes';
+      name: any;
+      id: any;
+      definition: any;
+    } | null;
+    productStatus?: {
+      __typename?: 'CProductStatuses';
+      name: any;
+      id: any;
+      definition: any;
+    } | null;
+    productDeployments?: Array<{
+      __typename?: 'CProductDeployments';
+      smartContractDeployment?: {
+        __typename?: 'CSmartContractDeployments';
+        isOfStandardId?: any | null;
+        id: any;
+        deployedOnProduct?: {
+          __typename?: 'CProducts';
+          id: any;
+          name: any;
+          root?: { __typename?: 'CRoots'; slug: any } | null;
+        } | null;
+        assetStandard?: { __typename?: 'CAssetStandards'; id: any } | null;
+        deploymentType?: { __typename?: 'CDeploymentTypes'; name: any } | null;
+        smartContracts?: Array<{
+          __typename?: 'CSmartContracts';
+          name: any;
+          id: any;
+          deploymentDate?: any | null;
+          address: any;
+          deploymentId?: any | null;
+        }> | null;
       } | null;
-      supportedByProducts: Array<{
-        __typename?: 'productSupports';
-        supports: { __typename?: 'products'; name: string; id: number };
-        product: { __typename?: 'products'; name: string; id: number };
-      }>;
-    }>;
-    mainProduct: Array<{
-      __typename?: 'products';
-      name: string;
-      productType: { __typename?: 'productTypes'; name: string };
-    }>;
-    entities: Array<{
-      __typename?: 'entities';
-      tradeName: string;
-      profileId: number;
-      urlToEntity: string;
-      name: string;
-      localRegistrationNumber: string;
-      leiNumber: string;
-      dateOfIncorporation?: any | null;
-      countryId?: number | null;
-      address: string;
-      id: number;
-      parentEntityId?: number | null;
-      taxIdentificationNumber: string;
-      country?: { __typename?: 'countries'; code: string; name: string } | null;
-      entityType?: {
-        __typename?: 'entityTypes';
-        name: string;
-        id: number;
-        definition: string;
+    }> | null;
+    supportsProducts?: Array<{
+      __typename?: 'CSupportsProducts';
+      supportsProduct?: {
+        __typename?: 'CProducts';
+        name: any;
+        id: any;
+        root?: { __typename?: 'CRoots'; slug: any } | null;
       } | null;
-    }>;
-    profileTags: Array<{
-      __typename?: 'profileTags';
-      tag: { __typename?: 'tags'; name: string; id: number };
-    }>;
-  }>;
+    }> | null;
+    urls?: Array<{
+      __typename?: 'ProductUrls';
+      url: any;
+      urlType?: {
+        __typename?: 'CUrlTypes';
+        name: any;
+        id: any;
+        definition: any;
+      } | null;
+    }> | null;
+  }> | null;
 };
 
 export type SearchProfilesQueryVariables = Exact<{
-  order_by?: InputMaybe<Array<Profiles_Order_By> | Profiles_Order_By>;
-  where?: InputMaybe<Profiles_Bool_Exp>;
+  order_by?: InputMaybe<Array<CProfileInfosOrderBy> | CProfileInfosOrderBy>;
+  where?: InputMaybe<CProfileInfosBoolExp>;
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
 }>;
 
 export type SearchProfilesQuery = {
-  __typename?: 'query_root';
-  profiles: Array<{
-    __typename?: 'profiles';
-    name: string;
-    logo: string;
-    id: number;
-    slug: string;
-    descriptionShort: string;
-    urlDocumentation: string;
-    tagLine: string;
-    urlWhitepaper: string;
-    urlMain: string;
-    urlBlog: string;
-    socials: Array<{
-      __typename?: 'socials';
-      url: string;
-      socialType?: { __typename?: 'socialTypes'; name: string } | null;
-    }>;
-    profileTags: Array<{ __typename?: 'profileTags'; id: number }>;
-    profileSector: { __typename?: 'profileSectors'; name: string };
-    profileType: { __typename?: 'profileTypes'; name: string };
-    profileStatus: { __typename?: 'profileStatuses'; name: string };
-    assets: Array<{ __typename?: 'assets'; ticker: string }>;
-    mainProduct: Array<{
-      __typename?: 'products';
-      name: string;
-      productType: { __typename?: 'productTypes'; name: string };
-    }>;
-  }>;
+  __typename?: 'Query';
+  profileInfos?: Array<{
+    __typename?: 'CProfileInfos';
+    name: any;
+    logo: any;
+    id: any;
+    tagLine: any;
+    descriptionShort: any;
+    profileTypeId: any;
+    profileStatusId: any;
+    profileSectorId: any;
+    foundingDate?: any | null;
+    profileSector?: {
+      __typename?: 'CProfileSectors';
+      name: any;
+      id: any;
+      definition: any;
+    } | null;
+    profileStatus?: {
+      __typename?: 'CProfileStatuses';
+      name: any;
+      id: any;
+      definition: any;
+    } | null;
+    profileType?: {
+      __typename?: 'CProfileTypes';
+      name: any;
+      id: any;
+      definition: any;
+    } | null;
+    urls?: Array<{
+      __typename?: 'ProfileInfoUrls';
+      url: any;
+      urlType?: {
+        __typename?: 'CUrlTypes';
+        name: any;
+        id: any;
+        definition: any;
+      } | null;
+    }> | null;
+    mainProduct?: {
+      __typename?: 'CRoots';
+      products?: Array<{
+        __typename?: 'CProducts';
+        name: any;
+        productType?: { __typename?: 'CProductTypes'; name: any } | null;
+      }> | null;
+    } | null;
+    root?: {
+      __typename?: 'CRoots';
+      urlMain: any;
+      slug: any;
+      assets?: Array<{
+        __typename?: 'CAssets';
+        ticker: any;
+        name: any;
+        id: any;
+        rootId: any;
+        icon: any;
+        description: any;
+        assetTypeId: any;
+        assetStatusId: any;
+        assetType?: {
+          __typename?: 'CAssetTypes';
+          definition: any;
+          id: any;
+          name: any;
+        } | null;
+        assetStatus?: {
+          __typename?: 'CAssetStatuses';
+          name: any;
+          id: any;
+          definition: any;
+        } | null;
+        assetDeployments?: Array<{
+          __typename?: 'CAssetDeployments';
+          id: any;
+          deploymentId: any;
+          assetId: any;
+          smartContractDeployment?: {
+            __typename?: 'CSmartContractDeployments';
+            id: any;
+            deployedOnProduct?: {
+              __typename?: 'CProducts';
+              id: any;
+              name: any;
+              root?: { __typename?: 'CRoots'; slug: any } | null;
+            } | null;
+            assetStandard?: { __typename?: 'CAssetStandards'; id: any } | null;
+            smartContracts?: Array<{
+              __typename?: 'CSmartContracts';
+              name: any;
+              id: any;
+              deploymentId?: any | null;
+              deploymentDate?: any | null;
+              address: any;
+            }> | null;
+            deploymentType?: {
+              __typename?: 'CDeploymentTypes';
+              name: any;
+              id: any;
+              definition: any;
+            } | null;
+          } | null;
+        }> | null;
+        urls?: Array<{
+          __typename?: 'AssetUrls';
+          url: any;
+          urlType?: {
+            __typename?: 'CUrlTypes';
+            name: any;
+            id: any;
+            definition: any;
+          } | null;
+        }> | null;
+      }> | null;
+      socials?: Array<{
+        __typename?: 'CSocials';
+        name: any;
+        socialType?: { __typename?: 'CSocialTypes'; name: any } | null;
+        urls?: Array<{ __typename?: 'SocialUrls'; url: any }> | null;
+      }> | null;
+      profileTags?: Array<{
+        __typename?: 'CProfileTags';
+        tag?: { __typename?: 'CTags'; name: any; id: any } | null;
+      }> | null;
+      products?: Array<{
+        __typename?: 'CProducts';
+        rootId: any;
+        productTypeId: any;
+        productStatusId: any;
+        name: any;
+        launchDate?: any | null;
+        isMainProduct?: any | null;
+        id: any;
+        description: any;
+        productType?: {
+          __typename?: 'CProductTypes';
+          name: any;
+          id: any;
+          definition: any;
+        } | null;
+        productStatus?: {
+          __typename?: 'CProductStatuses';
+          name: any;
+          id: any;
+          definition: any;
+        } | null;
+        productDeployments?: Array<{
+          __typename?: 'CProductDeployments';
+          smartContractDeployment?: {
+            __typename?: 'CSmartContractDeployments';
+            isOfStandardId?: any | null;
+            id: any;
+            deployedOnProduct?: {
+              __typename?: 'CProducts';
+              id: any;
+              name: any;
+              root?: { __typename?: 'CRoots'; slug: any } | null;
+            } | null;
+            assetStandard?: { __typename?: 'CAssetStandards'; id: any } | null;
+            deploymentType?: {
+              __typename?: 'CDeploymentTypes';
+              name: any;
+            } | null;
+            smartContracts?: Array<{
+              __typename?: 'CSmartContracts';
+              name: any;
+              id: any;
+              deploymentDate?: any | null;
+              address: any;
+              deploymentId?: any | null;
+            }> | null;
+          } | null;
+        }> | null;
+        supportsProducts?: Array<{
+          __typename?: 'CSupportsProducts';
+          supportsProduct?: {
+            __typename?: 'CProducts';
+            name: any;
+            id: any;
+            root?: { __typename?: 'CRoots'; slug: any } | null;
+          } | null;
+        }> | null;
+        urls?: Array<{
+          __typename?: 'ProductUrls';
+          url: any;
+          urlType?: {
+            __typename?: 'CUrlTypes';
+            name: any;
+            id: any;
+            definition: any;
+          } | null;
+        }> | null;
+      }> | null;
+      entities?: Array<{
+        __typename?: 'CEntities';
+        name: any;
+        tradeName: any;
+        taxIdentificationNumber: any;
+        localRegistrationNumber: any;
+        leiNumber: any;
+        id: any;
+        dateOfIncorporation?: any | null;
+        address: any;
+        entityType?: {
+          __typename?: 'CEntityTypes';
+          name: any;
+          id: any;
+          definition: any;
+        } | null;
+        country?: {
+          __typename?: 'CCountries';
+          name: any;
+          id: any;
+          code: any;
+        } | null;
+        urls?: Array<{
+          __typename?: 'EntityUrls';
+          url: any;
+          urlType?: {
+            __typename?: 'CUrlTypes';
+            name: any;
+            id: any;
+            definition: any;
+          } | null;
+        }> | null;
+      }> | null;
+    } | null;
+  }> | null;
 };
 
+export const AssetFieldsFragmentDoc = `
+    fragment AssetFields on CRoots {
+  assets {
+    ticker
+    rootId
+    name
+    id
+    icon
+    description
+    assetTypeId
+    assetStatusId
+    assetType {
+      definition
+      id
+      name
+    }
+    assetStatus {
+      name
+      id
+      definition
+    }
+    assetDeployments {
+      id
+      deploymentId
+      assetId
+      smartContractDeployment {
+        id
+        deployedOnProduct {
+          id
+          name
+          root {
+            slug
+          }
+        }
+        assetStandard {
+          id
+        }
+        smartContracts {
+          name
+          id
+          deploymentId
+          deploymentDate
+          address
+        }
+        deploymentType {
+          name
+          id
+          definition
+        }
+      }
+    }
+    urls(order_by: {urlTypeId: Asc}) {
+      url
+      urlType {
+        name
+        id
+        definition
+      }
+    }
+  }
+}
+    `;
+export const EntityFieldsFragmentDoc = `
+    fragment EntityFields on CRoots {
+  entities {
+    name
+    tradeName
+    taxIdentificationNumber
+    localRegistrationNumber
+    leiNumber
+    id
+    dateOfIncorporation
+    address
+    entityType {
+      name
+      id
+      definition
+    }
+    country {
+      name
+      id
+      code
+    }
+    urls {
+      url
+      urlType {
+        name
+        id
+        definition
+      }
+    }
+  }
+}
+    `;
+export const ProductFieldsFragmentDoc = `
+    fragment ProductFields on CRoots {
+  products {
+    rootId
+    productTypeId
+    productStatusId
+    name
+    launchDate
+    isMainProduct
+    id
+    description
+    productType {
+      name
+      id
+      definition
+    }
+    productStatus {
+      name
+      id
+      definition
+    }
+    productDeployments {
+      smartContractDeployment {
+        deployedOnProduct {
+          id
+          name
+          root {
+            slug
+          }
+        }
+        assetStandard {
+          id
+        }
+        deploymentType {
+          name
+        }
+        smartContracts {
+          name
+          id
+          deploymentDate
+          address
+          deploymentId
+        }
+        isOfStandardId
+        id
+      }
+    }
+    supportsProducts {
+      supportsProduct {
+        name
+        id
+        root {
+          slug
+        }
+      }
+    }
+    urls(order_by: {urlTypeId: Asc}) {
+      url
+      urlType {
+        name
+        id
+        definition
+      }
+    }
+  }
+}
+    `;
 export const GetFiltersOptionsDocument = `
-    query GetFiltersOptions($productSupportsWhere: productSupports_bool_exp, $deployedOnProductsWhere: products_bool_exp, $productTypesWhere: productTypes_bool_exp, $tagsWhere: tags_bool_exp) {
+    query getFiltersOptions($supportsProductsWhere: CSupportsProductsBoolExp = {}, $deployedOnProductsWhere: CProductsBoolExp = {}, $productTypesFilterInput: CProductsFilterInput = {}, $tagsWhere: CTagsBoolExp = {}, $tagsFilterInput: CProfileTagsFilterInput = {}, $profileSectorsFilterInput: CProfileInfosFilterInput = {}) {
   profileTypes {
     name
     id
@@ -2740,23 +3741,26 @@ export const GetFiltersOptionsDocument = `
     name
     id
     definition
+    ProfileInfosAggregate(filter_input: $profileSectorsFilterInput) {
+      _count
+    }
   }
-  productTypes(
-    where: $productTypesWhere
-    order_by: {products_aggregate: {count: desc}}
-  ) {
+  productTypes {
     name
     id
     definition
+    productsAggregate(filter_input: $productTypesFilterInput) {
+      _count
+    }
   }
-  productStatus {
+  productStatuses {
     definition
     id
     name
   }
-  productSupports(where: $productSupportsWhere) {
-    supports {
-      descriptionShort
+  supportsProducts(where: $supportsProductsWhere) {
+    supportsProduct {
+      description
       name
       id
     }
@@ -2764,19 +3768,14 @@ export const GetFiltersOptionsDocument = `
   deployedOnProducts: products(where: $deployedOnProductsWhere) {
     name
     id
-    descriptionShort
+    description
   }
-  products {
-    name
-    id
-    descriptionShort
-  }
-  assetStandardSupport {
+  assetStandards {
     definition
     id
     name
   }
-  assetType {
+  assetTypes {
     name
     id
     definition
@@ -2797,10 +3796,13 @@ export const GetFiltersOptionsDocument = `
     name
     id
   }
-  tags(where: $tagsWhere, order_by: {profileTags_aggregate: {count: desc}}) {
+  tags(where: $tagsWhere) {
     name
     id
     description
+    profileTagsAggregate(filter_input: $tagsFilterInput) {
+      _count
+    }
   }
 }
     `;
@@ -2824,8 +3826,8 @@ export const useGetFiltersOptionsQuery = <
   return useQuery<GetFiltersOptionsQuery, TError, TData>({
     queryKey:
       variables === undefined
-        ? ['GetFiltersOptions']
-        : ['GetFiltersOptions', variables],
+        ? ['getFiltersOptions']
+        : ['getFiltersOptions', variables],
     queryFn: fetcher<GetFiltersOptionsQuery, GetFiltersOptionsQueryVariables>(
       GetFiltersOptionsDocument,
       variables
@@ -2856,8 +3858,8 @@ export const useInfiniteGetFiltersOptionsQuery = <
       return {
         queryKey:
           optionsQueryKey ?? variables === undefined
-            ? ['GetFiltersOptions.infinite']
-            : ['GetFiltersOptions.infinite', variables],
+            ? ['getFiltersOptions.infinite']
+            : ['getFiltersOptions.infinite', variables],
         queryFn: metaData =>
           fetcher<GetFiltersOptionsQuery, GetFiltersOptionsQueryVariables>(
             GetFiltersOptionsDocument,
@@ -2877,25 +3879,6 @@ export const GetOrderByFieldsDocument = `
       type {
         inputFields {
           name
-          type {
-            inputFields {
-              name
-              type {
-                name
-                kind
-                ofType {
-                  name
-                  kind
-                }
-              }
-            }
-            name
-            kind
-            ofType {
-              name
-              kind
-            }
-          }
         }
         name
         kind
@@ -2968,55 +3951,20 @@ export const useInfiniteGetOrderByFieldsQuery = <
 };
 
 export const GetProfileDocument = `
-    query GetProfile($where: profiles_bool_exp) {
-  profiles(limit: 1, offset: 0, where: $where) {
+    query getProfile($where: CProfileInfosBoolExp) {
+  profileInfos(limit: 1, offset: 0, where: $where) {
+    tagLine
+    rootId
+    profileTypeId
+    profileStatusId
+    profileSectorId
     name
     logo
     id
     foundingDate
     descriptionShort
     descriptionLong
-    profileSectorId
-    profileStatusId
-    profileTypeId
-    tagLine
-    urlBlog
-    urlDocumentation
-    urlMain
-    urlWhitepaper
-    socials {
-      url
-      socialTypeId
-      profileId
-      name
-      id
-      socialType {
-        id
-        name
-      }
-    }
-    assets {
-      id
-      ticker
-      shortDescription
-      urlToAssetDocs
-      name
-      icon
-      address
-      deployedOnProductId
-      assetTypeId
-      assetType {
-        id
-        name
-      }
-      assetDeployedOnProductId {
-        name
-        profile {
-          slug
-        }
-      }
-    }
-    profileType {
+    profileSector {
       name
       id
       definition
@@ -3026,113 +3974,54 @@ export const GetProfileDocument = `
       id
       definition
     }
-    profileSector {
+    profileType {
       name
       id
       definition
     }
-    products {
-      urlToProduct
-      descriptionShort
-      id
-      isMainProduct
-      launchDate
-      name
-      productAddress
-      productStatusId
-      productType {
-        name
-      }
-      productStatus {
-        name
-      }
-      supportsProducts {
-        supports {
-          name
-          profile {
-            slug
-          }
-        }
-      }
-      asset {
-        name
-        id
-        icon
-        deployedOnProductId
-        assetTypeId
-        assetStandardId
-        address
-        urlToAssetDocs
-        ticker
-        profileId
-        shortDescription
-      }
-      mainAsset {
-        urlToAssetDocs
-        ticker
-        profileId
-        shortDescription
-        name
-      }
-      productDeployedOnProduct {
-        name
-        launchDate
-        descriptionShort
-        deployedOnProductId
-        urlToProduct
-        profile {
-          slug
-        }
-      }
-      supportedByProducts {
-        supports {
-          name
-          id
-        }
-        product {
-          name
-          id
-        }
-      }
-    }
-    mainProduct: products(where: {isMainProduct: {_eq: 1}}, limit: 1) {
-      name
-      productType {
-        name
-      }
-    }
-    entities {
-      tradeName
-      profileId
-      urlToEntity
-      name
-      localRegistrationNumber
-      leiNumber
-      dateOfIncorporation
-      countryId
-      address
-      country {
-        code
-        name
-      }
-      id
-      entityType {
+    urls(order_by: {urlTypeId: Asc}) {
+      url
+      urlType {
         name
         id
         definition
       }
-      parentEntityId
-      taxIdentificationNumber
     }
-    profileTags {
-      tag {
+    root {
+      urlMain
+      slug
+      socials {
         name
-        id
+        socialType {
+          name
+        }
+        urls(order_by: {urlTypeId: Asc}) {
+          url
+        }
+      }
+      ...AssetFields
+      ...ProductFields
+      ...EntityFields
+      profileTags {
+        tag {
+          name
+          id
+        }
+      }
+    }
+    mainProduct: root {
+      products(where: {isMainProduct: {_eq: "1"}}, limit: 1) {
+        name
+        productType {
+          name
+        }
       }
     }
   }
 }
-    `;
+    ${AssetFieldsFragmentDoc}
+${ProductFieldsFragmentDoc}
+${EntityFieldsFragmentDoc}`;
 
 export const useGetProfileQuery = <TData = GetProfileQuery, TError = unknown>(
   variables?: GetProfileQueryVariables,
@@ -3143,7 +4032,7 @@ export const useGetProfileQuery = <TData = GetProfileQuery, TError = unknown>(
 ) => {
   return useQuery<GetProfileQuery, TError, TData>({
     queryKey:
-      variables === undefined ? ['GetProfile'] : ['GetProfile', variables],
+      variables === undefined ? ['getProfile'] : ['getProfile', variables],
     queryFn: fetcher<GetProfileQuery, GetProfileQueryVariables>(
       GetProfileDocument,
       variables
@@ -3174,8 +4063,8 @@ export const useInfiniteGetProfileQuery = <
       return {
         queryKey:
           optionsQueryKey ?? variables === undefined
-            ? ['GetProfile.infinite']
-            : ['GetProfile.infinite', variables],
+            ? ['getProfile.infinite']
+            : ['getProfile.infinite', variables],
         queryFn: metaData =>
           fetcher<GetProfileQuery, GetProfileQueryVariables>(
             GetProfileDocument,
@@ -3188,49 +4077,80 @@ export const useInfiniteGetProfileQuery = <
 };
 
 export const SearchProfilesDocument = `
-    query SearchProfiles($order_by: [profiles_order_by!], $where: profiles_bool_exp, $limit: Int, $offset: Int) {
-  profiles(limit: $limit, offset: $offset, where: $where, order_by: $order_by) {
+    query SearchProfiles($order_by: [CProfileInfosOrderBy!], $where: CProfileInfosBoolExp, $limit: Int, $offset: Int) {
+  profileInfos(limit: $limit, offset: $offset, where: $where, order_by: $order_by) {
     name
     logo
     id
-    slug
-    descriptionShort
-    urlDocumentation
     tagLine
-    urlWhitepaper
-    urlMain
-    urlDocumentation
-    urlBlog
-    socials {
-      url
-      socialType {
-        name
-      }
-    }
-    profileTags {
-      id
-    }
+    descriptionShort
+    profileTypeId
+    profileStatusId
+    profileSectorId
+    foundingDate
     profileSector {
       name
-    }
-    profileType {
-      name
+      id
+      definition
     }
     profileStatus {
       name
+      id
+      definition
     }
-    assets {
-      ticker
-    }
-    mainProduct: products(where: {isMainProduct: {_eq: 1}}, limit: 1) {
+    profileType {
       name
-      productType {
+      id
+      definition
+    }
+    urls(order_by: {urlTypeId: Asc}) {
+      url
+      urlType {
         name
+        id
+        definition
       }
+    }
+    mainProduct: root {
+      products(where: {isMainProduct: {_eq: "1"}}, limit: 1) {
+        name
+        productType {
+          name
+        }
+      }
+    }
+    root {
+      urlMain
+      slug
+      assets {
+        ticker
+        name
+        id
+      }
+      socials {
+        name
+        socialType {
+          name
+        }
+        urls(order_by: {urlTypeId: Asc}) {
+          url
+        }
+      }
+      profileTags {
+        tag {
+          name
+          id
+        }
+      }
+      ...AssetFields
+      ...ProductFields
+      ...EntityFields
     }
   }
 }
-    `;
+    ${AssetFieldsFragmentDoc}
+${ProductFieldsFragmentDoc}
+${EntityFieldsFragmentDoc}`;
 
 export const useSearchProfilesQuery = <
   TData = SearchProfilesQuery,

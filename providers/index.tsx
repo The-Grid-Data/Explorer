@@ -2,10 +2,19 @@ import { PropsWithChildren } from 'react';
 import { ReactQueryProvider } from './react-query-provider';
 import { TooltipProvider } from '@/components/ui/tooltip';
 import { Toaster } from '@/components/ui/toaster';
+import { ThemeProvider } from './theme-provider';
 
 export const Providers = ({ children }: PropsWithChildren) => (
-  <ReactQueryProvider>
-    <Toaster />
-    <TooltipProvider>{children}</TooltipProvider>
-  </ReactQueryProvider>
+  <ThemeProvider
+    attribute="class"
+    defaultTheme="light"
+    enableSystem
+    themes={['light', 'dark']}
+    // disableTransitionOnChange
+  >
+    <ReactQueryProvider>
+      <Toaster />
+      <TooltipProvider>{children}</TooltipProvider>
+    </ReactQueryProvider>
+  </ThemeProvider>
 );

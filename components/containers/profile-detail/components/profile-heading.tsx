@@ -5,11 +5,15 @@ import {
   GetProfileQuery
 } from '@/lib/graphql/generated-graphql';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { ProfileCardIconLinks } from '@/components/containers/profile-card-icon-links';
 import { QueryDialogButton } from '@/components/containers/query-dialog-button';
 import { siteConfig } from '@/lib/site-config';
+import {
+  extractSocialUrls,
+  extractUrls,
+  UrlTypeIconLinks
+} from '@/components/containers/url-type-icon/url-type-icon-list';
 
-export type Profile = GetProfileQuery['profiles'][0];
+export type Profile = NonNullable<GetProfileQuery['profileInfos']>[number];
 
 export type ProfileCardCardProps = {
   profile: Profile;
@@ -40,7 +44,12 @@ export const ProfileHeading = ({
         <div className="flex flex-col gap-4 md:gap-2">
           <div className="flex flex-col gap-2 md:flex-row md:items-center md:gap-6">
             <h3 className="text-5xl font-bold">{profile.name}</h3>
-            <ProfileCardIconLinks profile={profile} />
+            <UrlTypeIconLinks
+              urls={[
+                extractUrls(profile.urls),
+                extractSocialUrls(profile.root?.socials)
+              ]}
+            />
           </div>
           {siteConfig.displayQueries && (
             <QueryDialogButton

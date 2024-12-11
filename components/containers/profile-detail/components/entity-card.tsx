@@ -1,37 +1,38 @@
 'use client';
 
 import { GetProfileQuery } from '@/lib/graphql/generated-graphql';
-import { ProfileDataCard } from './profile-data-card';
-import { Globe } from 'lucide-react';
-import { IconLink } from '@/components/ui/icon-link';
-import { Separator } from '@radix-ui/react-separator';
+import { ProfileDataCard, ProfileDataCardProps } from './profile-data-card';
 import { CardTitle } from '@/components/ui/card';
+import {
+  extractUrls,
+  UrlTypeIconLinks
+} from '@/components/containers/url-type-icon/url-type-icon-list';
+import { Separator } from '@/components/ui/separator';
 
-export type Profile = GetProfileQuery['profiles'][0];
-export type Entity = Profile['entities'][0];
+export type Profile = NonNullable<GetProfileQuery['profileInfos']>[number];
+export type Entity = NonNullable<
+  NonNullable<Profile['root']>['entities']
+>[number];
+
 export type EntityCardProps = {
   entity: Entity;
+  variant?: ProfileDataCardProps['variant'];
 };
 
-export const EntityCard = ({ entity }: EntityCardProps) => {
+export const EntityCard = ({ entity, variant }: EntityCardProps) => {
   return (
     <ProfileDataCard
+      variant={variant}
       title={
         <div className="flex items-center gap-2">
           <CardTitle>{entity.name}</CardTitle>
-
-          {entity.urlToEntity && (
+          {entity.urls && (
             <>
               <Separator
                 className="mx-2 h-[10px] rounded-lg border-[1px]"
                 orientation="vertical"
               />
-              <IconLink url={entity.urlToEntity} tooltipLabel="Website">
-                <Globe
-                  className="text-primary hover:text-primary/60"
-                  size={20}
-                />
-              </IconLink>
+              <UrlTypeIconLinks urls={[extractUrls(entity.urls)]} />
             </>
           )}
         </div>
@@ -59,7 +60,7 @@ export const EntityCard = ({ entity }: EntityCardProps) => {
         },
         {
           label: 'Country',
-          value: entity?.country?.name || '-'
+          value: entity.country?.name || '-'
         },
         {
           label: 'Incorporation Date',
@@ -70,17 +71,6 @@ export const EntityCard = ({ entity }: EntityCardProps) => {
           fullWidth: true,
           children: entity.address ? (
             <span className="w-full break-all text-sm">{entity.address}</span>
-          ) : (
-            '-'
-          )
-        },
-        {
-          label: 'Parent Entity',
-          fullWidth: true,
-          children: entity.address ? (
-            <span className="w-full break-all text-sm">
-              {entity.parentEntityId}
-            </span>
           ) : (
             '-'
           )

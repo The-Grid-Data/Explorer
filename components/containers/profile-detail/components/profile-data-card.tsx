@@ -8,7 +8,7 @@ import {
   CardContent
 } from '@/components/ui/card';
 import { ReactNode } from 'react';
-import { Separator } from '@/components/ui/separator';
+import { InlineDataPoint } from './inline-data-point';
 import { cn } from '@/lib/utils';
 
 export type DataPoint = {
@@ -16,43 +16,40 @@ export type DataPoint = {
   value?: string | boolean | ReactNode;
   children?: ReactNode;
   fullWidth?: boolean;
+  separator?: boolean;
 };
 
 export type ProfileDataCardProps = {
   title: string | ReactNode;
   description?: string;
   dataPoints: DataPoint[];
+  variant?: 'default' | 'fluid';
 };
 
 export const ProfileDataCard = ({
   title,
   description,
-  dataPoints
+  dataPoints,
+  variant = 'default'
 }: ProfileDataCardProps) => {
   return (
-    <Card>
+    <div
+      className={cn(
+        variant === 'default' &&
+          'rounded-xl border bg-card text-card-foreground shadow'
+      )}
+    >
       <CardHeader>
         {typeof title === 'string' ? <CardTitle>{title}</CardTitle> : title}
         <CardDescription>{description}</CardDescription>
       </CardHeader>
       <CardContent>
         <div className="space-y-4">
-          {dataPoints.map(({ label, value, children, fullWidth }) => (
-            <div key={label} className="flex flex-col gap-2">
-              <div
-                className={cn(
-                  'flex items-center justify-between',
-                  fullWidth && 'flex-col items-start gap-2'
-                )}
-              >
-                <p className="text-xs text-muted-foreground">{label}</p>
-                {value ? <h3 className="font-semibold">{value}</h3> : children}
-              </div>
-              {!fullWidth && <Separator />}
-            </div>
+          {dataPoints.map(dataPoint => (
+            <InlineDataPoint key={dataPoint.label} {...dataPoint} />
           ))}
         </div>
       </CardContent>
-    </Card>
+    </div>
   );
 };

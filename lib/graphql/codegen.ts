@@ -19,7 +19,12 @@ const codegenConfig: CodegenConfig = {
         reactQueryVersion: 5,
         addInfiniteQuery: true,
         fetcher: {
-          endpoint: process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT_URL
+          endpoint: process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT_URL,
+          fetchParams: {
+            headers: {
+              'Content-Type': 'application/json'
+            }
+          }
         }
       },
       plugins: ['typescript', 'typescript-operations', 'typescript-react-query']

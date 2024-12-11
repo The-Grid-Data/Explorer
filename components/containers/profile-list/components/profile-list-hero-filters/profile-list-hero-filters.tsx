@@ -8,6 +8,21 @@ export const ProfileListHeroFilters = () => {
     <>
       <div className="space-y-4">
         <h1 className="text-xl font-bold lg:text-xl ">
+          Profile Sectors{' '}
+          {filters.productTypesFilter?.options &&
+            `(${filters.profileSectorsFilter.options?.length ?? 0})`}
+        </h1>
+        <CheckboxGrid
+          isLoading={isLoading}
+          selected={filters.profileSectorsFilter.value}
+          options={filters.profileSectorsFilter.options ?? []}
+          onChange={selected => {
+            filters.profileSectorsFilter.setValue(selected);
+          }}
+        />
+      </div>
+      <div className="space-y-4">
+        <h1 className="text-xl font-bold lg:text-xl ">
           Product types{' '}
           {filters.productTypesFilter?.options &&
             `(${filters.productTypesFilter.options.length})`}

@@ -6,8 +6,10 @@ import { SiGithub } from 'react-icons/si';
 
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
-import Image from 'next/image';
 import { siteConfig } from '@/lib/site-config';
+import { ToggleThemeButton } from './toggle-theme-button';
+import { useTheme } from 'next-themes';
+import { Logo } from './logo';
 
 const learnMoreButton = (
   <Link
@@ -49,12 +51,7 @@ export const Header = () => {
     <header className="container flex w-full items-center py-4">
       <div className="w-full items-center justify-start">
         <Link href="/" className="flex items-center">
-          <Image
-            alt="The grid logo"
-            src={siteConfig.logoSrc}
-            width={160}
-            height={1200}
-          />
+          <Logo />
         </Link>
       </div>
 
@@ -62,6 +59,7 @@ export const Header = () => {
         {learnMoreButton}
         {claimProfileButton}
         {cloneRepoButton}
+        <ToggleThemeButton />
       </div>
       <Sheet>
         <SheetTrigger asChild className="flex w-full items-center justify-end">
@@ -73,11 +71,11 @@ export const Header = () => {
         </SheetTrigger>
 
         <SheetContent>
-          <SheetTrigger asChild>
-            <Link className="flex items-center gap-2" href="/">
-              <h3 className="text-lg font-semibold tracking-tight">The Grid</h3>
-            </Link>
-          </SheetTrigger>
+          <Link className="flex items-center gap-3" href="/">
+            <h3 className="text-lg font-semibold tracking-tight">The Grid</h3>
+            <ToggleThemeButton />
+          </Link>
+
           <ul className="mt-4 flex flex-col gap-3">
             <li>
               <SheetTrigger asChild>{learnMoreButton}</SheetTrigger>

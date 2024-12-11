@@ -1,4 +1,7 @@
 import {
+  CAssetsBoolExp,
+  CEntitiesBoolExp,
+  CProductsBoolExp,
   SearchProfilesQueryVariables,
   useGetFiltersOptionsQuery
 } from '@/lib/graphql/generated-graphql';
@@ -9,9 +12,8 @@ import {
   parseAsString
 } from 'nuqs';
 import { useFilter } from './use-filter';
-import { siteConfig } from '@/lib/site-config';
-import { useState } from 'react';
 import { isNotEmpty } from '@/lib/utils/is-not-empty';
+import { siteConfig } from '@/lib/site-config';
 
 export type Filters = ReturnType<typeof useProfileFilters>;
 
@@ -39,27 +41,56 @@ export const useProfileFilters = () => {
     },
     { clearOnDefault: true, throttleMs: 1000 }
   );
-  const [tags, setTags] = useState<number[] | null>(queryParams.tags);
 
   const { data, isLoading } = useGetFiltersOptionsQuery(
     {
-      productSupportsWhere: {
+      supportsProductsWhere: {
         ...(isNotEmpty(siteConfig.blockchainIds) && {
           supportsProductId: { _in: siteConfig.blockchainIds }
         })
       },
-      productTypesWhere: {
-        ...((isNotEmpty(tags) || isNotEmpty(siteConfig.tags)) && {
-          products: {
-            profile: {
-              profileTags: {
-                tagId: {
-                  _in: [...(tags || []), ...(siteConfig.tags || [])]
-                }
+      productTypesFilterInput: {
+        where: {
+          root: {
+            ...(isNotEmpty(queryParams.tags) && {
+              profileTags: { tagId: { _in: queryParams.tags } }
+            }),
+            ...(isNotEmpty(queryParams.productTypes) && {
+              products: { productTypeId: { _in: queryParams.productTypes } }
+            }),
+            ...(isNotEmpty(queryParams.profileSectors) && {
+              profileInfos: {
+                profileSector: { id: { _in: queryParams.profileSectors } }
               }
-            }
+            })
           }
-        })
+        }
+      },
+      profileSectorsFilterInput: {
+        where: {
+          root: {
+            ...(isNotEmpty(queryParams.tags) && {
+              profileTags: { tagId: { _in: queryParams.tags } }
+            }),
+            ...(isNotEmpty(queryParams.productTypes) && {
+              products: { productTypeId: { _in: queryParams.productTypes } }
+            })
+          }
+        }
+      },
+      tagsFilterInput: {
+        where: {
+          root: {
+            ...(isNotEmpty(queryParams.productTypes) && {
+              products: { productTypeId: { _in: queryParams.productTypes } }
+            }),
+            ...(isNotEmpty(queryParams.profileSectors) && {
+              profileInfos: {
+                profileSector: { id: { _in: queryParams.profileSectors } }
+              }
+            })
+          }
+        }
       },
       deployedOnProductsWhere: {
         ...(isNotEmpty(siteConfig.blockchainIds) && {
@@ -83,28 +114,33 @@ export const useProfileFilters = () => {
    * CHECKBOX GRID FILTERS
    *************************************/
   const productTypesFilter = useFilter<number>({
-    options: data?.productTypes.map(item => ({
-      value: item.id,
-      label: item.name,
-      description: item.definition
-    })),
+    options: data?.productTypes
+      ?.filter(item => item.name?.trim())
+      ?.filter(item => Boolean(item.productsAggregate?._count))
+      .map(item => ({
+        value: item.id,
+        label: item.name,
+        count: item.productsAggregate?._count,
+        description: item.definition
+      })),
     type: 'multiselect',
     initialValue: queryParams.productTypes,
     onChange: newValue => setQueryParams({ productTypes: newValue })
   });
 
   const tagsFilter = useFilter<number>({
-    options: data?.tags.map(item => ({
-      value: item.id,
-      label: item.name,
-      description: item.description
-    })),
+    options: data?.tags
+      ?.filter(item => Boolean(item.profileTagsAggregate?._count))
+      .map(item => ({
+        value: item.id,
+        label: item.name,
+        description: item.description,
+        count: item.profileTagsAggregate?._count,
+        disabled: !Boolean(item.profileTagsAggregate?._count)
+      })),
     type: 'multiselect',
     initialValue: queryParams.tags,
-    onChange: newValue => {
-      setQueryParams({ tags: newValue });
-      setTags(newValue);
-    }
+    onChange: newValue => setQueryParams({ tags: newValue })
   });
 
   /*************************************
@@ -131,7 +167,7 @@ export const useProfileFilters = () => {
    * PROFILE FILTERS
    *************************************/
   const profileTypeFilter = useFilter<number>({
-    options: data?.profileTypes.map(item => ({
+    options: data?.profileTypes?.map(item => ({
       value: item.id,
       label: item.name,
       description: item.definition
@@ -142,18 +178,22 @@ export const useProfileFilters = () => {
   });
 
   const profileSectorsFilter = useFilter<number>({
-    options: data?.profileSectors.map(item => ({
-      value: item.id,
-      label: item.name,
-      description: item.definition
-    })),
+    options: data?.profileSectors
+      ?.filter(item => item.name?.trim())
+      ?.filter(item => Boolean(item.ProfileInfosAggregate?._count))
+      .map(item => ({
+        value: item.id,
+        label: item.name,
+        count: item.ProfileInfosAggregate?._count,
+        description: item.definition
+      })),
     type: 'multiselect',
     initialValue: queryParams.profileSectors,
     onChange: newValue => setQueryParams({ profileSectors: newValue })
   });
 
   const profileStatusesFilter = useFilter<number>({
-    options: data?.profileStatuses.map(item => ({
+    options: data?.profileStatuses?.map(item => ({
       value: item.id,
       label: item.name,
       description: item.definition
@@ -173,7 +213,7 @@ export const useProfileFilters = () => {
    * PRODUCT FILTERS
    *************************************/
   const productStatusFilter = useFilter<number>({
-    options: data?.productStatus.map(item => ({
+    options: data?.productStatuses?.map(item => ({
       value: item.id,
       label: item.name,
       description: item.definition
@@ -187,11 +227,11 @@ export const useProfileFilters = () => {
     //@todo: we are filtering products by distinct id in the FE, we might wanna move this to the query but is not supported at the moment
     options: Array.from(
       new Map(
-        data?.productSupports
-          .map(item => ({
-            value: item.supports.id,
-            label: item.supports.name,
-            description: item.supports.descriptionShort
+        data?.supportsProducts
+          ?.map(item => ({
+            value: item.supportsProduct?.id,
+            label: item.supportsProduct?.name,
+            description: item.supportsProduct?.description
           }))
           .map(option => [option.value, option])
       ).values()
@@ -208,21 +248,21 @@ export const useProfileFilters = () => {
   });
 
   const productDeployedOnFilter = useFilter<number>({
-    options: data?.deployedOnProducts.map(item => ({
+    options: data?.deployedOnProducts?.map(item => ({
       value: item.id,
       label: item.name,
-      description: item.descriptionShort
+      description: item.description
     })),
     type: 'multiselect',
     initialValue: queryParams.productDeployedOn,
     onChange: newValue => setQueryParams({ productDeployedOn: newValue })
   });
 
-  /*************************************
-   * ASSET FILTERS
-   *************************************/
+  // /*************************************
+  //  * ASSET FILTERS
+  //  *************************************/
   const assetTypeFilter = useFilter<number>({
-    options: data?.assetType.map(item => ({
+    options: data?.assetTypes?.map(item => ({
       value: item.id,
       label: item.name,
       description: item.definition
@@ -234,7 +274,7 @@ export const useProfileFilters = () => {
 
   const assetTickerFilter = useFilter<string>({
     options: data?.assets
-      .map(item => item.ticker)
+      ?.map(item => item.ticker)
       .filter(ticker => ticker && ticker !== '')
       .map(ticker => ({
         value: ticker,
@@ -247,10 +287,10 @@ export const useProfileFilters = () => {
   });
 
   const assetDeployedOnFilter = useFilter<number>({
-    options: data?.deployedOnProducts.map(item => ({
+    options: data?.deployedOnProducts?.map(item => ({
       value: item.id,
       label: item.name,
-      description: item.descriptionShort
+      description: item.description
     })),
     type: 'multiselect',
     initialValue: queryParams.assetDeployedOn,
@@ -258,7 +298,7 @@ export const useProfileFilters = () => {
   });
 
   const assetStandardFilter = useFilter<number>({
-    options: data?.assetStandardSupport.map(item => ({
+    options: data?.assetStandards?.map(item => ({
       value: item.id,
       label: item.name,
       description: item.definition
@@ -268,11 +308,11 @@ export const useProfileFilters = () => {
     onChange: newValue => setQueryParams({ assetStandard: newValue })
   });
 
-  /*************************************
-   * ENTITY FILTERS
-   *************************************/
+  // /*************************************
+  //  * ENTITY FILTERS
+  //  *************************************/
   const entityTypeFilter = useFilter<number>({
-    options: data?.entityTypes.map(item => ({
+    options: data?.entityTypes?.map(item => ({
       value: item.id,
       label: item.name,
       description: item.definition
@@ -283,7 +323,7 @@ export const useProfileFilters = () => {
   });
 
   const entityNameFilter = useFilter<number>({
-    options: data?.entities.map(item => ({
+    options: data?.entities?.map(item => ({
       value: item.id,
       label: item.name,
       description: null
@@ -294,7 +334,7 @@ export const useProfileFilters = () => {
   });
 
   const entityCountryFilter = useFilter<number>({
-    options: data?.countries.map(item => ({
+    options: data?.countries?.map(item => ({
       value: item.id,
       label: item.name,
       description: null
@@ -304,128 +344,143 @@ export const useProfileFilters = () => {
     onChange: newValue => setQueryParams({ entityCountry: newValue })
   });
 
-  const toQueryWhereFields = () => {
-    const searchConditions = isNotEmpty(searchFilter?.value)
-      ? [
-          ...(searchFilter.config?.fields?.productName
-            ? [
-                { name: { _ilike: `%${searchFilter.value}%` } },
-                { products: { name: { _ilike: `%${searchFilter.value}%` } } }
-              ]
-            : [])
-        ]
-      : [];
+  // @ts-ignore
+  const toQueryWhereFields: () => SearchProfilesQueryVariables['where'] =
+    () => {
+      const searchConditions = isNotEmpty(searchFilter?.value)
+        ? [
+            ...(searchFilter.config?.fields?.productName
+              ? [
+                  { name: { _like: `%${searchFilter.value}%` } },
+                  {
+                    root: {
+                      products: {
+                        name: { _like: `%${searchFilter.value}%` }
+                      }
+                    }
+                  }
+                ]
+              : [])
+          ]
+        : [];
 
-    const profileConditions = {
-      ...(isNotEmpty(profileTypeFilter.value) && {
-        profileType: { id: { _in: profileTypeFilter.value } }
-      }),
-      ...(isNotEmpty(profileSectorsFilter.value) && {
-        profileSector: { id: { _in: profileSectorsFilter.value } }
-      }),
-      ...(isNotEmpty(profileStatusesFilter.value) && {
-        profileStatus: { id: { _in: profileStatusesFilter.value } }
-      }),
-      ...(profileFoundingDateFilter.value?.every?.(i => i) && {
-        foundingDate: {
-          _gte: profileFoundingDateFilter.value[0],
-          _lte: profileFoundingDateFilter.value[1]
+      const profileConditions = {
+        ...(isNotEmpty(profileTypeFilter.value) && {
+          profileType: { id: { _in: profileTypeFilter.value } }
+        }),
+        ...(isNotEmpty(profileSectorsFilter.value) && {
+          profileSector: { id: { _in: profileSectorsFilter.value } }
+        }),
+        ...(isNotEmpty(profileStatusesFilter.value) && {
+          profileStatus: { id: { _in: profileStatusesFilter.value } }
+        }),
+        ...(profileFoundingDateFilter.value?.every?.(i => i) && {
+          foundingDate: {
+            _gte: profileFoundingDateFilter.value[0],
+            _lte: profileFoundingDateFilter.value[1]
+          }
+        })
+      };
+
+      const productConditions = {
+        ...(isNotEmpty(productTypesFilter.value) && {
+          productTypeId: { _in: productTypesFilter.value }
+        }),
+        ...(isNotEmpty(productStatusFilter.value) && {
+          productStatus: { id: { _in: productStatusFilter.value } }
+        }),
+        ...(isNotEmpty(productDeployedOnFilter.value) && {
+          productDeployments: {
+            deploymentId: { _in: productDeployedOnFilter.value }
+          }
+        }),
+        ...(isNotEmpty(productSupportsFilter.value) && {
+          supportsProducts: {
+            supportsProductId: { _in: productSupportsFilter.value }
+          }
+        }),
+        ...(productLaunchDateFilter.value?.every?.(i => i) && {
+          launchDate: {
+            _gte: productLaunchDateFilter.value[0],
+            _lte: productLaunchDateFilter.value[1]
+          }
+        })
+      } satisfies CProductsBoolExp;
+
+      const assetConditions = {
+        ...(isNotEmpty(assetTypeFilter.value) && {
+          assetTypeId: { _in: assetTypeFilter.value }
+        }),
+        ...(isNotEmpty(assetTickerFilter.value) && {
+          // @ts-ignore
+          ticker: { _in: assetTickerFilter.value }
+        }),
+        ...(isNotEmpty(assetDeployedOnFilter.value) && {
+          assetDeployments: {
+            smartContractDeployment: {
+              deployedOnId: { _in: assetDeployedOnFilter.value }
+            }
+          }
+        }),
+        ...(isNotEmpty(assetStandardFilter.value) && {
+          assetStandardId: { _in: assetStandardFilter.value }
+        })
+      } satisfies CAssetsBoolExp;
+
+      const entityConditions = {
+        ...(isNotEmpty(entityTypeFilter.value) && {
+          entityTypeId: { _in: entityTypeFilter.value }
+        }),
+        ...(isNotEmpty(entityNameFilter.value) && {
+          id: { _in: entityNameFilter.value }
+        }),
+        ...(isNotEmpty(entityCountryFilter.value) && {
+          countryId: { _in: entityCountryFilter.value }
+        })
+      } satisfies CEntitiesBoolExp;
+
+      return {
+        /*************************************
+         * SEARCH FILTERS
+         *************************************/
+        ...(searchConditions.length > 0 && { _or: searchConditions }),
+
+        /*************************************
+         * PROFILE FILTERS
+         *************************************/
+        ...(Object.keys(profileConditions).length > 0 && profileConditions),
+
+        root: {
+          /*************************************
+           * PRODUCT FILTERS
+           *************************************/
+          ...(Object.keys(productConditions).length > 0 && {
+            products: productConditions
+          }),
+
+          /*************************************
+           * ASSET FILTERS
+           *************************************/
+          ...(Object.keys(assetConditions).length > 0 && {
+            assets: assetConditions
+          }),
+
+          /*************************************
+           * ENTITY FILTERS
+           *************************************/
+          ...(Object.keys(entityConditions).length > 0 && {
+            entities: entityConditions
+          }),
+
+          /*************************************
+           * TAGS FILTERS
+           *************************************/
+          ...(isNotEmpty(tagsFilter.value) && {
+            profileTags: { tagId: { _in: tagsFilter.value } }
+          })
         }
-      })
+      };
     };
-
-    const productConditions = {
-      ...(isNotEmpty(productTypesFilter.value) && {
-        productTypeId: { _in: productTypesFilter.value }
-      }),
-      ...(isNotEmpty(productStatusFilter.value) && {
-        productStatus: { id: { _in: productStatusFilter.value } }
-      }),
-      ...(isNotEmpty(productDeployedOnFilter.value) && {
-        deployedOnProductId: { _in: productDeployedOnFilter.value }
-      }),
-      ...(isNotEmpty(productSupportsFilter.value) && {
-        supportsProducts: {
-          supportsProductId: { _in: productSupportsFilter.value }
-        }
-      }),
-      ...(productLaunchDateFilter.value?.every?.(i => i) && {
-        launchDate: {
-          _gte: productLaunchDateFilter.value[0],
-          _lte: productLaunchDateFilter.value[1]
-        }
-      })
-    };
-
-    const assetConditions = {
-      ...(isNotEmpty(assetTypeFilter.value) && {
-        assetTypeId: { _in: assetTypeFilter.value }
-      }),
-      ...(isNotEmpty(assetTickerFilter.value) && {
-        ticker: { _in: assetTickerFilter.value }
-      }),
-      ...(isNotEmpty(assetDeployedOnFilter.value) && {
-        assetDeployedOnProductId: {
-          id: { _in: assetDeployedOnFilter.value }
-        }
-      }),
-      ...(isNotEmpty(assetStandardFilter.value) && {
-        assetStandardId: { _in: assetStandardFilter.value }
-      })
-    };
-
-    const entityConditions = {
-      ...(isNotEmpty(entityTypeFilter.value) && {
-        entityTypeId: { _in: entityTypeFilter.value }
-      }),
-      ...(isNotEmpty(entityNameFilter.value) && {
-        id: { _in: entityNameFilter.value }
-      }),
-      ...(isNotEmpty(entityCountryFilter.value) && {
-        countryId: { _in: entityCountryFilter.value }
-      })
-    };
-
-    return {
-      /*************************************
-       * SEARCH FILTERS
-       *************************************/
-      ...(searchConditions.length > 0 && { _or: searchConditions }),
-
-      /*************************************
-       * PROFILE FILTERS
-       *************************************/
-      ...(Object.keys(profileConditions).length > 0 && profileConditions),
-
-      /*************************************
-       * PRODUCT FILTERS
-       *************************************/
-      ...(Object.keys(productConditions).length > 0 && {
-        products: productConditions
-      }),
-
-      /*************************************
-       * ASSET FILTERS
-       *************************************/
-      ...(Object.keys(assetConditions).length > 0 && {
-        assets: assetConditions
-      }),
-
-      /*************************************
-       * ENTITY FILTERS
-       *************************************/
-      ...(Object.keys(entityConditions).length > 0 && {
-        entities: entityConditions
-      }),
-
-      /*************************************
-       * TAGS FILTERS
-       *************************************/
-      ...(isNotEmpty(tagsFilter.value) && {
-        profileTags: { tagId: { _in: tagsFilter.value } }
-      })
-    } satisfies SearchProfilesQueryVariables['where'];
-  };
 
   return {
     isLoading,

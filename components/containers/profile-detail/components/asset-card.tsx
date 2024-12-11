@@ -2,23 +2,30 @@
 
 import { GetProfileQuery } from '@/lib/graphql/generated-graphql';
 import { paths } from '@/lib/routes/paths';
-import { DeepLinkBadge } from '@/components/ui/deep-link-badge';
-import { ProfileDataCard } from './profile-data-card';
-import { FileCode2, Package } from 'lucide-react';
-import { IconLink } from '@/components/ui/icon-link';
+import { ProfileDataCard, ProfileDataCardProps } from './profile-data-card';
+import { Package } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Separator } from '@radix-ui/react-separator';
 import { CardTitle } from '@/components/ui/card';
+import {
+  extractUrls,
+  UrlTypeIconLinks
+} from '@/components/containers/url-type-icon/url-type-icon-list';
+import Link from 'next/link';
+import { InlineDataPoint } from './inline-data-point';
+import { ContractAddressesBadge } from './contract-address-badge';
 
-export type Profile = GetProfileQuery['profiles'][0];
-export type Asset = Profile['assets'][0];
+export type Profile = NonNullable<GetProfileQuery['profileInfos']>[number];
+export type Asset = NonNullable<NonNullable<Profile['root']>['assets']>[number];
 export type AssetCardProps = {
   asset: Asset;
+  variant?: ProfileDataCardProps['variant'];
 };
 
-export const AssetCard = ({ asset }: AssetCardProps) => {
+export const AssetCard = ({ asset, variant }: AssetCardProps) => {
   return (
     <ProfileDataCard
+      variant={variant}
       title={
         <div className="flex items-center gap-2">
           <Avatar className="h-[20px] w-[20px] rounded-xl">
@@ -32,49 +39,90 @@ export const AssetCard = ({ asset }: AssetCardProps) => {
             </AvatarFallback>
           </Avatar>
           <CardTitle>{asset.name}</CardTitle>
-          <Separator
-            className="mx-2 h-[10px] rounded-lg border-[1px]"
-            orientation="vertical"
-          />
-          {asset.urlToAssetDocs && (
-            <IconLink url={asset.urlToAssetDocs} tooltipLabel="Website">
-              <FileCode2
-                className="text-primary hover:text-primary/60"
-                size={20}
+          {asset.urls && (
+            <>
+              <Separator
+                className="mx-2 h-[10px] rounded-lg border-[1px]"
+                orientation="vertical"
               />
-            </IconLink>
+              <UrlTypeIconLinks urls={[extractUrls(asset.urls)]} />
+            </>
           )}
         </div>
       }
-      description={asset.shortDescription || 'No description available'}
+      description={asset.description || 'No description available'}
       dataPoints={[
         {
           label: 'Asset Type',
           value: asset.assetType?.name || '-'
         },
         {
-          label: 'Deployed on',
-          value: (
-            <DeepLinkBadge
-              icon={<Package size={16} />}
-              href={
-                asset.assetDeployedOnProductId?.profile?.slug &&
-                paths.profile.detail(
-                  asset.assetDeployedOnProductId?.profile?.slug,
-                  {
-                    section: 'products'
-                  }
-                )
-              }
-              value={asset.assetDeployedOnProductId?.name}
-            />
-          )
+          label: 'Asset Ticker',
+          value: asset.ticker || '-'
         },
         {
-          label: 'Address',
           fullWidth: true,
-          children: asset.address ? (
-            <span className="w-full break-all text-sm">{asset.address}</span>
+          label: 'Deployed on',
+          separator: false,
+          children: Boolean(asset.assetDeployments?.length) ? (
+            <div className="flex w-full flex-col gap-2">
+              {asset.assetDeployments?.map(deployment => (
+                <div
+                  key={deployment.smartContractDeployment?.id}
+                  className="w-full flex-1 rounded-lg border p-3"
+                >
+                  <Link
+                    className="mb-2 flex items-center gap-2 hover:underline"
+                    href={paths.profile.detail(
+                      deployment.smartContractDeployment?.deployedOnProduct
+                        ?.root?.slug ?? '',
+                      { section: 'products' }
+                    )}
+                  >
+                    <Package size={16} />
+                    <span className="font-medium">
+                      {
+                        deployment.smartContractDeployment?.deployedOnProduct
+                          ?.name
+                      }
+                    </span>
+                  </Link>
+
+                  <div className="space-y-1">
+                    <InlineDataPoint fullWidth label="Deployment Type">
+                      {deployment.smartContractDeployment?.deploymentType
+                        ?.name ? (
+                        <span className="text-sm">
+                          {
+                            deployment.smartContractDeployment.deploymentType
+                              .name
+                          }
+                        </span>
+                      ) : (
+                        '-'
+                      )}
+                    </InlineDataPoint>
+
+                    <InlineDataPoint
+                      fullWidth
+                      label="Addresses"
+                      separator={false}
+                    >
+                      {deployment.smartContractDeployment?.smartContracts
+                        ?.length ? (
+                        <ContractAddressesBadge
+                          smartContracts={
+                            deployment.smartContractDeployment?.smartContracts
+                          }
+                        />
+                      ) : (
+                        ' -'
+                      )}
+                    </InlineDataPoint>
+                  </div>
+                </div>
+              ))}
+            </div>
           ) : (
             '-'
           )

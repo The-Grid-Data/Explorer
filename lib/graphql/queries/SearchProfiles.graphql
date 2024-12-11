@@ -1,47 +1,85 @@
+#import "./AssetFields.fragment.graphql"
+#import "./ProductsFields.fragment.graphql"
+#import "./EntitiesFields.fragment.graphql"
+
 query SearchProfiles(
-  $order_by: [profiles_order_by!]
-  $where: profiles_bool_exp
+  $order_by: [CProfileInfosOrderBy!]
+  $where: CProfileInfosBoolExp
   $limit: Int
   $offset: Int
 ) {
-  profiles(limit: $limit, offset: $offset, where: $where, order_by: $order_by) {
+  profileInfos(
+    limit: $limit
+    offset: $offset
+    where: $where
+    order_by: $order_by
+  ) {
     name
     logo
     id
-    slug
-    descriptionShort
-    urlDocumentation
     tagLine
-    urlWhitepaper
-    urlMain
-    urlDocumentation
-    urlBlog
-    socials {
-      url
-      socialType {
-        name
-      }
-    }
-    profileTags {
-      id
-    }
+    descriptionShort
+    profileTypeId
+    profileStatusId
+    profileSectorId
+    foundingDate
     profileSector {
       name
-    }
-    profileType {
-      name
+      id
+      definition
     }
     profileStatus {
       name
+      id
+      definition
     }
-    assets {
-      ticker
-    }
-    mainProduct: products(where: { isMainProduct: { _eq: 1 } }, limit: 1) {
+    profileType {
       name
-      productType {
+      id
+      definition
+    }
+    urls(order_by: { urlTypeId: Asc }) {
+      url
+      urlType {
         name
+        id
+        definition
       }
+    }
+    mainProduct: root {
+      products(where: { isMainProduct: { _eq: "1" } }, limit: 1) {
+        name
+        productType {
+          name
+        }
+      }
+    }
+    root {
+      urlMain
+      slug
+      assets {
+        ticker
+        name
+        id
+      }
+      socials {
+        name
+        socialType {
+          name
+        }
+        urls(order_by: { urlTypeId: Asc }) {
+          url
+        }
+      }
+      profileTags {
+        tag {
+          name
+          id
+        }
+      }
+      ...AssetFields
+      ...ProductFields
+      ...EntityFields
     }
   }
 }

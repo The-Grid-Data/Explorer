@@ -31,7 +31,7 @@ export const metadata: Metadata = {
 
 export default function Layout({ children }: TLayout) {
   return (
-    <html lang="en" className="h-full">
+    <html lang="en" className="h-full" suppressHydrationWarning>
       <body
         className={cn(
           dmSans.className,
