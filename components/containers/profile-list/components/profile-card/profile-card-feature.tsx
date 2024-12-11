@@ -22,7 +22,7 @@ export const ProfileCardFeature = ({
       >
         {label}
       </span>
-      <span className="text w-full rounded-b-sm border border-t-0 px-2 py-1 text-sm">
+      <span className="text w-full rounded-b-sm border border-t-0 border-primary px-2 py-1 text-sm">
         {value || '-'}
       </span>
     </div>

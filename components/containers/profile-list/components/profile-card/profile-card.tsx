@@ -20,6 +20,7 @@ import { ItemWithSheet } from '@/components/containers/profile-detail/components
 import { ProductCard } from '@/components/containers/profile-detail/components/product-card';
 import { AssetCard } from '@/components/containers/profile-detail/components/asset-card';
 import { EntityCard } from '@/components/containers/profile-detail/components/entity-card';
+import { format } from 'date-fns';
 
 export type Profile = NonNullable<SearchProfilesQuery['profileInfos']>[number];
 
@@ -99,7 +100,11 @@ export const ProfileCard = ({ profile }: ProfileCardCardProps) => {
             />
             <ProfileCardFeature
               label="Profile Founding Date"
-              value={profile.foundingDate}
+              value={
+                profile.foundingDate
+                  ? format(new Date(profile.foundingDate), 'MMM yy')
+                  : undefined
+              }
               active={filters.profileFoundingDateFilter.active}
             />
             <ProfileCardFeature
@@ -194,36 +199,6 @@ export const ProfileCard = ({ profile }: ProfileCardCardProps) => {
                         </Badge>
                       }
                       content={<AssetCard variant="fluid" asset={asset} />}
-                    />
-                  ))
-                ) : (
-                  <span className="mt-1 text-sm">-</span>
-                )}
-              </div>
-            </ProfileCardDataPoint>
-            <ProfileCardDataPoint
-              label="Entities"
-              active={[
-                filters.entityCountryFilter.active,
-                filters.entityNameFilter.active,
-                filters.entityTypeFilter.active
-              ].some(value => value)}
-              className="items-start"
-            >
-              <div className="flex h-full flex-wrap gap-2">
-                {profile.root?.entities?.length ? (
-                  profile.root.entities.map(entity => (
-                    <ItemWithSheet
-                      key={entity.id}
-                      trigger={
-                        <Badge
-                          variant="secondary"
-                          className="flex w-fit items-center gap-2 hover:cursor-pointer"
-                        >
-                          <Building2 size={16} /> {entity.name}
-                        </Badge>
-                      }
-                      content={<EntityCard variant="fluid" entity={entity} />}
                     />
                   ))
                 ) : (

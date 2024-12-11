@@ -9,7 +9,8 @@ export const Providers = ({ children }: PropsWithChildren) => (
     attribute="class"
     defaultTheme="light"
     enableSystem
-    disableTransitionOnChange
+    themes={['light', 'dark']}
+    // disableTransitionOnChange
   >
     <ReactQueryProvider>
       <Toaster />

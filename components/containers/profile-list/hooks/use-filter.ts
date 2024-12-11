@@ -4,6 +4,7 @@ type Options<T> = Array<{
   label: string;
   value: T;
   description?: string | null;
+  count?: number | string | null;
   disabled?: boolean;
 }>;
 

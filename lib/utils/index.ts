@@ -1,1 +1,2 @@
-export * from './cn'
+export * from './cn';
+export * from './is-nil';

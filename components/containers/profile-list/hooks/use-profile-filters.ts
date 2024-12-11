@@ -119,7 +119,8 @@ export const useProfileFilters = () => {
       ?.filter(item => Boolean(item.productsAggregate?._count))
       .map(item => ({
         value: item.id,
-        label: `${item.name} (${item.productsAggregate?._count})`,
+        label: item.name,
+        count: item.productsAggregate?._count,
         description: item.definition
       })),
     type: 'multiselect',
@@ -132,8 +133,9 @@ export const useProfileFilters = () => {
       ?.filter(item => Boolean(item.profileTagsAggregate?._count))
       .map(item => ({
         value: item.id,
-        label: `${item.name} (${item.profileTagsAggregate?._count})`,
+        label: item.name,
         description: item.description,
+        count: item.profileTagsAggregate?._count,
         disabled: !Boolean(item.profileTagsAggregate?._count)
       })),
     type: 'multiselect',
@@ -181,7 +183,8 @@ export const useProfileFilters = () => {
       ?.filter(item => Boolean(item.ProfileInfosAggregate?._count))
       .map(item => ({
         value: item.id,
-        label: `${item.name} (${item.ProfileInfosAggregate?._count})`,
+        label: item.name,
+        count: item.ProfileInfosAggregate?._count,
         description: item.definition
       })),
     type: 'multiselect',

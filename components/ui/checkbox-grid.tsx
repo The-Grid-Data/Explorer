@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react';
 import { Button } from '@/components/ui/button';
-import { cn } from '@/lib/utils';
+import { cn, isNil } from '@/lib/utils';
 import {
   Tooltip,
   TooltipContent,
@@ -14,6 +14,7 @@ type Option<T extends string | number> = {
   value: T;
   label: string;
   description?: string | null;
+  count?: string | null;
   disabled?: boolean;
 };
 
@@ -83,7 +84,7 @@ export default function CheckboxGrid<T extends string | number>({
                               : 'secondary'
                           }
                           className={cn(
-                            'flex items-center justify-center text-sm font-medium',
+                            'flex items-center justify-center gap-2 text-sm font-medium',
                             selected?.includes(option.value)
                               ? 'border-2 border-primary text-primary'
                               : 'text-secondary-foreground'
@@ -91,6 +92,11 @@ export default function CheckboxGrid<T extends string | number>({
                           onClick={() => toggleItem(option.value)}
                         >
                           <span>{option.label}</span>
+                          {!isNil(option.count) && (
+                            <div className="min-w-6 rounded-md bg-primary/10 px-1 py-0 text-center text-[10px]">
+                              {option.count}
+                            </div>
+                          )}
                         </Button>
                       </TooltipTrigger>
                       <TooltipContent className="max-w-64 text-base">

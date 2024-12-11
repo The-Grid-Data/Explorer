@@ -2,8 +2,8 @@ export const siteConfig = {
   pageTitle: 'The Grid | Data Explorer',
   verifiedTagId: 7,
   logoSrc: {
-    light: '/thegrid-logo-light.svg',
-    dark: '/thegrid-logo.svg'
+    dark: '/thegrid-logo-white.svg',
+    light: '/thegrid-logo.svg'
   },
   pageDescription:
     'Powering Discoverability of Assets, Products, and Services in Web3.',
@@ -12,4 +12,4 @@ export const siteConfig = {
   blockchainProductTypeIds: [15, 16, 17], // Filter default options. used by productDeployedOnFilter.
   tags: [], // Filter default options. used by tagsFilter.
   displayQueries: true
-};
+} as const;

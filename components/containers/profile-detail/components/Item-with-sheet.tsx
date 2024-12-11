@@ -18,10 +18,10 @@ export const ItemWithSheet = ({ trigger, content }: ItemWithSheetProps) => {
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>
-      <SheetTrigger asChild>
+      <SheetTrigger>
         <TooltipProvider>
           <Tooltip>
-            <TooltipTrigger>
+            <TooltipTrigger asChild>
               <div className="cursor-pointer" onClick={() => setOpen(true)}>
                 {trigger}
               </div>
