@@ -19,7 +19,6 @@ import { Banknote, Building2, Package } from 'lucide-react';
 import { ItemWithSheet } from '@/components/containers/profile-detail/components/Item-with-sheet';
 import { ProductCard } from '@/components/containers/profile-detail/components/product-card';
 import { AssetCard } from '@/components/containers/profile-detail/components/asset-card';
-import { EntityCard } from '@/components/containers/profile-detail/components/entity-card';
 import { format } from 'date-fns';
 
 export type Profile = NonNullable<SearchProfilesQuery['profileInfos']>[number];
@@ -102,7 +101,7 @@ export const ProfileCard = ({ profile }: ProfileCardCardProps) => {
               label="Profile Founding Date"
               value={
                 profile.foundingDate
-                  ? format(new Date(profile.foundingDate), 'MMM yy')
+                  ? format(new Date(profile.foundingDate), 'MMM yyyy')
                   : undefined
               }
               active={filters.profileFoundingDateFilter.active}
