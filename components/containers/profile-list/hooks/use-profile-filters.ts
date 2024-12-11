@@ -94,7 +94,9 @@ export const useProfileFilters = () => {
       },
       deployedOnProductsWhere: {
         ...(isNotEmpty(siteConfig.blockchainIds) && {
-          deployedOnProductId: { _in: siteConfig.blockchainIds }
+          productDeployments: {
+            productId: { _in: siteConfig.blockchainIds }
+          }
         }),
         _or: [
           {
