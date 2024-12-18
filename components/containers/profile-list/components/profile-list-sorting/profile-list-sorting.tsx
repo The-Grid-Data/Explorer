@@ -1,10 +1,16 @@
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue
-} from '@/components/ui/select';
+  Popover,
+  PopoverContent,
+  PopoverTrigger
+} from '@/components/ui/popover';
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList
+} from '@/components/ui/command';
 import {
   __TypeKind,
   GetOrderByFieldsQuery,
@@ -12,9 +18,12 @@ import {
   useGetOrderByFieldsQuery
 } from '@/lib/graphql/generated-graphql';
 import { Sorting } from '../../hooks/use-profile-sorting';
-import { memo, useMemo } from 'react';
+import { memo, useMemo, useState } from 'react';
 import { Label } from '@/components/ui/label';
 import { useProfileSortingContext } from '@/providers/sorting-provider';
+import { Check, ChevronsUpDown } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
 
 const ProfileListSortingComponent = () => {
   const { data } = useGetOrderByFieldsQuery({
@@ -22,6 +31,8 @@ const ProfileListSortingComponent = () => {
   });
 
   const { sorting } = useProfileSortingContext();
+  const [openSortBy, setOpenSortBy] = useState(false);
+  const [openSortOrder, setOpenSortOrder] = useState(false);
 
   const options = useMemo(() => extractOrderByOptions(data), [data]);
 
@@ -29,40 +40,107 @@ const ProfileListSortingComponent = () => {
     <div className="flex w-full flex-col justify-end gap-4 md:flex-row">
       <div className="flex flex-col gap-1">
         <Label className="text-xs">Sort by</Label>
-        <Select
-          value={sorting.sortBy}
-          onValueChange={value => {
-            sorting.setSortBy(value);
-          }}
-        >
-          <SelectTrigger className="w-full md:w-[180px]">
-            <SelectValue placeholder="Sort by" />
-          </SelectTrigger>
-          <SelectContent>
-            {options.map(item => (
-              <SelectItem key={item} value={item}>
-                {item}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+        <Popover open={openSortBy} onOpenChange={setOpenSortBy}>
+          <PopoverTrigger asChild>
+            <Button
+              variant="outline"
+              role="combobox"
+              aria-expanded={openSortBy}
+              className="w-full justify-between md:w-[180px]"
+            >
+              <span className="truncate">
+                {sorting.sortBy || 'Select field...'}
+              </span>
+              <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent className="w-full p-0">
+            <Command>
+              <CommandInput placeholder="Search fields..." />
+              <CommandEmpty>No field found.</CommandEmpty>
+              <CommandGroup>
+                <CommandList>
+                  {options.map(item => (
+                    <CommandItem
+                      key={item}
+                      value={item}
+                      onSelect={value => {
+                        sorting.setSortBy(value);
+                        setOpenSortBy(false);
+                      }}
+                    >
+                      <Check
+                        className={cn(
+                          'mr-2 h-4 w-4',
+                          sorting.sortBy === item ? 'opacity-100' : 'opacity-0'
+                        )}
+                      />
+                      {item}
+                    </CommandItem>
+                  ))}
+                </CommandList>
+              </CommandGroup>
+            </Command>
+          </PopoverContent>
+        </Popover>
       </div>
       <div className="flex flex-col gap-1">
         <Label className="text-xs">Sort order</Label>
-        <Select
-          value={sorting.sortOrder}
-          onValueChange={value => {
-            sorting.setSortOrder(value as OrderBy);
-          }}
-        >
-          <SelectTrigger className="w-full md:w-[130px]">
-            <SelectValue placeholder="Sort order" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value={OrderBy.Asc}>Ascending</SelectItem>
-            <SelectItem value={OrderBy.Desc}>Descending</SelectItem>
-          </SelectContent>
-        </Select>
+        <Popover open={openSortOrder} onOpenChange={setOpenSortOrder}>
+          <PopoverTrigger asChild>
+            <Button
+              variant="outline"
+              role="combobox"
+              aria-expanded={openSortOrder}
+              className="w-full justify-between md:w-[130px]"
+            >
+              {sorting.sortOrder === OrderBy.Asc ? 'Ascending' : 'Descending'}
+              <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent className="w-full p-0 md:w-[130px]">
+            <Command>
+              <CommandGroup>
+                <CommandList>
+                  <CommandItem
+                    value={OrderBy.Asc}
+                    onSelect={() => {
+                      sorting.setSortOrder(OrderBy.Asc);
+                      setOpenSortOrder(false);
+                    }}
+                  >
+                    <Check
+                      className={cn(
+                        'mr-2 h-4 w-4',
+                        sorting.sortOrder === OrderBy.Asc
+                          ? 'opacity-100'
+                          : 'opacity-0'
+                      )}
+                    />
+                    Ascending
+                  </CommandItem>
+                  <CommandItem
+                    value={OrderBy.Desc}
+                    onSelect={() => {
+                      sorting.setSortOrder(OrderBy.Desc);
+                      setOpenSortOrder(false);
+                    }}
+                  >
+                    <Check
+                      className={cn(
+                        'mr-2 h-4 w-4',
+                        sorting.sortOrder === OrderBy.Desc
+                          ? 'opacity-100'
+                          : 'opacity-0'
+                      )}
+                    />
+                    Descending
+                  </CommandItem>
+                </CommandList>
+              </CommandGroup>
+            </Command>
+          </PopoverContent>
+        </Popover>
       </div>
     </div>
   );

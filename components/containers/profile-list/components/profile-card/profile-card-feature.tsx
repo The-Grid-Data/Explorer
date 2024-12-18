@@ -1,4 +1,5 @@
 import { cn } from '@/lib/utils';
+import { isEmpty } from '@/lib/utils/is-empty';
 
 export type ProfileCardFeatureProps = {
   label: string;
@@ -23,7 +24,7 @@ export const ProfileCardFeature = ({
         {label}
       </span>
       <span className="text w-full rounded-b-sm border border-t-0 border-primary px-2 py-1 text-sm dark:border-secondary">
-        {value || '-'}
+        {isEmpty(value) ? '-' : value}
       </span>
     </div>
   );

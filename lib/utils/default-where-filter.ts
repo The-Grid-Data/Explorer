@@ -12,10 +12,8 @@ const getDefaultWhereFilter = (): CProfileInfosBoolExp => {
       {
         root: {
           products: {
-            supportsProductsBySupportsProductId: {
-              productId: {
-                _in: siteConfig.filterByProductIds
-              }
+            supportsProducts: {
+              supportsProductId: { _in: siteConfig.filterByProductIds }
             }
           }
         }
@@ -24,8 +22,10 @@ const getDefaultWhereFilter = (): CProfileInfosBoolExp => {
         root: {
           products: {
             productDeployments: {
-              deploymentId: {
-                _in: siteConfig.filterByProductIds
+              smartContractDeployment: {
+                deployedOnId: {
+                  _in: siteConfig.filterByProductIds
+                }
               }
             }
           }
