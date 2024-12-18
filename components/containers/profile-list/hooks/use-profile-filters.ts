@@ -118,11 +118,11 @@ export const useProfileFilters = () => {
   const productTypesFilter = useFilter<number>({
     options: data?.productTypes
       ?.filter(item => item.name?.trim())
-      ?.filter(item => Boolean(item.productsAggregate?._count))
+      // ?.filter(item => Boolean(item.productsAggregate?._count))
       .map(item => ({
         value: item.id,
         label: item.name,
-        count: item.productsAggregate?._count,
+        // count: item.productsAggregate?._count,
         description: item.definition
       })),
     type: 'multiselect',
@@ -132,13 +132,13 @@ export const useProfileFilters = () => {
 
   const tagsFilter = useFilter<number>({
     options: data?.tags
-      ?.filter(item => Boolean(item.profileTagsAggregate?._count))
-      .map(item => ({
+      // ?.filter(item => Boolean(item.profileTagsAggregate?._count))
+      ?.map(item => ({
         value: item.id,
         label: item.name,
-        description: item.description,
-        count: item.profileTagsAggregate?._count,
-        disabled: !Boolean(item.profileTagsAggregate?._count)
+        description: item.description
+        // count: item.profileTagsAggregate?._count,
+        // disabled: !Boolean(item.profileTagsAggregate?._count)
       })),
     type: 'multiselect',
     initialValue: queryParams.tags,
@@ -182,11 +182,11 @@ export const useProfileFilters = () => {
   const profileSectorsFilter = useFilter<number>({
     options: data?.profileSectors
       ?.filter(item => item.name?.trim())
-      ?.filter(item => Boolean(item.ProfileInfosAggregate?._count))
+      // ?.filter(item => Boolean(item.ProfileInfosAggregate?._count))
       .map(item => ({
         value: item.id,
         label: item.name,
-        count: item.ProfileInfosAggregate?._count,
+        // count: item.ProfileInfosAggregate?._count,
         description: item.definition
       })),
     type: 'multiselect',
