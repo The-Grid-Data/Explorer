@@ -1,6 +1,6 @@
 'use client';
 
-import { useGetProfileQuery } from '@/lib/graphql/generated-graphql';
+// import { useGetProfileQuery } from '@/lib/graphql/generated-graphql';
 import ProfileNotFound from './components/profile-not-found';
 import { ProfileHeading } from './components/profile-heading';
 import { ProfileDataSection } from './components/profile-data-section';
@@ -11,6 +11,25 @@ import { AssetCard } from './components/asset-card';
 import { EntityCard } from './components/entity-card';
 import { Banknote, Building2, Package } from 'lucide-react';
 import { OverviewSection } from './components/overview-section';
+import { graphql, FragmentType, useFragment } from '@/lib/graphql/generated';
+import { execute } from '@/lib/graphql/execute';
+import { useQuery } from '@tanstack/react-query';
+// import { ProfileDetailQuery } from '@/lib/graphql/queries/profile-detail.graphql';
+import { ProductFieldsFragment } from '@/lib/graphql/queries/fragments/product.graphql';
+import { AssetFieldsFragment } from '@/lib/graphql/queries/fragments/asset.graphql';
+import { EntityFieldsFragment } from '@/lib/graphql/queries/fragments/entity.graphql';
+
+export const ProfileDetailQuery = graphql(`
+  query getProfileData($where: CProfileInfosBoolExp) {
+    profileInfos(limit: 1, offset: 0, where: $where) {
+      tagLine
+      descriptionShort
+      descriptionLong
+      ...ProfileFragment
+      ...ProfileHeadingFragment
+    }
+  }
+`);
 
 export type ProfileDetailProps = {
   profileId: string;
@@ -20,7 +39,13 @@ export const ProfileDetail = ({ profileId }: ProfileDetailProps) => {
   const query = {
     where: { root: { slug: { _eq: profileId } } }
   };
-  const { data, isFetching } = useGetProfileQuery(query);
+
+  const { data, isFetching } = useQuery({
+    queryKey: ['films'],
+    queryFn: () => execute(ProfileDetailQuery, query)
+  });
+
+  // const { data, isFetching } = useGetProfileQuery(query);
   const profile = data?.profileInfos?.[0];
 
   if (isFetching) {
@@ -31,9 +56,17 @@ export const ProfileDetail = ({ profileId }: ProfileDetailProps) => {
     return <ProfileNotFound />;
   }
 
+  // const { products } = useFragment(ProductFieldsFragment, profile.root) ?? {};
+  // const { assets } = useFragment(AssetFieldsFragment, profile.root) ?? {};
+  // const { entities } = useFragment(EntityFieldsFragment, profile.root) ?? {};
+
   return (
     <div className="container w-full space-y-10 pb-12">
-      <ProfileHeading queryVariables={query} profile={profile} />
+      <ProfileHeading
+        query={ProfileDetailQuery.toString()}
+        queryVariables={query}
+        profile={profile}
+      />
 
       <section className="space-y-3">
         <ProfileDataPoint label="Tagline" value={profile.tagLine} />
@@ -49,17 +82,15 @@ export const ProfileDetail = ({ profileId }: ProfileDetailProps) => {
 
       <OverviewSection profile={profile} />
 
-      <ProfileDataSection
+      {/* <ProfileDataSection
         title="Products"
         id="products"
         icon={<Package className="h-6 w-6" />}
       >
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {!Boolean(profile?.root?.products?.length) && (
-            <p>No products found</p>
-          )}
-          {Boolean(profile?.root?.products?.length) &&
-            profile?.root?.products?.map(product => (
+          {!Boolean(products?.length) && <p>No products found</p>}
+          {Boolean(products?.length) &&
+            products?.map(product => (
               <ProductCard key={product.id} product={product} />
             ))}
         </div>
@@ -70,11 +101,9 @@ export const ProfileDetail = ({ profileId }: ProfileDetailProps) => {
         title="Assets"
       >
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {!Boolean(profile.root?.assets?.length) && <p>No assets found</p>}
-          {Boolean(profile.root?.assets?.length) &&
-            profile.root?.assets?.map(asset => (
-              <AssetCard key={asset.id} asset={asset} />
-            ))}
+          {!Boolean(assets?.length) && <p>No assets found</p>}
+          {Boolean(assets?.length) &&
+            assets?.map(asset => <AssetCard key={asset.id} asset={asset} />)}
         </div>
       </ProfileDataSection>
 
@@ -83,13 +112,13 @@ export const ProfileDetail = ({ profileId }: ProfileDetailProps) => {
         title="Entities"
       >
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {!Boolean(profile.root?.entities?.length) && <p>No entities found</p>}
-          {Boolean(profile.root?.entities?.length) &&
-            profile.root?.entities?.map(asset => (
+          {!Boolean(entities?.length) && <p>No entities found</p>}
+          {Boolean(entities?.length) &&
+            entities?.map(asset => (
               <EntityCard key={asset.id} entity={asset} />
             ))}
         </div>
-      </ProfileDataSection>
+      </ProfileDataSection> */}
     </div>
   );
 };

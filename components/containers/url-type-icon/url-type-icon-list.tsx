@@ -6,7 +6,7 @@ type UrlType = keyof typeof urlTypeIconMap;
 
 export type SocialUrlType = {
   url: string;
-  type: string | UrlType;
+  type?: string | UrlType;
 };
 
 export type UrlTypeIconLinksProps = {
@@ -40,9 +40,9 @@ export const UrlTypeIconLinks = ({ urls }: UrlTypeIconLinksProps) => {
 // HELPER FUNCTIONS
 
 type URL = {
-  url: any;
+  url: string;
   urlType?: {
-    name: any;
+    name: string;
   } | null;
 };
 
@@ -58,9 +58,9 @@ export const extractUrls = (urls?: URL[] | null): SocialUrlType[] => {
 };
 
 type SocialURL = {
-  name: any;
-  socialType?: { name: any } | null;
-  urls?: { url: any }[] | null;
+  name: string;
+  socialType?: { name: string } | null;
+  urls?: { url: string }[] | null;
 };
 
 export const extractSocialUrls = (

@@ -1,8 +1,8 @@
 'use client';
 
 import {
-  GetProfileDocument,
-  GetProfileQuery
+  GetProfileQuery,
+  GetProfileQueryVariables
 } from '@/lib/graphql/generated-graphql';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { QueryDialogButton } from '@/components/containers/query-dialog-button';
@@ -12,19 +12,47 @@ import {
   extractUrls,
   UrlTypeIconLinks
 } from '@/components/containers/url-type-icon/url-type-icon-list';
+import { FragmentType, graphql, useFragment } from '@/lib/graphql/generated';
 
 export type Profile = NonNullable<GetProfileQuery['profileInfos']>[number];
+export const ProfileHeadingFragment = graphql(`
+  fragment ProfileHeadingFragment on CProfileInfos {
+    logo
+    name
+    urls(order_by: { urlTypeId: Asc }) {
+      url
+      urlType {
+        name
+      }
+    }
+    root {
+      socials {
+        name
+        socialType {
+          name
+        }
+        urls(order_by: { urlTypeId: Asc }) {
+          url
+        }
+      }
+    }
+  }
+`);
 
 export type ProfileCardCardProps = {
-  profile: Profile;
-  queryVariables?: Record<string, any>;
+  profile: FragmentType<typeof ProfileHeadingFragment>;
+  queryVariables?: GetProfileQueryVariables;
+  query: string;
 };
 
 export const ProfileHeading = ({
   profile,
-  queryVariables
+  queryVariables,
+  query
 }: ProfileCardCardProps) => {
-  const validLogoUrl = profile.logo && profile.logo.startsWith('https://');
+  const profileData = useFragment(ProfileHeadingFragment, profile);
+  const validLogoUrl =
+    profileData?.logo && profileData.logo.startsWith('https://');
 
   return (
     <div className="flex flex-col gap-6">
@@ -34,8 +62,8 @@ export const ProfileHeading = ({
             {validLogoUrl && (
               <AvatarImage
                 className="object-scale-down"
-                src={profile.logo}
-                alt={profile.name}
+                src={profileData?.logo}
+                alt={profileData?.name}
               />
             )}
             <AvatarFallback className="bg-white">No logo</AvatarFallback>
@@ -43,18 +71,18 @@ export const ProfileHeading = ({
         </div>
         <div className="flex flex-col gap-4 md:gap-2">
           <div className="flex flex-col gap-2 md:flex-row md:items-center md:gap-6">
-            <h3 className="text-5xl font-bold">{profile.name}</h3>
+            <h3 className="text-5xl font-bold">{profileData?.name}</h3>
             <UrlTypeIconLinks
               urls={[
-                extractUrls(profile.urls),
-                extractSocialUrls(profile.root?.socials)
+                extractUrls(profileData.urls),
+                extractSocialUrls(profileData.root?.socials)
               ]}
             />
           </div>
           {siteConfig.displayQueries && (
             <QueryDialogButton
               variables={queryVariables}
-              queryDocument={GetProfileDocument}
+              queryDocument={query}
               buttonLabel="View query"
             />
           )}

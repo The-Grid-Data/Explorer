@@ -7,14 +7,50 @@ import Link from 'next/link';
 import { paths } from '@/lib/routes/paths';
 import { GetProfileQuery } from '@/lib/graphql/generated-graphql';
 import { TagIcon } from 'lucide-react';
+import { FragmentType, graphql, useFragment } from '@/lib/graphql/generated';
 
-export type Profile = NonNullable<GetProfileQuery['profileInfos']>[number];
+export const ProfileFragment = graphql(`
+  fragment ProfileFragment on CProfileInfos {
+    profileSector {
+      name
+    }
+    profileType {
+      name
+    }
+    root {
+      assets {
+        ticker
+      }
+    }
+    profileStatus {
+      name
+      id
+    }
+    root {
+      profileTags {
+        tag {
+          name
+          id
+        }
+      }
+    }
+    mainProduct: root {
+      products(where: { isMainProduct: { _eq: "1" } }, limit: 1) {
+        productType {
+          name
+        }
+      }
+    }
+  }
+`);
 
 export type OverviewSectionProps = {
-  profile: Profile;
+  profile: FragmentType<typeof ProfileFragment>;
 };
 
 export const OverviewSection = ({ profile }: OverviewSectionProps) => {
+  const profileData = useFragment(ProfileFragment, profile);
+
   const overviewItems: {
     label: string;
     value?: string | boolean | ReactNode;
@@ -22,31 +58,31 @@ export const OverviewSection = ({ profile }: OverviewSectionProps) => {
   }[] = [
     {
       label: 'Sector',
-      value: profile?.profileSector?.name
+      value: profileData?.profileSector?.name
     },
     {
       label: 'Profile type',
-      value: profile.profileType?.name
+      value: profileData?.profileType?.name
     },
     {
       label: 'Main Product Type',
-      value: profile.mainProduct?.products?.at(0)?.productType?.name
+      value: profileData?.mainProduct?.products?.at(0)?.productType?.name
     },
     {
       label: 'Status',
-      value: profile.profileStatus?.name
+      value: profileData?.profileStatus?.name
     },
     {
       label: 'Issued Assets',
       value:
-        Boolean(profile.root?.assets?.length) &&
-        profile.root?.assets?.map(asset => asset.ticker).join(', ')
+        Boolean(profileData?.root?.assets?.length) &&
+        profileData?.root?.assets?.map(asset => asset.ticker).join(', ')
     },
     {
       label: 'Tags',
-      value: Boolean(profile.root?.profileTags?.length) ? (
+      value: Boolean(profileData?.root?.profileTags?.length) ? (
         <div className="flex flex-wrap gap-1">
-          {profile.root?.profileTags?.map(tag => (
+          {profileData?.root?.profileTags?.map(tag => (
             <Link
               key={tag.tag?.id}
               href={`${paths.base}?tags=${tag.tag?.id}`}

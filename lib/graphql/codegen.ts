@@ -5,34 +5,56 @@ config();
 
 const codegenConfig: CodegenConfig = {
   schema: process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT_URL,
-  overwrite: true,
+  // overwrite: true,
   ignoreNoDocuments: true,
-  config: {
-    skipDocumentsValidation: {
-      ignoreRules: ['MaxIntrospectionDepthRule']
-    }
-  },
-  documents: './lib/graphql/queries/**/*.graphql',
+  // config: {
+  //   skipDocumentsValidation: {
+  //     ignoreRules: ['MaxIntrospectionDepthRule']
+  //   }
+  // },
+  documents: [
+    'lib/**/*.graphql.ts',
+    '{app,components}/**/*.tsx',
+    '!lib/graphql/generated/**/*'
+  ],
   generates: {
-    'lib/graphql/generated-graphql.ts': {
+    'lib/graphql/generated/': {
+      preset: 'client',
       config: {
-        reactQueryVersion: 5,
-        addInfiniteQuery: true,
-        fetcher: {
-          endpoint: process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT_URL,
-          fetchParams: {
-            headers: {
-              'Content-Type': 'application/json'
-            }
+        documentMode: 'string',
+        dedupeFragments: true,
+        extractAllFieldsToTypes: true,
+        strictScalars: true,
+        scalars: {
+          Date1: {
+            input: 'string',
+            output: 'string'
+          },
+          Float2: {
+            input: 'number',
+            output: 'number'
+          },
+          Int2: {
+            input: 'number',
+            output: 'number'
+          },
+          String2: {
+            input: 'string',
+            output: 'string'
           }
         }
-      },
-      plugins: ['typescript', 'typescript-operations', 'typescript-react-query']
+      }
+    },
+    'lib/graphql/generated/schema.graphql': {
+      plugins: ['schema-ast'],
+      config: {
+        includeDirectives: true
+      }
     }
-  },
-  hooks: {
-    afterOneFileWrite: ['prettier --write', 'echo']
   }
+  // hooks: {
+  //   afterOneFileWrite: ['prettier --write', 'echo']
+  // }
 };
 
 export default codegenConfig;
