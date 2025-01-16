@@ -54,7 +54,12 @@ export const ProfileListCards = () => {
         };
       }
     },
-    queryFn: () => execute(SearchProfilesQuery, query)
+    queryFn: async ({
+      pageParam
+    }: {
+      pageParam: { limit: number; offset: number };
+    }) =>
+      await execute(SearchProfilesQuery, { ...debouncedQuery, ...pageParam })
   });
 
   useEffect(() => {
