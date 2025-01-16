@@ -6,7 +6,7 @@ import { siteConfig } from '@/lib/site-config';
 import { execute } from '@/lib/graphql/execute';
 import { graphql } from '@/lib/graphql/generated';
 import { z } from 'zod';
-
+import { createParser } from 'nuqs';
 export type Filters = ReturnType<typeof useProfileFilters>;
 
 const validateAndFormatOptions = <T>(options: unknown) => {
@@ -23,7 +23,21 @@ const validateAndFormatOptions = <T>(options: unknown) => {
   return validatedOptions.filter(item => item.label?.trim());
 };
 
-const parseAsId = parseAsString;
+const parseAsId = createParser({
+  parse(queryValue) {
+    if (!queryValue) return null;
+    try {
+      const decoded = decodeURIComponent(queryValue);
+      return decoded;
+    } catch {
+      return null;
+    }
+  },
+  serialize(value) {
+    if (!value) return '';
+    return encodeURIComponent(value.toString());
+  }
+});
 
 export const useProfileFilters = () => {
   const [queryParams, setQueryParams] = useQueryStates(
@@ -616,7 +630,6 @@ export const useProfileFilters = () => {
   };
 
   return {
-    isLoading: false,
     filters,
     toQueryWhereFields
   };
