@@ -1,13 +1,11 @@
-import { OrderBy } from '@/lib/graphql/generated-graphql';
+import { OrderBy } from '@/lib/graphql/generated/graphql';
 import { useState } from 'react';
 
 export type Sorting = ReturnType<typeof useProfileSorting>;
 
 export const useProfileSorting = () => {
   const [sortBy, setSortBy] = useState<string>('id');
-  const [sortOrder, setSortOrder] = useState<OrderBy>(
-    OrderBy.Asc
-  );
+  const [sortOrder, setSortOrder] = useState<OrderBy>(OrderBy.Asc);
 
   const toQuerySortByFields = () => generateOrderByQuery(sortBy, sortOrder);
 

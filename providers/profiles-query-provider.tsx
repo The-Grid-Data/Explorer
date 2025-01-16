@@ -1,8 +1,8 @@
 import { createContext, useContext } from 'react';
 import { useProfileSortingContext } from '@/providers/sorting-provider';
-import { useProfileFiltersContext } from '@/providers/filters-provider';
-import { SearchProfilesQueryVariables } from '@/lib/graphql/generated-graphql';
 import { withDefaultWhereFilter } from '@/lib/utils/default-where-filter';
+import { useProfileFiltersContext } from './filters-provider';
+import { SearchProfilesQueryVariables } from '@/lib/graphql/generated/graphql';
 
 const ProfilesQueryContext = createContext<SearchProfilesQueryVariables | null>(
   null

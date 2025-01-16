@@ -5,7 +5,6 @@ import { ReactNode } from 'react';
 import { Badge } from '@/components/ui/badge';
 import Link from 'next/link';
 import { paths } from '@/lib/routes/paths';
-import { GetProfileQuery } from '@/lib/graphql/generated-graphql';
 import { TagIcon } from 'lucide-react';
 import { FragmentType, graphql, useFragment } from '@/lib/graphql/generated';
 

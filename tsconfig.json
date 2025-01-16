@@ -18,7 +18,8 @@
       },
       {
         "name": "@0no-co/graphqlsp",
-        "schema": "./lib/graphql/generated/schema.graphql"
+        "schema": "./lib/graphql/generated/schema.graphql",
+        "trackFieldUsage": false
       }
     ],
     "paths": {

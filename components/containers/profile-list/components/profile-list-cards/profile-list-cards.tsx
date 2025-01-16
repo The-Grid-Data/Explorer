@@ -1,11 +1,31 @@
-import { useInfiniteSearchProfilesQuery } from '@/lib/graphql/generated-graphql';
 import { useInView } from 'react-intersection-observer';
 import { useEffect } from 'react';
 import { ProfileCard, ProfileCardSkeleton } from '../profile-card';
 import { useDebounceValue } from 'usehooks-ts';
 import { useProfilesQueryContext } from '@/providers/profiles-query-provider';
+import { useInfiniteQuery } from '@tanstack/react-query';
+import { execute } from '@/lib/graphql/execute';
+import { graphql } from '@/lib/graphql/generated';
 
 const defaultLimit = 10;
+
+export const SearchProfilesQuery = graphql(`
+  query SearchProfiles(
+    $order_by: [CProfileInfosOrderBy!]
+    $where: CProfileInfosBoolExp
+    $limit: Int
+    $offset: Int
+  ) {
+    profileInfos(
+      limit: $limit
+      offset: $offset
+      where: $where
+      order_by: $order_by
+    ) {
+      ...ProfileCardFragment
+    }
+  }
+`);
 
 export const ProfileListCards = () => {
   const query = useProfilesQueryContext();
@@ -15,26 +35,27 @@ export const ProfileListCards = () => {
   const { ref: fetchNextPageTriggerRef, inView } = useInView({ threshold: 1 });
   const limit = query?.limit ?? defaultLimit;
 
-  const { data, isFetching, isError, fetchNextPage } =
-    useInfiniteSearchProfilesQuery(debouncedQuery, {
-      placeholderData: previousData => previousData,
-      initialPageParam: {
-        limit,
-        offset: 0
-      },
-      refetchOnMount: false,
-      refetchOnWindowFocus: false,
-      getNextPageParam: (lastPage, allPages, lastPageParam) => {
-        const lastOffset = ((lastPageParam as any)?.offset as number) ?? 0;
+  const { data, isFetching, isError, fetchNextPage } = useInfiniteQuery({
+    queryKey: ['searchProfiles', debouncedQuery],
+    placeholderData: previousData => previousData,
+    initialPageParam: {
+      limit,
+      offset: 0
+    },
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
+    getNextPageParam: (lastPage, allPages, lastPageParam) => {
+      const lastOffset = ((lastPageParam as any)?.offset as number) ?? 0;
 
-        if (lastPage.profileInfos?.length) {
-          return {
-            offset: lastOffset + limit,
-            limit
-          };
-        }
+      if (lastPage.profileInfos?.length) {
+        return {
+          offset: lastOffset + limit,
+          limit
+        };
       }
-    });
+    },
+    queryFn: () => execute(SearchProfilesQuery, query)
+  });
 
   useEffect(() => {
     if (inView && !isFetching && !isError) {

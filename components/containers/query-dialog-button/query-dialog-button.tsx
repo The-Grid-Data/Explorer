@@ -25,7 +25,7 @@ const getPlaygroundUrl = (
   variables?: QueryDialogProps['variables']
 ): string => {
   const endpoint = process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT_URL;
-  const encodedQuery = encodeURIComponent(query);
+  const encodedQuery = encodeURIComponent(query as unknown as string);
   const encodedVariables = variables
     ? `&variables=${encodeURIComponent(JSON.stringify(variables, null, 2))}`
     : '';
@@ -53,7 +53,10 @@ export const QueryDialogButton = ({
           </DialogDescription>
         </DialogHeader>
         <div className="space-y-4">
-          <CodeSection title="Query" content={queryDocument} />
+          <CodeSection
+            title="Query"
+            content={queryDocument as unknown as string}
+          />
           {variables && (
             <CodeSection
               title="Variables"

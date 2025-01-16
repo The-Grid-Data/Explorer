@@ -7,16 +7,16 @@ const codegenConfig: CodegenConfig = {
   schema: process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT_URL,
   // overwrite: true,
   ignoreNoDocuments: true,
-  // config: {
-  //   skipDocumentsValidation: {
-  //     ignoreRules: ['MaxIntrospectionDepthRule']
-  //   }
-  // },
   documents: [
     'lib/**/*.graphql.ts',
-    '{app,components}/**/*.tsx',
+    '{app,components}/**/*.{tsx,ts}',
     '!lib/graphql/generated/**/*'
   ],
+  config: {
+    skipDocumentsValidation: {
+      ignoreRules: ['MaxIntrospectionDepthRule']
+    }
+  },
   generates: {
     'lib/graphql/generated/': {
       preset: 'client',
@@ -24,21 +24,27 @@ const codegenConfig: CodegenConfig = {
         documentMode: 'string',
         dedupeFragments: true,
         extractAllFieldsToTypes: true,
+        experimentalFragmentVariables: true,
+        allowUndefinedQueryVariables: true,
         strictScalars: true,
         scalars: {
-          Date1: {
+          Date: {
             input: 'string',
             output: 'string'
           },
-          Float2: {
+          Float64: {
             input: 'number',
             output: 'number'
           },
-          Int2: {
+          Int8: {
             input: 'number',
             output: 'number'
           },
-          String2: {
+          Int64: {
+            input: 'number',
+            output: 'number'
+          },
+          String1: {
             input: 'string',
             output: 'string'
           }

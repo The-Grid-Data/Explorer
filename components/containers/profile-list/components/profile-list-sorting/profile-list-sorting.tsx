@@ -11,23 +11,44 @@ import {
   CommandItem,
   CommandList
 } from '@/components/ui/command';
-import {
-  __TypeKind,
-  GetOrderByFieldsQuery,
-  OrderBy,
-  useGetOrderByFieldsQuery
-} from '@/lib/graphql/generated-graphql';
-import { Sorting } from '../../hooks/use-profile-sorting';
 import { memo, useMemo, useState } from 'react';
 import { Label } from '@/components/ui/label';
 import { useProfileSortingContext } from '@/providers/sorting-provider';
 import { Check, ChevronsUpDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
+import { useQuery } from '@tanstack/react-query';
+import { execute } from '@/lib/graphql/execute';
+import { graphql } from '@/lib/graphql/generated';
+import { ResultOf } from '@graphql-typed-document-node/core';
+import { OrderBy } from '@/lib/graphql/generated/graphql';
+
+const GetOrderByFieldsQuery = graphql(`
+  query GetOrderByFields($name: String!) {
+    __type(name: $name) {
+      inputFields {
+        name
+        type {
+          inputFields {
+            name
+          }
+          name
+          kind
+          ofType {
+            name
+            kind
+          }
+        }
+      }
+    }
+  }
+`);
 
 const ProfileListSortingComponent = () => {
-  const { data } = useGetOrderByFieldsQuery({
-    name: 'CProfileInfosOrderBy'
+  const { data } = useQuery({
+    queryKey: ['orderByFields'],
+    queryFn: () =>
+      execute(GetOrderByFieldsQuery, { name: 'CProfileInfosOrderBy' })
   });
 
   const { sorting } = useProfileSortingContext();
@@ -146,7 +167,9 @@ const ProfileListSortingComponent = () => {
   );
 };
 
-const extractOrderByOptions = (data?: GetOrderByFieldsQuery): string[] => {
+const extractOrderByOptions = (
+  data?: ResultOf<typeof GetOrderByFieldsQuery>
+): string[] => {
   const fields = data?.__type?.inputFields || [];
   let options: string[] = [];
 

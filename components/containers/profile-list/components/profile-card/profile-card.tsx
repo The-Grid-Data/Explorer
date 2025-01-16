@@ -1,6 +1,5 @@
 'use client';
 
-import { SearchProfilesQuery } from '@/lib/graphql/generated-graphql';
 import { ProfileCardDataPoint } from './profile-card-data-point';
 import { ProfileCardFeature } from './profile-card-feature';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -15,19 +14,96 @@ import {
   UrlTypeIconLinks
 } from '@/components/containers/url-type-icon/url-type-icon-list';
 import { useProfileFiltersContext } from '@/providers/filters-provider';
-import { Banknote, Building2, Package } from 'lucide-react';
+import { Banknote, Package } from 'lucide-react';
 import { ItemWithSheet } from '@/components/containers/profile-detail/components/Item-with-sheet';
 import { ProductCard } from '@/components/containers/profile-detail/components/product-card';
 import { AssetCard } from '@/components/containers/profile-detail/components/asset-card';
 import { format } from 'date-fns';
+import { graphql, FragmentType, useFragment } from '@/lib/graphql/generated';
 
-export type Profile = NonNullable<SearchProfilesQuery['profileInfos']>[number];
+export const ProfileCardFragment = graphql(`
+  fragment ProfileCardFragment on CProfileInfos {
+    name
+    logo
+    id
+    tagLine
+    descriptionShort
+    profileTypeId
+    profileStatusId
+    profileSectorId
+    foundingDate
+    profileSector {
+      name
+      id
+      definition
+    }
+    profileStatus {
+      name
+      id
+      definition
+    }
+    profileType {
+      name
+      id
+      definition
+    }
+    urls(order_by: { urlTypeId: Asc }) {
+      url
+      urlType {
+        name
+        id
+        definition
+      }
+    }
+    mainProduct: root {
+      products(where: { isMainProduct: { _eq: "1" } }, limit: 1) {
+        name
+        productType {
+          name
+        }
+      }
+    }
+    root {
+      urlMain
+      slug
+      assets {
+        ticker
+        name
+        id
+      }
+      socials {
+        name
+        socialType {
+          name
+        }
+        urls(order_by: { urlTypeId: Asc }) {
+          url
+        }
+      }
+      profileTags {
+        tag {
+          name
+          id
+        }
+      }
+      products {
+        id
+        name
+        ...ProductFieldsFragment
+      }
+      assets {
+        ...AssetFieldsFragment
+      }
+    }
+  }
+`);
 
 export type ProfileCardCardProps = {
-  profile: Profile;
+  profile: FragmentType<typeof ProfileCardFragment>;
 };
 
-export const ProfileCard = ({ profile }: ProfileCardCardProps) => {
+export const ProfileCard = ({ profile: profileData }: ProfileCardCardProps) => {
+  const profile = useFragment(ProfileCardFragment, profileData);
   const validLogoUrl = profile.logo && profile.logo.startsWith('https://');
   const { filters } = useProfileFiltersContext();
 
@@ -36,7 +112,7 @@ export const ProfileCard = ({ profile }: ProfileCardCardProps) => {
       <div className="relative mt-20 rounded-lg border-2 border-primary bg-card text-card-foreground shadow-sm dark:border-secondary">
         <div className="relative -mt-16 flex w-full flex-col items-start gap-3 lg:absolute lg:-top-16 lg:left-[-24px] lg:mt-0 lg:flex-row">
           <div className="border-1 -ml-6 w-fit shrink-0 rounded-xl border-2 border-primary bg-white shadow-lg hover:scale-105 dark:border-secondary lg:ml-0">
-            <Link href={paths.profile.detail(profile.root?.slug)}>
+            <Link href={paths.profile.detail(profile.root?.slug ?? '')}>
               <Avatar className="h-[100px] w-[160px] min-w-[120px] rounded-xl p-2">
                 {validLogoUrl && (
                   <AvatarImage
@@ -53,7 +129,7 @@ export const ProfileCard = ({ profile }: ProfileCardCardProps) => {
             <div className="flex flex-row gap-2">
               <Link
                 className="flex w-fit items-center gap-2"
-                href={paths.profile.detail(profile.root?.slug)}
+                href={paths.profile.detail(profile.root?.slug ?? '')}
               >
                 <h3 className="w-fit text-2xl font-bold hover:underline">
                   {profile.name}
@@ -73,7 +149,7 @@ export const ProfileCard = ({ profile }: ProfileCardCardProps) => {
                 />
               </div>
               <Button className="w-full lg:w-fit" variant="default" asChild>
-                <Link href={paths.profile.detail(profile.root?.slug)}>
+                <Link href={paths.profile.detail(profile.root?.slug ?? '')}>
                   More info
                 </Link>
               </Button>
@@ -147,7 +223,7 @@ export const ProfileCard = ({ profile }: ProfileCardCardProps) => {
                 filters.productDeployedOnFilter.active,
                 filters.productLaunchDateFilter.active,
                 filters.productStatusFilter.active,
-                filters.productSupportsFilter.active
+                filters.supportsProductsFilter.active
               ].some(value => value)}
               className="items-start"
             >

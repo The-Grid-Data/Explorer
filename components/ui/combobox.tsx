@@ -1,5 +1,3 @@
-'use client';
-
 import { Check } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
@@ -15,27 +13,27 @@ import pluralize from 'pluralize';
 import { FilterContainer, useFilterContainer } from './filter-container';
 import { useRef } from 'react';
 
-type Option<T extends string | number> = {
+type Option<T> = {
   value: T;
   label: string;
   description?: string | null;
 };
 
-export type ComboBoxProps<T extends string | number> = {
+export type ComboBoxProps<T> = {
   label: string;
-  options?: Option<T>[] | null;
+  options?: Option<T>[];
   selected?: T[];
-  onChange: (selected: T[]) => void;
+  onChange: (selected: NonNullable<Option<T>['value']>[]) => void;
 };
 
-export function ComboBox<T extends string | number>({
+export function ComboBox<T>({
   label,
   options = [],
   selected = [],
   onChange
 }: ComboBoxProps<T>) {
   const nrOfSelectedOptions = selected?.length ?? 0;
-  const validOptions = options?.filter(item => item && item.label !== '');
+  const validOptions = options?.filter(item => item && item.label !== '') ?? [];
 
   return (
     <FilterContainer
@@ -44,10 +42,10 @@ export function ComboBox<T extends string | number>({
       active={selected?.length > 0}
     >
       <div className="flex flex-col md:min-w-[480px]">
-        <OptionList<T>
+        <OptionList
           label={label}
-          selected={selected}
-          options={validOptions}
+          selected={selected as NonNullable<Option<T>['value']>[]}
+          options={validOptions as Option<NonNullable<T>>[]}
           onChange={onChange}
         />
       </div>
@@ -55,14 +53,13 @@ export function ComboBox<T extends string | number>({
   );
 }
 
-export type OptionListProps<T extends string | number> = {
+export type OptionListProps<T> = {
   label: string;
   options?: Option<T>[] | null;
   selected?: T[];
   onChange: (selected: T[]) => void;
 };
-
-export const OptionList = <T extends string | number>({
+export const OptionList = <T,>({
   label,
   onChange,
   options = [],
@@ -91,7 +88,7 @@ export const OptionList = <T extends string | number>({
           <CommandGroup>
             {options?.map(option => (
               <CommandItem
-                key={option.value}
+                key={option.value?.toString()}
                 value={option.value as string}
                 onSelect={() => {
                   // Determine if the option is already selected

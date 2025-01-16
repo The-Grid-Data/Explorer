@@ -1,6 +1,5 @@
 'use client';
 
-import { GetProfileQuery } from '@/lib/graphql/generated-graphql';
 import { paths } from '@/lib/routes/paths';
 import { ProfileDataCard, ProfileDataCardProps } from './profile-data-card';
 import { Package } from 'lucide-react';
@@ -14,15 +13,77 @@ import {
 import Link from 'next/link';
 import { InlineDataPoint } from './inline-data-point';
 import { ContractAddressesBadge } from './contract-address-badge';
+import { FragmentType, graphql, useFragment } from '@/lib/graphql/generated';
 
-export type Profile = NonNullable<GetProfileQuery['profileInfos']>[number];
-export type Asset = NonNullable<NonNullable<Profile['root']>['assets']>[number];
+export const AssetFragment = graphql(`
+  fragment AssetFieldsFragment on CAssets {
+    ticker
+    rootId
+    name
+    id
+    icon
+    description
+    assetTypeId
+    assetStatusId
+    assetType {
+      definition
+      id
+      name
+    }
+    assetStatus {
+      name
+      id
+      definition
+    }
+    assetDeployments {
+      id
+      deploymentId
+      assetId
+      smartContractDeployment {
+        id
+        deployedOnProduct {
+          id
+          name
+          root {
+            slug
+          }
+        }
+        assetStandard {
+          id
+        }
+        smartContracts {
+          name
+          id
+          deploymentId
+          deploymentDate
+          address
+        }
+        deploymentType {
+          name
+          id
+          definition
+        }
+      }
+    }
+    urls(order_by: { urlTypeId: Asc }) {
+      url
+      urlType {
+        name
+        id
+        definition
+      }
+    }
+  }
+`);
+
 export type AssetCardProps = {
-  asset: Asset;
+  asset: FragmentType<typeof AssetFragment>;
   variant?: ProfileDataCardProps['variant'];
 };
 
-export const AssetCard = ({ asset, variant }: AssetCardProps) => {
+export const AssetCard = ({ asset: assetData, variant }: AssetCardProps) => {
+  const asset = useFragment(AssetFragment, assetData);
+
   return (
     <ProfileDataCard
       variant={variant}
@@ -35,7 +96,7 @@ export const AssetCard = ({ asset, variant }: AssetCardProps) => {
               className="object-scale-down"
             />
             <AvatarFallback className="font-bold">
-              {asset.name.at(0)?.toUpperCase()}
+              {asset.name?.at(0)?.toUpperCase()}
             </AvatarFallback>
           </Avatar>
           <CardTitle>{asset.name}</CardTitle>

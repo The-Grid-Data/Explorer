@@ -1,6 +1,6 @@
-export const isNotEmpty = (
-  value: string | number | Array<string | number> | null
-): value is string | number | Array<string | number> => {
+export const isNotEmpty = <T>(
+  value: T | T[] | null | undefined
+): value is NonNullable<T | T[]> => {
   if (typeof value === 'string' || Array.isArray(value)) {
     return value.length > 0;
   }

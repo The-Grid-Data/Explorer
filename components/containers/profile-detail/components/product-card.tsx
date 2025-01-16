@@ -1,9 +1,8 @@
 'use client';
 
-import { GetProfileQuery } from '@/lib/graphql/generated-graphql';
 import { paths } from '@/lib/routes/paths';
 import { ProfileDataCard, ProfileDataCardProps } from './profile-data-card';
-import { Package, Link2 } from 'lucide-react';
+import { Package } from 'lucide-react';
 import { DeepLinkBadge } from '@/components/ui/deep-link-badge';
 import { InlineDataPoint } from './inline-data-point';
 import Link from 'next/link';
@@ -15,17 +14,85 @@ import {
 } from '@/components/containers/url-type-icon/url-type-icon-list';
 import { Badge } from '@/components/ui/badge';
 import { ContractAddressesBadge } from './contract-address-badge';
+import { FragmentType, graphql, useFragment } from '@/lib/graphql/generated';
 
-export type Profile = NonNullable<GetProfileQuery['profileInfos']>[number];
-export type Product = NonNullable<
-  NonNullable<Profile['root']>['products']
->[number];
+export const ProductFragment = graphql(`
+  fragment ProductFieldsFragment on CProducts {
+    rootId
+    productTypeId
+    productStatusId
+    name
+    launchDate
+    isMainProduct
+    id
+    description
+    productType {
+      name
+      id
+      definition
+    }
+    productStatus {
+      name
+      id
+      definition
+    }
+    productDeployments {
+      smartContractDeployment {
+        deployedOnProduct {
+          id
+          name
+          root {
+            slug
+          }
+        }
+        assetStandard {
+          id
+        }
+        deploymentType {
+          name
+        }
+        smartContracts {
+          name
+          id
+          deploymentDate
+          address
+          deploymentId
+        }
+        isOfStandardId
+        id
+      }
+    }
+    supportsProducts {
+      supportsProduct {
+        name
+        id
+        root {
+          slug
+        }
+      }
+    }
+    urls(order_by: { urlTypeId: Asc }) {
+      url
+      urlType {
+        name
+        id
+        definition
+      }
+    }
+  }
+`);
+
 export type ProductCardCardProps = {
-  product: Product;
+  product: FragmentType<typeof ProductFragment>;
   variant?: ProfileDataCardProps['variant'];
 };
 
-export const ProductCard = ({ product, variant }: ProductCardCardProps) => {
+export const ProductCard = ({
+  product: productData,
+  variant
+}: ProductCardCardProps) => {
+  const product = useFragment(ProductFragment, productData);
+
   return (
     <ProfileDataCard
       variant={variant}

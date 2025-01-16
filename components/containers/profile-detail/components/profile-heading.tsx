@@ -1,9 +1,5 @@
 'use client';
 
-import {
-  GetProfileQuery,
-  GetProfileQueryVariables
-} from '@/lib/graphql/generated-graphql';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { QueryDialogButton } from '@/components/containers/query-dialog-button';
 import { siteConfig } from '@/lib/site-config';
@@ -13,8 +9,8 @@ import {
   UrlTypeIconLinks
 } from '@/components/containers/url-type-icon/url-type-icon-list';
 import { FragmentType, graphql, useFragment } from '@/lib/graphql/generated';
+import { ProfileDetailQuery } from '../profile-detail';
 
-export type Profile = NonNullable<GetProfileQuery['profileInfos']>[number];
 export const ProfileHeadingFragment = graphql(`
   fragment ProfileHeadingFragment on CProfileInfos {
     logo
@@ -41,7 +37,7 @@ export const ProfileHeadingFragment = graphql(`
 
 export type ProfileCardCardProps = {
   profile: FragmentType<typeof ProfileHeadingFragment>;
-  queryVariables?: GetProfileQueryVariables;
+  queryVariables?: any;
   query: string;
 };
 
@@ -82,7 +78,7 @@ export const ProfileHeading = ({
           {siteConfig.displayQueries && (
             <QueryDialogButton
               variables={queryVariables}
-              queryDocument={query}
+              queryDocument={ProfileDetailQuery as unknown as string}
               buttonLabel="View query"
             />
           )}

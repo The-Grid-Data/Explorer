@@ -1,7 +1,10 @@
 'use client';
 
 import { QueryDialogButton } from '@/components/containers/query-dialog-button';
-import { ProfileListCards } from './components/profile-list-cards';
+import {
+  ProfileListCards,
+  SearchProfilesQuery
+} from './components/profile-list-cards';
 import { ProfileListHeroFilters } from './components/profile-list-hero-filters';
 import {
   ProfileListFilters,
@@ -16,7 +19,7 @@ import {
   ProfileQueryProvider,
   useProfilesQueryContext
 } from '@/providers/profiles-query-provider';
-import { SearchProfilesDocument } from '@/lib/graphql/generated-graphql';
+import { ProfileListFiltersList } from './components/profile-list-filters/profile-list-filters-list';
 
 export const ProfileList = () => {
   return (
@@ -31,7 +34,9 @@ export const ProfileList = () => {
                 <div className="flex w-full flex-col gap-4">
                   <ProfileListSearch />
                   <div className="flex flex-col gap-4 md:flex-row">
-                    <ProfileListFilters />
+                    <div className="lg:hidden">
+                      <ProfileListFilters />
+                    </div>
                     <ProfileListFiltersLabel />
                   </div>
                 </div>
@@ -41,7 +46,14 @@ export const ProfileList = () => {
                   {siteConfig.displayQueries && <ViewQueryButton />}
                 </div>
               </div>
-              <ProfileListCards />
+              <div className="flex gap-8">
+                <div className="hidden w-72 shrink-0 lg:block">
+                  <ProfileListFiltersList />
+                </div>
+                <div className="w-full">
+                  <ProfileListCards />
+                </div>
+              </div>
             </div>
           </div>
         </ProfileQueryProvider>
@@ -54,7 +66,7 @@ const ViewQueryButton = () => {
   const query = useProfilesQueryContext();
   return (
     <QueryDialogButton
-      queryDocument={SearchProfilesDocument}
+      queryDocument={SearchProfilesQuery as unknown as string}
       variables={query}
       buttonLabel="View query"
     />

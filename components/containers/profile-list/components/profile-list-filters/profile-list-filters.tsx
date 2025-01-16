@@ -1,34 +1,19 @@
 'use client';
 
-import { Filters } from '../../hooks/use-profile-filters';
-import { ProfileFilters } from './components/profile-filters';
-import { ProductFilters } from './components/product-filters';
-import { AssetFilters } from './components/asset-filters';
-import { EntityFilters } from './components/entity-filters';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
 import { Filter } from 'lucide-react';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { useState } from 'react';
 import { useEventListener } from '@/hooks/use-event-listener';
-import { useProfileFiltersContext } from '@/providers/filters-provider';
+import { ProfileListFiltersList } from './profile-list-filters-list';
 
 export const ProfileListFilters = () => {
-  const { filters } = useProfileFiltersContext();
   const [open, setOpen] = useState(false);
 
   useEventListener('close-dialog', () => {
     setOpen(false);
   });
-
-  const filterNodes = (
-    <>
-      <ProfileFilters filters={filters} />
-      <ProductFilters filters={filters} />
-      <AssetFilters filters={filters} />
-      <EntityFilters filters={filters} />
-    </>
-  );
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>
@@ -45,7 +30,7 @@ export const ProfileListFilters = () => {
         <ScrollArea className="h-full">
           <div className="space-y-8 pr-4">
             <h3 className="text-2xl font-semibold tracking-tight">Filters</h3>
-            {filterNodes}
+            <ProfileListFiltersList />
           </div>
         </ScrollArea>
       </SheetContent>

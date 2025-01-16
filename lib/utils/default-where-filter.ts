@@ -1,8 +1,8 @@
 import { siteConfig } from '@/lib/site-config';
 import {
-  SearchProfilesQueryVariables,
-  CProfileInfosBoolExp
-} from '@/lib/graphql/generated-graphql';
+  CProfileInfosBoolExp,
+  SearchProfilesQueryVariables
+} from '../graphql/generated/graphql';
 
 const getDefaultWhereFilter = (): CProfileInfosBoolExp => {
   const orConditions: CProfileInfosBoolExp[] = [];

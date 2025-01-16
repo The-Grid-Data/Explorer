@@ -1,511 +1,623 @@
-import {
-  CAssetsBoolExp,
-  CEntitiesBoolExp,
-  CProductsBoolExp,
-  SearchProfilesQueryVariables,
-  useGetFiltersOptionsQuery
-} from '@/lib/graphql/generated-graphql';
-import {
-  useQueryStates,
-  parseAsArrayOf,
-  parseAsInteger,
-  parseAsString
-} from 'nuqs';
+import { CProfileInfosBoolExp } from '@/lib/graphql/generated/graphql';
+import { useQueryStates, parseAsArrayOf, parseAsString } from 'nuqs';
 import { useFilter } from './use-filter';
 import { isNotEmpty } from '@/lib/utils/is-not-empty';
 import { siteConfig } from '@/lib/site-config';
+import { execute } from '@/lib/graphql/execute';
+import { graphql } from '@/lib/graphql/generated';
+import { z } from 'zod';
 
 export type Filters = ReturnType<typeof useProfileFilters>;
+
+const validateAndFormatOptions = <T>(options: unknown) => {
+  const optionsSchema = z.array(
+    z.object({
+      label: z.string(),
+      value: z.string(),
+      description: z.string().nullable().optional()
+    })
+  );
+
+  const result = optionsSchema.safeParse(options);
+  const validatedOptions = result.success ? result.data : [];
+  return validatedOptions.filter(item => item.label?.trim());
+};
+
+const parseAsId = parseAsString;
 
 export const useProfileFilters = () => {
   const [queryParams, setQueryParams] = useQueryStates(
     {
-      productTypes: parseAsArrayOf(parseAsInteger).withDefault([]),
-      tags: parseAsArrayOf(parseAsInteger).withDefault([]),
+      productTypes: parseAsArrayOf(parseAsId).withDefault([]),
+      tags: parseAsArrayOf(parseAsId).withDefault([]),
       search: parseAsString.withDefault(''),
-      profileType: parseAsArrayOf(parseAsInteger).withDefault([]),
-      profileSectors: parseAsArrayOf(parseAsInteger).withDefault([]),
-      profileStatuses: parseAsArrayOf(parseAsInteger).withDefault([]),
+      profileType: parseAsArrayOf(parseAsId).withDefault([]),
+      profileSectors: parseAsArrayOf(parseAsId).withDefault([]),
+      profileStatuses: parseAsArrayOf(parseAsId).withDefault([]),
       profileFoundingDate: parseAsArrayOf(parseAsString),
-      productStatus: parseAsArrayOf(parseAsInteger).withDefault([]),
-      productSupports: parseAsArrayOf(parseAsInteger).withDefault([]),
+      productStatus: parseAsArrayOf(parseAsId).withDefault([]),
+      productSupports: parseAsArrayOf(parseAsId).withDefault([]),
       productLaunchDate: parseAsArrayOf(parseAsString),
-      productDeployedOn: parseAsArrayOf(parseAsInteger).withDefault([]),
-      assetType: parseAsArrayOf(parseAsInteger).withDefault([]),
-      assetTicker: parseAsArrayOf(parseAsString).withDefault([]),
-      assetDeployedOn: parseAsArrayOf(parseAsInteger).withDefault([]),
-      assetStandard: parseAsArrayOf(parseAsInteger).withDefault([]),
-      entityType: parseAsArrayOf(parseAsInteger).withDefault([]),
-      entityName: parseAsArrayOf(parseAsInteger).withDefault([]),
-      entityCountry: parseAsArrayOf(parseAsInteger).withDefault([])
+      productDeployedOn: parseAsArrayOf(parseAsId).withDefault([]),
+      assetType: parseAsArrayOf(parseAsId).withDefault([]),
+      assetTicker: parseAsArrayOf(parseAsId).withDefault([]),
+      assetDeployedOn: parseAsArrayOf(parseAsId).withDefault([]),
+      assetStandard: parseAsArrayOf(parseAsId).withDefault([]),
+      entityType: parseAsArrayOf(parseAsId).withDefault([]),
+      entityName: parseAsArrayOf(parseAsId).withDefault([]),
+      entityCountry: parseAsArrayOf(parseAsId).withDefault([])
     },
     { clearOnDefault: true, throttleMs: 1000 }
-  );
-
-  const { data, isLoading } = useGetFiltersOptionsQuery(
-    {
-      supportsProductsWhere: {
-        ...(isNotEmpty(siteConfig.blockchainIds) && {
-          supportsProductId: { _in: siteConfig.blockchainIds }
-        })
-      },
-      productTypesFilterInput: {
-        where: {
-          root: {
-            ...(isNotEmpty(queryParams.tags) && {
-              profileTags: { tagId: { _in: queryParams.tags } }
-            }),
-            ...(isNotEmpty(queryParams.productTypes) && {
-              products: { productTypeId: { _in: queryParams.productTypes } }
-            }),
-            ...(isNotEmpty(queryParams.profileSectors) && {
-              profileInfos: {
-                profileSector: { id: { _in: queryParams.profileSectors } }
-              }
-            })
-          }
-        }
-      },
-      profileSectorsFilterInput: {
-        where: {
-          root: {
-            ...(isNotEmpty(queryParams.tags) && {
-              profileTags: { tagId: { _in: queryParams.tags } }
-            }),
-            ...(isNotEmpty(queryParams.productTypes) && {
-              products: { productTypeId: { _in: queryParams.productTypes } }
-            })
-          }
-        }
-      },
-      tagsFilterInput: {
-        where: {
-          root: {
-            ...(isNotEmpty(queryParams.productTypes) && {
-              products: { productTypeId: { _in: queryParams.productTypes } }
-            }),
-            ...(isNotEmpty(queryParams.profileSectors) && {
-              profileInfos: {
-                profileSector: { id: { _in: queryParams.profileSectors } }
-              }
-            })
-          }
-        }
-      },
-      deployedOnProductsWhere: {
-        ...(isNotEmpty(siteConfig.blockchainIds) && {
-          productDeployments: {
-            productId: { _in: siteConfig.blockchainIds }
-          }
-        }),
-        _or: [
-          {
-            ...(isNotEmpty(siteConfig.blockchainProductTypeIds) && {
-              productTypeId: {
-                _in: siteConfig.blockchainProductTypeIds
-              }
-            })
-          }
-        ]
-      }
-    },
-    { placeholderData: prevData => prevData }
   );
 
   /*************************************
    * CHECKBOX GRID FILTERS
    *************************************/
-  const productTypesFilter = useFilter<number>({
-    options: data?.productTypes
-      ?.filter(item => item.name?.trim())
-      // ?.filter(item => Boolean(item.productsAggregate?._count))
-      .map(item => ({
-        value: item.id,
-        label: item.name,
-        // count: item.productsAggregate?._count,
-        description: item.definition
-      })),
+  const productTypesFilter = useFilter<string, string>({
+    id: 'productTypes',
+    getOptions: async () => {
+      const data = await execute(
+        graphql(`
+          query getProductTypeOptions($where: CProductTypesBoolExp) {
+            productTypes(where: $where) {
+              label: name
+              value: id
+              description: definition
+            }
+          }
+        `),
+        { where: {} }
+      );
+      return validateAndFormatOptions(data?.productTypes);
+    },
     type: 'multiselect',
     initialValue: queryParams.productTypes,
-    onChange: newValue => setQueryParams({ productTypes: newValue })
+    onChange: newValue => setQueryParams({ productTypes: newValue }),
+    getQueryConditions: value => ({
+      root: {
+        products: {
+          productTypeId: { _in: value }
+        }
+      }
+    })
   });
 
-  const tagsFilter = useFilter<number>({
-    options: data?.tags
-      // ?.filter(item => Boolean(item.profileTagsAggregate?._count))
-      ?.map(item => ({
-        value: item.id,
-        label: item.name,
-        description: item.description
-        // count: item.profileTagsAggregate?._count,
-        // disabled: !Boolean(item.profileTagsAggregate?._count)
-      })),
+  const tagsFilter = useFilter<string, string>({
+    id: 'tags',
     type: 'multiselect',
     initialValue: queryParams.tags,
-    onChange: newValue => setQueryParams({ tags: newValue })
+    getOptions: async () => {
+      const data = await execute(
+        graphql(`
+          query getTagsOptions {
+            tags {
+              value: id
+              label: name
+              description
+            }
+          }
+        `)
+      );
+      return validateAndFormatOptions(data?.tags);
+    },
+    onChange: newValue => setQueryParams({ tags: newValue }),
+    getQueryConditions: value => ({
+      root: {
+        profileTags: { tagId: { _in: value } }
+      }
+    })
   });
 
   /*************************************
    * SEARCH FILTERS
    *************************************/
-  const searchFilter = useFilter<{
-    fields: {
-      profileName: boolean;
-      productName: boolean;
-    };
-  }>({
+  const searchFilter = useFilter({
+    id: 'search',
     type: 'search',
     initialValue: queryParams.search,
-    config: {
-      fields: {
-        profileName: true,
-        productName: true
-      }
-    },
-    onChange: newValue => setQueryParams({ search: newValue })
+    onChange: newValue => setQueryParams({ search: newValue }),
+    getQueryConditions: value => ({
+      _or: [
+        { name: { _like: `%${value}%` } },
+        {
+          root: {
+            products: {
+              name: { _like: `%${value}%` }
+            }
+          }
+        }
+      ]
+    })
   });
 
   /*************************************
    * PROFILE FILTERS
    *************************************/
-  const profileTypeFilter = useFilter<number>({
-    options: data?.profileTypes?.map(item => ({
-      value: item.id,
-      label: item.name,
-      description: item.definition
-    })),
+  const profileTypeFilter = useFilter<string, string>({
+    id: 'profileType',
     type: 'multiselect',
     initialValue: queryParams.profileType,
-    onChange: newValue => setQueryParams({ profileType: newValue })
+    getOptions: async () => {
+      const data = await execute(
+        graphql(`
+          query getProfileTypeOptions {
+            profileTypes {
+              label: name
+              value: id
+              description: definition
+            }
+          }
+        `)
+      );
+      return validateAndFormatOptions(data?.profileTypes);
+    },
+    onChange: newValue => setQueryParams({ profileType: newValue }),
+    getQueryConditions: value => ({
+      profileType: { id: { _in: value } }
+    })
   });
 
-  const profileSectorsFilter = useFilter<number>({
-    options: data?.profileSectors
-      ?.filter(item => item.name?.trim())
-      // ?.filter(item => Boolean(item.ProfileInfosAggregate?._count))
-      .map(item => ({
-        value: item.id,
-        label: item.name,
-        // count: item.ProfileInfosAggregate?._count,
-        description: item.definition
-      })),
+  const profileSectorsFilter = useFilter<string, string>({
+    id: 'profileSectors',
     type: 'multiselect',
     initialValue: queryParams.profileSectors,
-    onChange: newValue => setQueryParams({ profileSectors: newValue })
+    getOptions: async () => {
+      const data = await execute(
+        graphql(`
+          query getProfileSectorsOptions {
+            profileSectors {
+              label: name
+              value: id
+              description: definition
+            }
+          }
+        `)
+      );
+      return validateAndFormatOptions(data?.profileSectors);
+    },
+    onChange: newValue => setQueryParams({ profileSectors: newValue }),
+    getQueryConditions: value => ({
+      profileSector: { id: { _in: value } }
+    })
   });
 
-  const profileStatusesFilter = useFilter<number>({
-    options: data?.profileStatuses?.map(item => ({
-      value: item.id,
-      label: item.name,
-      description: item.definition
-    })),
+  const profileStatusesFilter = useFilter<string, string>({
+    id: 'profileStatuses',
     type: 'multiselect',
     initialValue: queryParams.profileStatuses,
-    onChange: newValue => setQueryParams({ profileStatuses: newValue })
+    getOptions: async () => {
+      const data = await execute(
+        graphql(`
+          query getProfileStatusesOptions {
+            profileStatuses {
+              label: name
+              value: id
+              description: definition
+            }
+          }
+        `)
+      );
+      return validateAndFormatOptions(data?.profileStatuses);
+    },
+    onChange: newValue => setQueryParams({ profileStatuses: newValue }),
+    getQueryConditions: value => ({
+      profileStatus: { id: { _in: value } }
+    })
   });
 
   const profileFoundingDateFilter = useFilter<string>({
+    id: 'profileFoundingDate',
     type: 'range',
     initialValue: queryParams.profileFoundingDate as [string, string] | null,
-    onChange: newValue => setQueryParams({ profileFoundingDate: newValue })
+    onChange: newValue => setQueryParams({ profileFoundingDate: newValue }),
+    getQueryConditions: value => ({
+      foundingDate: {
+        _gte: value[0],
+        _lte: value[1]
+      }
+    })
   });
 
   /*************************************
    * PRODUCT FILTERS
    *************************************/
-  const productStatusFilter = useFilter<number>({
-    options: data?.productStatuses?.map(item => ({
-      value: item.id,
-      label: item.name,
-      description: item.definition
-    })),
+  const productStatusFilter = useFilter<string, string>({
+    id: 'productStatus',
     type: 'multiselect',
     initialValue: queryParams.productStatus,
-    onChange: newValue => setQueryParams({ productStatus: newValue })
+    getOptions: async () => {
+      const data = await execute(
+        graphql(`
+          query getProductStatusesOptions {
+            productStatuses {
+              label: name
+              value: id
+              description: definition
+            }
+          }
+        `)
+      );
+      return validateAndFormatOptions(data?.productStatuses);
+    },
+    onChange: newValue => setQueryParams({ productStatus: newValue }),
+    getQueryConditions: value => ({
+      root: {
+        products: {
+          productStatus: { id: { _in: value } }
+        }
+      }
+    })
   });
 
-  const productSupportsFilter = useFilter<number>({
-    //@todo: we are filtering products by distinct id in the FE, we might wanna move this to the query but is not supported at the moment
-    options: Array.from(
-      new Map(
-        data?.supportsProducts
-          ?.map(item => ({
-            value: item.supportsProduct?.id,
-            label: item.supportsProduct?.name,
-            description: item.supportsProduct?.description
-          }))
-          .map(option => [option.value, option])
-      ).values()
-    ),
+  const supportsProductsFilter = useFilter<string, string>({
+    id: 'supportsProducts',
     type: 'multiselect',
     initialValue: queryParams.productSupports,
-    onChange: newValue => setQueryParams({ productSupports: newValue })
+    getOptions: async () => {
+      const data = await execute(
+        graphql(`
+          query getSupportsProductsOptions(
+            $supportsProductsWhere: CSupportsProductsBoolExp
+          ) {
+            supportsProducts(where: $supportsProductsWhere) {
+              supportsProduct {
+                name
+                id
+                description
+              }
+            }
+          }
+        `),
+        {
+          supportsProductsWhere: {
+            ...(isNotEmpty(siteConfig.blockchainIds) && {
+              supportsProduct: {
+                id: {
+                  _in: siteConfig.blockchainIds
+                }
+              }
+            })
+          }
+        }
+      );
+      //@todo: API REQUEST we are filtering products by distinct id in the FE, we might wanna move this to the query but is not supported at the moment
+      const options = Array.from(
+        new Map(
+          (data?.supportsProducts ?? [])
+            ?.map(item => ({
+              value: item.supportsProduct?.id,
+              label: item.supportsProduct?.name ?? ' - ',
+              description: item.supportsProduct?.description ?? ' - '
+            }))
+            .map(option => [option.value, option])
+        ).values()
+      );
+      return validateAndFormatOptions(options);
+    },
+    onChange: newValue => setQueryParams({ productSupports: newValue }),
+    getQueryConditions: value => ({
+      root: {
+        products: {
+          supportsProducts: {
+            supportsProductId: { _in: value }
+          }
+        }
+      }
+    })
   });
 
   const productLaunchDateFilter = useFilter<string>({
+    id: 'productLaunchDate',
     type: 'range',
     initialValue: queryParams.productLaunchDate as [string, string] | null,
-    onChange: newValue => setQueryParams({ productLaunchDate: newValue })
+    onChange: newValue => setQueryParams({ productLaunchDate: newValue }),
+    getQueryConditions: value => ({
+      root: {
+        products: {
+          launchDate: {
+            _gte: value[0],
+            _lte: value[1]
+          }
+        }
+      }
+    })
   });
 
-  const productDeployedOnFilter = useFilter<number>({
-    options: data?.deployedOnProducts?.map(item => ({
-      value: item.id,
-      label: item.name,
-      description: item.description
-    })),
+  const productDeployedOnFilter = useFilter<string, string>({
+    id: 'productDeployedOn',
     type: 'multiselect',
     initialValue: queryParams.productDeployedOn,
-    onChange: newValue => setQueryParams({ productDeployedOn: newValue })
-  });
-
-  // /*************************************
-  //  * ASSET FILTERS
-  //  *************************************/
-  const assetTypeFilter = useFilter<number>({
-    options: data?.assetTypes?.map(item => ({
-      value: item.id,
-      label: item.name,
-      description: item.definition
-    })),
-    type: 'multiselect',
-    initialValue: queryParams.assetType,
-    onChange: newValue => setQueryParams({ assetType: newValue })
-  });
-
-  const assetTickerFilter = useFilter<string>({
-    options: data?.assets
-      ?.map(item => item.ticker)
-      .filter(ticker => ticker && ticker !== '')
-      .map(ticker => ({
-        value: ticker,
-        label: ticker,
-        description: null
-      })),
-    type: 'multiselect',
-    initialValue: queryParams.assetTicker,
-    onChange: newValue => setQueryParams({ assetTicker: newValue })
-  });
-
-  const assetDeployedOnFilter = useFilter<number>({
-    options: data?.deployedOnProducts?.map(item => ({
-      value: item.id,
-      label: item.name,
-      description: item.description
-    })),
-    type: 'multiselect',
-    initialValue: queryParams.assetDeployedOn,
-    onChange: newValue => setQueryParams({ assetDeployedOn: newValue })
-  });
-
-  const assetStandardFilter = useFilter<number>({
-    options: data?.assetStandards?.map(item => ({
-      value: item.id,
-      label: item.name,
-      description: item.definition
-    })),
-    type: 'multiselect',
-    initialValue: queryParams.assetStandard,
-    onChange: newValue => setQueryParams({ assetStandard: newValue })
-  });
-
-  // /*************************************
-  //  * ENTITY FILTERS
-  //  *************************************/
-  const entityTypeFilter = useFilter<number>({
-    options: data?.entityTypes?.map(item => ({
-      value: item.id,
-      label: item.name,
-      description: item.definition
-    })),
-    type: 'multiselect',
-    initialValue: queryParams.entityType,
-    onChange: newValue => setQueryParams({ entityType: newValue })
-  });
-
-  const entityNameFilter = useFilter<number>({
-    options: data?.entities?.map(item => ({
-      value: item.id,
-      label: item.name,
-      description: null
-    })),
-    type: 'multiselect',
-    initialValue: queryParams.entityName,
-    onChange: newValue => setQueryParams({ entityName: newValue })
-  });
-
-  const entityCountryFilter = useFilter<number>({
-    options: data?.countries?.map(item => ({
-      value: item.id,
-      label: item.name,
-      description: null
-    })),
-    type: 'multiselect',
-    initialValue: queryParams.entityCountry,
-    onChange: newValue => setQueryParams({ entityCountry: newValue })
-  });
-
-  // @ts-ignore
-  const toQueryWhereFields: () => SearchProfilesQueryVariables['where'] =
-    () => {
-      const searchConditions = isNotEmpty(searchFilter?.value)
-        ? [
-            ...(searchFilter.config?.fields?.productName
-              ? [
-                  { name: { _like: `%${searchFilter.value}%` } },
-                  {
-                    root: {
-                      products: {
-                        name: { _like: `%${searchFilter.value}%` }
-                      }
-                    }
-                  }
-                ]
-              : [])
-          ]
-        : [];
-
-      const profileConditions = {
-        ...(isNotEmpty(profileTypeFilter.value) && {
-          profileType: { id: { _in: profileTypeFilter.value } }
-        }),
-        ...(isNotEmpty(profileSectorsFilter.value) && {
-          profileSector: { id: { _in: profileSectorsFilter.value } }
-        }),
-        ...(isNotEmpty(profileStatusesFilter.value) && {
-          profileStatus: { id: { _in: profileStatusesFilter.value } }
-        }),
-        ...(profileFoundingDateFilter.value?.every?.(i => i) && {
-          foundingDate: {
-            _gte: profileFoundingDateFilter.value[0],
-            _lte: profileFoundingDateFilter.value[1]
-          }
-        })
-      };
-
-      const productConditions = {
-        ...(isNotEmpty(productTypesFilter.value) && {
-          productTypeId: { _in: productTypesFilter.value }
-        }),
-        ...(isNotEmpty(productStatusFilter.value) && {
-          productStatus: { id: { _in: productStatusFilter.value } }
-        }),
-        ...(isNotEmpty(productDeployedOnFilter.value) && {
-          productDeployments: {
-            deploymentId: { _in: productDeployedOnFilter.value }
-          }
-        }),
-        ...(isNotEmpty(productSupportsFilter.value) && {
-          supportsProducts: {
-            supportsProductId: { _in: productSupportsFilter.value }
-          }
-        }),
-        ...(productLaunchDateFilter.value?.every?.(i => i) && {
-          launchDate: {
-            _gte: productLaunchDateFilter.value[0],
-            _lte: productLaunchDateFilter.value[1]
-          }
-        })
-      } satisfies CProductsBoolExp;
-
-      const assetConditions = {
-        ...(isNotEmpty(assetTypeFilter.value) && {
-          assetTypeId: { _in: assetTypeFilter.value }
-        }),
-        ...(isNotEmpty(assetTickerFilter.value) && {
-          // @ts-ignore
-          ticker: { _in: assetTickerFilter.value }
-        }),
-        ...(isNotEmpty(assetDeployedOnFilter.value) && {
-          assetDeployments: {
-            smartContractDeployment: {
-              deployedOnId: { _in: assetDeployedOnFilter.value }
+    getOptions: async () => {
+      const data = await execute(
+        graphql(`
+          query getDeployedOnProductsOptions(
+            $deployedOnProductsWhere: CProductsBoolExp
+          ) {
+            deployedOnProducts: products(where: $deployedOnProductsWhere) {
+              label: name
+              value: id
+              description
             }
           }
-        }),
-        ...(isNotEmpty(assetStandardFilter.value) && {
-          assetStandardId: { _in: assetStandardFilter.value }
-        })
-      } satisfies CAssetsBoolExp;
-
-      const entityConditions = {
-        ...(isNotEmpty(entityTypeFilter.value) && {
-          entityTypeId: { _in: entityTypeFilter.value }
-        }),
-        ...(isNotEmpty(entityNameFilter.value) && {
-          id: { _in: entityNameFilter.value }
-        }),
-        ...(isNotEmpty(entityCountryFilter.value) && {
-          countryId: { _in: entityCountryFilter.value }
-        })
-      } satisfies CEntitiesBoolExp;
-
-      return {
-        /*************************************
-         * SEARCH FILTERS
-         *************************************/
-        ...(searchConditions.length > 0 && { _or: searchConditions }),
-
-        /*************************************
-         * PROFILE FILTERS
-         *************************************/
-        ...(Object.keys(profileConditions).length > 0 && profileConditions),
-
-        root: {
-          /*************************************
-           * PRODUCT FILTERS
-           *************************************/
-          ...(Object.keys(productConditions).length > 0 && {
-            products: productConditions
-          }),
-
-          /*************************************
-           * ASSET FILTERS
-           *************************************/
-          ...(Object.keys(assetConditions).length > 0 && {
-            assets: assetConditions
-          }),
-
-          /*************************************
-           * ENTITY FILTERS
-           *************************************/
-          ...(Object.keys(entityConditions).length > 0 && {
-            entities: entityConditions
-          }),
-
-          /*************************************
-           * TAGS FILTERS
-           *************************************/
-          ...(isNotEmpty(tagsFilter.value) && {
-            profileTags: { tagId: { _in: tagsFilter.value } }
-          })
+        `),
+        {
+          deployedOnProductsWhere: {
+            root: {
+              products: {
+                ...(isNotEmpty(siteConfig.blockchainIds) && {
+                  productDeployments: {
+                    productId: { _in: siteConfig.blockchainIds }
+                  }
+                }),
+                _or: [
+                  {
+                    ...(isNotEmpty(siteConfig.blockchainProductTypeIds) && {
+                      productTypeId: {
+                        _in: siteConfig.blockchainProductTypeIds
+                      }
+                    })
+                  }
+                ]
+              }
+            }
+          }
         }
-      };
-    };
+      );
+      return validateAndFormatOptions(data?.deployedOnProducts);
+    },
+    onChange: newValue => setQueryParams({ productDeployedOn: newValue }),
+    getQueryConditions: value => ({
+      root: {
+        products: {
+          productDeployments: {
+            deploymentId: { _in: value }
+          }
+        }
+      }
+    })
+  });
+
+  /*************************************
+   * ASSET FILTERS
+   *************************************/
+  const assetTypeFilter = useFilter<string, string>({
+    id: 'assetType',
+    type: 'multiselect',
+    initialValue: queryParams.assetType,
+    getOptions: async () => {
+      const data = await execute(
+        graphql(`
+          query getAssetTypeOptions {
+            assetTypes {
+              label: name
+              value: id
+              description: definition
+            }
+          }
+        `)
+      );
+      return validateAndFormatOptions(data?.assetTypes);
+    },
+    onChange: newValue => setQueryParams({ assetType: newValue }),
+    getQueryConditions: value => ({
+      root: {
+        assets: {
+          assetTypeId: { _in: value }
+        }
+      }
+    })
+  });
+
+  const assetTickerFilter = useFilter<string, string>({
+    id: 'assetTicker',
+    type: 'multiselect',
+    initialValue: queryParams.assetTicker,
+    getOptions: async () => {
+      const data = await execute(
+        graphql(`
+          query getAssetTickerOptions {
+            assets {
+              ticker
+            }
+          }
+        `)
+      );
+      const options = data?.assets
+        ?.map(item => item.ticker)
+        .filter(ticker => ticker && ticker !== '')
+        .map(ticker => ({
+          value: ticker,
+          label: ticker,
+          description: null
+        }));
+      return validateAndFormatOptions(options);
+    },
+    onChange: newValue => setQueryParams({ assetTicker: newValue }),
+    getQueryConditions: value => ({
+      root: {
+        assets: {
+          ticker: { _in: value }
+        }
+      }
+    })
+  });
+
+  const assetDeployedOnFilter = useFilter<string, string>({
+    id: 'assetDeployedOn',
+    type: 'multiselect',
+    initialValue: queryParams.assetDeployedOn,
+    options: productDeployedOnFilter.options,
+    onChange: newValue => setQueryParams({ assetDeployedOn: newValue }),
+    getQueryConditions: value => ({
+      root: {
+        assets: {
+          assetDeployments: {
+            smartContractDeployment: {
+              deployedOnId: { _in: value }
+            }
+          }
+        }
+      }
+    })
+  });
+
+  const assetStandardFilter = useFilter<string, string>({
+    id: 'assetStandard',
+    type: 'multiselect',
+    enabled: false,
+    initialValue: queryParams.assetStandard,
+    getOptions: async () => {
+      const data = await execute(
+        graphql(`
+          query getAssetStandardOptions {
+            assetStandards {
+              label: name
+              value: id
+              description: definition
+            }
+          }
+        `)
+      );
+      return validateAndFormatOptions(data?.assetStandards);
+    },
+    onChange: newValue => setQueryParams({ assetStandard: newValue })
+    // getQueryConditions: value => ({
+    //   root: {
+    //     assets: {
+    //       assetStandard: { id: { _in: value } }
+    //     }
+    //   }
+    // })
+  });
+
+  /*************************************
+   * ENTITY FILTERS
+   *************************************/
+  const entityTypeFilter = useFilter<string, string>({
+    id: 'entityType',
+    type: 'multiselect',
+    initialValue: queryParams.entityType,
+    getOptions: async () => {
+      const data = await execute(
+        graphql(`
+          query getEntityTypeOptions {
+            entityTypes {
+              label: name
+              value: id
+              description: definition
+            }
+          }
+        `)
+      );
+      return validateAndFormatOptions(data?.entityTypes);
+    },
+    onChange: newValue => setQueryParams({ entityType: newValue }),
+    getQueryConditions: value => ({
+      root: {
+        entities: {
+          entityTypeId: { _in: value }
+        }
+      }
+    })
+  });
+
+  const entityNameFilter = useFilter<string, string>({
+    id: 'entityName',
+    type: 'multiselect',
+    initialValue: queryParams.entityName,
+    getOptions: async () => {
+      const data = await execute(
+        graphql(`
+          query getEntityNameOptions {
+            entities {
+              label: name
+              value: id
+            }
+          }
+        `)
+      );
+      return validateAndFormatOptions(data?.entities);
+    },
+    onChange: newValue => setQueryParams({ entityName: newValue }),
+    getQueryConditions: value => ({
+      root: {
+        entities: {
+          id: { _in: value }
+        }
+      }
+    })
+  });
+
+  const entityCountryFilter = useFilter<string, string>({
+    id: 'entityCountry',
+    type: 'multiselect',
+    initialValue: queryParams.entityCountry,
+    getOptions: async () => {
+      const data = await execute(
+        graphql(`
+          query getEntityCountryOptions {
+            countries {
+              label: name
+              value: id
+            }
+          }
+        `)
+      );
+      return validateAndFormatOptions(data?.countries);
+    },
+    onChange: newValue => setQueryParams({ entityCountry: newValue }),
+    getQueryConditions: value => ({
+      root: {
+        entities: {
+          countryId: { _in: value }
+        }
+      }
+    })
+  });
+
+  const filters = {
+    searchFilter,
+    profileTypeFilter,
+    profileSectorsFilter,
+    profileStatusesFilter,
+    profileFoundingDateFilter,
+    productStatusFilter,
+    productTypesFilter,
+    productLaunchDateFilter,
+    supportsProductsFilter,
+    productDeployedOnFilter,
+    assetTypeFilter,
+    assetTickerFilter,
+    assetDeployedOnFilter,
+    assetStandardFilter,
+    entityTypeFilter,
+    entityNameFilter,
+    entityCountryFilter,
+    tagsFilter
+  };
+
+  const toQueryWhereFields = () => {
+    const conditions = Object.values(filters)
+      .map(filter => filter.getQueryConditions?.())
+      .filter((condition): condition is CProfileInfosBoolExp =>
+        Boolean(condition)
+      );
+
+    return conditions.reduce((acc, condition) => {
+      const newAcc = { ...acc };
+      if (condition.root) {
+        newAcc.root = {
+          ...newAcc.root,
+          ...condition.root
+        };
+      }
+      return { ...newAcc, ...condition };
+    }, {} as CProfileInfosBoolExp);
+  };
 
   return {
-    isLoading,
-    filters: {
-      searchFilter,
-      profileTypeFilter,
-      profileSectorsFilter,
-      profileStatusesFilter,
-      profileFoundingDateFilter,
-      productStatusFilter,
-      productTypesFilter,
-      productLaunchDateFilter,
-      productSupportsFilter,
-      productDeployedOnFilter,
-      assetTypeFilter,
-      assetTickerFilter,
-      assetDeployedOnFilter,
-      assetStandardFilter,
-      entityTypeFilter,
-      entityNameFilter,
-      entityCountryFilter,
-      tagsFilter
-    },
+    isLoading: false,
+    filters,
     toQueryWhereFields
   };
 };
