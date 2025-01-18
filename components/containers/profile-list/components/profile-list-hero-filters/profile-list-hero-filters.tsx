@@ -1,4 +1,5 @@
 import CheckboxGrid from '@/components/ui/checkbox-grid';
+import { Spinner } from '@/components/ui/spinner';
 import { siteConfig } from '@/lib/site-config';
 import { useProfileFiltersContext } from '@/providers/filters-provider';
 
@@ -7,13 +8,14 @@ export const ProfileListHeroFilters = () => {
   return (
     <>
       <div className="space-y-4">
-        <h1 className="text-xl font-bold lg:text-xl ">
-          Profile Sectors{' '}
-          {filters.productTypesFilter?.options &&
-            `(${filters.profileSectorsFilter.options?.data?.length ?? 0})`}
-        </h1>
+        <FilterTitle
+          title="Profile Sectors"
+          count={filters.profileSectorsFilter.options?.data?.length}
+          isFetching={filters.profileSectorsFilter.options?.isFetching}
+        />
         <CheckboxGrid
-          isLoading={filters.profileSectorsFilter.options?.isFetching}
+          isFetching={filters.profileSectorsFilter.options?.isFetching}
+          isLoading={filters.profileSectorsFilter.options?.isLoading}
           selected={filters.profileSectorsFilter.value}
           options={filters.profileSectorsFilter.options?.data ?? []}
           onChange={selected => {
@@ -22,14 +24,14 @@ export const ProfileListHeroFilters = () => {
         />
       </div>
       <div className="space-y-4">
-        <h1 className="text-xl font-bold lg:text-xl ">
-          Product types{' '}
-          {filters.productTypesFilter?.options &&
-            `(${filters.productTypesFilter.options?.data?.length ?? 0})`}
-        </h1>
-
+        <FilterTitle
+          title="Product types"
+          count={filters.productTypesFilter.options?.data?.length}
+          isFetching={filters.productTypesFilter.options?.isFetching}
+        />
         <CheckboxGrid
-          isLoading={filters.productTypesFilter.options?.isFetching}
+          isFetching={filters.productTypesFilter.options?.isFetching}
+          isLoading={filters.productTypesFilter.options?.isLoading}
           selected={filters.productTypesFilter.value}
           options={filters.productTypesFilter.options?.data ?? []}
           onChange={selected => {
@@ -39,13 +41,14 @@ export const ProfileListHeroFilters = () => {
       </div>
       {!Boolean(siteConfig.tags.length) && (
         <div className="space-y-4">
-          <h1 className="text-xl font-bold lg:text-xl ">
-            Tags{' '}
-            {filters.tagsFilter?.options &&
-              `(${filters.tagsFilter.options?.data?.length ?? 0})`}
-          </h1>
+          <FilterTitle
+            title="Tags"
+            count={filters.tagsFilter.options?.data?.length}
+            isFetching={filters.tagsFilter.options?.isFetching}
+          />
           <CheckboxGrid
-            isLoading={filters.tagsFilter.options?.isFetching}
+            isFetching={filters.tagsFilter.options?.isFetching}
+            isLoading={filters.tagsFilter.options?.isLoading}
             selected={filters.tagsFilter.value}
             options={filters.tagsFilter.options?.data ?? []}
             onChange={selected => {
@@ -57,3 +60,18 @@ export const ProfileListHeroFilters = () => {
     </>
   );
 };
+
+const FilterTitle = ({
+  title,
+  count,
+  isFetching
+}: {
+  title: string;
+  count?: number;
+  isFetching?: boolean;
+}) => (
+  <h1 className="flex items-center gap-2 text-xl font-bold lg:text-xl">
+    {title}{' '}
+    {isFetching ? <Spinner size="sm" /> : count !== undefined && `(${count})`}
+  </h1>
+);

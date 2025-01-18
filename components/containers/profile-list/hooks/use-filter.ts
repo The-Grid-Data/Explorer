@@ -1,5 +1,9 @@
 import { useState } from 'react';
-import { useQuery, UseQueryResult } from '@tanstack/react-query';
+import {
+  useQuery,
+  UseQueryResult,
+  keepPreviousData
+} from '@tanstack/react-query';
 import { isNotEmpty } from '@/lib/utils/is-not-empty';
 import { SearchProfilesQueryVariables } from '@/lib/graphql/generated/graphql';
 
@@ -107,20 +111,18 @@ export function useFilter<T, O = unknown>(
     getOptions,
     getQueryConditions,
     getOptionsQueryConditions,
-    optionsQueryDeps,
+    optionsQueryDeps = [],
     enabled = true
   } = props;
 
   const [value, _setValue] = useState<typeof initialValue>(initialValue);
 
   const { data = [], ...options } = useQuery({
-    queryKey: [id, JSON.stringify(optionsQueryDeps)],
+    queryKey: [id, ...optionsQueryDeps],
     queryFn: () => getOptions?.(),
-    initialData: [],
+    placeholderData: keepPreviousData,
     enabled: !!getOptions
   });
-
-  console.log('data', data);
 
   const optionsQueryResult = { ...options, data };
 

@@ -66,11 +66,21 @@ const config = {
         'accordion-up': {
           from: { height: 'var(--radix-accordion-content-height)' },
           to: { height: '0' }
+        },
+        spinner: {
+          '0%': { opacity: '1' },
+          '10%': { opacity: '0.7' },
+          '20%': { opacity: '0.3' },
+          '35%': { opacity: '0.2' },
+          '50%': { opacity: '0.1' },
+          '75%': { opacity: '0.05' },
+          '100%': { opacity: '0' }
         }
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
-        'accordion-up': 'accordion-up 0.2s ease-out'
+        'accordion-up': 'accordion-up 0.2s ease-out',
+        spinner: 'spinner 1s linear infinite'
       },
       boxShadow: {
         'inner-tb': 'inset 0 16px 16px -16px, inset 0 -16px 16px -16px' // Customize as needed

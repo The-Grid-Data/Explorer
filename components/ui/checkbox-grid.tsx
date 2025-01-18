@@ -25,13 +25,35 @@ export type CheckboxGridProps<T extends string | number> = {
   selected: T[] | null;
   onChange: (selected: T[]) => void;
   isLoading?: boolean;
+  isFetching?: boolean;
+};
+
+const containerVariants = {
+  visible: {
+    transition: {
+      staggerChildren: 0.05
+    }
+  },
+  hidden: {},
+  exit: {
+    transition: {
+      staggerChildren: 0.05
+    }
+  }
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 10, rotate: -5 },
+  visible: { opacity: 1, y: 0, rotate: 0, transition: { duration: 0.15 } },
+  exit: { opacity: 0, y: -20, rotate: 5, transition: { duration: 0.15 } }
 };
 
 export default function CheckboxGrid<T extends string | number>({
   options,
   selected,
   onChange,
-  isLoading
+  isLoading,
+  isFetching
 }: CheckboxGridProps<T>) {
   const [showAll, setShowAll] = useState(false);
   const isDesktop = useMediaQuery('(min-width: 768px)');
@@ -56,32 +78,6 @@ export default function CheckboxGrid<T extends string | number>({
 
   const toggleShowAll = useCallback(() => setShowAll(prev => !prev), []);
 
-  const containerVariants = useMemo(
-    () => ({
-      visible: {
-        transition: {
-          staggerChildren: 0.05
-        }
-      },
-      hidden: {},
-      exit: {
-        transition: {
-          staggerChildren: 0.05
-        }
-      }
-    }),
-    []
-  );
-
-  const itemVariants = useMemo(
-    () => ({
-      hidden: { opacity: 0, y: 10, rotate: -5 },
-      visible: { opacity: 1, y: 0, rotate: 0, transition: { duration: 0.15 } },
-      exit: { opacity: 0, y: -20, rotate: 5, transition: { duration: 0.15 } }
-    }),
-    []
-  );
-
   return (
     <div>
       <div className="mb-6 flex flex-wrap gap-4">
@@ -102,7 +98,10 @@ export default function CheckboxGrid<T extends string | number>({
               initial="hidden"
               animate="visible"
               exit="exit"
-              className="flex flex-wrap gap-4"
+              className={cn(
+                'flex flex-wrap gap-4',
+                isFetching && 'animate-pulse'
+              )}
             >
               <AnimatePresence>
                 {visibleItems.map(option => (
@@ -116,7 +115,7 @@ export default function CheckboxGrid<T extends string | number>({
                           exit="exit"
                         >
                           <Button
-                            disabled={option.disabled}
+                            disabled={option.disabled || isFetching}
                             variant={
                               selected?.includes(option.value)
                                 ? 'outline'

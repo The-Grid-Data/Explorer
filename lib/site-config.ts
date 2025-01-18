@@ -11,5 +11,6 @@ export const siteConfig = {
   blockchainIds: [], // Filter default options. Filters the options of (productSupports, productDeployedOnFilter and assetDeployedOnFilter)
   blockchainProductTypeIds: ['15', '16', '17'], // Filter default options. used by productDeployedOnFilter.
   tags: [], // Filter default options. used by tagsFilter.
-  displayQueries: true
+  displayQueries: true,
+  productSupportsAssetTicker: []
 };
