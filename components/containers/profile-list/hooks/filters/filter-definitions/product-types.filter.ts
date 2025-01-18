@@ -6,6 +6,7 @@ import { useQueryState, parseAsArrayOf } from 'nuqs';
 import { graphql } from '@/lib/graphql/generated';
 import { isNotEmpty } from '@/lib/utils/is-not-empty';
 import deepmerge from 'deepmerge';
+import { CProductTypesBoolExp } from '@/lib/graphql/generated/graphql';
 
 const filterId = 'productTypes';
 
@@ -24,7 +25,7 @@ export const useProductTypesFilter = (filterStore: FiltersStore) => {
     getOptions: async () => {
       const where = deepmerge.all([
         isNotEmpty(filterStore.tagsFilter)
-          ? {
+          ? ({
               products: {
                 root: {
                   profileInfos: {
@@ -34,20 +35,20 @@ export const useProductTypesFilter = (filterStore: FiltersStore) => {
                   }
                 }
               }
-            }
+            } satisfies CProductTypesBoolExp)
           : {},
         isNotEmpty(filterStore.profileSectorsFilter)
-          ? {
+          ? ({
               products: {
                 root: {
-                  profileSectors: {
-                    profileSector: {
-                      id: { _in: filterStore.profileSectorsFilter }
+                  profileInfos: {
+                    profileSectorId: {
+                      _in: filterStore.profileSectorsFilter
                     }
                   }
                 }
               }
-            }
+            } satisfies CProductTypesBoolExp)
           : {}
       ]);
 
