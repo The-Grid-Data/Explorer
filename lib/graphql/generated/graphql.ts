@@ -2893,7 +2893,7 @@ export type EntityFieldsFragmentFragment = { __typename?: 'CEntities', name: str
 
 export type ProfileFragmentFragment = { __typename?: 'CProfileInfos', profileSector?: { __typename?: 'CProfileSectors', name: string } | null, profileType?: { __typename?: 'CProfileTypes', name: string } | null, root?: { __typename?: 'CRoots', assets?: Array<{ __typename?: 'CAssets', ticker: string }> | null, profileTags?: Array<{ __typename?: 'CProfileTags', tag?: { __typename?: 'CTags', name: string, id: string } | null }> | null } | null, profileStatus?: { __typename?: 'CProfileStatuses', name: string, id: string } | null, mainProduct?: { __typename?: 'CRoots', products?: Array<{ __typename?: 'CProducts', productType?: { __typename?: 'CProductTypes', name: string } | null }> | null } | null } & { ' $fragmentName'?: 'ProfileFragmentFragment' };
 
-export type ProductFieldsFragmentFragment = { __typename?: 'CProducts', rootId: string, productTypeId?: string | null, productStatusId?: string | null, name: string, launchDate?: string | null, isMainProduct: number, id: string, description: string, productType?: { __typename?: 'CProductTypes', name: string, id: string, definition: string } | null, productStatus?: { __typename?: 'CProductStatuses', name: string, id: string, definition: string } | null, productDeployments?: Array<{ __typename?: 'CProductDeployments', smartContractDeployment?: { __typename?: 'CSmartContractDeployments', isOfStandardId?: string | null, id: string, deployedOnProduct?: { __typename?: 'CProducts', id: string, name: string, root?: { __typename?: 'CRoots', slug: string } | null } | null, assetStandard?: { __typename?: 'CAssetStandards', id: string } | null, deploymentType?: { __typename?: 'CDeploymentTypes', name: string } | null, smartContracts?: Array<{ __typename?: 'CSmartContracts', name: string, id: string, deploymentDate?: string | null, address: string, deploymentId?: string | null }> | null } | null }> | null, supportsProducts?: Array<{ __typename?: 'CSupportsProducts', supportsProduct?: { __typename?: 'CProducts', name: string, id: string, root?: { __typename?: 'CRoots', slug: string } | null } | null }> | null, urls?: Array<{ __typename?: 'ProductUrls', url?: string | null, urlType?: { __typename?: 'CUrlTypes', name: string, id: string, definition: string } | null }> | null } & { ' $fragmentName'?: 'ProductFieldsFragmentFragment' };
+export type ProductFieldsFragmentFragment = { __typename?: 'CProducts', rootId: string, productTypeId?: string | null, productStatusId?: string | null, name: string, launchDate?: string | null, isMainProduct: number, id: string, description: string, productType?: { __typename?: 'CProductTypes', name: string, id: string, definition: string } | null, productStatus?: { __typename?: 'CProductStatuses', name: string, id: string, definition: string } | null, productDeployments?: Array<{ __typename?: 'CProductDeployments', smartContractDeployment?: { __typename?: 'CSmartContractDeployments', isOfStandardId?: string | null, id: string, deployedOnProduct?: { __typename?: 'CProducts', id: string, name: string, root?: { __typename?: 'CRoots', slug: string } | null } | null, assetStandard?: { __typename?: 'CAssetStandards', id: string } | null, deploymentType?: { __typename?: 'CDeploymentTypes', name: string } | null, smartContracts?: Array<{ __typename?: 'CSmartContracts', name: string, id: string, deploymentDate?: string | null, address: string, deploymentId?: string | null }> | null } | null }> | null, supportsProducts?: Array<{ __typename?: 'CSupportsProducts', supportsProduct?: { __typename?: 'CProducts', name: string, id: string, root?: { __typename?: 'CRoots', slug: string } | null } | null }> | null, urls?: Array<{ __typename?: 'ProductUrls', url?: string | null, urlType?: { __typename?: 'CUrlTypes', name: string, id: string, definition: string } | null }> | null, productAssetRelationships?: Array<{ __typename?: 'CProductAssetRelationships', assetId: string, asset?: { __typename?: 'CAssets', name: string, id: string, assetType?: { __typename?: 'CAssetTypes', name: string } | null, root?: { __typename?: 'CRoots', slug: string } | null } | null, assetSupportType?: { __typename?: 'CAssetSupportTypes', name: string } | null, product?: { __typename?: 'CProducts', name: string, id: string, description: string } | null }> | null } & { ' $fragmentName'?: 'ProductFieldsFragmentFragment' };
 
 export type ProfileHeadingFragmentFragment = { __typename?: 'CProfileInfos', logo: string, name: string, urls?: Array<{ __typename?: 'ProfileInfoUrls', url?: string | null, urlType?: { __typename?: 'CUrlTypes', name: string } | null }> | null, root?: { __typename?: 'CRoots', socials?: Array<{ __typename?: 'CSocials', name: string, socialType?: { __typename?: 'CSocialTypes', name: string } | null, urls?: Array<{ __typename?: 'SocialUrls', url?: string | null }> | null }> | null } | null } & { ' $fragmentName'?: 'ProfileHeadingFragmentFragment' };
 
@@ -2951,71 +2951,95 @@ export type GetProductTypeOptionsQueryVariables = Exact<{
 
 export type GetProductTypeOptionsQuery = { __typename?: 'Query', productTypes?: Array<{ __typename?: 'CProductTypes', label: string, value: string, description: string }> | null };
 
-export type GetTagsOptionsQueryVariables = Exact<{ [key: string]: never; }>;
+export type GetTagsOptionsQueryVariables = Exact<{
+  where?: InputMaybe<CTagsBoolExp>;
+}>;
 
 
 export type GetTagsOptionsQuery = { __typename?: 'Query', tags?: Array<{ __typename?: 'CTags', description: string, value: string, label: string }> | null };
 
-export type GetProfileTypeOptionsQueryVariables = Exact<{ [key: string]: never; }>;
+export type GetProfileTypeOptionsQueryVariables = Exact<{
+  where?: InputMaybe<CProfileTypesBoolExp>;
+}>;
 
 
 export type GetProfileTypeOptionsQuery = { __typename?: 'Query', profileTypes?: Array<{ __typename?: 'CProfileTypes', label: string, value: string, description: string }> | null };
 
-export type GetProfileSectorsOptionsQueryVariables = Exact<{ [key: string]: never; }>;
+export type GetProfileSectorsOptionsQueryVariables = Exact<{
+  where?: InputMaybe<CProfileSectorsBoolExp>;
+}>;
 
 
 export type GetProfileSectorsOptionsQuery = { __typename?: 'Query', profileSectors?: Array<{ __typename?: 'CProfileSectors', label: string, value: string, description: string }> | null };
 
-export type GetProfileStatusesOptionsQueryVariables = Exact<{ [key: string]: never; }>;
+export type GetProfileStatusesOptionsQueryVariables = Exact<{
+  where?: InputMaybe<CProfileStatusesBoolExp>;
+}>;
 
 
 export type GetProfileStatusesOptionsQuery = { __typename?: 'Query', profileStatuses?: Array<{ __typename?: 'CProfileStatuses', label: string, value: string, description: string }> | null };
 
-export type GetProductStatusesOptionsQueryVariables = Exact<{ [key: string]: never; }>;
+export type GetProductStatusesOptionsQueryVariables = Exact<{
+  where?: InputMaybe<CProductStatusesBoolExp>;
+}>;
 
 
 export type GetProductStatusesOptionsQuery = { __typename?: 'Query', productStatuses?: Array<{ __typename?: 'CProductStatuses', label: string, value: string, description: string }> | null };
 
 export type GetSupportsProductsOptionsQueryVariables = Exact<{
   supportsProductsWhere?: InputMaybe<CSupportsProductsBoolExp>;
+  where?: InputMaybe<CProductsBoolExp>;
 }>;
 
 
-export type GetSupportsProductsOptionsQuery = { __typename?: 'Query', supportsProducts?: Array<{ __typename?: 'CSupportsProducts', supportsProduct?: { __typename?: 'CProducts', name: string, id: string, description: string } | null }> | null };
+export type GetSupportsProductsOptionsQuery = { __typename?: 'Query', supportsProducts?: Array<{ __typename?: 'CSupportsProducts', supportsProduct?: { __typename?: 'CProducts', name: string, id: string, description: string } | null }> | null, products?: Array<{ __typename?: 'CProducts', id: string }> | null };
 
-export type GetDeployedOnProductsOptionsQueryVariables = Exact<{
-  deployedOnProductsWhere?: InputMaybe<CProductsBoolExp>;
+export type GetAssetTickerOptionsQueryVariables = Exact<{
+  where?: InputMaybe<CAssetsBoolExp>;
 }>;
-
-
-export type GetDeployedOnProductsOptionsQuery = { __typename?: 'Query', deployedOnProducts?: Array<{ __typename?: 'CProducts', description: string, label: string, value: string }> | null };
-
-export type GetAssetTypeOptionsQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type GetAssetTypeOptionsQuery = { __typename?: 'Query', assetTypes?: Array<{ __typename?: 'CAssetTypes', label: string, value: string, description: string }> | null };
-
-export type GetAssetTickerOptionsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type GetAssetTickerOptionsQuery = { __typename?: 'Query', assets?: Array<{ __typename?: 'CAssets', ticker: string }> | null };
 
-export type GetAssetStandardOptionsQueryVariables = Exact<{ [key: string]: never; }>;
+export type GetDeployedOnProductsOptionsQueryVariables = Exact<{
+  deployedOnProductsWhere?: InputMaybe<CProductsBoolExp>;
+  where?: InputMaybe<CProductsBoolExp>;
+}>;
+
+
+export type GetDeployedOnProductsOptionsQuery = { __typename?: 'Query', deployedOnProducts?: Array<{ __typename?: 'CProducts', description: string, label: string, value: string }> | null, products?: Array<{ __typename?: 'CProducts', id: string }> | null };
+
+export type GetAssetTypeOptionsQueryVariables = Exact<{
+  where?: InputMaybe<CAssetTypesBoolExp>;
+}>;
+
+
+export type GetAssetTypeOptionsQuery = { __typename?: 'Query', assetTypes?: Array<{ __typename?: 'CAssetTypes', label: string, value: string, description: string }> | null };
+
+export type GetAssetStandardOptionsQueryVariables = Exact<{
+  where?: InputMaybe<CAssetStandardsBoolExp>;
+}>;
 
 
 export type GetAssetStandardOptionsQuery = { __typename?: 'Query', assetStandards?: Array<{ __typename?: 'CAssetStandards', label: string, value: string, description: string }> | null };
 
-export type GetEntityTypeOptionsQueryVariables = Exact<{ [key: string]: never; }>;
+export type GetEntityTypeOptionsQueryVariables = Exact<{
+  where?: InputMaybe<CEntityTypesBoolExp>;
+}>;
 
 
 export type GetEntityTypeOptionsQuery = { __typename?: 'Query', entityTypes?: Array<{ __typename?: 'CEntityTypes', label: string, value: string, description: string }> | null };
 
-export type GetEntityNameOptionsQueryVariables = Exact<{ [key: string]: never; }>;
+export type GetEntityNameOptionsQueryVariables = Exact<{
+  where?: InputMaybe<CEntitiesBoolExp>;
+}>;
 
 
 export type GetEntityNameOptionsQuery = { __typename?: 'Query', entities?: Array<{ __typename?: 'CEntities', label: string, value: string }> | null };
 
-export type GetEntityCountryOptionsQueryVariables = Exact<{ [key: string]: never; }>;
+export type GetEntityCountryOptionsQueryVariables = Exact<{
+  where?: InputMaybe<CCountriesBoolExp>;
+}>;
 
 
 export type GetEntityCountryOptionsQuery = { __typename?: 'Query', countries?: Array<{ __typename?: 'CCountries', label: string, value: string }> | null };
@@ -3182,6 +3206,27 @@ export const ProductFieldsFragmentFragmentDoc = new TypedDocumentString(`
       name
       id
       definition
+    }
+  }
+  productAssetRelationships {
+    assetId
+    asset {
+      name
+      id
+      assetType {
+        name
+      }
+      root {
+        slug
+      }
+    }
+    assetSupportType {
+      name
+    }
+    product {
+      name
+      id
+      description
     }
   }
 }
@@ -3441,6 +3486,27 @@ fragment ProductFieldsFragment on CProducts {
       definition
     }
   }
+  productAssetRelationships {
+    assetId
+    asset {
+      name
+      id
+      assetType {
+        name
+      }
+      root {
+        slug
+      }
+    }
+    assetSupportType {
+      name
+    }
+    product {
+      name
+      id
+      description
+    }
+  }
 }`, {"fragmentName":"ProfileCardFragment"}) as unknown as TypedDocumentString<ProfileCardFragmentFragment, unknown>;
 export const GetProfileDataDocument = new TypedDocumentString(`
     query getProfileData($where: CProfileInfosBoolExp) {
@@ -3646,6 +3712,27 @@ fragment ProductFieldsFragment on CProducts {
       definition
     }
   }
+  productAssetRelationships {
+    assetId
+    asset {
+      name
+      id
+      assetType {
+        name
+      }
+      root {
+        slug
+      }
+    }
+    assetSupportType {
+      name
+    }
+    product {
+      name
+      id
+      description
+    }
+  }
 }
 fragment ProfileHeadingFragment on CProfileInfos {
   logo
@@ -3794,6 +3881,27 @@ fragment ProductFieldsFragment on CProducts {
       definition
     }
   }
+  productAssetRelationships {
+    assetId
+    asset {
+      name
+      id
+      assetType {
+        name
+      }
+      root {
+        slug
+      }
+    }
+    assetSupportType {
+      name
+    }
+    product {
+      name
+      id
+      description
+    }
+  }
 }
 fragment ProfileCardFragment on CProfileInfos {
   name
@@ -3899,8 +4007,8 @@ export const GetProductTypeOptionsDocument = new TypedDocumentString(`
 }
     `) as unknown as TypedDocumentString<GetProductTypeOptionsQuery, GetProductTypeOptionsQueryVariables>;
 export const GetTagsOptionsDocument = new TypedDocumentString(`
-    query getTagsOptions {
-  tags {
+    query getTagsOptions($where: CTagsBoolExp) {
+  tags(where: $where) {
     value: id
     label: name
     description
@@ -3908,8 +4016,8 @@ export const GetTagsOptionsDocument = new TypedDocumentString(`
 }
     `) as unknown as TypedDocumentString<GetTagsOptionsQuery, GetTagsOptionsQueryVariables>;
 export const GetProfileTypeOptionsDocument = new TypedDocumentString(`
-    query getProfileTypeOptions {
-  profileTypes {
+    query getProfileTypeOptions($where: CProfileTypesBoolExp) {
+  profileTypes(where: $where) {
     label: name
     value: id
     description: definition
@@ -3917,8 +4025,8 @@ export const GetProfileTypeOptionsDocument = new TypedDocumentString(`
 }
     `) as unknown as TypedDocumentString<GetProfileTypeOptionsQuery, GetProfileTypeOptionsQueryVariables>;
 export const GetProfileSectorsOptionsDocument = new TypedDocumentString(`
-    query getProfileSectorsOptions {
-  profileSectors {
+    query getProfileSectorsOptions($where: CProfileSectorsBoolExp) {
+  profileSectors(where: $where) {
     label: name
     value: id
     description: definition
@@ -3926,8 +4034,8 @@ export const GetProfileSectorsOptionsDocument = new TypedDocumentString(`
 }
     `) as unknown as TypedDocumentString<GetProfileSectorsOptionsQuery, GetProfileSectorsOptionsQueryVariables>;
 export const GetProfileStatusesOptionsDocument = new TypedDocumentString(`
-    query getProfileStatusesOptions {
-  profileStatuses {
+    query getProfileStatusesOptions($where: CProfileStatusesBoolExp) {
+  profileStatuses(where: $where) {
     label: name
     value: id
     description: definition
@@ -3935,8 +4043,8 @@ export const GetProfileStatusesOptionsDocument = new TypedDocumentString(`
 }
     `) as unknown as TypedDocumentString<GetProfileStatusesOptionsQuery, GetProfileStatusesOptionsQueryVariables>;
 export const GetProductStatusesOptionsDocument = new TypedDocumentString(`
-    query getProductStatusesOptions {
-  productStatuses {
+    query getProductStatusesOptions($where: CProductStatusesBoolExp) {
+  productStatuses(where: $where) {
     label: name
     value: id
     description: definition
@@ -3944,7 +4052,7 @@ export const GetProductStatusesOptionsDocument = new TypedDocumentString(`
 }
     `) as unknown as TypedDocumentString<GetProductStatusesOptionsQuery, GetProductStatusesOptionsQueryVariables>;
 export const GetSupportsProductsOptionsDocument = new TypedDocumentString(`
-    query getSupportsProductsOptions($supportsProductsWhere: CSupportsProductsBoolExp) {
+    query getSupportsProductsOptions($supportsProductsWhere: CSupportsProductsBoolExp, $where: CProductsBoolExp) {
   supportsProducts(where: $supportsProductsWhere) {
     supportsProduct {
       name
@@ -3952,36 +4060,42 @@ export const GetSupportsProductsOptionsDocument = new TypedDocumentString(`
       description
     }
   }
+  products(where: $where) {
+    id
+  }
 }
     `) as unknown as TypedDocumentString<GetSupportsProductsOptionsQuery, GetSupportsProductsOptionsQueryVariables>;
+export const GetAssetTickerOptionsDocument = new TypedDocumentString(`
+    query getAssetTickerOptions($where: CAssetsBoolExp) {
+  assets(where: $where) {
+    ticker
+  }
+}
+    `) as unknown as TypedDocumentString<GetAssetTickerOptionsQuery, GetAssetTickerOptionsQueryVariables>;
 export const GetDeployedOnProductsOptionsDocument = new TypedDocumentString(`
-    query getDeployedOnProductsOptions($deployedOnProductsWhere: CProductsBoolExp) {
+    query getDeployedOnProductsOptions($deployedOnProductsWhere: CProductsBoolExp, $where: CProductsBoolExp) {
   deployedOnProducts: products(where: $deployedOnProductsWhere) {
     label: name
     value: id
     description
   }
+  products(where: $where) {
+    id
+  }
 }
     `) as unknown as TypedDocumentString<GetDeployedOnProductsOptionsQuery, GetDeployedOnProductsOptionsQueryVariables>;
 export const GetAssetTypeOptionsDocument = new TypedDocumentString(`
-    query getAssetTypeOptions {
-  assetTypes {
+    query getAssetTypeOptions($where: CAssetTypesBoolExp) {
+  assetTypes(where: $where) {
     label: name
     value: id
     description: definition
   }
 }
     `) as unknown as TypedDocumentString<GetAssetTypeOptionsQuery, GetAssetTypeOptionsQueryVariables>;
-export const GetAssetTickerOptionsDocument = new TypedDocumentString(`
-    query getAssetTickerOptions {
-  assets {
-    ticker
-  }
-}
-    `) as unknown as TypedDocumentString<GetAssetTickerOptionsQuery, GetAssetTickerOptionsQueryVariables>;
 export const GetAssetStandardOptionsDocument = new TypedDocumentString(`
-    query getAssetStandardOptions {
-  assetStandards {
+    query getAssetStandardOptions($where: CAssetStandardsBoolExp) {
+  assetStandards(where: $where) {
     label: name
     value: id
     description: definition
@@ -3989,8 +4103,8 @@ export const GetAssetStandardOptionsDocument = new TypedDocumentString(`
 }
     `) as unknown as TypedDocumentString<GetAssetStandardOptionsQuery, GetAssetStandardOptionsQueryVariables>;
 export const GetEntityTypeOptionsDocument = new TypedDocumentString(`
-    query getEntityTypeOptions {
-  entityTypes {
+    query getEntityTypeOptions($where: CEntityTypesBoolExp) {
+  entityTypes(where: $where) {
     label: name
     value: id
     description: definition
@@ -3998,16 +4112,16 @@ export const GetEntityTypeOptionsDocument = new TypedDocumentString(`
 }
     `) as unknown as TypedDocumentString<GetEntityTypeOptionsQuery, GetEntityTypeOptionsQueryVariables>;
 export const GetEntityNameOptionsDocument = new TypedDocumentString(`
-    query getEntityNameOptions {
-  entities {
+    query getEntityNameOptions($where: CEntitiesBoolExp) {
+  entities(where: $where) {
     label: name
     value: id
   }
 }
     `) as unknown as TypedDocumentString<GetEntityNameOptionsQuery, GetEntityNameOptionsQueryVariables>;
 export const GetEntityCountryOptionsDocument = new TypedDocumentString(`
-    query getEntityCountryOptions {
-  countries {
+    query getEntityCountryOptions($where: CCountriesBoolExp) {
+  countries(where: $where) {
     label: name
     value: id
   }

@@ -79,6 +79,27 @@ export const ProductFragment = graphql(`
         definition
       }
     }
+    productAssetRelationships {
+      assetId
+      asset {
+        name
+        id
+        assetType {
+          name
+        }
+        root {
+          slug
+        }
+      }
+      assetSupportType {
+        name
+      }
+      product {
+        name
+        id
+        description
+      }
+    }
   }
 `);
 
@@ -162,6 +183,26 @@ export const ProductCard = ({
                       )
                     }
                     value={supportsProduct.supportsProduct?.name}
+                  />
+                </div>
+              ))
+            : '-'
+        },
+        {
+          label: 'Asset relationships',
+          fullWidth: true,
+          children: Boolean(product?.productAssetRelationships?.length)
+            ? product?.productAssetRelationships?.map(relationship => (
+                <div className="flex gap-2" key={relationship.assetId}>
+                  <DeepLinkBadge
+                    icon={<Package size={16} />}
+                    href={
+                      relationship.asset?.root?.slug &&
+                      paths.profile.detail(relationship.asset?.root?.slug, {
+                        section: 'assets'
+                      })
+                    }
+                    value={`${relationship.asset?.name} | Support type: ${relationship.assetSupportType?.name}`}
                   />
                 </div>
               ))

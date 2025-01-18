@@ -7,7 +7,8 @@ import { execute } from '@/lib/graphql/execute';
 import { graphql } from '@/lib/graphql/generated';
 import { z } from 'zod';
 import { createParser } from 'nuqs';
-export type Filters = ReturnType<typeof useProfileFilters>;
+import { useRef } from 'react';
+import deepmerge from 'deepmerge';
 
 const validateAndFormatOptions = <T>(options: unknown) => {
   const optionsSchema = z.array(
@@ -39,7 +40,28 @@ const parseAsId = createParser({
   }
 });
 
-export const useProfileFilters = () => {
+/**
+ * Helper to build a merged "where" condition across all multiselect filters,
+ * so that each filter's options change according to other filters' selections.
+ */
+function buildMultiselectWhere(
+  filters?: Filters['filters']
+): CProfileInfosBoolExp {
+  // Collect conditions from each filter that has type “multiselect.”
+  const conditions = Object.values(filters ?? {})
+    .filter(f => f.type === 'multiselect')
+    .map(f => f.getOptionsQueryConditions?.() || {})
+    .filter(Boolean);
+
+  // Deep-merge them into a single combined where object.
+  return deepmerge.all<CProfileInfosBoolExp>(
+    conditions as CProfileInfosBoolExp[]
+  );
+}
+
+export type Filters = ReturnType<typeof useProfileFilters>;
+
+export function useProfileFilters() {
   const [queryParams, setQueryParams] = useQueryStates(
     {
       productTypes: parseAsArrayOf(parseAsId).withDefault([]),
@@ -64,12 +86,21 @@ export const useProfileFilters = () => {
     { clearOnDefault: true, throttleMs: 1000 }
   );
 
+  // This ref holds references to all filters so that within each filter's "getOptions",
+  // we can build cross-dependent queries. We type it as record of FilterInstance.
+  const filtersRef = useRef<Filters['filters']>();
+
   /*************************************
    * CHECKBOX GRID FILTERS
    *************************************/
   const productTypesFilter = useFilter<string, string>({
     id: 'productTypes',
+    type: 'multiselect',
+    optionsQueryDeps: [queryParams],
+    initialValue: queryParams.productTypes,
+    onChange: newValue => setQueryParams({ productTypes: newValue }),
     getOptions: async () => {
+      const where = buildMultiselectWhere(filtersRef.current);
       const data = await execute(
         graphql(`
           query getProductTypeOptions($where: CProductTypesBoolExp) {
@@ -80,13 +111,10 @@ export const useProfileFilters = () => {
             }
           }
         `),
-        { where: {} }
+        { where }
       );
       return validateAndFormatOptions(data?.productTypes);
     },
-    type: 'multiselect',
-    initialValue: queryParams.productTypes,
-    onChange: newValue => setQueryParams({ productTypes: newValue }),
     getQueryConditions: value => ({
       root: {
         products: {
@@ -99,25 +127,38 @@ export const useProfileFilters = () => {
   const tagsFilter = useFilter<string, string>({
     id: 'tags',
     type: 'multiselect',
+    optionsQueryDeps: [queryParams],
     initialValue: queryParams.tags,
+    onChange: newValue => setQueryParams({ tags: newValue }),
     getOptions: async () => {
+      const { tagsFilter, ...others } = filtersRef.current as any;
+      const where = buildMultiselectWhere(others);
       const data = await execute(
         graphql(`
-          query getTagsOptions {
-            tags {
+          query getTagsOptions($where: CTagsBoolExp) {
+            tags(where: $where) {
               value: id
               label: name
               description
             }
           }
-        `)
+        `),
+        { where }
       );
       return validateAndFormatOptions(data?.tags);
     },
-    onChange: newValue => setQueryParams({ tags: newValue }),
     getQueryConditions: value => ({
       root: {
         profileTags: { tagId: { _in: value } }
+      }
+    }),
+    getOptionsQueryConditions: value => ({
+      products: {
+        root: {
+          profileInfos: {
+            root: { profileTags: { tagId: { _in: value } } }
+          }
+        }
       }
     })
   });
@@ -151,21 +192,23 @@ export const useProfileFilters = () => {
     id: 'profileType',
     type: 'multiselect',
     initialValue: queryParams.profileType,
+    onChange: newValue => setQueryParams({ profileType: newValue }),
     getOptions: async () => {
+      const where = buildMultiselectWhere(filtersRef.current);
       const data = await execute(
         graphql(`
-          query getProfileTypeOptions {
-            profileTypes {
+          query getProfileTypeOptions($where: CProfileTypesBoolExp) {
+            profileTypes(where: $where) {
               label: name
               value: id
               description: definition
             }
           }
-        `)
+        `),
+        { where }
       );
       return validateAndFormatOptions(data?.profileTypes);
     },
-    onChange: newValue => setQueryParams({ profileType: newValue }),
     getQueryConditions: value => ({
       profileType: { id: { _in: value } }
     })
@@ -175,21 +218,25 @@ export const useProfileFilters = () => {
     id: 'profileSectors',
     type: 'multiselect',
     initialValue: queryParams.profileSectors,
+    optionsQueryDeps: [queryParams],
+    onChange: newValue => setQueryParams({ profileSectors: newValue }),
     getOptions: async () => {
+      const where = buildMultiselectWhere(filtersRef.current);
+      console.log('where', where);
       const data = await execute(
         graphql(`
-          query getProfileSectorsOptions {
-            profileSectors {
+          query getProfileSectorsOptions($where: CProfileSectorsBoolExp) {
+            profileSectors(where: $where) {
               label: name
               value: id
               description: definition
             }
           }
-        `)
+        `),
+        { where }
       );
       return validateAndFormatOptions(data?.profileSectors);
     },
-    onChange: newValue => setQueryParams({ profileSectors: newValue }),
     getQueryConditions: value => ({
       profileSector: { id: { _in: value } }
     })
@@ -199,21 +246,23 @@ export const useProfileFilters = () => {
     id: 'profileStatuses',
     type: 'multiselect',
     initialValue: queryParams.profileStatuses,
+    onChange: newValue => setQueryParams({ profileStatuses: newValue }),
     getOptions: async () => {
+      const where = buildMultiselectWhere(filtersRef.current);
       const data = await execute(
         graphql(`
-          query getProfileStatusesOptions {
-            profileStatuses {
+          query getProfileStatusesOptions($where: CProfileStatusesBoolExp) {
+            profileStatuses(where: $where) {
               label: name
               value: id
               description: definition
             }
           }
-        `)
+        `),
+        { where }
       );
       return validateAndFormatOptions(data?.profileStatuses);
     },
-    onChange: newValue => setQueryParams({ profileStatuses: newValue }),
     getQueryConditions: value => ({
       profileStatus: { id: { _in: value } }
     })
@@ -239,21 +288,23 @@ export const useProfileFilters = () => {
     id: 'productStatus',
     type: 'multiselect',
     initialValue: queryParams.productStatus,
+    onChange: newValue => setQueryParams({ productStatus: newValue }),
     getOptions: async () => {
+      const where = buildMultiselectWhere(filtersRef.current);
       const data = await execute(
         graphql(`
-          query getProductStatusesOptions {
-            productStatuses {
+          query getProductStatusesOptions($where: CProductStatusesBoolExp) {
+            productStatuses(where: $where) {
               label: name
               value: id
               description: definition
             }
           }
-        `)
+        `),
+        { where }
       );
       return validateAndFormatOptions(data?.productStatuses);
     },
-    onChange: newValue => setQueryParams({ productStatus: newValue }),
     getQueryConditions: value => ({
       root: {
         products: {
@@ -267,11 +318,14 @@ export const useProfileFilters = () => {
     id: 'supportsProducts',
     type: 'multiselect',
     initialValue: queryParams.productSupports,
+    onChange: newValue => setQueryParams({ productSupports: newValue }),
     getOptions: async () => {
+      const where = buildMultiselectWhere(filtersRef.current);
       const data = await execute(
         graphql(`
           query getSupportsProductsOptions(
             $supportsProductsWhere: CSupportsProductsBoolExp
+            $where: CProductsBoolExp
           ) {
             supportsProducts(where: $supportsProductsWhere) {
               supportsProduct {
@@ -280,25 +334,27 @@ export const useProfileFilters = () => {
                 description
               }
             }
+            products(where: $where) {
+              # If you need more product data for other merges
+              id
+            }
           }
         `),
         {
           supportsProductsWhere: {
             ...(isNotEmpty(siteConfig.blockchainIds) && {
               supportsProduct: {
-                id: {
-                  _in: siteConfig.blockchainIds
-                }
+                id: { _in: siteConfig.blockchainIds }
               }
             })
-          }
+          },
+          where
         }
       );
-      //@todo: API REQUEST we are filtering products by distinct id in the FE, we might wanna move this to the query but is not supported at the moment
       const options = Array.from(
         new Map(
           (data?.supportsProducts ?? [])
-            ?.map(item => ({
+            .map(item => ({
               value: item.supportsProduct?.id,
               label: item.supportsProduct?.name ?? ' - ',
               description: item.supportsProduct?.description ?? ' - '
@@ -308,13 +364,48 @@ export const useProfileFilters = () => {
       );
       return validateAndFormatOptions(options);
     },
-    onChange: newValue => setQueryParams({ productSupports: newValue }),
     getQueryConditions: value => ({
       root: {
         products: {
           supportsProducts: {
             supportsProductId: { _in: value }
           }
+        }
+      }
+    })
+  });
+
+  const productAssetRelationshipsFilter = useFilter<string, string>({
+    id: 'productAssetRelationships',
+    type: 'multiselect',
+    initialValue: queryParams.productStatus,
+    onChange: newValue => setQueryParams({ productStatus: newValue }),
+    getOptions: async () => {
+      const where = buildMultiselectWhere(filtersRef.current);
+      const data = await execute(
+        graphql(`
+          query getAssetTickerOptions($where: CAssetsBoolExp) {
+            assets(where: $where) {
+              ticker
+            }
+          }
+        `),
+        { where }
+      );
+      const options = data?.assets
+        ?.map(item => item.ticker)
+        .filter(ticker => ticker && ticker !== '')
+        .map(ticker => ({
+          value: ticker,
+          label: ticker,
+          description: null
+        }));
+      return validateAndFormatOptions(options);
+    },
+    getQueryConditions: value => ({
+      root: {
+        products: {
+          productAssetRelationships: { asset: { ticker: { _in: value } } }
         }
       }
     })
@@ -341,16 +432,23 @@ export const useProfileFilters = () => {
     id: 'productDeployedOn',
     type: 'multiselect',
     initialValue: queryParams.productDeployedOn,
+    onChange: newValue => setQueryParams({ productDeployedOn: newValue }),
     getOptions: async () => {
+      const where = buildMultiselectWhere(filtersRef.current);
       const data = await execute(
         graphql(`
           query getDeployedOnProductsOptions(
             $deployedOnProductsWhere: CProductsBoolExp
+            $where: CProductsBoolExp
           ) {
             deployedOnProducts: products(where: $deployedOnProductsWhere) {
               label: name
               value: id
               description
+            }
+            products(where: $where) {
+              # Additional fields if needed
+              id
             }
           }
         `),
@@ -374,12 +472,12 @@ export const useProfileFilters = () => {
                 ]
               }
             }
-          }
+          },
+          where
         }
       );
       return validateAndFormatOptions(data?.deployedOnProducts);
     },
-    onChange: newValue => setQueryParams({ productDeployedOn: newValue }),
     getQueryConditions: value => ({
       root: {
         products: {
@@ -398,21 +496,23 @@ export const useProfileFilters = () => {
     id: 'assetType',
     type: 'multiselect',
     initialValue: queryParams.assetType,
+    onChange: newValue => setQueryParams({ assetType: newValue }),
     getOptions: async () => {
+      const where = buildMultiselectWhere(filtersRef.current);
       const data = await execute(
         graphql(`
-          query getAssetTypeOptions {
-            assetTypes {
+          query getAssetTypeOptions($where: CAssetTypesBoolExp) {
+            assetTypes(where: $where) {
               label: name
               value: id
               description: definition
             }
           }
-        `)
+        `),
+        { where }
       );
       return validateAndFormatOptions(data?.assetTypes);
     },
-    onChange: newValue => setQueryParams({ assetType: newValue }),
     getQueryConditions: value => ({
       root: {
         assets: {
@@ -426,15 +526,18 @@ export const useProfileFilters = () => {
     id: 'assetTicker',
     type: 'multiselect',
     initialValue: queryParams.assetTicker,
+    onChange: newValue => setQueryParams({ assetTicker: newValue }),
     getOptions: async () => {
+      const where = buildMultiselectWhere(filtersRef.current);
       const data = await execute(
         graphql(`
-          query getAssetTickerOptions {
-            assets {
+          query getAssetTickerOptions($where: CAssetsBoolExp) {
+            assets(where: $where) {
               ticker
             }
           }
-        `)
+        `),
+        { where }
       );
       const options = data?.assets
         ?.map(item => item.ticker)
@@ -446,7 +549,6 @@ export const useProfileFilters = () => {
         }));
       return validateAndFormatOptions(options);
     },
-    onChange: newValue => setQueryParams({ assetTicker: newValue }),
     getQueryConditions: value => ({
       root: {
         assets: {
@@ -460,8 +562,52 @@ export const useProfileFilters = () => {
     id: 'assetDeployedOn',
     type: 'multiselect',
     initialValue: queryParams.assetDeployedOn,
-    options: productDeployedOnFilter.options,
     onChange: newValue => setQueryParams({ assetDeployedOn: newValue }),
+    getOptions: async () => {
+      const where = buildMultiselectWhere(filtersRef.current);
+      const data = await execute(
+        graphql(`
+          query getDeployedOnProductsOptions(
+            $deployedOnProductsWhere: CProductsBoolExp
+            $where: CProductsBoolExp
+          ) {
+            deployedOnProducts: products(where: $deployedOnProductsWhere) {
+              label: name
+              value: id
+              description
+            }
+            products(where: $where) {
+              # Additional fields if needed
+              id
+            }
+          }
+        `),
+        {
+          deployedOnProductsWhere: {
+            root: {
+              products: {
+                ...(isNotEmpty(siteConfig.blockchainIds) && {
+                  productDeployments: {
+                    productId: { _in: siteConfig.blockchainIds }
+                  }
+                }),
+                _or: [
+                  {
+                    ...(isNotEmpty(siteConfig.blockchainProductTypeIds) && {
+                      productTypeId: {
+                        _in: siteConfig.blockchainProductTypeIds
+                      }
+                    })
+                  }
+                ]
+              }
+            }
+          },
+          where
+        }
+      );
+      return validateAndFormatOptions(data?.deployedOnProducts);
+    },
     getQueryConditions: value => ({
       root: {
         assets: {
@@ -480,21 +626,24 @@ export const useProfileFilters = () => {
     type: 'multiselect',
     enabled: false,
     initialValue: queryParams.assetStandard,
+    onChange: newValue => setQueryParams({ assetStandard: newValue }),
     getOptions: async () => {
+      const { assetDeployedOnFilter, ...filters } = filtersRef.current as any;
+      const where = buildMultiselectWhere(filters);
       const data = await execute(
         graphql(`
-          query getAssetStandardOptions {
-            assetStandards {
+          query getAssetStandardOptions($where: CAssetStandardsBoolExp) {
+            assetStandards(where: $where) {
               label: name
               value: id
               description: definition
             }
           }
-        `)
+        `),
+        { where }
       );
       return validateAndFormatOptions(data?.assetStandards);
-    },
-    onChange: newValue => setQueryParams({ assetStandard: newValue })
+    }
     // getQueryConditions: value => ({
     //   root: {
     //     assets: {
@@ -511,21 +660,23 @@ export const useProfileFilters = () => {
     id: 'entityType',
     type: 'multiselect',
     initialValue: queryParams.entityType,
+    onChange: newValue => setQueryParams({ entityType: newValue }),
     getOptions: async () => {
+      const where = buildMultiselectWhere(filtersRef.current);
       const data = await execute(
         graphql(`
-          query getEntityTypeOptions {
-            entityTypes {
+          query getEntityTypeOptions($where: CEntityTypesBoolExp) {
+            entityTypes(where: $where) {
               label: name
               value: id
               description: definition
             }
           }
-        `)
+        `),
+        { where }
       );
       return validateAndFormatOptions(data?.entityTypes);
     },
-    onChange: newValue => setQueryParams({ entityType: newValue }),
     getQueryConditions: value => ({
       root: {
         entities: {
@@ -539,20 +690,22 @@ export const useProfileFilters = () => {
     id: 'entityName',
     type: 'multiselect',
     initialValue: queryParams.entityName,
+    onChange: newValue => setQueryParams({ entityName: newValue }),
     getOptions: async () => {
+      const where = buildMultiselectWhere(filtersRef.current);
       const data = await execute(
         graphql(`
-          query getEntityNameOptions {
-            entities {
+          query getEntityNameOptions($where: CEntitiesBoolExp) {
+            entities(where: $where) {
               label: name
               value: id
             }
           }
-        `)
+        `),
+        { where }
       );
       return validateAndFormatOptions(data?.entities);
     },
-    onChange: newValue => setQueryParams({ entityName: newValue }),
     getQueryConditions: value => ({
       root: {
         entities: {
@@ -566,20 +719,22 @@ export const useProfileFilters = () => {
     id: 'entityCountry',
     type: 'multiselect',
     initialValue: queryParams.entityCountry,
+    onChange: newValue => setQueryParams({ entityCountry: newValue }),
     getOptions: async () => {
+      const where = buildMultiselectWhere(filtersRef.current);
       const data = await execute(
         graphql(`
-          query getEntityCountryOptions {
-            countries {
+          query getEntityCountryOptions($where: CCountriesBoolExp) {
+            countries(where: $where) {
               label: name
               value: id
             }
           }
-        `)
+        `),
+        { where }
       );
       return validateAndFormatOptions(data?.countries);
     },
-    onChange: newValue => setQueryParams({ entityCountry: newValue }),
     getQueryConditions: value => ({
       root: {
         entities: {
@@ -589,6 +744,8 @@ export const useProfileFilters = () => {
     })
   });
 
+  // Collect all filters in an object and store in ref so we can access them
+  // from within each filter's getOptions.
   const filters = {
     searchFilter,
     profileTypeFilter,
@@ -607,30 +764,27 @@ export const useProfileFilters = () => {
     entityTypeFilter,
     entityNameFilter,
     entityCountryFilter,
-    tagsFilter
+    tagsFilter,
+    productAssetRelationshipsFilter
   };
 
-  const toQueryWhereFields = () => {
+  filtersRef.current = filters;
+
+  // Merge each filter’s conditions into a final “where” object.
+  const toQueryWhereFields = (): CProfileInfosBoolExp => {
     const conditions = Object.values(filters)
       .map(filter => filter.getQueryConditions?.())
       .filter((condition): condition is CProfileInfosBoolExp =>
         Boolean(condition)
       );
 
-    return conditions.reduce((acc, condition) => {
-      const newAcc = { ...acc };
-      if (condition.root) {
-        newAcc.root = {
-          ...newAcc.root,
-          ...condition.root
-        };
-      }
-      return { ...newAcc, ...condition };
-    }, {} as CProfileInfosBoolExp);
+    return deepmerge.all<CProfileInfosBoolExp>(
+      conditions as CProfileInfosBoolExp[]
+    );
   };
 
   return {
     filters,
     toQueryWhereFields
   };
-};
+}

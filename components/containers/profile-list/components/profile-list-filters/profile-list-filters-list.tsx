@@ -113,6 +113,17 @@ export const ProfileListFiltersList = () => {
             />
           )}
 
+          {filters.productDeployedOnFilter.enabled && (
+            <ComboBox
+              label="Supports Assets"
+              selected={filters.productAssetRelationshipsFilter.value}
+              onChange={options => {
+                filters.productAssetRelationshipsFilter.setValue(options);
+              }}
+              options={filters.productAssetRelationshipsFilter.options?.data}
+            />
+          )}
+
           {filters.supportsProductsFilter.enabled && (
             <ComboBox
               label="Supports Products"

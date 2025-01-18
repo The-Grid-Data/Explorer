@@ -17,10 +17,11 @@ type BaseFilterProps<T = unknown, O = unknown> = {
   enabled?: boolean;
   onChange?: (newValue: T) => void;
   getOptions?: () => Promise<Options<O>> | Options<O>;
-  options?: UseQueryResult<Options<O>, Error>;
+  optionsQueryDeps?: any[];
   getQueryConditions?: (
     value: NonNullable<T>
   ) => Partial<SearchProfilesQueryVariables['where']>;
+  getOptionsQueryConditions?: (value: NonNullable<T>) => any;
 };
 
 export type SearchFilterProps = BaseFilterProps<string> & {
@@ -52,29 +53,30 @@ export type BaseReturn = {
   getQueryConditions: () =>
     | Partial<SearchProfilesQueryVariables['where']>
     | undefined;
+  getOptionsQueryConditions: () => any | undefined;
 };
 
-type SearchReturn = BaseReturn & {
+export type SearchReturn = BaseReturn & {
   type: 'search';
   value: string;
   setValue: (newValue: string) => void;
 };
 
-type SelectReturn<T, O> = BaseReturn & {
+export type SelectReturn<T, O> = BaseReturn & {
   type: 'select';
   value: T | null;
   setValue: (newValue: T | null) => void;
   options?: UseQueryResult<Options<O>, Error>;
 };
 
-type MultiSelectReturn<T, O> = BaseReturn & {
+export type MultiSelectReturn<T, O> = BaseReturn & {
   type: 'multiselect';
   value: T[];
   setValue: (newValue: T[]) => void;
   options?: UseQueryResult<Options<O>, Error>;
 };
 
-type RangeReturn<T> = BaseReturn & {
+export type RangeReturn<T> = BaseReturn & {
   type: 'range';
   value: [T, T] | null;
   setValue: (newValue: [T, T] | null) => void;
@@ -103,19 +105,22 @@ export function useFilter<T, O = unknown>(
     initialValue,
     onChange,
     getOptions,
-    options: providedOptions,
     getQueryConditions,
+    getOptionsQueryConditions,
+    optionsQueryDeps,
     enabled = true
   } = props;
 
   const [value, _setValue] = useState<typeof initialValue>(initialValue);
 
   const { data = [], ...options } = useQuery({
-    queryKey: [id],
+    queryKey: [id, JSON.stringify(optionsQueryDeps)],
     queryFn: () => getOptions?.(),
     initialData: [],
     enabled: !!getOptions
   });
+
+  console.log('data', data);
 
   const optionsQueryResult = { ...options, data };
 
@@ -128,30 +133,19 @@ export function useFilter<T, O = unknown>(
     setValue(null);
   };
 
+  const getConditions = (
+    conditionsFn: typeof getQueryConditions | typeof getOptionsQueryConditions
+  ) => {
+    if (!conditionsFn) return undefined;
+    if (!isNotEmpty(value)) return {};
+    return conditionsFn(value as any);
+  };
+
   const base = {
     enabled,
     reset,
-    getQueryConditions: () => {
-      if (!getQueryConditions) return undefined;
-      if (!value) return {};
-      if (Array.isArray(value) && !isNotEmpty(value)) return {};
-      if (typeof value === 'string' && !isNotEmpty(value)) return {};
-
-      if (type === 'search' && typeof value === 'string') {
-        return getQueryConditions(value);
-      }
-      if (type === 'select' && value !== null) {
-        return getQueryConditions(value as NonNullable<T>);
-      }
-      if (type === 'multiselect' && Array.isArray(value)) {
-        return getQueryConditions(value as NonNullable<T[]>);
-      }
-      if (type === 'range' && Array.isArray(value) && value.length === 2) {
-        return getQueryConditions(value as [NonNullable<T>, NonNullable<T>]);
-      }
-      return {};
-    },
-    options: providedOptions ?? optionsQueryResult
+    getQueryConditions: () => getConditions(getQueryConditions),
+    getOptionsQueryConditions: () => getConditions(getOptionsQueryConditions)
   };
 
   if (type === 'search') {
@@ -175,10 +169,7 @@ export function useFilter<T, O = unknown>(
       setValue: (newValue: T | null) => {
         setValue(newValue);
       },
-      options: (providedOptions ?? optionsQueryResult) as UseQueryResult<
-        Options<O>,
-        Error
-      >
+      options: optionsQueryResult as UseQueryResult<Options<O>, Error>
     };
   }
 
@@ -191,10 +182,7 @@ export function useFilter<T, O = unknown>(
       setValue: (newValue: T[]) => {
         setValue(newValue);
       },
-      options: (providedOptions ?? optionsQueryResult) as UseQueryResult<
-        Options<O>,
-        Error
-      >
+      options: optionsQueryResult as UseQueryResult<Options<O>, Error>
     };
   }
 
