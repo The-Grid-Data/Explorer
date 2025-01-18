@@ -3017,10 +3017,11 @@ export type GetProductTypeOptionsQuery = { __typename?: 'Query', productTypes?: 
 
 export type GetProfileSectorsOptionsQueryVariables = Exact<{
   where?: InputMaybe<CProfileSectorsBoolExp>;
+  profileInfosFilterInput?: InputMaybe<CProfileInfosFilterInput>;
 }>;
 
 
-export type GetProfileSectorsOptionsQuery = { __typename?: 'Query', profileSectors?: Array<{ __typename?: 'CProfileSectors', label: string, value: string, description: string }> | null };
+export type GetProfileSectorsOptionsQuery = { __typename?: 'Query', profileSectors?: Array<{ __typename?: 'CProfileSectors', label: string, value: string, description: string, profileInfosAggregate: { __typename?: 'CProfileInfosAggExp', _count: number } }> | null };
 
 export type GetProfileStatusesOptionsQueryVariables = Exact<{
   where?: InputMaybe<CProfileStatusesBoolExp>;
@@ -4092,11 +4093,14 @@ export const GetProductTypeOptionsDocument = new TypedDocumentString(`
 }
     `) as unknown as TypedDocumentString<GetProductTypeOptionsQuery, GetProductTypeOptionsQueryVariables>;
 export const GetProfileSectorsOptionsDocument = new TypedDocumentString(`
-    query getProfileSectorsOptions($where: CProfileSectorsBoolExp) {
+    query getProfileSectorsOptions($where: CProfileSectorsBoolExp, $profileInfosFilterInput: CProfileInfosFilterInput) {
   profileSectors(where: $where) {
     label: name
     value: id
     description: definition
+    profileInfosAggregate(filter_input: $profileInfosFilterInput) {
+      _count
+    }
   }
 }
     `) as unknown as TypedDocumentString<GetProfileSectorsOptionsQuery, GetProfileSectorsOptionsQueryVariables>;

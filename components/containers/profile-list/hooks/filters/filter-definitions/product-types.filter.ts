@@ -30,7 +30,9 @@ export const useProductTypesFilter = (filterStore: FiltersStore) => {
                 root: {
                   profileInfos: {
                     root: {
-                      profileTags: { tagId: { _in: filterStore.tagsFilter } }
+                      profileTags: {
+                        tagId: { _in: filterStore.tagsFilter }
+                      }
                     }
                   }
                 }

@@ -19,7 +19,7 @@ export const useAssetStandardFilter = (filterStore: FiltersStore) => {
     initialValue: value,
     onChange: newValue => setValue(newValue),
     getOptions: async () => {
-      const { assetDeployedOnFilter, ...filters } = filterStore as any;
+      // const { assetDeployedOnFilter, ...filters } = filterStore as any;
       const where = {};
       const data = await execute(
         graphql(`

@@ -68,7 +68,9 @@ export const useProductDeployedOnFilter = (filterStore: FiltersStore) => {
       root: {
         products: {
           productDeployments: {
-            deploymentId: { _in: value }
+            smartContractDeployment: {
+              deployedOnId: { _in: value }
+            }
           }
         }
       }

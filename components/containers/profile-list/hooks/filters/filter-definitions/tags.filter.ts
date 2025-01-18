@@ -1,5 +1,5 @@
 import { execute } from '@/lib/graphql/execute';
-import { useFilter, MultiSelectFilterProps } from '../../use-filter';
+import { useFilter } from '../../use-filter';
 import { validateAndFormatOptions, parseAsId } from '../utils';
 import { FiltersStore } from '../../use-profile-filters';
 import { useQueryState, parseAsArrayOf } from 'nuqs';

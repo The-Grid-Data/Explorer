@@ -9,7 +9,8 @@ export const validateAndFormatOptions = <T>(options: unknown) => {
     z.object({
       label: z.string(),
       value: z.string(),
-      description: z.string().nullable().optional()
+      description: z.string().nullable().optional(),
+      count: z.number().nullable().optional()
     })
   );
 

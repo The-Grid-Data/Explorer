@@ -7,7 +7,7 @@ import { isNotEmpty } from '@/lib/utils/is-not-empty';
 import { siteConfig } from '@/lib/site-config';
 import { graphql } from '@/lib/graphql/generated';
 
-const filterId = 'assetStandard';
+const filterId = 'assetDeployedOnFilter';
 
 export const useAssetDeployedOnFilter = (filterStore: FiltersStore) => {
   const [value, setValue] = useQueryState(

@@ -89,7 +89,7 @@ export const OptionList = <T,>({
             {options?.map(option => (
               <CommandItem
                 key={option.value?.toString()}
-                value={option.value as string}
+                value={option.label}
                 onSelect={() => {
                   // Determine if the option is already selected
                   const isSelected = selected?.includes(option.value);
