@@ -9,6 +9,7 @@ import {
   CTagsBoolExp,
   CProfileTagsBoolExp
 } from '@/lib/graphql/generated/graphql';
+import { siteConfig } from '@/lib/site-config';
 
 const filterId = 'tags';
 
@@ -94,12 +95,41 @@ function buildTagsWhere(filterStore: FiltersStore): CTagsBoolExp {
     });
   }
 
-  if (isNotEmpty(filterStore.productTypesFilter)) {
+  if (
+    isNotEmpty(filterStore.productTypesFilter) ||
+    isNotEmpty(siteConfig.overrideFilterValues.productTypes)
+  ) {
     conditions.push({
       profileTags: {
         root: {
           products: {
-            productTypeId: { _in: filterStore.productTypesFilter }
+            productTypeId: {
+              _in: [
+                ...filterStore.productTypesFilter,
+                ...siteConfig.overrideFilterValues.productTypes
+              ]
+            }
+          }
+        }
+      }
+    });
+  }
+
+  if (
+    isNotEmpty(filterStore.productAssetRelationshipsFilter) ||
+    isNotEmpty(siteConfig.overrideFilterValues.productAssetRelationships)
+  ) {
+    conditions.push({
+      profileTags: {
+        root: {
+          products: {
+            productAssetRelationships: {
+              asset: {
+                ticker: {
+                  _in: siteConfig.overrideFilterValues.productAssetRelationships
+                }
+              }
+            }
           }
         }
       }
@@ -131,6 +161,28 @@ function buildAggregateInput(filterStore: FiltersStore): CProfileTagsBoolExp {
       root: {
         products: {
           productTypeId: { _in: filterStore.productTypesFilter }
+        }
+      }
+    });
+  }
+
+  if (
+    isNotEmpty(filterStore.productAssetRelationshipsFilter) ||
+    isNotEmpty(siteConfig.overrideFilterValues.productAssetRelationships)
+  ) {
+    conditions.push({
+      root: {
+        products: {
+          productAssetRelationships: {
+            asset: {
+              ticker: {
+                _in: [
+                  ...filterStore.productAssetRelationshipsFilter,
+                  ...siteConfig.overrideFilterValues.productAssetRelationships
+                ]
+              }
+            }
+          }
         }
       }
     });

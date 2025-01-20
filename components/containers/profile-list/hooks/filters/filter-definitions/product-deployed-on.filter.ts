@@ -1,11 +1,12 @@
 import { execute } from '@/lib/graphql/execute';
-import { useFilter, MultiSelectFilterProps } from '../../use-filter';
-import { validateAndFormatOptions, parseAsId } from '../utils';
+import { useFilter } from '../../use-filter';
+import { validateAndFormatOptions, parseAsId, mergeConditions } from '../utils';
 import { FiltersStore } from '../../use-profile-filters';
 import { useQueryState, parseAsArrayOf } from 'nuqs';
-import { isNotEmpty } from '@/lib/utils/is-not-empty';
-import { siteConfig } from '@/lib/site-config';
 import { graphql } from '@/lib/graphql/generated';
+import { isNotEmpty } from '@/lib/utils/is-not-empty';
+import { CProductsBoolExp } from '@/lib/graphql/generated/graphql';
+import { siteConfig } from '@/lib/site-config';
 
 const filterId = 'productDeployedOn';
 
@@ -18,51 +19,32 @@ export const useProductDeployedOnFilter = (filterStore: FiltersStore) => {
   return useFilter<string, string>({
     id: filterId,
     type: 'multiselect',
+    optionsQueryDeps: [filterStore],
     initialValue: value,
     onChange: newValue => setValue(newValue),
     getOptions: async () => {
-      const where = {};
       const data = await execute(
         graphql(`
-          query getDeployedOnProductsOptions(
-            $deployedOnProductsWhere: CProductsBoolExp
-            $where: CProductsBoolExp
-          ) {
-            deployedOnProducts: products(where: $deployedOnProductsWhere) {
-              label: name
-              value: id
-              description
-            }
+          query getProductDeployedOnProductsOptions($where: CProductsBoolExp) {
             products(where: $where) {
+              name
               id
+              description
             }
           }
         `),
         {
-          deployedOnProductsWhere: {
-            root: {
-              products: {
-                ...(isNotEmpty(siteConfig.blockchainIds) && {
-                  productDeployments: {
-                    productId: { _in: siteConfig.blockchainIds }
-                  }
-                }),
-                _or: [
-                  {
-                    ...(isNotEmpty(siteConfig.blockchainProductTypeIds) && {
-                      productTypeId: {
-                        _in: siteConfig.blockchainProductTypeIds
-                      }
-                    })
-                  }
-                ]
-              }
-            }
-          },
-          where
+          where: buildDeployedOnProductsWhere(filterStore)
         }
       );
-      return validateAndFormatOptions(data?.deployedOnProducts);
+
+      const options = data?.products?.map(item => ({
+        label: item.name,
+        value: item.id,
+        description: item.description
+      }));
+
+      return validateAndFormatOptions(options);
     },
     getQueryConditions: value => ({
       root: {
@@ -77,3 +59,37 @@ export const useProductDeployedOnFilter = (filterStore: FiltersStore) => {
     })
   });
 };
+
+function buildDeployedOnProductsWhere(
+  filterStore: FiltersStore
+): CProductsBoolExp {
+  const conditions: CProductsBoolExp[] = [];
+
+  if (isNotEmpty(siteConfig.overrideFilterValues.productDeployedOn)) {
+    conditions.push({
+      root: {
+        products: {
+          productDeployments: {
+            productId: {
+              _in: siteConfig.overrideFilterValues.productDeployedOn
+            }
+          }
+        }
+      }
+    });
+  }
+
+  if (isNotEmpty(siteConfig.overrideFilterValues.productTypes)) {
+    conditions.push({
+      root: {
+        products: {
+          productTypeId: {
+            _in: siteConfig.overrideFilterValues.productTypes
+          }
+        }
+      }
+    });
+  }
+
+  return mergeConditions(conditions);
+}

@@ -7,13 +7,15 @@ import {
 const getDefaultWhereFilter = (): CProfileInfosBoolExp => {
   const orConditions: CProfileInfosBoolExp[] = [];
 
-  if (siteConfig.filterByProductIds?.length) {
+  if (siteConfig.overrideFilterValues.productIds?.length) {
     orConditions.push(
       {
         root: {
           products: {
             supportsProducts: {
-              supportsProductId: { _in: siteConfig.filterByProductIds }
+              supportsProductId: {
+                _in: siteConfig.overrideFilterValues.productIds
+              }
             }
           }
         }
@@ -24,7 +26,7 @@ const getDefaultWhereFilter = (): CProfileInfosBoolExp => {
             productDeployments: {
               smartContractDeployment: {
                 deployedOnId: {
-                  _in: siteConfig.filterByProductIds
+                  _in: siteConfig.overrideFilterValues.productIds
                 }
               }
             }
@@ -35,7 +37,7 @@ const getDefaultWhereFilter = (): CProfileInfosBoolExp => {
         root: {
           products: {
             id: {
-              _in: siteConfig.filterByProductIds
+              _in: siteConfig.overrideFilterValues.productIds
             }
           }
         }
@@ -46,7 +48,7 @@ const getDefaultWhereFilter = (): CProfileInfosBoolExp => {
             assetDeployments: {
               smartContractDeployment: {
                 deployedOnId: {
-                  _in: siteConfig.filterByProductIds
+                  _in: siteConfig.overrideFilterValues.productIds
                 }
               }
             }
@@ -56,24 +58,28 @@ const getDefaultWhereFilter = (): CProfileInfosBoolExp => {
     );
   }
 
-  if (siteConfig.tags?.length) {
+  if (siteConfig.overrideFilterValues.tags?.length) {
     orConditions.push({
       root: {
         profileTags: {
           tagId: {
-            _in: siteConfig.tags
+            _in: siteConfig.overrideFilterValues.tags
           }
         }
       }
     });
   }
 
-  if (siteConfig.productSupportsAssetTicker?.length) {
+  if (siteConfig.overrideFilterValues.productAssetRelationships?.length) {
     orConditions.push({
       root: {
         products: {
           productAssetRelationships: {
-            asset: { ticker: { _in: siteConfig.productSupportsAssetTicker } }
+            asset: {
+              ticker: {
+                _in: siteConfig.overrideFilterValues.productAssetRelationships
+              }
+            }
           }
         }
       }

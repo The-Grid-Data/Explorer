@@ -9,6 +9,7 @@ import {
   CProductsBoolExp,
   CProductTypesBoolExp
 } from '@/lib/graphql/generated/graphql';
+import { siteConfig } from '@/lib/site-config';
 
 const filterId = 'productTypes';
 
@@ -73,14 +74,22 @@ function buildProfileSectorsWhere(
 ): CProductTypesBoolExp {
   const conditions: CProductTypesBoolExp[] = [];
 
-  if (isNotEmpty(filterStore.tagsFilter)) {
+  if (
+    isNotEmpty(filterStore.tagsFilter) ||
+    isNotEmpty(siteConfig.overrideFilterValues.tags)
+  ) {
     conditions.push({
       products: {
         root: {
           profileInfos: {
             root: {
               profileTags: {
-                tagId: { _in: filterStore.tagsFilter }
+                tagId: {
+                  _in: [
+                    ...filterStore.tagsFilter,
+                    ...siteConfig.overrideFilterValues.tags
+                  ]
+                }
               }
             }
           }
@@ -96,6 +105,32 @@ function buildProfileSectorsWhere(
           profileInfos: {
             profileSectorId: {
               _in: filterStore.profileSectorsFilter
+            }
+          }
+        }
+      }
+    });
+  }
+
+  if (
+    isNotEmpty(filterStore.productAssetRelationshipsFilter) ||
+    isNotEmpty(siteConfig.overrideFilterValues.productAssetRelationships)
+  ) {
+    conditions.push({
+      products: {
+        root: {
+          profileInfos: {
+            root: {
+              products: {
+                productAssetRelationships: {
+                  asset: {
+                    ticker: {
+                      _in: siteConfig.overrideFilterValues
+                        .productAssetRelationships
+                    }
+                  }
+                }
+              }
             }
           }
         }
@@ -125,6 +160,28 @@ function buildAggregateInput(filterStore: FiltersStore): CProductsBoolExp {
             profileInfos: {
               profileSectorId: {
                 _in: filterStore.profileSectorsFilter
+              }
+            }
+          }
+        }
+      }
+    });
+  }
+
+  if (
+    isNotEmpty(filterStore.productAssetRelationshipsFilter) ||
+    isNotEmpty(siteConfig.overrideFilterValues.productAssetRelationships)
+  ) {
+    conditions.push({
+      root: {
+        products: {
+          productAssetRelationships: {
+            asset: {
+              ticker: {
+                _in: [
+                  ...filterStore.productAssetRelationshipsFilter,
+                  ...siteConfig.overrideFilterValues.productAssetRelationships
+                ]
               }
             }
           }

@@ -45,11 +45,13 @@ export const ProfileListHeroFilters = () => {
             count={filteredSectors.length}
             isFetching={filters.profileSectorsFilter.options?.isFetching}
           />
-          <SearchInput
-            value={sectorSearch}
-            onChange={setSectorSearch}
-            placeholder="Search sectors..."
-          />
+          {siteConfig.allowHeroFiltersSearch && (
+            <SearchInput
+              value={sectorSearch}
+              onChange={setSectorSearch}
+              placeholder="Search sectors..."
+            />
+          )}
         </div>
         <CheckboxGrid
           isFetching={filters.profileSectorsFilter.options?.isFetching}
@@ -68,11 +70,13 @@ export const ProfileListHeroFilters = () => {
             count={filteredProducts.length}
             isFetching={filters.productTypesFilter.options?.isFetching}
           />
-          <SearchInput
-            value={productSearch}
-            onChange={setProductSearch}
-            placeholder="Search product types..."
-          />
+          {siteConfig.allowHeroFiltersSearch && (
+            <SearchInput
+              value={productSearch}
+              onChange={setProductSearch}
+              placeholder="Search product types..."
+            />
+          )}
         </div>
         <CheckboxGrid
           isFetching={filters.productTypesFilter.options?.isFetching}
@@ -84,7 +88,7 @@ export const ProfileListHeroFilters = () => {
           }}
         />
       </div>
-      {!Boolean(siteConfig.tags.length) && (
+      {!Boolean(siteConfig.overrideFilterValues.tags.length) && (
         <div className="space-y-4">
           <div className="flex flex-col gap-4 md:flex-row">
             <FilterTitle
@@ -92,11 +96,13 @@ export const ProfileListHeroFilters = () => {
               count={filteredTags.length}
               isFetching={filters.tagsFilter.options?.isFetching}
             />
-            <SearchInput
-              value={tagSearch}
-              onChange={setTagSearch}
-              placeholder="Search tags..."
-            />
+            {siteConfig.allowHeroFiltersSearch && (
+              <SearchInput
+                value={tagSearch}
+                onChange={setTagSearch}
+                placeholder="Search tags..."
+              />
+            )}
           </div>
           <CheckboxGrid
             isFetching={filters.tagsFilter.options?.isFetching}
