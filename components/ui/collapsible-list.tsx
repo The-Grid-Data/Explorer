@@ -15,9 +15,11 @@ export const CollapsibleList = <T extends unknown>({
   renderEmpty = () => null,
   initialVisibleCount = 3
 }: CollapsibleListProps<T>) => {
+  // Move useState outside of conditional
+  const [showAll, setShowAll] = useState(false);
+
   if (!items?.length) return renderEmpty?.();
 
-  const [showAll, setShowAll] = useState(false);
   const visibleItems = showAll ? items : items.slice(0, initialVisibleCount);
 
   return (
