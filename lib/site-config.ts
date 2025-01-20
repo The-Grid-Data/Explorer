@@ -13,7 +13,7 @@ export const siteConfig = {
     productDeployedOn: [],
     productTypes: [],
     productIds: [],
-    productAssetRelationships: ['USDt'],
+    productAssetRelationships: [],
     tags: []
   }
 };
