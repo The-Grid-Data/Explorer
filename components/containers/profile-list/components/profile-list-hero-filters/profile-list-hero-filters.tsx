@@ -39,7 +39,7 @@ export const ProfileListHeroFilters = () => {
   return (
     <>
       <div className="space-y-4">
-        <div className="flex flex-col gap-4 md:flex-row">
+        <div className="flex flex-col gap-2 md:flex-row">
           <FilterTitle
             title="Profile Sectors"
             count={filteredSectors.length}
@@ -64,7 +64,7 @@ export const ProfileListHeroFilters = () => {
         />
       </div>
       <div className="space-y-4">
-        <div className="flex flex-col gap-4 md:flex-row">
+        <div className="flex flex-col gap-2 md:flex-row">
           <FilterTitle
             title="Product types"
             count={filteredProducts.length}
@@ -90,7 +90,7 @@ export const ProfileListHeroFilters = () => {
       </div>
       {!Boolean(siteConfig.overrideFilterValues.tags.length) && (
         <div className="space-y-4">
-          <div className="flex flex-col gap-4 md:flex-row">
+          <div className="flex flex-col gap-2 md:flex-row">
             <FilterTitle
               title="Tags"
               count={filteredTags.length}
@@ -145,14 +145,14 @@ const SearchInput = ({
   className?: string;
   variant?: 'default';
 }) => (
-  <div className="flex items-center border-b">
-    <MagnifyingGlassIcon className="h-4 w-4 shrink-0 opacity-50" />
+  <div className="flex items-center rounded-md">
+    <MagnifyingGlassIcon className="mr-1 h-4 w-4 shrink-0 text-muted-foreground/50" />
     <Input
       type="text"
       placeholder={placeholder}
       value={value}
       onChange={e => onChange(e.target.value)}
-      className="flex h-7 w-fit border-none  bg-transparent outline-none placeholder:text-muted-foreground/50 focus-visible:border-b focus-visible:border-black focus-visible:ring-0 md:max-w-fit"
+      className="flex h-7 w-fit border-none bg-transparent px-0 shadow-none outline-none placeholder:text-muted-foreground/50 focus-visible:border-b focus-visible:border-black focus-visible:ring-0 md:max-w-fit"
     />
   </div>
 );

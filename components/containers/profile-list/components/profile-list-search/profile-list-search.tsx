@@ -8,7 +8,7 @@ export const ProfileListSearch = () => {
   return (
     <div className="relative flex h-14 flex-col justify-end">
       <Label
-        className="absolute -top-4 text-xl font-bold lg:text-xl"
+        className="absolute -top-4 text-xl font-bold lg:text-base"
         htmlFor="search"
         id="search-bar"
       >

@@ -1,8 +1,6 @@
 import { siteConfig } from '@/lib/site-config';
-import {
-  CProfileInfosBoolExp,
-  SearchProfilesQueryVariables
-} from '../graphql/generated/graphql';
+import { CProfileInfosBoolExp } from '../graphql/generated/graphql';
+import deepmerge from 'deepmerge';
 
 const getDefaultWhereFilter = (): CProfileInfosBoolExp => {
   const orConditions: CProfileInfosBoolExp[] = [];
@@ -89,11 +87,6 @@ const getDefaultWhereFilter = (): CProfileInfosBoolExp => {
   return orConditions.length ? { _or: orConditions } : {};
 };
 
-export const withDefaultWhereFilter = (
-  where: SearchProfilesQueryVariables['where'] = {}
-) => {
-  const defaultFilter = getDefaultWhereFilter();
-  return Object.keys(defaultFilter).length
-    ? { ...where, ...defaultFilter }
-    : where;
+export const withDefaultWhereFilter = (where: CProfileInfosBoolExp = {}) => {
+  return deepmerge(where, getDefaultWhereFilter());
 };

@@ -10,7 +10,6 @@ export const FilterGroup = ({ title, children }: FilterGroupProps) => {
     <div className="flex w-full flex-col gap-2">
       <div>
         <h3 className="font-bold">{title}</h3>
-        <Separator className="my-1" />
       </div>
       {children}
     </div>

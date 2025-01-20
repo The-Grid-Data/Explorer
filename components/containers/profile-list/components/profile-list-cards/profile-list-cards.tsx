@@ -7,6 +7,7 @@ import { useProfilesQueryContext } from '@/providers/profiles-query-provider';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { execute } from '@/lib/graphql/execute';
 import { graphql } from '@/lib/graphql/generated';
+import { Progress } from '@/components/ui/progress';
 
 const defaultLimit = 10;
 
@@ -77,6 +78,7 @@ export const ProfileListCards = () => {
 
   return (
     <div className="flex flex-col gap-8 pb-2">
+      {isFetching && <Progress className="mt-2" indeterminate />}
       {isError ? (
         <p className="text-center text-muted-foreground">
           There was an error with your search, please try again or contact the

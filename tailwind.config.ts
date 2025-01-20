@@ -75,12 +75,18 @@ const config = {
           '50%': { opacity: '0.1' },
           '75%': { opacity: '0.05' },
           '100%': { opacity: '0' }
+        },
+        progress: {
+          '0%': { transform: 'translateX(0) scaleX(0)' },
+          '40%': { transform: 'translateX(0) scaleX(0.4)' },
+          '100%': { transform: 'translateX(100%) scaleX(0.5)' }
         }
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
-        spinner: 'spinner 1s linear infinite'
+        spinner: 'spinner 1s linear infinite',
+        progress: 'progress 1s infinite linear'
       },
       boxShadow: {
         'inner-tb': 'inset 0 16px 16px -16px, inset 0 -16px 16px -16px' // Customize as needed
