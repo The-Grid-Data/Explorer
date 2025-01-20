@@ -39,7 +39,7 @@ export const ProfileListHeroFilters = () => {
   return (
     <>
       <div className="space-y-4">
-        <div className="flex gap-4">
+        <div className="flex flex-col gap-4 md:flex-row">
           <FilterTitle
             title="Profile Sectors"
             count={filteredSectors.length}
@@ -62,7 +62,7 @@ export const ProfileListHeroFilters = () => {
         />
       </div>
       <div className="space-y-4">
-        <div className="flex gap-4">
+        <div className="flex flex-col gap-4 md:flex-row">
           <FilterTitle
             title="Product types"
             count={filteredProducts.length}
@@ -86,7 +86,7 @@ export const ProfileListHeroFilters = () => {
       </div>
       {!Boolean(siteConfig.tags.length) && (
         <div className="space-y-4">
-          <div className="flex gap-4">
+          <div className="flex flex-col gap-4 md:flex-row">
             <FilterTitle
               title="Tags"
               count={filteredTags.length}
@@ -146,7 +146,7 @@ const SearchInput = ({
       placeholder={placeholder}
       value={value}
       onChange={e => onChange(e.target.value)}
-      className="flex h-7 w-fit border-none bg-transparent outline-none placeholder:text-muted-foreground/50 focus-visible:border-b focus-visible:border-black focus-visible:ring-0 md:max-w-fit"
+      className="flex h-7 w-fit border-none  bg-transparent outline-none placeholder:text-muted-foreground/50 focus-visible:border-b focus-visible:border-black focus-visible:ring-0 md:max-w-fit"
     />
   </div>
 );
