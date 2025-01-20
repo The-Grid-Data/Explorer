@@ -1,3 +1,4 @@
+'use client';
 import { useInView } from 'react-intersection-observer';
 import { useEffect } from 'react';
 import { ProfileCard, ProfileCardSkeleton } from '../profile-card';
