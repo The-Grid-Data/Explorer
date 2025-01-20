@@ -15,6 +15,7 @@ import {
 import { Badge } from '@/components/ui/badge';
 import { ContractAddressesBadge } from './contract-address-badge';
 import { FragmentType, graphql, useFragment } from '@/lib/graphql/generated';
+import { CollapsibleList } from '@/components/ui/collapsible-list';
 
 export const ProductFragment = graphql(`
   fragment ProductFieldsFragment on CProducts {
@@ -135,11 +136,7 @@ export const ProductCard = ({
       dataPoints={[
         {
           label: 'Product Status',
-          value: product.productStatus?.name ? (
-            <Badge>{product.productStatus?.name}</Badge>
-          ) : (
-            '-'
-          )
+          value: <Badge>{product.productStatus?.name}</Badge>
         },
         {
           label: 'Launch Date',
@@ -149,28 +146,20 @@ export const ProductCard = ({
           label: 'Is Main Product',
           value: product.isMainProduct ? 'Yes' : 'No'
         },
-        // {
-        //   label: 'Main asset',
-        //   value: product.mainAsset?.name ?? '-'
-        // },
         {
           label: 'Product type',
           fullWidth: true,
-          children: product.productType?.name ? (
-            <span className="text-sm">{product.productType.name}</span>
-          ) : (
-            '-'
-          )
+          children: <span className="text-sm">{product.productType?.name}</span>
         },
         {
           label: 'Supports',
           fullWidth: true,
-          children: Boolean(product?.supportsProducts?.length)
-            ? product?.supportsProducts?.map(supportsProduct => (
-                <div
-                  className="flex gap-2"
-                  key={supportsProduct.supportsProduct?.name}
-                >
+          children: (
+            <CollapsibleList
+              items={product.supportsProducts}
+              renderEmpty={() => <span className="text-sm">-</span>}
+              renderItem={supportsProduct => (
+                <div className="flex gap-2">
                   <DeepLinkBadge
                     icon={<Package size={16} />}
                     href={
@@ -185,15 +174,19 @@ export const ProductCard = ({
                     value={supportsProduct.supportsProduct?.name}
                   />
                 </div>
-              ))
-            : '-'
+              )}
+            />
+          )
         },
         {
           label: 'Asset relationships',
           fullWidth: true,
-          children: Boolean(product?.productAssetRelationships?.length)
-            ? product?.productAssetRelationships?.map(relationship => (
-                <div className="flex gap-2" key={relationship.assetId}>
+          children: (
+            <CollapsibleList
+              items={product.productAssetRelationships}
+              renderEmpty={() => <span className="text-sm">-</span>}
+              renderItem={relationship => (
+                <div className="flex gap-2">
                   <DeepLinkBadge
                     icon={<Package size={16} />}
                     href={
@@ -205,16 +198,19 @@ export const ProductCard = ({
                     value={`${relationship.asset?.name} | Support type: ${relationship.assetSupportType?.name}`}
                   />
                 </div>
-              ))
-            : '-'
+              )}
+            />
+          )
         },
         {
           fullWidth: true,
           label: 'Deployed on',
           separator: false,
-          children: Boolean(product.productDeployments?.length) ? (
-            <div className="flex w-full flex-col gap-2">
-              {product.productDeployments?.map(deployment => (
+          children: (
+            <CollapsibleList
+              items={product.productDeployments}
+              renderEmpty={() => <span className="text-sm">-</span>}
+              renderItem={deployment => (
                 <div
                   key={deployment.smartContractDeployment?.id}
                   className="w-full flex-1 rounded-lg border p-3"
@@ -238,17 +234,12 @@ export const ProductCard = ({
 
                   <div className="space-y-2">
                     <InlineDataPoint fullWidth label="Deployment Type">
-                      {deployment.smartContractDeployment?.deploymentType
-                        ?.name ? (
-                        <span className="text-sm">
-                          {
-                            deployment.smartContractDeployment.deploymentType
-                              .name
-                          }
-                        </span>
-                      ) : (
-                        '-'
-                      )}
+                      <span className="text-sm">
+                        {
+                          deployment.smartContractDeployment?.deploymentType
+                            ?.name
+                        }
+                      </span>
                     </InlineDataPoint>
 
                     <InlineDataPoint
@@ -264,10 +255,8 @@ export const ProductCard = ({
                     </InlineDataPoint>
                   </div>
                 </div>
-              ))}
-            </div>
-          ) : (
-            '-'
+              )}
+            />
           )
         }
       ]}
