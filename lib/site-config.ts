@@ -12,5 +12,5 @@ export const siteConfig = {
   blockchainProductTypeIds: ['15', '16', '17'], // Filter default options. used by productDeployedOnFilter.
   tags: [], // Filter default options. used by tagsFilter.
   displayQueries: true,
-  productSupportsAssetTicker: []
+  productSupportsAssetTicker: [] // Eg. ['ETH', 'BTC']
 };

@@ -68,6 +68,18 @@ const getDefaultWhereFilter = (): CProfileInfosBoolExp => {
     });
   }
 
+  if (siteConfig.productSupportsAssetTicker?.length) {
+    orConditions.push({
+      root: {
+        products: {
+          productAssetRelationships: {
+            asset: { ticker: { _in: siteConfig.productSupportsAssetTicker } }
+          }
+        }
+      }
+    });
+  }
+
   return orConditions.length ? { _or: orConditions } : {};
 };
 
