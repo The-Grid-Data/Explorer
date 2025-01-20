@@ -4,22 +4,22 @@ import { siteConfig } from '@/lib/site-config';
 export const dynamic = 'force-dynamic';
 
 type PageProps = {
-  params: Promise<{ profileId: string }>;
+  params: Promise<{ slug: string }>;
 };
 
 export async function generateMetadata({ params }: PageProps) {
-  const { profileId } = await params;
+  const { slug } = await params;
   return {
-    title: `${profileId} | ${siteConfig.pageTitle}`
+    title: `${slug} | ${siteConfig.pageTitle}`
   };
 }
 
 export default async function Profile({ params }: PageProps) {
-  const { profileId } = await params;
+  const { slug } = await params;
   return (
     <div>
       <div className="h-10" />
-      <ProfileDetail profileId={profileId} />
+      <ProfileDetail profileId={slug} />
     </div>
   );
 }
