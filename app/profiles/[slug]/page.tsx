@@ -3,23 +3,23 @@ import { siteConfig } from '@/lib/site-config';
 
 export const dynamic = 'force-dynamic';
 
-export type PageProps<P = {}> = {
-  params: P;
-  searchParams: { [key: string]: string | string[] | undefined };
+type PageProps = {
+  params: Promise<{ profileId: string }>;
 };
 
-export async function generateMetadata({
-  params
-}: PageProps<{ slug: string }>) {
+export async function generateMetadata({ params }: PageProps) {
+  const { profileId } = await params;
   return {
-    title: `${params.slug} | ${siteConfig.pageTitle}`
+    title: `${profileId} | ${siteConfig.pageTitle}`
   };
 }
-export default async function Profile({ params }: PageProps<{ slug: string }>) {
+
+export default async function Profile({ params }: PageProps) {
+  const { profileId } = await params;
   return (
     <div>
       <div className="h-10" />
-      <ProfileDetail profileId={params.slug} />
+      <ProfileDetail profileId={profileId} />
     </div>
   );
 }
