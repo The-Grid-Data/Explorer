@@ -15,14 +15,18 @@ export const useSearchFilter = () => {
     initialValue: value,
     onChange: newValue => setValue(newValue),
     getQueryConditions: value => ({
-      _or: [
-        { name: { _like: `%${value}%` } },
+      _and: [
         {
-          root: {
-            products: {
-              name: { _like: `%${value}%` }
+          _or: [
+            { name: { _like: `%${value}%` } },
+            {
+              root: {
+                products: {
+                  name: { _like: `%${value}%` }
+                }
+              }
             }
-          }
+          ]
         }
       ]
     })
