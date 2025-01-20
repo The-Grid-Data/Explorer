@@ -9,7 +9,7 @@ export const Banner = () => {
           href="https://thegrid.id/legal/web-services-terms"
           className="underline"
         >
-          The Grid's data
+          The Grid&apos;s data
         </a>{' '}
         which is in Beta - API users can pick and show data relevant to their
         users.
