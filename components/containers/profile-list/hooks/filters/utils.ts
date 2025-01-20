@@ -34,3 +34,7 @@ export const parseAsId = createParser({
     return encodeURIComponent(value.toString());
   }
 });
+
+export const mergeConditions = (conditions: Array<object>) => {
+  return deepmerge.all(conditions);
+};

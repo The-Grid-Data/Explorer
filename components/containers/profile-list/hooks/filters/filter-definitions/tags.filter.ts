@@ -1,12 +1,14 @@
 import { execute } from '@/lib/graphql/execute';
 import { useFilter } from '../../use-filter';
-import { validateAndFormatOptions, parseAsId } from '../utils';
+import { validateAndFormatOptions, parseAsId, mergeConditions } from '../utils';
 import { FiltersStore } from '../../use-profile-filters';
 import { useQueryState, parseAsArrayOf } from 'nuqs';
 import { graphql } from '@/lib/graphql/generated';
 import { isNotEmpty } from '@/lib/utils/is-not-empty';
-import deepmerge from 'deepmerge';
-import { CTagsBoolExp } from '@/lib/graphql/generated/graphql';
+import {
+  CTagsBoolExp,
+  CProfileTagsBoolExp
+} from '@/lib/graphql/generated/graphql';
 
 const filterId = 'tags';
 
@@ -23,50 +25,38 @@ export const useTagsFilter = (filterStore: FiltersStore) => {
     optionsQueryDeps: [filterStore],
     onChange: newValue => setValue(newValue),
     getOptions: async () => {
-      const where = deepmerge.all([
-        isNotEmpty(filterStore.profileSectorsFilter)
-          ? ({
-              profileTags: {
-                root: {
-                  products: {
-                    root: {
-                      profileInfos: {
-                        profileSector: {
-                          id: { _in: filterStore.profileSectorsFilter }
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            } satisfies CTagsBoolExp)
-          : {},
-        isNotEmpty(filterStore.productTypesFilter)
-          ? ({
-              profileTags: {
-                root: {
-                  products: {
-                    productTypeId: { _in: filterStore.productTypesFilter }
-                  }
-                }
-              }
-            } satisfies CTagsBoolExp)
-          : {}
-      ]);
-
       const data = await execute(
         graphql(`
-          query getTagsOptions($where: CTagsBoolExp) {
+          query getTagsOptions(
+            $where: CTagsBoolExp
+            $aggregateInput: CProfileTagsFilterInput
+          ) {
             tags(where: $where) {
               value: id
               label: name
               description
+              profileTagsAggregate(filter_input: $aggregateInput) {
+                _count
+              }
             }
           }
         `),
-        { where }
+        {
+          where: buildTagsWhere(filterStore),
+          aggregateInput: { where: buildAggregateInput(filterStore) }
+        }
       );
-      return validateAndFormatOptions(data?.tags);
+
+      return validateAndFormatOptions(
+        data?.tags
+          ?.map(item => ({
+            label: item.label,
+            value: item.value,
+            description: item.description,
+            count: item?.profileTagsAggregate?._count
+          }))
+          .sort((a, b) => (b.count ?? 0) - (a.count ?? 0))
+      );
     },
     getQueryConditions: value => ({
       root: {
@@ -84,3 +74,67 @@ export const useTagsFilter = (filterStore: FiltersStore) => {
     })
   });
 };
+
+function buildTagsWhere(filterStore: FiltersStore): CTagsBoolExp {
+  const conditions: CTagsBoolExp[] = [];
+
+  if (isNotEmpty(filterStore.profileSectorsFilter)) {
+    conditions.push({
+      profileTags: {
+        root: {
+          products: {
+            root: {
+              profileInfos: {
+                profileSectorId: { _in: filterStore.profileSectorsFilter }
+              }
+            }
+          }
+        }
+      }
+    });
+  }
+
+  if (isNotEmpty(filterStore.productTypesFilter)) {
+    conditions.push({
+      profileTags: {
+        root: {
+          products: {
+            productTypeId: { _in: filterStore.productTypesFilter }
+          }
+        }
+      }
+    });
+  }
+
+  return mergeConditions(conditions);
+}
+
+function buildAggregateInput(filterStore: FiltersStore): CProfileTagsBoolExp {
+  const conditions: Array<CProfileTagsBoolExp> = [];
+
+  if (isNotEmpty(filterStore.profileSectorsFilter)) {
+    conditions.push({
+      root: {
+        products: {
+          root: {
+            profileInfos: {
+              profileSectorId: { _in: filterStore.profileSectorsFilter }
+            }
+          }
+        }
+      }
+    });
+  }
+
+  if (isNotEmpty(filterStore.productTypesFilter)) {
+    conditions.push({
+      root: {
+        products: {
+          productTypeId: { _in: filterStore.productTypesFilter }
+        }
+      }
+    });
+  }
+
+  return mergeConditions(conditions);
+}

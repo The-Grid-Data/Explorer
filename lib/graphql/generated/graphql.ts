@@ -3010,14 +3010,15 @@ export type GetProductStatusesOptionsQuery = { __typename?: 'Query', productStat
 
 export type GetProductTypeOptionsQueryVariables = Exact<{
   where?: InputMaybe<CProductTypesBoolExp>;
+  aggregateInput?: InputMaybe<CProductsFilterInput>;
 }>;
 
 
-export type GetProductTypeOptionsQuery = { __typename?: 'Query', productTypes?: Array<{ __typename?: 'CProductTypes', label: string, value: string, description: string }> | null };
+export type GetProductTypeOptionsQuery = { __typename?: 'Query', productTypes?: Array<{ __typename?: 'CProductTypes', label: string, value: string, description: string, productsAggregate: { __typename?: 'CProductsAggExp', _count: number } }> | null };
 
 export type GetProfileSectorsOptionsQueryVariables = Exact<{
   where?: InputMaybe<CProfileSectorsBoolExp>;
-  profileInfosFilterInput?: InputMaybe<CProfileInfosFilterInput>;
+  aggregateInput?: InputMaybe<CProfileInfosFilterInput>;
 }>;
 
 
@@ -3047,10 +3048,11 @@ export type GetSupportsProductsOptionsQuery = { __typename?: 'Query', supportsPr
 
 export type GetTagsOptionsQueryVariables = Exact<{
   where?: InputMaybe<CTagsBoolExp>;
+  aggregateInput?: InputMaybe<CProfileTagsFilterInput>;
 }>;
 
 
-export type GetTagsOptionsQuery = { __typename?: 'Query', tags?: Array<{ __typename?: 'CTags', description: string, value: string, label: string }> | null };
+export type GetTagsOptionsQuery = { __typename?: 'Query', tags?: Array<{ __typename?: 'CTags', description: string, value: string, label: string, profileTagsAggregate: { __typename?: 'CProfileTagsAggExp', _count: number } }> | null };
 
 export class TypedDocumentString<TResult, TVariables>
   extends String
@@ -4084,21 +4086,24 @@ export const GetProductStatusesOptionsDocument = new TypedDocumentString(`
 }
     `) as unknown as TypedDocumentString<GetProductStatusesOptionsQuery, GetProductStatusesOptionsQueryVariables>;
 export const GetProductTypeOptionsDocument = new TypedDocumentString(`
-    query getProductTypeOptions($where: CProductTypesBoolExp) {
+    query getProductTypeOptions($where: CProductTypesBoolExp, $aggregateInput: CProductsFilterInput) {
   productTypes(where: $where) {
     label: name
     value: id
     description: definition
+    productsAggregate(filter_input: $aggregateInput) {
+      _count
+    }
   }
 }
     `) as unknown as TypedDocumentString<GetProductTypeOptionsQuery, GetProductTypeOptionsQueryVariables>;
 export const GetProfileSectorsOptionsDocument = new TypedDocumentString(`
-    query getProfileSectorsOptions($where: CProfileSectorsBoolExp, $profileInfosFilterInput: CProfileInfosFilterInput) {
+    query getProfileSectorsOptions($where: CProfileSectorsBoolExp, $aggregateInput: CProfileInfosFilterInput) {
   profileSectors(where: $where) {
     label: name
     value: id
     description: definition
-    profileInfosAggregate(filter_input: $profileInfosFilterInput) {
+    profileInfosAggregate(filter_input: $aggregateInput) {
       _count
     }
   }
@@ -4137,11 +4142,14 @@ export const GetSupportsProductsOptionsDocument = new TypedDocumentString(`
 }
     `) as unknown as TypedDocumentString<GetSupportsProductsOptionsQuery, GetSupportsProductsOptionsQueryVariables>;
 export const GetTagsOptionsDocument = new TypedDocumentString(`
-    query getTagsOptions($where: CTagsBoolExp) {
+    query getTagsOptions($where: CTagsBoolExp, $aggregateInput: CProfileTagsFilterInput) {
   tags(where: $where) {
     value: id
     label: name
     description
+    profileTagsAggregate(filter_input: $aggregateInput) {
+      _count
+    }
   }
 }
     `) as unknown as TypedDocumentString<GetTagsOptionsQuery, GetTagsOptionsQueryVariables>;
