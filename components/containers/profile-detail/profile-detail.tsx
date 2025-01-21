@@ -1,18 +1,18 @@
 'use client';
 
-import ProfileNotFound from './components/profile-not-found';
-import { ProfileHeading } from './components/profile-heading';
-import { ProfileDataSection } from './components/profile-data-section';
-import { ProfileDataPoint } from './components/profile-data-point';
-import ProfileLoading from './components/profile-loading';
-import { ProductCard } from './components/product-card';
+import { execute } from '@/lib/graphql/execute';
+import { graphql } from '@/lib/graphql/generated';
+import { useQuery } from '@tanstack/react-query';
+import { Banknote, Building2, Package } from 'lucide-react';
 import { AssetCard } from './components/asset-card';
 import { EntityCard } from './components/entity-card';
-import { Banknote, Building2, Package } from 'lucide-react';
 import { OverviewSection } from './components/overview-section';
-import { graphql, FragmentType, useFragment } from '@/lib/graphql/generated';
-import { execute } from '@/lib/graphql/execute';
-import { useQuery } from '@tanstack/react-query';
+import { ProductCard } from './components/product-card';
+import { ProfileDataPoint } from './components/profile-data-point';
+import { ProfileDataSection } from './components/profile-data-section';
+import { ProfileHeading } from './components/profile-heading';
+import ProfileLoading from './components/profile-loading';
+import ProfileNotFound from './components/profile-not-found';
 
 export const ProfileDetailQuery = graphql(`
   query getProfileData($where: CProfileInfosBoolExp) {
@@ -40,11 +40,18 @@ export const ProfileDetailQuery = graphql(`
   }
 `);
 
-export type ProfileDetailProps = {
-  profileId: string;
+export type ProfileMetadata = {
+  id: string;
+  slug: string;
+  name: string;
 };
 
-export const ProfileDetail = ({ profileId }: ProfileDetailProps) => {
+export type ProfileDetailProps = {
+  profileId: string;
+  metadata?: ProfileMetadata;
+};
+
+export const ProfileDetail = ({ profileId, metadata }: ProfileDetailProps) => {
   const query = {
     where: { root: { slug: { _eq: profileId } } }
   };

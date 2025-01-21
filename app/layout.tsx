@@ -1,7 +1,6 @@
 import '@/app/globals.css';
 
 import { cn } from '@/lib/utils';
-import { ClerkProvider } from '@clerk/nextjs';
 import type { Metadata, Viewport } from 'next';
 import { Archivo, DM_Sans } from 'next/font/google';
 
@@ -42,13 +41,11 @@ export default function Layout({ children }: TLayout) {
         )}
       >
         <Analytics />
-        <ClerkProvider>
-          <Providers>
-            <Banner />
-            <Header />
-            {children}
-          </Providers>
-        </ClerkProvider>
+        <Providers>
+          <Banner />
+          <Header />
+          {children}
+        </Providers>
       </body>
     </html>
   );

@@ -1,6 +1,6 @@
 'use client';
 
-import { SignedIn, SignedOut, UserButton } from '@clerk/nextjs';
+import { OrganizationSwitcher, SignedIn, SignedOut, UserButton } from '@clerk/nextjs';
 import { MenuIcon } from 'lucide-react';
 import Link from 'next/link';
 import { SiGithub } from 'react-icons/si';
@@ -45,6 +45,18 @@ const cloneRepoButton = (
   </Link>
 );
 
+const viewProfileButton = (
+  <Link
+    target="_blank"
+    rel="noopener noreferrer"
+    href="/profile"
+  >
+    <Button variant="outline" className="w-full md:w-fit">
+      View your profile
+    </Button>
+  </Link>
+);
+
 export const Header = () => {
   return (
     <header className="container flex w-full items-center py-4">
@@ -54,7 +66,7 @@ export const Header = () => {
         </Link>
       </div>
 
-      <div className="hidden w-full items-center justify-end gap-2 md:flex">
+      <div className="hidden w-full items-center justify-end gap-4 md:flex">
         <SignedOut>
           {claimProfileButton}
           <Link href="/sign-in">
@@ -62,6 +74,17 @@ export const Header = () => {
           </Link>
         </SignedOut>
         <SignedIn>
+          <OrganizationSwitcher
+            afterCreateOrganizationUrl="/profile"
+            afterLeaveOrganizationUrl="/profile"
+            afterSelectOrganizationUrl="/profile"
+            appearance={{
+              elements: {
+                rootBox: "flex justify-center",
+                organizationSwitcherTrigger: "flex justify-center"
+              }
+            }}
+          />
           <UserButton
             afterSignOutUrl="/"
             appearance={{
@@ -108,6 +131,19 @@ export const Header = () => {
                   appearance={{
                     elements: {
                       avatarBox: "h-10 w-10"
+                    }
+                  }}
+                />
+              </li>
+              <li className="flex justify-center">
+                <OrganizationSwitcher
+                  afterCreateOrganizationUrl="/profile"
+                  afterLeaveOrganizationUrl="/profile"
+                  afterSelectOrganizationUrl="/profile"
+                  appearance={{
+                    elements: {
+                      rootBox: "flex justify-center",
+                      organizationSwitcherTrigger: "flex justify-center"
                     }
                   }}
                 />
