@@ -4,10 +4,11 @@ import { PropsWithChildren, createContext, useContext, useState } from 'react';
 import { useMediaQuery } from '@/hooks/use-media-query';
 import { Button } from '@/components/ui/button';
 import { Drawer, DrawerContent, DrawerTrigger } from '@/components/ui/drawer';
-import { Dialog, DialogContent, DialogTrigger } from './dialog';
+import { Dialog, DialogContent, DialogTitle, DialogTrigger } from './dialog';
 import { cn } from '@/lib/utils';
 import { Badge } from './badge';
 import { useEventListener } from '@/hooks/use-event-listener';
+import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
 
 export type FilterContainerProps = PropsWithChildren<{
   label: string;
@@ -50,7 +51,13 @@ export function FilterContainer({
       <FilterContainerContext.Provider value={{ open, setOpen }}>
         <Dialog open={open} onOpenChange={setOpen}>
           <DialogTrigger asChild>{triggerButton}</DialogTrigger>
-          <DialogContent className="w-fit gap-0 rounded-md p-0">
+          <DialogContent
+            className="w-fit gap-0 rounded-md p-0"
+            aria-describedby={undefined}
+          >
+            <VisuallyHidden asChild>
+              <DialogTitle>{label}</DialogTitle>
+            </VisuallyHidden>
             {children}
           </DialogContent>
         </Dialog>

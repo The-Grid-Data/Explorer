@@ -131,8 +131,6 @@ function buildProfileSectorsWhere(
     });
   }
 
-  console.log(conditions);
-
   return mergeConditions(conditions);
 }
 

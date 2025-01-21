@@ -71,10 +71,10 @@ function buildSupportsProductsWhere(
 ): CSupportsProductsBoolExp {
   const conditions: CSupportsProductsBoolExp[] = [];
 
-  if (isNotEmpty(siteConfig.overrideFilterValues.productDeployedOn)) {
+  if (isNotEmpty(siteConfig.overrideFilterValues.supportsProducts)) {
     conditions.push({
       supportsProduct: {
-        id: { _in: siteConfig.overrideFilterValues.productDeployedOn }
+        id: { _in: siteConfig.overrideFilterValues.supportsProducts }
       }
     });
   }

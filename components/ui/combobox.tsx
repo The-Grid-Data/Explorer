@@ -86,9 +86,9 @@ export const OptionList = <T,>({
         <CommandList ref={listRef}>
           <CommandEmpty>No results found.</CommandEmpty>
           <CommandGroup>
-            {options?.map(option => (
+            {options?.map((option, index) => (
               <CommandItem
-                key={option.value?.toString()}
+                key={`${option.value}-${index}`}
                 value={option.label}
                 onSelect={() => {
                   // Determine if the option is already selected

@@ -8,10 +8,9 @@ import { NuqsAdapter } from 'nuqs/adapters/next/app';
 export const Providers = ({ children }: PropsWithChildren) => (
   <ThemeProvider
     attribute="class"
-    defaultTheme="light"
+    defaultTheme="system"
     enableSystem
     themes={['light', 'dark']}
-    // disableTransitionOnChange
   >
     <NuqsAdapter>
       <ReactQueryProvider>
