@@ -55,7 +55,6 @@ export const Header = () => {
       </div>
 
       <div className="hidden w-full items-center justify-end gap-2 md:flex">
-        {learnMoreButton}
         <SignedOut>
           {claimProfileButton}
           <Link href="/sign-in">
@@ -72,7 +71,6 @@ export const Header = () => {
             }}
           />
         </SignedIn>
-        {cloneRepoButton}
         <ToggleThemeButton />
       </div>
       <Sheet>
@@ -91,9 +89,6 @@ export const Header = () => {
           </Link>
 
           <ul className="mt-4 flex flex-col gap-3">
-            <li>
-              <SheetTrigger asChild>{learnMoreButton}</SheetTrigger>
-            </li>
             <SignedOut>
               <li>
                 <SheetTrigger asChild>
@@ -118,9 +113,6 @@ export const Header = () => {
                 />
               </li>
             </SignedIn>
-            <li>
-              <SheetTrigger asChild>{cloneRepoButton}</SheetTrigger>
-            </li>
           </ul>
         </SheetContent>
       </Sheet>

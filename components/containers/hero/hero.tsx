@@ -8,11 +8,10 @@ export const Hero = () => {
       </Badge>
 
       <h1 className="scroll-m-20 text-balance text-center text-4xl font-extrabold leading-tight tracking-tight lg:text-5xl lg:leading-[1.1]">
-        A Node of Truth on Assets, Products, and Services in Web3.
+        Claim Your Profile on The Grid
       </h1>
       <p className="max-w-xl text-center text-lg font-light text-foreground">
-        Explore the largest offchain dataset for Solana projects, use the
-        filters to find projects relevant to you.
+      A Node of Truth on Assets, Products, and Services in Web3.
       </p>
     </section>
   );
