@@ -1,13 +1,14 @@
 import '@/app/globals.css';
 
-import { Archivo, DM_Sans } from 'next/font/google';
 import { cn } from '@/lib/utils';
+import { ClerkProvider } from '@clerk/nextjs';
 import type { Metadata, Viewport } from 'next';
+import { Archivo, DM_Sans } from 'next/font/google';
 
-import { Header } from '@/components/containers/header';
-import { Providers } from '@/providers';
 import { Banner } from '@/components/containers/banner';
+import { Header } from '@/components/containers/header';
 import { siteConfig } from '@/lib/site-config';
+import { Providers } from '@/providers';
 import { Analytics } from '@vercel/analytics/react';
 
 type TLayout = Readonly<{
@@ -41,11 +42,13 @@ export default function Layout({ children }: TLayout) {
         )}
       >
         <Analytics />
-        <Providers>
-          <Banner />
-          <Header />
-          {children}
-        </Providers>
+        <ClerkProvider>
+          <Providers>
+            <Banner />
+            <Header />
+            {children}
+          </Providers>
+        </ClerkProvider>
       </body>
     </html>
   );

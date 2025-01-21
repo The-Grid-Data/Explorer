@@ -1,13 +1,14 @@
 'use client';
 
-import Link from 'next/link';
+import { SignedIn, SignedOut, UserButton } from '@clerk/nextjs';
 import { MenuIcon } from 'lucide-react';
+import Link from 'next/link';
 import { SiGithub } from 'react-icons/si';
 
-import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
-import { ToggleThemeButton } from './toggle-theme-button';
+import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { Logo } from './logo';
+import { ToggleThemeButton } from './toggle-theme-button';
 
 const learnMoreButton = (
   <Link
@@ -55,7 +56,22 @@ export const Header = () => {
 
       <div className="hidden w-full items-center justify-end gap-2 md:flex">
         {learnMoreButton}
-        {claimProfileButton}
+        <SignedOut>
+          {claimProfileButton}
+          <Link href="/sign-in">
+            <Button variant="outline">Sign in</Button>
+          </Link>
+        </SignedOut>
+        <SignedIn>
+          <UserButton
+            afterSignOutUrl="/"
+            appearance={{
+              elements: {
+                avatarBox: "h-10 w-10"
+              }
+            }}
+          />
+        </SignedIn>
         {cloneRepoButton}
         <ToggleThemeButton />
       </div>
@@ -78,11 +94,32 @@ export const Header = () => {
             <li>
               <SheetTrigger asChild>{learnMoreButton}</SheetTrigger>
             </li>
+            <SignedOut>
+              <li>
+                <SheetTrigger asChild>
+                  <Link href="/sign-in">
+                    <Button variant="outline" className="w-full">Sign in</Button>
+                  </Link>
+                </SheetTrigger>
+              </li>
+              <li>
+                <SheetTrigger asChild>{claimProfileButton}</SheetTrigger>
+              </li>
+            </SignedOut>
+            <SignedIn>
+              <li className="flex justify-center">
+                <UserButton
+                  afterSignOutUrl="/"
+                  appearance={{
+                    elements: {
+                      avatarBox: "h-10 w-10"
+                    }
+                  }}
+                />
+              </li>
+            </SignedIn>
             <li>
               <SheetTrigger asChild>{cloneRepoButton}</SheetTrigger>
-            </li>
-            <li>
-              <SheetTrigger asChild>{claimProfileButton}</SheetTrigger>
             </li>
           </ul>
         </SheetContent>
