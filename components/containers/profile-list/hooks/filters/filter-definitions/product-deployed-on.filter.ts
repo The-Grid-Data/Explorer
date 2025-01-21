@@ -70,8 +70,10 @@ function buildDeployedOnProductsWhere(
       root: {
         products: {
           productDeployments: {
-            productId: {
-              _in: siteConfig.overrideFilterValues.productDeployedOn
+            smartContractDeployment: {
+              deployedOnId: {
+                _in: siteConfig.overrideFilterValues.productDeployedOn
+              }
             }
           }
         }
