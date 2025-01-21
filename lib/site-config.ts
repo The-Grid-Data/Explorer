@@ -10,9 +10,9 @@ export const siteConfig = {
   displayQueries: true,
   allowHeroFiltersSearch: true,
   overrideFilterValues: {
-    productDeployedOn: ['22'],
+    productDeployedOn: [],
     productTypes: [],
-    productIds: ['22'],
+    productIds: [],
     productAssetRelationships: [],
     tags: []
   }
