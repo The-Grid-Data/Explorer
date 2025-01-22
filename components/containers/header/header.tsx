@@ -74,6 +74,15 @@ export const Header = () => {
           </Link>
         </SignedOut>
         <SignedIn>
+          {viewProfileButton}
+          <UserButton
+            afterSignOutUrl="/"
+            appearance={{
+              elements: {
+                avatarBox: "h-10 w-10"
+              }
+            }}
+          />
           <OrganizationSwitcher
             afterCreateOrganizationUrl="/profile"
             afterLeaveOrganizationUrl="/profile"
@@ -82,14 +91,6 @@ export const Header = () => {
               elements: {
                 rootBox: "flex justify-center",
                 organizationSwitcherTrigger: "flex justify-center"
-              }
-            }}
-          />
-          <UserButton
-            afterSignOutUrl="/"
-            appearance={{
-              elements: {
-                avatarBox: "h-10 w-10"
               }
             }}
           />
