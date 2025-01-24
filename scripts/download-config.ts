@@ -19,7 +19,7 @@ export const getSiteConfig = async () => {
 };
 
 async function downloadConfig() {
-  if (!LOAD_CONFIG_FROM_VERCEL_STORAGE) {
+  if (!Boolean(LOAD_CONFIG_FROM_VERCEL_STORAGE)) {
     console.error('BLOB_READ_WRITE_TOKEN environment variable is not set');
     process.exit(0);
   }
