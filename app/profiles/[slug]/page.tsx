@@ -10,7 +10,7 @@ type PageProps = {
 export async function generateMetadata({ params }: PageProps) {
   const { slug } = await params;
   return {
-    title: `${slug} | ${siteConfig.pageTitle}`
+    title: `${slug} | ${siteConfig.metadata.title}`
   };
 }
 

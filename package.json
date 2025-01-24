@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "next dev",
     "dev:watch": "npm run graphql:watch & next dev",
-    "build": "next build",
+    "download-config": "tsx scripts/download-config.ts",
+    "build": "pnpm download-config && next build",
     "start": "next start",
     "lint": "next lint",
     "graphql:compile": "graphql-codegen --config ./lib/graphql/codegen.ts",
@@ -34,6 +35,7 @@
     "@tanstack/react-query": "^5.56.2",
     "@types/pluralize": "^0.0.33",
     "@vercel/analytics": "^1.3.1",
+    "@vercel/blob": "^0.27.1",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "cmdk": "^1.0.0",
@@ -76,6 +78,7 @@
     "prettier": "3.2.5",
     "prettier-plugin-tailwindcss": "^0.5.14",
     "tailwindcss": "^3.4.11",
+    "tsx": "^4.7.1",
     "typescript": "^5.6.2"
   },
   "packageManager": "pnpm@9.14.4+sha512.c8180b3fbe4e4bca02c94234717896b5529740a6cbadf19fa78254270403ea2f27d4e1d46a08a0f56c89b63dc8ebfd3ee53326da720273794e6200fcf0d184ab"

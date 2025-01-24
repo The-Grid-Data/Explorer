@@ -9,6 +9,7 @@ import { Providers } from '@/providers';
 import { Banner } from '@/components/containers/banner';
 import { siteConfig } from '@/lib/site-config';
 import { Analytics } from '@vercel/analytics/react';
+import { Toaster } from '@/components/ui/toaster';
 
 type TLayout = Readonly<{
   children: React.ReactNode;
@@ -18,8 +19,8 @@ const archivo = Archivo({ subsets: ['latin'], variable: '--font-archivo' });
 const dmSans = DM_Sans({ subsets: ['latin'], variable: '--font-dm-sans' });
 
 export const metadata: Metadata = {
-  title: siteConfig.pageTitle,
-  description: siteConfig.pageDescription
+  title: siteConfig.metadata.title,
+  description: siteConfig.metadata.description
 };
 
 export const viewport: Viewport = {
@@ -46,6 +47,7 @@ export default function Layout({ children }: TLayout) {
           <Header />
           {children}
         </Providers>
+        <Toaster />
       </body>
     </html>
   );

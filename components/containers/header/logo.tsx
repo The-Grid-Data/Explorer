@@ -25,7 +25,11 @@ export const Logo = () => {
   return (
     <Image
       alt="The grid logo"
-      src={siteConfig.logoSrc[currentTheme as keyof typeof siteConfig.logoSrc]}
+      src={
+        siteConfig.header.logoSrc[
+          currentTheme as keyof typeof siteConfig.header.logoSrc
+        ]
+      }
       width={160}
       height={50}
     />

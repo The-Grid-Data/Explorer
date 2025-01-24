@@ -45,7 +45,7 @@ export const ProfileListHeroFilters = () => {
             count={filteredSectors.length}
             isFetching={filters.profileSectorsFilter.options?.isFetching}
           />
-          {siteConfig.allowHeroFiltersSearch && (
+          {siteConfig.featureFlags.allowHeroFiltersSearch && (
             <SearchInput
               value={sectorSearch}
               onChange={setSectorSearch}
@@ -70,7 +70,7 @@ export const ProfileListHeroFilters = () => {
             count={filteredProducts.length}
             isFetching={filters.productTypesFilter.options?.isFetching}
           />
-          {siteConfig.allowHeroFiltersSearch && (
+          {siteConfig.featureFlags.allowHeroFiltersSearch && (
             <SearchInput
               value={productSearch}
               onChange={setProductSearch}
@@ -96,7 +96,7 @@ export const ProfileListHeroFilters = () => {
               count={filteredTags.length}
               isFetching={filters.tagsFilter.options?.isFetching}
             />
-            {siteConfig.allowHeroFiltersSearch && (
+            {siteConfig.featureFlags.allowHeroFiltersSearch && (
               <SearchInput
                 value={tagSearch}
                 onChange={setTagSearch}

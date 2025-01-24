@@ -8,14 +8,17 @@ import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
 import { ToggleThemeButton } from './toggle-theme-button';
 import { Logo } from './logo';
+import { siteConfig } from '@/lib/site-config';
 
 const learnMoreButton = (
   <Link
     target="_blank"
     rel="noopener noreferrer"
-    href="https://docs.thegrid.id"
+    href={siteConfig.header.docsButton.href}
   >
-    <Button className="w-full md:w-fit">Read the docs</Button>
+    <Button className="w-full md:w-fit">
+      {siteConfig.header.docsButton.label}
+    </Button>
   </Link>
 );
 
@@ -23,23 +26,23 @@ const claimProfileButton = (
   <Link
     target="_blank"
     rel="noopener noreferrer"
-    href="https://enter.thegrid.id/claimprofile"
+    href={siteConfig.header.claimProfileButton.href}
   >
     <Button variant="outline" className="w-full md:w-fit">
-      Claim your profile
+      {siteConfig.header.claimProfileButton.label}
     </Button>
   </Link>
 );
 
 const cloneRepoButton = (
   <Link
-    href="https://github.com/The-Grid-Data/Explorer"
+    href={siteConfig.header.githubButton.href}
     target="_blank"
     rel="noopener noreferrer"
   >
     <Button className="w-full md:w-fit" variant="outline">
       <SiGithub className="mr-2" size={18} />
-      Clone project
+      {siteConfig.header.githubButton.label}
     </Button>
   </Link>
 );

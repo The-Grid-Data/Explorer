@@ -75,7 +75,7 @@ export const ProfileHeading = ({
               ]}
             />
           </div>
-          {siteConfig.displayQueries && (
+          {siteConfig.featureFlags.displayQueriesButtons && (
             <QueryDialogButton
               variables={queryVariables}
               queryDocument={ProfileDetailQuery as unknown as string}
