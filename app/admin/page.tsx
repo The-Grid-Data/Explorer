@@ -2,6 +2,8 @@ import { getFileContent } from '@/lib/storage/blob';
 import { ConfigField } from './config-field';
 import { TriggerRedeployButton } from './trigger-redeploy-button';
 
+export const dynamic = 'force-dynamic';
+
 export default async function AdminPage() {
   const config = await getFileContent('config.json');
   return (
