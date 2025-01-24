@@ -40,7 +40,7 @@ export function TriggerRedeployButton() {
             target="_blank"
             rel="noopener noreferrer"
           >
-            Vercel's Deploy Hooks Guide
+            Vercel&apos;s Deploy Hooks Guide
           </a>{' '}
           and add the hook URL as{' '}
           <code className="rounded bg-muted px-1 py-0.5">
