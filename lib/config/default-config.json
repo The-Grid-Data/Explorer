@@ -4,6 +4,9 @@
     "description": "Powering Discoverability of Assets, Products, and Services in Web3."
   },
   "verifiedTagId": "7",
+  "banner": {
+    "text": "YOU SHOULD NOT USE THIS AS A DAILY DRIVER. This is a reference implementation of <a target='_blank' href='https://thegrid.id/legal/web-services-terms' class='underline'>The Grid&apos;s data</a>  which is in Beta - API users can pick and show data relevant to their users."
+  },
   "header": {
     "logoSrc": {
       "dark": "/thegrid-logo-white.svg",
@@ -40,7 +43,11 @@
     "productIds": []
   },
   "overrideOptionsFilterValues": {
-    "productTypes": ["15", "16", "17"]
+    "productTypes": [
+      "15",
+      "16",
+      "17"
+    ]
   },
   "featureFlags": {
     "displayQueriesButtons": true,

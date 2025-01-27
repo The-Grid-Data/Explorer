@@ -7,6 +7,9 @@ export const configSchema = z.object({
     description: z.string().default(defaultConfig.metadata.description)
   }),
   verifiedTagId: z.string().default(defaultConfig.verifiedTagId),
+  banner: z.object({
+    text: z.string().default(defaultConfig.banner.text)
+  }),
   header: z.object({
     logoSrc: z.object({
       dark: z.string().default(defaultConfig.header.logoSrc.dark),
