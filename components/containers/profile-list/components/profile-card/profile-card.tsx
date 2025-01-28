@@ -11,7 +11,7 @@ import { siteConfig } from '@/lib/site-config';
 import {
   extractSocialUrls,
   extractUrls,
-  UrlTypeIconLinks
+  UrlTypeIconLinks,
 } from '@/components/containers/url-type-icon/url-type-icon-list';
 import { useProfileFiltersContext } from '@/providers/filters-provider';
 import { Banknote, Package } from 'lucide-react';
@@ -135,17 +135,14 @@ export const ProfileCard = ({ profile: profileData }: ProfileCardCardProps) => {
                   {profile.name}
                 </h3>
                 {profile.root?.profileTags?.find(
-                  tag => tag.tag?.id === siteConfig.verifiedTagId
+                  (tag) => tag.tag?.id === siteConfig.verifiedTagId
                 ) && <Badge className="w-fit">Claimed</Badge>}
               </Link>
             </div>
             <div className="flex flex-col gap-4 lg:mr-[-16px] lg:flex-row">
               <div className="w-fit flex-1">
                 <UrlTypeIconLinks
-                  urls={[
-                    extractUrls(profile.urls),
-                    extractSocialUrls(profile.root?.socials)
-                  ]}
+                  urls={extractSocialUrls(profile.root?.socials)}
                 />
               </div>
               <Button className="w-full lg:w-fit" variant="default" asChild>
@@ -190,7 +187,7 @@ export const ProfileCard = ({ profile: profileData }: ProfileCardCardProps) => {
               label="Issued Assets"
               value={
                 Boolean(profile.root?.assets?.length) &&
-                profile.root?.assets?.map(asset => asset.ticker).join(', ')
+                profile.root?.assets?.map((asset) => asset.ticker).join(', ')
               }
             />
           </div>
@@ -203,19 +200,11 @@ export const ProfileCard = ({ profile: profileData }: ProfileCardCardProps) => {
             <ProfileCardDataPoint
               label="Tags"
               value={profile.root?.profileTags
-                ?.map(tag => tag?.tag?.name)
+                ?.map((tag) => tag?.tag?.name)
                 .filter(Boolean)
                 .join(', ')}
               active={filters.tagsFilter.active}
             />
-            {/* <ProfileCardDataPoint
-              label="Product types"
-              value={profile.root?.products
-                ?.map(product => product.productType?.name)
-                .filter(Boolean)
-                .join(', ')}
-              active={filters.productTypesFilter.active}
-            /> */}
             <ProfileCardDataPoint
               label="Products"
               active={[
@@ -223,13 +212,13 @@ export const ProfileCard = ({ profile: profileData }: ProfileCardCardProps) => {
                 filters.productDeployedOnFilter.active,
                 filters.productLaunchDateFilter.active,
                 filters.productStatusFilter.active,
-                filters.supportsProductsFilter.active
-              ].some(value => value)}
+                filters.supportsProductsFilter.active,
+              ].some((value) => value)}
               className="items-start"
             >
               <div className="flex h-full flex-wrap gap-2">
                 {profile.root?.products?.length ? (
-                  profile.root.products.map(product => (
+                  profile.root.products.map((product) => (
                     <ItemWithSheet
                       key={product.id}
                       trigger={
@@ -256,13 +245,13 @@ export const ProfileCard = ({ profile: profileData }: ProfileCardCardProps) => {
                 filters.assetDeployedOnFilter.active,
                 filters.assetStandardFilter.active,
                 filters.assetTickerFilter.active,
-                filters.assetTypeFilter.active
-              ].some(value => value)}
+                filters.assetTypeFilter.active,
+              ].some((value) => value)}
               className="items-start"
             >
               <div className="flex h-full flex-wrap gap-2">
                 {profile.root?.assets?.length ? (
-                  profile.root.assets.map(asset => (
+                  profile.root.assets.map((asset) => (
                     <ItemWithSheet
                       key={asset.id}
                       trigger={
@@ -287,3 +276,33 @@ export const ProfileCard = ({ profile: profileData }: ProfileCardCardProps) => {
     </div>
   );
 };
+
+// Utility function
+export function extractSocialUrls(
+  socials: Array<{ name: string; urls: Array<{ url: string }> }> = []
+) {
+  return socials.map((social) => ({
+    url: social.urls?.[0]?.url,
+    name: social.name,
+  }));
+}
+
+// Tooltip component (uses Radix UI or shadcn/ui)
+import * as TooltipPrimitive from '@radix-ui/react-tooltip';
+
+export const Tooltip = ({
+  children,
+  content,
+}: {
+  children: React.ReactNode;
+  content: string;
+}) => (
+  <TooltipPrimitive.Provider>
+    <TooltipPrimitive.Root>
+      <TooltipPrimitive.Trigger asChild>{children}</TooltipPrimitive.Trigger>
+      <TooltipPrimitive.Content className="rounded bg-black px-2 py-1 text-white">
+        {content}
+      </TooltipPrimitive.Content>
+    </TooltipPrimitive.Root>
+  </TooltipPrimitive.Provider>
+);
