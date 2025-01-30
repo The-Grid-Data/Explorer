@@ -5,7 +5,7 @@ import { FiltersStore } from '../../use-profile-filters';
 import { useQueryState, parseAsArrayOf } from 'nuqs';
 import { graphql } from '@/lib/graphql/generated';
 import { isNotEmpty } from '@/lib/utils/is-not-empty';
-import { CSupportsProductsBoolExp } from '@/lib/graphql/generated/graphql';
+import { SupportsProductsBoolExp } from '@/lib/graphql/generated/graphql';
 import { siteConfig } from '@/lib/site-config';
 
 const filterId = 'supportsProducts';
@@ -68,8 +68,8 @@ export const useSupportsProductsFilter = (filterStore: FiltersStore) => {
 
 function buildSupportsProductsWhere(
   filterStore: FiltersStore
-): CSupportsProductsBoolExp {
-  const conditions: CSupportsProductsBoolExp[] = [];
+): SupportsProductsBoolExp {
+  const conditions: SupportsProductsBoolExp[] = [];
 
   if (isNotEmpty(siteConfig.overrideFilterValues.supportsProducts)) {
     conditions.push({

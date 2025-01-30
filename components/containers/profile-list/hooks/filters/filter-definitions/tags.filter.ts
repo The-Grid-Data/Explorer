@@ -76,8 +76,8 @@ export const useTagsFilter = (filterStore: FiltersStore) => {
   });
 };
 
-function buildTagsWhere(filterStore: FiltersStore): CTagsBoolExp {
-  const conditions: CTagsBoolExp[] = [];
+function buildTagsWhere(filterStore: FiltersStore): TagsBoolExp {
+  const conditions: TagsBoolExp[] = [];
 
   if (isNotEmpty(filterStore.profileSectorsFilter)) {
     conditions.push({

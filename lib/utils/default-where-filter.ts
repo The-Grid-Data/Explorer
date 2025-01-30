@@ -1,9 +1,9 @@
 import { siteConfig } from '@/lib/site-config';
-import { CProfileInfosBoolExp } from '../graphql/generated/graphql';
+import { ProfileInfosBoolExp } from '../graphql/generated/graphql';
 import deepmerge from 'deepmerge';
 
-const getDefaultWhereFilter = (): CProfileInfosBoolExp => {
-  const orConditions: CProfileInfosBoolExp[] = [];
+const getDefaultWhereFilter = (): ProfileInfosBoolExp => {
+  const orConditions: ProfileInfosBoolExp[] = [];
 
   if (siteConfig.overrideFilterValues.productIds?.length) {
     orConditions.push(
@@ -87,6 +87,6 @@ const getDefaultWhereFilter = (): CProfileInfosBoolExp => {
   return orConditions.length ? { _or: orConditions } : {};
 };
 
-export const withDefaultWhereFilter = (where: CProfileInfosBoolExp = {}) => {
+export const withDefaultWhereFilter = (where: ProfileInfosBoolExp = {}) => {
   return deepmerge(where, getDefaultWhereFilter());
 };

@@ -1,4 +1,3 @@
-import { InfosBoolExp } from '@/lib/graphql/generated/graphql';
 import { useRef } from 'react';
 import deepmerge from 'deepmerge';
 import type {
@@ -28,6 +27,7 @@ import {
   useProfileFoundingDateFilter,
   useProductAssetRelationshipsFilter
 } from './filters/filter-definitions';
+import { ProfileInfosBoolExp } from '@/lib/graphql/generated/graphql';
 
 export type FiltersStore = {
   searchFilter: SearchReturn['value'];

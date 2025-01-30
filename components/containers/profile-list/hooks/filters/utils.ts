@@ -1,8 +1,6 @@
 import { z } from 'zod';
 import { createParser } from 'nuqs';
-import { InfosBoolExp } from '@/lib/graphql/generated/graphql';
 import deepmerge from 'deepmerge';
-import { FiltersStore } from '../use-profile-filters';
 
 export const validateAndFormatOptions = <T>(options: unknown) => {
   const optionsSchema = z.array(

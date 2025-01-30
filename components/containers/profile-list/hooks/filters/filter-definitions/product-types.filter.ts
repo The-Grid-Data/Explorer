@@ -7,7 +7,7 @@ import { graphql } from '@/lib/graphql/generated';
 import { isNotEmpty } from '@/lib/utils/is-not-empty';
 import {
   ProductsBoolExp,
-  CProductTypesBoolExp
+  ProductTypesBoolExp
 } from '@/lib/graphql/generated/graphql';
 import { siteConfig } from '@/lib/site-config';
 
@@ -71,8 +71,8 @@ export const useProductTypesFilter = (filterStore: FiltersStore) => {
 
 function buildProfileSectorsWhere(
   filterStore: FiltersStore
-): CProductTypesBoolExp {
-  const conditions: CProductTypesBoolExp[] = [];
+): ProductTypesBoolExp {
+  const conditions: ProductTypesBoolExp[] = [];
 
   if (
     isNotEmpty(filterStore.tagsFilter) ||
