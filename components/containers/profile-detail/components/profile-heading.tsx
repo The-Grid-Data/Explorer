@@ -12,7 +12,7 @@ import { FragmentType, graphql, useFragment } from '@/lib/graphql/generated';
 import { ProfileDetailQuery } from '../profile-detail';
 
 export const ProfileHeadingFragment = graphql(`
-  fragment ProfileHeadingFragment on CProfileInfos {
+  fragment ProfileHeadingFragment on ProfileInfos {
     logo
     name
     urls(order_by: { urlTypeId: Asc }) {

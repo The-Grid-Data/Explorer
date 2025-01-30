@@ -24,7 +24,7 @@ export const useProductAssetRelationshipsFilter = (
       const where = {};
       const data = await execute(
         graphql(`
-          query getProductAssetRelationshipsOptions($where: CAssetsBoolExp) {
+          query getProductAssetRelationshipsOptions($where: AssetsBoolExp) {
             assets(where: $where) {
               ticker
             }

@@ -1,23 +1,23 @@
 {
   "metadata": {
-    "title": "The Grid | Data Explorer",
-    "description": "Powering Discoverability of Assets, Products, and Services in Web3."
+    "title": "Solana Explorer | The Grid",
+    "description": "Explore The Grids data on the Solana ecosystem"
   },
   "verifiedTagId": "7",
   "banner": {
-    "text": "YOU SHOULD NOT USE THIS AS A DAILY DRIVER. This is a reference implementation of <a target='_blank' href='https://thegrid.id/legal/web-services-terms' class='underline'>The Grid&apos;s data</a>  which is in Beta - API users can pick and show data relevant to their users."
+    "text": "Experience <a target='_blank' href='https://thegrid.id/legal/web-services-terms' class='underline'>The Grid&apos;s</a> validated Solana data layer which is in Beta"
   },
   "header": {
     "logoSrc": {
-      "dark": "/thegrid-logo-white.svg",
-      "light": "/thegrid-logo.svg"
+      "dark": "https://ufqc7mkcepqpfc3w.public.blob.vercel-storage.com/solana-ID2FtnNCtsY3YXrJJaxEuVO5kuVYUQ.svg",
+      "light": "https://ufqc7mkcepqpfc3w.public.blob.vercel-storage.com/solana-white-9zPFJeY8vrgLWg32UVOzY6pC7cpi8Z.svg"
     },
     "docsButton": {
       "label": "Read the docs",
       "href": "https://docs.thegrid.id"
     },
     "claimProfileButton": {
-      "label": "Claim your profile",
+      "label": "Claim your profile on The Grid",
       "href": "https://enter.thegrid.id/claimprofile"
     },
     "githubButton": {
@@ -28,19 +28,19 @@
   "pages": {
     "home": {
       "hero": {
-        "badge": "For all of Web3 but currently focused on Solana.",
-        "title": "A Node of Truth on Assets, Products, and Services in Web3.",
-        "description": "Explore the largest offchain dataset for Solana projects, use the filters to find projects relevant to you."
+        "badge": "This is an opensource UI to show data.",
+        "title": "Explore and discover Solana projects, products and assets.",
+        "description": "Browse Solana's ecosystem via <a href='https://thegrid.id'>The Grid's</a> data.<br></br> Filter to find what matters to you or integrate this data into your own product using the API."
       }
     }
   },
   "overrideFilterValues": {
-    "productDeployedOn": [],
-    "supportsProducts": [],
+    "productDeployedOn": ["22"],
+    "supportsProducts": ["22"],
     "productTypes": [],
     "productAssetRelationships": [],
     "tags": [],
-    "productIds": []
+    "productIds": ["22"]
   },
   "overrideOptionsFilterValues": {
     "productTypes": [

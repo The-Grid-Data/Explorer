@@ -22,7 +22,7 @@ export const useAssetTypeFilter = (filterStore: FiltersStore) => {
       const where = {};
       const data = await execute(
         graphql(`
-          query getAssetTypeOptions($where: CAssetTypesBoolExp) {
+          query getAssetTypeOptions($where: AssetTypesBoolExp) {
             assetTypes(where: $where) {
               label: name
               value: id

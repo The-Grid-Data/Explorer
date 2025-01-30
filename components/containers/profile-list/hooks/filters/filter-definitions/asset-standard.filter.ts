@@ -23,7 +23,7 @@ export const useAssetStandardFilter = (filterStore: FiltersStore) => {
       const where = {};
       const data = await execute(
         graphql(`
-          query getAssetStandardOptions($where: CAssetStandardsBoolExp) {
+          query getAssetStandardOptions($where: AssetStandardsBoolExp) {
             assetStandards(where: $where) {
               label: name
               value: id

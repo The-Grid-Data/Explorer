@@ -15,7 +15,7 @@ import { execute } from '@/lib/graphql/execute';
 import { useQuery } from '@tanstack/react-query';
 
 export const ProfileDetailQuery = graphql(`
-  query getProfileData($where: CProfileInfosBoolExp) {
+  query getProfileData($where: ProfileInfosBoolExp) {
     profileInfos(limit: 1, offset: 0, where: $where) {
       tagLine
       descriptionShort

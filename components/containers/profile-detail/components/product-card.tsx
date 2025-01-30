@@ -18,7 +18,7 @@ import { FragmentType, graphql, useFragment } from '@/lib/graphql/generated';
 import { CollapsibleList } from '@/components/ui/collapsible-list';
 
 export const ProductFragment = graphql(`
-  fragment ProductFieldsFragment on CProducts {
+  fragment ProductFieldsFragment on Products {
     rootId
     productTypeId
     productStatusId

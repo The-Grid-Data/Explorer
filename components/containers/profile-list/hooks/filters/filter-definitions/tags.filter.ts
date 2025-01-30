@@ -6,8 +6,8 @@ import { useQueryState, parseAsArrayOf } from 'nuqs';
 import { graphql } from '@/lib/graphql/generated';
 import { isNotEmpty } from '@/lib/utils/is-not-empty';
 import {
-  CTagsBoolExp,
-  CProfileTagsBoolExp
+  TagsBoolExp,
+  ProfileTagsBoolExp
 } from '@/lib/graphql/generated/graphql';
 import { siteConfig } from '@/lib/site-config';
 
@@ -29,8 +29,8 @@ export const useTagsFilter = (filterStore: FiltersStore) => {
       const data = await execute(
         graphql(`
           query getTagsOptions(
-            $where: CTagsBoolExp
-            $aggregateInput: CProfileTagsFilterInput
+            $where: TagsBoolExp
+            $aggregateInput: ProfileTagsFilterInput
           ) {
             tags(where: $where) {
               value: id
@@ -139,8 +139,8 @@ function buildTagsWhere(filterStore: FiltersStore): CTagsBoolExp {
   return mergeConditions(conditions);
 }
 
-function buildAggregateInput(filterStore: FiltersStore): CProfileTagsBoolExp {
-  const conditions: Array<CProfileTagsBoolExp> = [];
+function buildAggregateInput(filterStore: FiltersStore): ProfileTagsBoolExp {
+  const conditions: Array<ProfileTagsBoolExp> = [];
 
   if (isNotEmpty(filterStore.profileSectorsFilter)) {
     conditions.push({

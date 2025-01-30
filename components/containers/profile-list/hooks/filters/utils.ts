@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import { createParser } from 'nuqs';
-import { CProfileInfosBoolExp } from '@/lib/graphql/generated/graphql';
+import { InfosBoolExp } from '@/lib/graphql/generated/graphql';
 import deepmerge from 'deepmerge';
 import { FiltersStore } from '../use-profile-filters';
 

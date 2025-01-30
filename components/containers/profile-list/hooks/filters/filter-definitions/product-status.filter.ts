@@ -22,7 +22,7 @@ export const useProductStatusFilter = (filterStore: FiltersStore) => {
       const where = {};
       const data = await execute(
         graphql(`
-          query getProductStatusesOptions($where: CProductStatusesBoolExp) {
+          query getProductStatusesOptions($where: ProductStatusesBoolExp) {
             productStatuses(where: $where) {
               label: name
               value: id

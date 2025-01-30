@@ -1,4 +1,4 @@
-import { CProfileInfosBoolExp } from '@/lib/graphql/generated/graphql';
+import { InfosBoolExp } from '@/lib/graphql/generated/graphql';
 import { useRef } from 'react';
 import deepmerge from 'deepmerge';
 import type {
@@ -91,15 +91,15 @@ export function useProfileFilters() {
   );
 
   // Merge each filter's conditions into a final "where" object.
-  const toQueryWhereFields = (): CProfileInfosBoolExp => {
+  const toQueryWhereFields = (): ProfileInfosBoolExp => {
     const conditions = Object.values(filters)
       .map(filter => filter.getQueryConditions?.())
-      .filter((condition): condition is CProfileInfosBoolExp =>
+      .filter((condition): condition is ProfileInfosBoolExp =>
         Boolean(condition)
       );
 
-    return deepmerge.all<CProfileInfosBoolExp>(
-      conditions as CProfileInfosBoolExp[]
+    return deepmerge.all<ProfileInfosBoolExp>(
+      conditions as ProfileInfosBoolExp[]
     );
   };
 

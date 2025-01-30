@@ -16,7 +16,7 @@ import { ContractAddressesBadge } from './contract-address-badge';
 import { FragmentType, graphql, useFragment } from '@/lib/graphql/generated';
 
 export const AssetFragment = graphql(`
-  fragment AssetFieldsFragment on CAssets {
+  fragment AssetFieldsFragment on Assets {
     ticker
     rootId
     name

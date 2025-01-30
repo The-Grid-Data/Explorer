@@ -6,7 +6,7 @@ import { useQueryState, parseAsArrayOf } from 'nuqs';
 import { graphql } from '@/lib/graphql/generated';
 import { isNotEmpty } from '@/lib/utils/is-not-empty';
 import {
-  CProductsBoolExp,
+  ProductsBoolExp,
   CProductTypesBoolExp
 } from '@/lib/graphql/generated/graphql';
 import { siteConfig } from '@/lib/site-config';
@@ -29,8 +29,8 @@ export const useProductTypesFilter = (filterStore: FiltersStore) => {
       const data = await execute(
         graphql(`
           query getProductTypeOptions(
-            $where: CProductTypesBoolExp
-            $aggregateInput: CProductsFilterInput
+            $where: ProductTypesBoolExp
+            $aggregateInput: ProductsFilterInput
           ) {
             productTypes(where: $where) {
               label: name
@@ -141,8 +141,8 @@ function buildProfileSectorsWhere(
   return mergeConditions(conditions);
 }
 
-function buildAggregateInput(filterStore: FiltersStore): CProductsBoolExp {
-  const conditions: Array<CProductsBoolExp> = [];
+function buildAggregateInput(filterStore: FiltersStore): ProductsBoolExp {
+  const conditions: Array<ProductsBoolExp> = [];
 
   if (isNotEmpty(filterStore.tagsFilter)) {
     conditions.push({

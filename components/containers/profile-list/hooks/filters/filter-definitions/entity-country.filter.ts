@@ -22,7 +22,7 @@ export const useEntityCountryFilter = (filterStore: FiltersStore) => {
       const where = {};
       const data = await execute(
         graphql(`
-          query getEntityCountryOptions($where: CCountriesBoolExp) {
+          query getEntityCountryOptions($where: CountriesBoolExp) {
             countries(where: $where) {
               label: name
               value: id

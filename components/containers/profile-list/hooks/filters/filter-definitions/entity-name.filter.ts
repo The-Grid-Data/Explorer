@@ -22,7 +22,7 @@ export const useEntityNameFilter = (filterStore: FiltersStore) => {
       const where = {};
       const data = await execute(
         graphql(`
-          query getEntityNameOptions($where: CEntitiesBoolExp) {
+          query getEntityNameOptions($where: EntitiesBoolExp) {
             entities(where: $where) {
               label: name
               value: id

@@ -22,7 +22,7 @@ export const useAssetTickerFilter = (filterStore: FiltersStore) => {
       const where = {};
       const data = await execute(
         graphql(`
-          query getAssetTickerOptions($where: CAssetsBoolExp) {
+          query getAssetTickerOptions($where: AssetsBoolExp) {
             assets(where: $where) {
               ticker
             }

@@ -5,7 +5,7 @@ import { FiltersStore } from '../../use-profile-filters';
 import { useQueryState, parseAsArrayOf } from 'nuqs';
 import { graphql } from '@/lib/graphql/generated';
 import { isNotEmpty } from '@/lib/utils/is-not-empty';
-import { CProductsBoolExp } from '@/lib/graphql/generated/graphql';
+import { ProductsBoolExp } from '@/lib/graphql/generated/graphql';
 import { siteConfig } from '@/lib/site-config';
 
 const filterId = 'assetDeployedOnFilter';
@@ -25,7 +25,7 @@ export const useAssetDeployedOnFilter = (filterStore: FiltersStore) => {
     getOptions: async () => {
       const data = await execute(
         graphql(`
-          query getAssetDeployedOnProductsOptions($where: CProductsBoolExp) {
+          query getAssetDeployedOnProductsOptions($where: ProductsBoolExp) {
             products(where: $where) {
               name
               id
@@ -62,8 +62,8 @@ export const useAssetDeployedOnFilter = (filterStore: FiltersStore) => {
 
 function buildDeployedOnProductsWhere(
   filterStore: FiltersStore
-): CProductsBoolExp {
-  const conditions: CProductsBoolExp[] = [];
+): ProductsBoolExp {
+  const conditions: ProductsBoolExp[] = [];
 
   if (isNotEmpty(siteConfig.overrideFilterValues.productDeployedOn)) {
     conditions.push({

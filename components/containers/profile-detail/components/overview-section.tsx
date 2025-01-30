@@ -9,7 +9,7 @@ import { TagIcon } from 'lucide-react';
 import { FragmentType, graphql, useFragment } from '@/lib/graphql/generated';
 
 export const ProfileFragment = graphql(`
-  fragment ProfileFragment on CProfileInfos {
+  fragment ProfileFragment on ProfileInfos {
     profileSector {
       name
     }

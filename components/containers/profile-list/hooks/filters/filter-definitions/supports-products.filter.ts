@@ -25,7 +25,7 @@ export const useSupportsProductsFilter = (filterStore: FiltersStore) => {
     getOptions: async () => {
       const data = await execute(
         graphql(`
-          query getSupportsProductsOptions($where: CSupportsProductsBoolExp) {
+          query getSupportsProductsOptions($where: SupportsProductsBoolExp) {
             supportsProducts(where: $where) {
               supportsProduct {
                 name

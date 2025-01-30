@@ -22,7 +22,7 @@ import { format } from 'date-fns';
 import { graphql, FragmentType, useFragment } from '@/lib/graphql/generated';
 
 export const ProfileCardFragment = graphql(`
-  fragment ProfileCardFragment on CProfileInfos {
+  fragment ProfileCardFragment on ProfileInfos {
     name
     logo
     id

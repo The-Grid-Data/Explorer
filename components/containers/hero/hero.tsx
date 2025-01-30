@@ -17,9 +17,12 @@ export const Hero = () => {
       )}
 
       {siteConfig.pages.home.hero.description && (
-        <p className="max-w-xl text-center text-lg font-light text-foreground">
-          {siteConfig.pages.home.hero.description}
-        </p>
+        <p
+          className="max-w-xl text-center text-lg font-light text-foreground"
+          dangerouslySetInnerHTML={{
+            __html: siteConfig.pages.home.hero.description
+          }}
+        ></p>
       )}
     </section>
   );

@@ -13,8 +13,8 @@ const defaultLimit = 10;
 
 export const SearchProfilesQuery = graphql(`
   query SearchProfiles(
-    $order_by: [CProfileInfosOrderBy!]
-    $where: CProfileInfosBoolExp
+    $order_by: [ProfileInfosOrderBy!]
+    $where: ProfileInfosBoolExp
     $limit: Int
     $offset: Int
   ) {

@@ -10,7 +10,7 @@ import { Separator } from '@/components/ui/separator';
 import { FragmentType, graphql, useFragment } from '@/lib/graphql/generated';
 
 export const EntityFieldsFragment = graphql(`
-  fragment EntityFieldsFragment on CEntities {
+  fragment EntityFieldsFragment on Entities {
     name
     tradeName
     taxIdentificationNumber

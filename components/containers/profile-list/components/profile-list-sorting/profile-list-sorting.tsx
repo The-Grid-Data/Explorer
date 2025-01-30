@@ -48,7 +48,7 @@ const ProfileListSortingComponent = () => {
   const { data } = useQuery({
     queryKey: ['orderByFields'],
     queryFn: () =>
-      execute(GetOrderByFieldsQuery, { name: 'CProfileInfosOrderBy' })
+      execute(GetOrderByFieldsQuery, { name: 'ProfileInfosOrderBy' })
   });
 
   const { sorting } = useProfileSortingContext();
