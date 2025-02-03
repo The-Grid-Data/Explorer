@@ -1,16 +1,16 @@
 {
   "metadata": {
-    "title": "mtndao unofficial directory",
-    "description": "See the projects that have a presence at mtndao"
+    "title": "The Grid | Data Explorer",
+    "description": "Powering Discoverability of Assets, Products, and Services in Web3."
   },
   "verifiedTagId": "7",
   "banner": {
-    "text": "This is a reference implementation of <a target='_blank' href='https://thegrid.id/legal/web-services-terms' class='underline'>The Grid&apos;s data</a>  which is in Beta - API users can pick and show data relevant to their users."
+    "text": "YOU SHOULD NOT USE THIS AS A DAILY DRIVER. This is a reference implementation of <a target='_blank' href='https://thegrid.id/legal/web-services-terms' class='underline'>The Grid&apos;s data</a>  which is in Beta - API users can pick and show data relevant to their users."
   },
   "header": {
     "logoSrc": {
       "dark": "/thegrid-logo-white.svg",
-      "light": "https://img.thegrid.id/upload/5a1f3afab1b157b98afb6c526e272debd0a089abb5f74982e906e126c467220f.svg"
+      "light": "/thegrid-logo.svg"
     },
     "docsButton": {
       "label": "Read the docs",
@@ -21,16 +21,16 @@
       "href": "https://enter.thegrid.id/claimprofile"
     },
     "githubButton": {
-      "label": "Clone this repo",
+      "label": "Clone project",
       "href": "https://github.com/The-Grid-Data/Explorer"
     }
   },
   "pages": {
     "home": {
       "hero": {
-        "badge": "mtndao 2025",
-        "title": "The unofficial mtndao directory",
-        "description": "Explore the profiles that are either sponsoring or attending mtndao 2025 - q's  <a target='_blank' href='https://telegram.me/jpkne' class='underline'>reach out on tg</a>"
+        "badge": "For all of Web3 but currently focused on Solana.",
+        "title": "A Node of Truth on Assets, Products, and Services in Web3.",
+        "description": "Explore the largest offchain dataset for Solana projects, use the filters to find projects relevant to you."
       }
     }
   },
@@ -39,11 +39,7 @@
     "supportsProducts": [],
     "productTypes": [],
     "productAssetRelationships": [],
-    "tags": [
-      "id1738605713-nJlNCdQtT_WHtcKbyllFZw",
-      "id1738088601-aYNp2VCMS5qA8dC929UcBg",
-      "id1738611346-KfBp7qguQqaloenJws8QHA"
-    ],
+    "tags": [],
     "productIds": []
   },
   "overrideOptionsFilterValues": {
@@ -56,6 +52,6 @@
   "featureFlags": {
     "displayQueriesButtons": true,
     "allowHeroFiltersSearch": true,
-    "displayTagsFilter": true
+    "displayTagsFilter": false
   }
 }
