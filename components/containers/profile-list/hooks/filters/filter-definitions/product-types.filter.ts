@@ -144,10 +144,20 @@ function buildProfileSectorsWhere(
 function buildAggregateInput(filterStore: FiltersStore): ProductsBoolExp {
   const conditions: Array<ProductsBoolExp> = [];
 
-  if (isNotEmpty(filterStore.tagsFilter)) {
+  if (
+    isNotEmpty(filterStore.tagsFilter) ||
+    isNotEmpty(siteConfig.overrideFilterValues.tags)
+  ) {
     conditions.push({
       root: {
-        profileTags: { tagId: { _in: filterStore.tagsFilter } }
+        profileTags: {
+          tagId: {
+            _in: [
+              ...filterStore.tagsFilter,
+              ...siteConfig.overrideFilterValues.tags
+            ]
+          }
+        }
       }
     });
   }

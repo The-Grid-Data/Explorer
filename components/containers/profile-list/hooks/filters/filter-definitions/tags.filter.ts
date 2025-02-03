@@ -136,6 +136,14 @@ function buildTagsWhere(filterStore: FiltersStore): TagsBoolExp {
     });
   }
 
+  if (isNotEmpty(siteConfig.overrideFilterValues.tags)) {
+    conditions.push({
+      profileTags: {
+        tagId: { _in: siteConfig.overrideFilterValues.tags }
+      }
+    });
+  }
+
   return mergeConditions(conditions);
 }
 

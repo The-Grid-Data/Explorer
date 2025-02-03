@@ -1,46 +1,50 @@
 {
   "metadata": {
-    "title": "Solana Explorer | The Grid",
-    "description": "Explore The Grids data on the Solana ecosystem"
+    "title": "mtndao unofficial directory",
+    "description": "See the projects that have a presence at mtndao"
   },
   "verifiedTagId": "7",
   "banner": {
-    "text": "Experience <a target='_blank' href='https://thegrid.id/legal/web-services-terms' class='underline'>The Grid&apos;s</a> validated Solana data layer which is in Beta"
+    "text": "This is a reference implementation of <a target='_blank' href='https://thegrid.id/legal/web-services-terms' class='underline'>The Grid&apos;s data</a>  which is in Beta - API users can pick and show data relevant to their users."
   },
   "header": {
     "logoSrc": {
-      "dark": "https://ufqc7mkcepqpfc3w.public.blob.vercel-storage.com/solana-ID2FtnNCtsY3YXrJJaxEuVO5kuVYUQ.svg",
-      "light": "https://ufqc7mkcepqpfc3w.public.blob.vercel-storage.com/solana-white-9zPFJeY8vrgLWg32UVOzY6pC7cpi8Z.svg"
+      "dark": "/thegrid-logo-white.svg",
+      "light": "https://img.thegrid.id/upload/5a1f3afab1b157b98afb6c526e272debd0a089abb5f74982e906e126c467220f.svg"
     },
     "docsButton": {
       "label": "Read the docs",
       "href": "https://docs.thegrid.id"
     },
     "claimProfileButton": {
-      "label": "Claim your profile on The Grid",
+      "label": "Claim your profile",
       "href": "https://enter.thegrid.id/claimprofile"
     },
     "githubButton": {
-      "label": "Clone project",
+      "label": "Clone this repo",
       "href": "https://github.com/The-Grid-Data/Explorer"
     }
   },
   "pages": {
     "home": {
       "hero": {
-        "badge": "This is an opensource UI to show data.",
-        "title": "Explore and discover Solana projects, products and assets.",
-        "description": "Browse Solana's ecosystem via <a href='https://thegrid.id'>The Grid's</a> data.<br></br> Filter to find what matters to you or integrate this data into your own product using the API."
+        "badge": "mtndao 2025",
+        "title": "The unofficial mtndao directory",
+        "description": "Explore the profiles that are either sponsoring or attending mtndao 2025 - q's  <a target='_blank' href='https://telegram.me/jpkne' class='underline'>reach out on tg</a>"
       }
     }
   },
   "overrideFilterValues": {
-    "productDeployedOn": ["22"],
-    "supportsProducts": ["22"],
+    "productDeployedOn": [],
+    "supportsProducts": [],
     "productTypes": [],
     "productAssetRelationships": [],
-    "tags": [],
-    "productIds": ["22"]
+    "tags": [
+      "id1738605713-nJlNCdQtT_WHtcKbyllFZw",
+      "id1738088601-aYNp2VCMS5qA8dC929UcBg",
+      "id1738611346-KfBp7qguQqaloenJws8QHA"
+    ],
+    "productIds": []
   },
   "overrideOptionsFilterValues": {
     "productTypes": [
