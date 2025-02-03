@@ -71,7 +71,10 @@ export const configSchema = z.object({
       .default(defaultConfig.featureFlags.displayQueriesButtons),
     allowHeroFiltersSearch: z
       .boolean()
-      .default(defaultConfig.featureFlags.allowHeroFiltersSearch)
+      .default(defaultConfig.featureFlags.allowHeroFiltersSearch),
+    displayTagsFilter: z
+      .boolean()
+      .default(defaultConfig.featureFlags.displayTagsFilter)
   })
 });
 

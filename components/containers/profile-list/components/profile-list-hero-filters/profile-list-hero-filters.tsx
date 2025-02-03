@@ -88,7 +88,7 @@ export const ProfileListHeroFilters = () => {
           }}
         />
       </div>
-      {Boolean(siteConfig.overrideFilterValues.tags.length) && (
+      {Boolean(siteConfig.featureFlags.displayTagsFilter) && (
         <div className="space-y-4">
           <div className="flex flex-col gap-2 md:flex-row">
             <FilterTitle
