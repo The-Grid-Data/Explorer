@@ -293,4 +293,3 @@ export const ProfileCard = ({ profile: profileData }: ProfileCardCardProps) => {
     </div>
   );
 };
-
