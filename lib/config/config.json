@@ -52,6 +52,7 @@
   "featureFlags": {
     "displayQueriesButtons": true,
     "allowHeroFiltersSearch": true,
-    "displayTagsFilter": false
+    "displayTagsFilter": true,
+    "displayPoweredBy": true
   }
 }

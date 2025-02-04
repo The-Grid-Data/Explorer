@@ -74,6 +74,9 @@ export const configSchema = z.object({
       .default(defaultConfig.featureFlags.allowHeroFiltersSearch),
     displayTagsFilter: z
       .boolean()
+      .default(defaultConfig.featureFlags.displayTagsFilter),
+    displayPoweredBy: z
+      .boolean()
       .default(defaultConfig.featureFlags.displayTagsFilter)
   })
 });

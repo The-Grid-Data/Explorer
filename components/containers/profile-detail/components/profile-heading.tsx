@@ -10,6 +10,7 @@ import {
 } from '@/components/containers/url-type-icon/url-type-icon-list';
 import { FragmentType, graphql, useFragment } from '@/lib/graphql/generated';
 import { ProfileDetailQuery } from '../profile-detail';
+import { PoweredBy } from './powered-by';
 
 export const ProfileHeadingFragment = graphql(`
   fragment ProfileHeadingFragment on ProfileInfos {
@@ -75,13 +76,16 @@ export const ProfileHeading = ({
               ]}
             />
           </div>
-          {siteConfig.featureFlags.displayQueriesButtons && (
-            <QueryDialogButton
-              variables={queryVariables}
-              queryDocument={ProfileDetailQuery as unknown as string}
-              buttonLabel="View query"
-            />
-          )}
+          <div className="flex flex-col gap-2 md:flex-row md:items-center md:gap-4">
+            {siteConfig.featureFlags.displayQueriesButtons && (
+              <QueryDialogButton
+                variables={queryVariables}
+                queryDocument={ProfileDetailQuery as unknown as string}
+                buttonLabel="View query"
+              />
+            )}
+            {siteConfig.featureFlags.displayPoweredBy && <PoweredBy />}
+          </div>
         </div>
       </div>
     </div>
