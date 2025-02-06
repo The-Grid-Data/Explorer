@@ -37,13 +37,13 @@ To be able to customise this to your usecase, you must first deploy a new projec
 8. Redeploy -> Main -> Create Hook -> My hook -> Main (this means that the hook works from the main branch? (I think??)
 9. Copy hook -> Enviroment vars -> Add too "TRIGGER_REDEPLOY_HOOK_URL"
 
-Generate Blob
+Then Generate Blob: 
+
 10. Go to storage (tab on top nav bar)
 11. Create database
 12. Create New Blob
 13. Ok normal store name and click create 
 14. Contuine (this will add the env var!) 
-
 15. Rejoice! You made it!
 
 Now you can go to /admin and click restore to get started. 
