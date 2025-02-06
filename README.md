@@ -7,16 +7,50 @@ Information can be found here:  [docs.thegrid.id](https://docs.thegrid.id/)
 
 Right now this takes a very profile focused 'lens' view at our data. In the future, this may expand to other lenses. To understand how we look at lenses, [see this](https://docs.thegrid.id/lenses-at-the-grid-18)
 
-## Usage
+To see the 
 
-To be able to customise this to your usecase, the following is a very simple check list of things you need to change:
+# To use this repo
+### Full fork
+To have full control, fork this repo. This will provide the most flexiablity. (if you want to add pricing charts ect, you should be making a fork!)
 
-- [ ] Update hard filters on site-config.ts which limits which list of profiles loads, also update header and description names for tab information
-- [ ] Upload your logos and favicon (before deployment to avoid caching issues)
-- [ ] Maybe remove the clone repo button
-- [ ] Update the banner text in the banner file
-- [ ] Update the header info
-      _(though note that if you are using our open API and a free plan, you need to [keep attribution back to The Grid](https://thegrid.id/legal/web-services-terms) so keep this in mind when updating the banner text and header info)_
+### 'Simple' deploy - But changes on this repo will effect your deployment, but this repo is provided 'as is'.
+You can spin this up on any domain you want, and limit which data is shown. You get access to simple JSON package on /admin to customise the deployment. Everything is done via Vercel hooks and blobs.
+
+To be able to customise this to your usecase, you must first deploy a new project on your vercel account. Follow the excat steps to complete the full setup. 
+1. Sign up for a vercel account
+2. Click new project
+3. Import the explorer
+4. Enter end the following first enviroment variables. If blank, leave blank as you will need to gererate these in the next steps
+
+
+| Environment Variable | Value |
+|-------------------|-------|
+| NEXT_PUBLIC_GRAPHQL_ENDPOINT_URL | https://beta.node.thegrid.id/graphql |
+| ADMIN_PASSWORD | Password |
+| ADMIN_USER | admin |
+| LOAD_CONFIG_FROM_VERCEL_STORAGE | true  (set to false if you just want the full explorer) |
+| TRIGGER_REDEPLOY_HOOK_URL | steps 5 -> 9 |
+
+5. Press deploy and put on the kettle...
+6. Once your tea is made, go to your project settings
+7. Git -> Deploy hooks
+8. Redeploy -> Main -> Create Hook -> My hook -> Main (this means that the hook works from the main branch? (I think??)
+9. Copy hook -> Enviroment vars -> Add too "TRIGGER_REDEPLOY_HOOK_URL"
+
+Generate Blob
+10. Go to storage (tab on top nav bar)
+11. Create database
+12. Create New Blob
+13. Ok normal store name and click create 
+14. Contuine (this will add the env var!) 
+
+15. Rejoice! You made it!
+
+Now you can go to /admin and click restore to get started. 
+
+Whenever you make a change, you will need to redeploy to see changes. For large enviroments we would recommend that you deploy a staging on a random domain before commiting to live. 
+
+You can then limit which data is shown through various filters. The most common is tags or ProductDeployOn / supports products. Use the graphQl endpoint to find values or contact us for support here.
 
 ### Installation
 
