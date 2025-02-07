@@ -9,7 +9,7 @@ import { toast } from '@/hooks/use-toast';
 import defaultConfig from '@/lib/config/default-config.json';
 
 export function ConfigField({ config }: { config: string }) {
-  const [jsonValue, setJsonValue] = useState(config);
+  const [jsonValue, setJsonValue] = useState<string>();
   const [isSaving, setIsSaving] = useState(false);
   const [validationError, setValidationError] = useState<string | null>(null);
 
@@ -24,7 +24,8 @@ export function ConfigField({ config }: { config: string }) {
 
   useEffect(() => {
     try {
-      setJsonValue(formatJson(config));
+      const parsedConfig = configSchema.parse(JSON.parse(config));
+      setJsonValue(JSON.stringify(parsedConfig, null, 2));
     } catch {
       setJsonValue(config);
     }
@@ -49,7 +50,7 @@ export function ConfigField({ config }: { config: string }) {
     setIsSaving(true);
 
     try {
-      const parsedJson = JSON.parse(jsonValue);
+      const parsedJson = JSON.parse(jsonValue ?? '');
       configSchema.parse(parsedJson);
       await updateConfig(parsedJson);
       toast({
