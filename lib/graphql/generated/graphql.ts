@@ -1258,6 +1258,7 @@ export type ProfileInfos = {
   descriptionLong: Scalars['String1']['output'];
   descriptionShort: Scalars['String1']['output'];
   foundingDate?: Maybe<Scalars['Date']['output']>;
+  icon: Scalars['String1']['output'];
   id: Scalars['String1']['output'];
   logo: Scalars['String1']['output'];
   name: Scalars['String1']['output'];
@@ -1288,6 +1289,7 @@ export type ProfileInfosAggExp = {
   descriptionLong: StringAggExp;
   descriptionShort: StringAggExp;
   foundingDate: DateAggExp;
+  icon: StringAggExp;
   id: StringAggExp;
   logo: StringAggExp;
   name: StringAggExp;
@@ -1305,6 +1307,7 @@ export type ProfileInfosBoolExp = {
   descriptionLong?: InputMaybe<StringBoolExp>;
   descriptionShort?: InputMaybe<StringBoolExp>;
   foundingDate?: InputMaybe<DateBoolExp>;
+  icon?: InputMaybe<StringBoolExp>;
   id?: InputMaybe<StringBoolExp>;
   logo?: InputMaybe<StringBoolExp>;
   name?: InputMaybe<StringBoolExp>;
@@ -1330,6 +1333,7 @@ export type ProfileInfosOrderBy = {
   descriptionLong?: InputMaybe<OrderBy>;
   descriptionShort?: InputMaybe<OrderBy>;
   foundingDate?: InputMaybe<OrderBy>;
+  icon?: InputMaybe<OrderBy>;
   id?: InputMaybe<OrderBy>;
   logo?: InputMaybe<OrderBy>;
   name?: InputMaybe<OrderBy>;
@@ -2877,7 +2881,7 @@ export type EntityFieldsFragmentFragment = { __typename?: 'Entities', name: stri
 
 export type ProfileFragmentFragment = { __typename?: 'ProfileInfos', profileSector?: { __typename?: 'ProfileSectors', name: string } | null, profileType?: { __typename?: 'ProfileTypes', name: string } | null, root?: { __typename?: 'Roots', assets?: Array<{ __typename?: 'Assets', ticker: string }> | null, profileTags?: Array<{ __typename?: 'ProfileTags', tag?: { __typename?: 'Tags', name: string, id: string } | null }> | null } | null, profileStatus?: { __typename?: 'ProfileStatuses', name: string, id: string } | null, mainProduct?: { __typename?: 'Roots', products?: Array<{ __typename?: 'Products', productType?: { __typename?: 'ProductTypes', name: string } | null }> | null } | null } & { ' $fragmentName'?: 'ProfileFragmentFragment' };
 
-export type ProductFieldsFragmentFragment = { __typename?: 'Products', rootId: string, productTypeId?: string | null, productStatusId?: string | null, name: string, launchDate?: string | null, isMainProduct: number, id: string, description: string, productType?: { __typename?: 'ProductTypes', name: string, id: string, definition: string } | null, productStatus?: { __typename?: 'ProductStatuses', name: string, id: string, definition: string } | null, productDeployments?: Array<{ __typename?: 'ProductDeployments', smartContractDeployment?: { __typename?: 'SmartContractDeployments', isOfStandardId?: string | null, id: string, deployedOnProduct?: { __typename?: 'Products', id: string, name: string, root?: { __typename?: 'Roots', slug: string } | null } | null, assetStandard?: { __typename?: 'AssetStandards', id: string } | null, deploymentType?: { __typename?: 'DeploymentTypes', name: string } | null, smartContracts?: Array<{ __typename?: 'SmartContracts', name: string, id: string, deploymentDate?: string | null, address: string, deploymentId?: string | null }> | null } | null }> | null, supportsProducts?: Array<{ __typename?: 'SupportsProducts', supportsProduct?: { __typename?: 'Products', name: string, id: string, root?: { __typename?: 'Roots', slug: string } | null } | null }> | null, urls?: Array<{ __typename?: 'ProductUrls', url?: string | null, urlType?: { __typename?: 'UrlTypes', name: string, id: string, definition: string } | null }> | null, productAssetRelationships?: Array<{ __typename?: 'ProductAssetRelationships', assetId: string, asset?: { __typename?: 'Assets', name: string, id: string, assetType?: { __typename?: 'AssetTypes', name: string } | null, root?: { __typename?: 'Roots', slug: string } | null } | null, assetSupportType?: { __typename?: 'AssetSupportTypes', name: string } | null, product?: { __typename?: 'Products', name: string, id: string, description: string } | null }> | null } & { ' $fragmentName'?: 'ProductFieldsFragmentFragment' };
+export type ProductFieldsFragmentFragment = { __typename?: 'Products', rootId: string, productTypeId?: string | null, productStatusId?: string | null, name: string, launchDate?: string | null, isMainProduct: number, id: string, description: string, productType?: { __typename?: 'ProductTypes', name: string, id: string, definition: string } | null, productStatus?: { __typename?: 'ProductStatuses', name: string, id: string, definition: string } | null, productDeployments?: Array<{ __typename?: 'ProductDeployments', smartContractDeployment?: { __typename?: 'SmartContractDeployments', isOfStandardId?: string | null, id: string, deployedOnProduct?: { __typename?: 'Products', id: string, name: string, root?: { __typename?: 'Roots', slug: string } | null } | null, assetStandard?: { __typename?: 'AssetStandards', id: string } | null, deploymentType?: { __typename?: 'DeploymentTypes', name: string } | null, smartContracts?: Array<{ __typename?: 'SmartContracts', name: string, id: string, deploymentDate?: string | null, address: string, deploymentId?: string | null }> | null } | null }> | null, supportsProducts?: Array<{ __typename?: 'SupportsProducts', supportsProduct?: { __typename?: 'Products', name: string, id: string, root?: { __typename?: 'Roots', slug: string } | null } | null }> | null, supportedBy?: Array<{ __typename?: 'SupportsProducts', product?: { __typename?: 'Products', name: string, id: string, root?: { __typename?: 'Roots', slug: string } | null } | null }> | null, urls?: Array<{ __typename?: 'ProductUrls', url?: string | null, urlType?: { __typename?: 'UrlTypes', name: string, id: string, definition: string } | null }> | null, productAssetRelationships?: Array<{ __typename?: 'ProductAssetRelationships', assetId: string, asset?: { __typename?: 'Assets', name: string, id: string, assetType?: { __typename?: 'AssetTypes', name: string } | null, root?: { __typename?: 'Roots', slug: string } | null } | null, assetSupportType?: { __typename?: 'AssetSupportTypes', name: string } | null, product?: { __typename?: 'Products', name: string, id: string, description: string } | null }> | null } & { ' $fragmentName'?: 'ProductFieldsFragmentFragment' };
 
 export type ProfileHeadingFragmentFragment = { __typename?: 'ProfileInfos', logo: string, name: string, urls?: Array<{ __typename?: 'ProfileInfoUrls', url?: string | null, urlType?: { __typename?: 'UrlTypes', name: string } | null }> | null, root?: { __typename?: 'Roots', socials?: Array<{ __typename?: 'Socials', name: string, socialType?: { __typename?: 'SocialTypes', name: string } | null, urls?: Array<{ __typename?: 'SocialUrls', url?: string | null }> | null }> | null } | null } & { ' $fragmentName'?: 'ProfileHeadingFragmentFragment' };
 
@@ -3199,6 +3203,15 @@ export const ProductFieldsFragmentFragmentDoc = new TypedDocumentString(`
       }
     }
   }
+  supportedBy: supportsProductsBySupportsProductId {
+    product {
+      name
+      id
+      root {
+        slug
+      }
+    }
+  }
   urls(order_by: {urlTypeId: Asc}) {
     url
     urlType {
@@ -3477,6 +3490,15 @@ fragment ProductFieldsFragment on Products {
       }
     }
   }
+  supportedBy: supportsProductsBySupportsProductId {
+    product {
+      name
+      id
+      root {
+        slug
+      }
+    }
+  }
   urls(order_by: {urlTypeId: Asc}) {
     url
     urlType {
@@ -3703,6 +3725,15 @@ fragment ProductFieldsFragment on Products {
       }
     }
   }
+  supportedBy: supportsProductsBySupportsProductId {
+    product {
+      name
+      id
+      root {
+        slug
+      }
+    }
+  }
   urls(order_by: {urlTypeId: Asc}) {
     url
     urlType {
@@ -3865,6 +3896,15 @@ fragment ProductFieldsFragment on Products {
   }
   supportsProducts {
     supportsProduct {
+      name
+      id
+      root {
+        slug
+      }
+    }
+  }
+  supportedBy: supportsProductsBySupportsProductId {
+    product {
       name
       id
       root {
