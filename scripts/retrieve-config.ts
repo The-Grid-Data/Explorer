@@ -36,12 +36,7 @@ async function downloadConfig() {
   }
 
   try {
-    const result = configSchema.safeParse(config);
-    if (!result.success) {
-      console.error('Config validation failed:', result.error);
-      process.exit(0);
-    }
-    const validatedConfig = result.data;
+    const validatedConfig = configSchema.parse(config);
 
     fs.mkdirSync(path.dirname(CONFIG_PATH), { recursive: true });
     fs.writeFileSync(CONFIG_PATH, JSON.stringify(validatedConfig, null, 2));
