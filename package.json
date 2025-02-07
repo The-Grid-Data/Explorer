@@ -5,8 +5,8 @@
   "scripts": {
     "dev": "next dev",
     "dev:watch": "npm run graphql:watch & next dev",
-    "download-config": "tsx scripts/download-config.ts",
-    "build": "pnpm download-config && next build",
+    "retrieve-config": "tsx scripts/retrieve-config.ts",
+    "build": "pnpm retrieve-config && next build",
     "start": "next start",
     "lint": "next lint",
     "graphql:compile": "graphql-codegen --config ./lib/graphql/codegen.ts",
