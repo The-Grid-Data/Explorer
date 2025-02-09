@@ -77,14 +77,14 @@ export const ProfileHeading = ({
             />
           </div>
           <div className="flex flex-col gap-2 md:flex-row md:items-center md:gap-4">
-            {siteConfig.featureFlags.displayQueriesButtons && (
+            {siteConfig.featureFlags?.displayQueriesButtons && (
               <QueryDialogButton
                 variables={queryVariables}
                 queryDocument={ProfileDetailQuery as unknown as string}
                 buttonLabel="View query"
               />
             )}
-            {siteConfig.featureFlags.displayPoweredBy && <PoweredBy />}
+            {siteConfig.featureFlags?.displayPoweredBy && <PoweredBy />}
           </div>
         </div>
       </div>

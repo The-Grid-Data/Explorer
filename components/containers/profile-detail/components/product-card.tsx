@@ -72,6 +72,15 @@ export const ProductFragment = graphql(`
         }
       }
     }
+    supportedBy: supportsProductsBySupportsProductId {
+      product {
+        name
+        id
+        root {
+          slug
+        }
+      }
+    }
     urls(order_by: { urlTypeId: Asc }) {
       url
       urlType {
@@ -172,6 +181,30 @@ export const ProductCard = ({
                       )
                     }
                     value={supportsProduct.supportsProduct?.name}
+                  />
+                </div>
+              )}
+            />
+          )
+        },
+        {
+          label: 'Supported By',
+          fullWidth: true,
+          children: (
+            <CollapsibleList
+              items={product.supportedBy}
+              renderEmpty={() => <span className="text-sm">-</span>}
+              renderItem={supportedBy => (
+                <div className="flex gap-2">
+                  <DeepLinkBadge
+                    icon={<Package size={16} />}
+                    href={
+                      supportedBy?.product?.root?.slug &&
+                      paths.profile.detail(supportedBy.product?.root?.slug, {
+                        section: 'products'
+                      })
+                    }
+                    value={supportedBy.product?.name}
                   />
                 </div>
               )}

@@ -77,7 +77,7 @@ export const configSchema = z.object({
       .default(defaultConfig.featureFlags.displayTagsFilter),
     displayPoweredBy: z
       .boolean()
-      .default(defaultConfig.featureFlags.displayTagsFilter)
+      .default(defaultConfig.featureFlags.displayPoweredBy)
   })
 });
 

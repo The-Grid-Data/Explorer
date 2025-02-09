@@ -17,36 +17,33 @@ export const getSiteConfig = async () => {
   if (!jsonString) return null;
   return JSON.parse(jsonString);
 };
-
 async function downloadConfig() {
-  if (!Boolean(LOAD_CONFIG_FROM_VERCEL_STORAGE)) {
-    console.error('BLOB_READ_WRITE_TOKEN environment variable is not set');
-    process.exit(0);
-  }
-  if (!BLOB_READ_WRITE_TOKEN) {
-    console.error('BLOB_READ_WRITE_TOKEN environment variable is not set');
-    process.exit(0);
+  let config;
+  let configSource;
+
+  if (LOAD_CONFIG_FROM_VERCEL_STORAGE === 'true') {
+    if (!BLOB_READ_WRITE_TOKEN) {
+      console.error(
+        'BLOB_READ_WRITE_TOKEN environment variable must be set when LOAD_CONFIG_FROM_VERCEL_STORAGE is true'
+      );
+      process.exit(0);
+    }
+    config = (await getSiteConfig()) ?? defaultConfig;
+    configSource = 'vercel';
+  } else {
+    config = defaultConfig;
+    configSource = 'default-config.json';
   }
 
   try {
-    const config = (await getSiteConfig()) ?? defaultConfig;
-
-    if (!config) {
-      console.error('No config found');
-      process.exit(0);
-    }
-
-    const result = configSchema.safeParse(config);
-    if (!result.success) {
-      console.error('Config validation failed:', result.error);
-      process.exit(0);
-    }
-    const validatedConfig = result.data;
+    const validatedConfig = configSchema.parse(config);
 
     fs.mkdirSync(path.dirname(CONFIG_PATH), { recursive: true });
-
     fs.writeFileSync(CONFIG_PATH, JSON.stringify(validatedConfig, null, 2));
-    console.log('Config file successfully downloaded to:', CONFIG_PATH);
+    console.log(
+      `Config file successfully retrieved from ${configSource} and saved to:`,
+      CONFIG_PATH
+    );
   } catch (error) {
     console.error('Error downloading config:', error);
     process.exit(0);

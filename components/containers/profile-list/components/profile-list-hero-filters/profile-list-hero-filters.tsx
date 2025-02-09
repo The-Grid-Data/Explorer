@@ -45,7 +45,7 @@ export const ProfileListHeroFilters = () => {
             count={filteredSectors.length}
             isFetching={filters.profileSectorsFilter.options?.isFetching}
           />
-          {siteConfig.featureFlags.allowHeroFiltersSearch && (
+          {siteConfig.featureFlags?.allowHeroFiltersSearch && (
             <SearchInput
               value={sectorSearch}
               onChange={setSectorSearch}
@@ -70,7 +70,7 @@ export const ProfileListHeroFilters = () => {
             count={filteredProducts.length}
             isFetching={filters.productTypesFilter.options?.isFetching}
           />
-          {siteConfig.featureFlags.allowHeroFiltersSearch && (
+          {siteConfig.featureFlags?.allowHeroFiltersSearch && (
             <SearchInput
               value={productSearch}
               onChange={setProductSearch}
@@ -88,7 +88,7 @@ export const ProfileListHeroFilters = () => {
           }}
         />
       </div>
-      {Boolean(siteConfig.featureFlags.displayTagsFilter) && (
+      {Boolean(siteConfig.featureFlags?.displayTagsFilter) && (
         <div className="space-y-4">
           <div className="flex flex-col gap-2 md:flex-row">
             <FilterTitle

@@ -2,8 +2,8 @@
 
 This has been created as a way for data platforms to explore and get inspired by [The Grid's](https://thegrid.id/) ecosystem metadata. It is easily deployable on Vercel.
 
-This uses our graphQL endpoint which is: https://beta.node.thegrid.id/graphql 
-Information can be found here:  [docs.thegrid.id](https://docs.thegrid.id/)
+This uses our graphQL endpoint which is: https://beta.node.thegrid.id/graphql
+Information can be found here: [docs.thegrid.id](https://docs.thegrid.id/)
 
 Right now this takes a very profile focused 'lens' view at our data. In the future, this may expand to other lenses. To understand how we look at lenses, [see this](https://docs.thegrid.id/lenses-at-the-grid-18).
 
@@ -64,13 +64,15 @@ create a `.env` file and make sure to add the following variables `NEXT_PUBLIC_G
 
 To develop all apps and packages, run the following command:
 
+Recommended to run `pnpm dev:watch` to automatically run codegen(Pull latest graphql schema and unify fragments)
+
+Option 1:
+
 ```
-pnpm dev
+pnpm dev:watch
 ```
 
-### Deployment
-
-The app is dockerized, all the docker files will be available inside the `infra` directory.
+Option 2:
 
 ```
 pnpm dev
@@ -83,6 +85,21 @@ To build all apps and packages, run the following command:
 ```
 pnpm build
 ```
+
+#### Commands
+
+The following commands are available:
+
+- `pnpm dev` - Start the development server
+- `pnpm dev:watch` - (Recommended) Start development server and watch for GraphQL schema changes
+- `pnpm download-config` - Download configuration file from the vercel storage if provided in the environment variables
+- `pnpm build` - Build the application for production
+- `pnpm start` - Start the production server
+- `pnpm lint` - Run ESLint
+- `pnpm graphql:compile` - Generate GraphQL types and SDK
+- `pnpm graphql:watch` - Watch and regenerate GraphQL types and SDK
+- `pnpm shadcn` - Add new shadcn/ui components
+- `pnpm typecheck` - Run TypeScript type checking
 
 ## Deploy on Vercel
 

@@ -48,7 +48,7 @@ export const ProfileList = () => {
 
                     <div className="flex w-full flex-col items-end gap-4 md:w-fit md:flex-row md:justify-start">
                       <ProfileListSorting />
-                      {siteConfig.featureFlags.displayQueriesButtons && (
+                      {siteConfig.featureFlags?.displayQueriesButtons && (
                         <ViewQueryButton />
                       )}
                     </div>
