@@ -4,7 +4,7 @@ import defaultConfig from './default-config.json';
 export const configSchema = z.object({
   metadata: z.object({
     title: z.string().default(defaultConfig.metadata.title),
-    description: z.string().default(defaultConfig.metadata.description)
+    description: z.string().default(defaultConfig.metadata.description),
     icon: z.string().default(defaultConfig.metadata.icon)
   }),
   verifiedTagId: z.string().default(defaultConfig.verifiedTagId),
