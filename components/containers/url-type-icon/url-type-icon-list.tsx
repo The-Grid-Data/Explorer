@@ -7,6 +7,7 @@ type UrlType = keyof typeof urlTypeIconMap;
 export type SocialUrlType = {
   url?: string | null;
   type?: string | UrlType;
+  tooltip?: string | null;
 };
 
 export type UrlTypeIconLinksProps = {
@@ -25,7 +26,7 @@ export const UrlTypeIconLinks = ({ urls }: UrlTypeIconLinksProps) => {
                   <IconLink
                     key={`${url.url}-${index}-${subindex}`}
                     url={url.url}
-                    tooltipLabel={url.type}
+                    tooltipLabel={url.tooltip || url.type}
                   >
                     <UrlTypeIcon type={url.type as UrlType} />
                   </IconLink>
@@ -78,7 +79,8 @@ export const extractSocialUrls = (
       item =>
         item.urls?.map(urlObj => ({
           url: urlObj.url,
-          type: item.socialType?.name
+          type: item.socialType?.name,
+          tooltip: `${item.name} (${item.socialType?.name})`
         })) ?? []
     ) ?? []
   );
