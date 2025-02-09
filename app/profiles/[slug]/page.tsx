@@ -1,5 +1,6 @@
 import { ProfileDetail } from '@/components/containers/profile-detail';
-import { siteConfig } from '@/lib/site-config';
+import { execute } from '@/lib/graphql/execute';
+import { graphql } from '@/lib/graphql/generated';
 
 export const dynamic = 'force-dynamic';
 
@@ -7,10 +8,26 @@ type PageProps = {
   params: Promise<{ slug: string }>;
 };
 
+const ProfileDetailQuery = graphql(`
+  query getProfileName($where: ProfileInfosBoolExp) {
+    profileInfos(limit: 1, offset: 0, where: $where) {
+      name
+      descriptionShort
+    }
+  }
+`);
+
 export async function generateMetadata({ params }: PageProps) {
   const { slug } = await params;
+  const profileData = await execute(ProfileDetailQuery, {
+    where: { root: { slug: { _eq: slug } } }
+  });
+
+  const profile = profileData?.profileInfos?.[0];
+  if (!profile) return null;
   return {
-    title: `${slug} | ${siteConfig.metadata.title}`
+    title: `${profile.name} Profile on The Grid`,
+    description: profile.descriptionShort
   };
 }
 

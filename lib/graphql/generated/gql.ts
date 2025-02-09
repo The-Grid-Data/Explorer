@@ -15,6 +15,7 @@ import * as types from './graphql';
  * Learn more about it here: https://the-guild.dev/graphql/codegen/plugins/presets/preset-client#reducing-bundle-size
  */
 const documents = {
+    "\n  query getProfileName($where: ProfileInfosBoolExp) {\n    profileInfos(limit: 1, offset: 0, where: $where) {\n      name\n      descriptionShort\n    }\n  }\n": types.GetProfileNameDocument,
     "\n  fragment AssetFieldsFragment on Assets {\n    ticker\n    rootId\n    name\n    id\n    icon\n    description\n    assetTypeId\n    assetStatusId\n    assetType {\n      definition\n      id\n      name\n    }\n    assetStatus {\n      name\n      id\n      definition\n    }\n    assetDeployments {\n      id\n      deploymentId\n      assetId\n      smartContractDeployment {\n        id\n        deployedOnProduct {\n          id\n          name\n          root {\n            slug\n          }\n        }\n        assetStandard {\n          id\n        }\n        smartContracts {\n          name\n          id\n          deploymentId\n          deploymentDate\n          address\n        }\n        deploymentType {\n          name\n          id\n          definition\n        }\n      }\n    }\n    urls(order_by: { urlTypeId: Asc }) {\n      url\n      urlType {\n        name\n        id\n        definition\n      }\n    }\n  }\n": types.AssetFieldsFragmentFragmentDoc,
     "\n  fragment EntityFieldsFragment on Entities {\n    name\n    tradeName\n    taxIdentificationNumber\n    localRegistrationNumber\n    leiNumber\n    id\n    dateOfIncorporation\n    address\n    entityType {\n      name\n      id\n      definition\n    }\n    country {\n      name\n      id\n      code\n    }\n    urls {\n      url\n      urlType {\n        name\n        id\n        definition\n      }\n    }\n  }\n": types.EntityFieldsFragmentFragmentDoc,
     "\n  fragment ProfileFragment on ProfileInfos {\n    profileSector {\n      name\n    }\n    profileType {\n      name\n    }\n    root {\n      assets {\n        ticker\n      }\n    }\n    profileStatus {\n      name\n      id\n    }\n    root {\n      profileTags {\n        tag {\n          name\n          id\n        }\n      }\n    }\n    mainProduct: root {\n      products(where: { isMainProduct: { _eq: \"1\" } }, limit: 1) {\n        productType {\n          name\n        }\n      }\n    }\n  }\n": types.ProfileFragmentFragmentDoc,
@@ -42,6 +43,10 @@ const documents = {
     "\n          query getTagsOptions(\n            $where: TagsBoolExp\n            $aggregateInput: ProfileTagsFilterInput\n          ) {\n            tags(where: $where) {\n              value: id\n              label: name\n              description\n              profileTagsAggregate(filter_input: $aggregateInput) {\n                _count\n              }\n            }\n          }\n        ": types.GetTagsOptionsDocument,
 };
 
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  query getProfileName($where: ProfileInfosBoolExp) {\n    profileInfos(limit: 1, offset: 0, where: $where) {\n      name\n      descriptionShort\n    }\n  }\n"): typeof import('./graphql').GetProfileNameDocument;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

@@ -10,7 +10,7 @@ import { AssetCard } from './components/asset-card';
 import { EntityCard } from './components/entity-card';
 import { Banknote, Building2, Package } from 'lucide-react';
 import { OverviewSection } from './components/overview-section';
-import { graphql, FragmentType, useFragment } from '@/lib/graphql/generated';
+import { graphql } from '@/lib/graphql/generated';
 import { execute } from '@/lib/graphql/execute';
 import { useQuery } from '@tanstack/react-query';
 

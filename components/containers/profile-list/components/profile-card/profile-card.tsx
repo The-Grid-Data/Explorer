@@ -20,6 +20,7 @@ import { ProductCard } from '@/components/containers/profile-detail/components/p
 import { AssetCard } from '@/components/containers/profile-detail/components/asset-card';
 import { format } from 'date-fns';
 import { graphql, FragmentType, useFragment } from '@/lib/graphql/generated';
+import { ProfileTags } from '@/components/containers/profile-detail/components/profile-tags';
 
 export const ProfileCardFragment = graphql(`
   fragment ProfileCardFragment on ProfileInfos {
@@ -202,12 +203,11 @@ export const ProfileCard = ({ profile: profileData }: ProfileCardCardProps) => {
             />
             <ProfileCardDataPoint
               label="Tags"
-              value={profile.root?.profileTags
-                ?.map(tag => tag?.tag?.name)
-                .filter(Boolean)
-                .join(', ')}
               active={filters.tagsFilter.active}
-            />
+              className="items-start"
+            >
+              <ProfileTags profileTags={profile.root?.profileTags} />
+            </ProfileCardDataPoint>
             {/* <ProfileCardDataPoint
               label="Product types"
               value={profile.root?.products

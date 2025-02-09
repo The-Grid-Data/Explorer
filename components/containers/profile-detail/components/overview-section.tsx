@@ -2,11 +2,8 @@
 
 import { Card, CardContent } from '@/components/ui/card';
 import { ReactNode } from 'react';
-import { Badge } from '@/components/ui/badge';
-import Link from 'next/link';
-import { paths } from '@/lib/routes/paths';
-import { TagIcon } from 'lucide-react';
 import { FragmentType, graphql, useFragment } from '@/lib/graphql/generated';
+import { ProfileTags } from './profile-tags';
 
 export const ProfileFragment = graphql(`
   fragment ProfileFragment on ProfileInfos {
@@ -79,26 +76,7 @@ export const OverviewSection = ({ profile }: OverviewSectionProps) => {
     },
     {
       label: 'Tags',
-      value: Boolean(profileData?.root?.profileTags?.length) ? (
-        <div className="flex flex-wrap gap-1">
-          {profileData?.root?.profileTags?.map(tag => (
-            <Link
-              key={tag.tag?.id}
-              href={`${paths.base}?tags=${tag.tag?.id}`}
-              className="text-sm font-semibold text-primary hover:text-primary/60"
-            >
-              <Badge
-                variant="secondary"
-                className="flex w-fit items-center gap-2"
-              >
-                <TagIcon size={16} /> {tag.tag?.name}
-              </Badge>
-            </Link>
-          ))}
-        </div>
-      ) : (
-        '-'
-      )
+      value: <ProfileTags profileTags={profileData?.root?.profileTags} />
     }
   ];
 

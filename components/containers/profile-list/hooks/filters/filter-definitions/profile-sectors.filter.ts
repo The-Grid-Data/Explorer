@@ -56,6 +56,7 @@ export const useProfileSectorsFilter = (filterStore: FiltersStore) => {
             description: item.description,
             count: item?.profileInfosAggregate?._count
           }))
+          .filter(item => item.count)
           .sort((a, b) => (b.count ?? 0) - (a.count ?? 0))
       );
     },

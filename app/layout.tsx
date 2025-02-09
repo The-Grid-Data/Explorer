@@ -20,7 +20,10 @@ const dmSans = DM_Sans({ subsets: ['latin'], variable: '--font-dm-sans' });
 
 export const metadata: Metadata = {
   title: siteConfig.metadata.title,
-  description: siteConfig.metadata.description
+  description: siteConfig.metadata.description,
+  icons: {
+    icon: siteConfig.metadata.icon
+  }
 };
 
 export const viewport: Viewport = {
