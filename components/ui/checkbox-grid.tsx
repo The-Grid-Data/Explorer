@@ -24,6 +24,7 @@ export type CheckboxGridProps<T extends string | number> = {
   onChange: (selected: T[]) => void;
   isLoading?: boolean;
   isFetching?: boolean;
+  initialVisibleCount?: number;
 };
 
 export default function CheckboxGrid<T extends string | number>({
@@ -31,7 +32,8 @@ export default function CheckboxGrid<T extends string | number>({
   selected,
   onChange,
   isLoading,
-  isFetching
+  isFetching,
+  initialVisibleCount = 30
 }: CheckboxGridProps<T>) {
   const toggleItem = useCallback(
     (value: T) => {
@@ -66,7 +68,7 @@ export default function CheckboxGrid<T extends string | number>({
           >
             <CollapsibleList
               items={options}
-              initialVisibleCount={30}
+              initialVisibleCount={initialVisibleCount}
               renderEmpty={() => null}
               renderItem={option => (
                 <TooltipProvider>

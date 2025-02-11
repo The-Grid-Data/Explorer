@@ -38,6 +38,34 @@ export const ProfileListHeroFilters = () => {
 
   return (
     <>
+      {Boolean(siteConfig.featureFlags?.displayTagsFilter) && (
+        <div className="space-y-4">
+          <div className="flex flex-col gap-2 md:flex-row">
+            <FilterTitle
+              title="Tags"
+              count={filteredTags.length}
+              isFetching={filters.tagsFilter.options?.isFetching}
+            />
+            {siteConfig.featureFlags.allowHeroFiltersSearch && (
+              <SearchInput
+                value={tagSearch}
+                onChange={setTagSearch}
+                placeholder="Search tags..."
+              />
+            )}
+          </div>
+          <CheckboxGrid
+            initialVisibleCount={12}
+            isFetching={filters.tagsFilter.options?.isFetching}
+            isLoading={filters.tagsFilter.options?.isLoading}
+            selected={filters.tagsFilter.value}
+            options={filteredTags}
+            onChange={selected => {
+              filters.tagsFilter.setValue(selected);
+            }}
+          />
+        </div>
+      )}
       <div className="space-y-4">
         <div className="flex flex-col gap-2 md:flex-row">
           <FilterTitle
@@ -88,33 +116,6 @@ export const ProfileListHeroFilters = () => {
           }}
         />
       </div>
-      {Boolean(siteConfig.featureFlags?.displayTagsFilter) && (
-        <div className="space-y-4">
-          <div className="flex flex-col gap-2 md:flex-row">
-            <FilterTitle
-              title="Tags"
-              count={filteredTags.length}
-              isFetching={filters.tagsFilter.options?.isFetching}
-            />
-            {siteConfig.featureFlags.allowHeroFiltersSearch && (
-              <SearchInput
-                value={tagSearch}
-                onChange={setTagSearch}
-                placeholder="Search tags..."
-              />
-            )}
-          </div>
-          <CheckboxGrid
-            isFetching={filters.tagsFilter.options?.isFetching}
-            isLoading={filters.tagsFilter.options?.isLoading}
-            selected={filters.tagsFilter.value}
-            options={filteredTags}
-            onChange={selected => {
-              filters.tagsFilter.setValue(selected);
-            }}
-          />
-        </div>
-      )}
     </>
   );
 };
