@@ -26,7 +26,7 @@ export async function generateMetadata({ params }: PageProps) {
   const profile = profileData?.profileInfos?.[0];
   if (!profile) return null;
   return {
-    title: `${profile.name} Profile on The Grid`,
+    title: `${profile.name} Profile`,
     description: profile.descriptionShort
   };
 }
