@@ -48,6 +48,8 @@ export const useTagsFilter = (filterStore: FiltersStore) => {
         }
       );
 
+      const tagsToExclude = siteConfig.excludeTags as string[];
+
       return validateAndFormatOptions(
         data?.tags
           ?.map(item => ({
@@ -57,6 +59,7 @@ export const useTagsFilter = (filterStore: FiltersStore) => {
             count: item?.profileTagsAggregate?._count
           }))
           .filter(item => item.count)
+          .filter(item => !tagsToExclude?.includes?.(item.value))
           .sort((a, b) => (b.count ?? 0) - (a.count ?? 0))
       );
     },

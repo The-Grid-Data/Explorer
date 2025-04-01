@@ -57,15 +57,17 @@ export const configSchema = z.object({
       .array(z.string())
       .default(defaultConfig.overrideFilterValues.productAssetRelationships),
     tags: z.array(z.string()).default(defaultConfig.overrideFilterValues.tags),
-    productIds: z
-      .array(z.string())
-      .default(defaultConfig.overrideFilterValues.productIds)
+    productIds: z.array(z.string()).default(defaultConfig.excludeTags)
   }),
   overrideOptionsFilterValues: z.object({
     productTypes: z
       .array(z.string())
       .default(defaultConfig.overrideOptionsFilterValues.productTypes)
   }),
+  excludeTags: z
+    .array(z.string())
+    .default(defaultConfig.excludeTags)
+    .describe('Tag ids to exclude from the filter options (client side)'),
   featureFlags: z.object({
     displayQueriesButtons: z
       .boolean()

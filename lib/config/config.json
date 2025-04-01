@@ -50,6 +50,7 @@
       "17"
     ]
   },
+  "excludeTags": [],
   "featureFlags": {
     "displayQueriesButtons": true,
     "allowHeroFiltersSearch": true,
