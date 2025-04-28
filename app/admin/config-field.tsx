@@ -59,12 +59,13 @@ export function ConfigField({ config }: { config: string }) {
         description:
           'Configuration saved successfully. Please trigger redeploy for changes to take effect'
       });
-    } catch {
+    } catch (error) {
+      console.error(error);
       toast({
         variant: 'destructive',
         title: 'Error',
         description:
-          'Invalid configuration format. Please check your JSON syntax and schema.'
+          error instanceof Error ? error.message : 'An unknown error occurred'
       });
     } finally {
       setIsSaving(false);
@@ -81,7 +82,7 @@ export function ConfigField({ config }: { config: string }) {
       <label htmlFor="jsonString">Site Configuration</label>
       <Textarea
         required
-        placeholder="Paste your JSON here..."
+        placeholder="Paste your JSON here..., or click on the 'Restore to default config' button to reset to the default config"
         className="min-h-[600px] w-full font-mono"
         value={jsonValue}
         onChange={e => handleChange(e.target.value)}

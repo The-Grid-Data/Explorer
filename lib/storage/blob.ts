@@ -13,6 +13,7 @@ export const getFileContent = async (path: string) => {
   const url = getFileUrl(path);
   if (!url) return null;
   const response = await fetch(url);
+  if (!response.ok) return null;
   return response.text();
 };
 
