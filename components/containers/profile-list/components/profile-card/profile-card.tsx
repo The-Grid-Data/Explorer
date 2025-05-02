@@ -16,16 +16,10 @@ import {
 import { useProfileFiltersContext } from '@/providers/filters-provider';
 import { Banknote, Package } from 'lucide-react';
 import { ItemWithSheet } from '@/components/containers/profile-detail/components/Item-with-sheet';
-import { ProductCard } from '@/components/containers/profile-detail/components/product-card';
 import { AssetCard } from '@/components/containers/profile-detail/components/asset-card';
 import { format } from 'date-fns';
 import { graphql, FragmentType, useFragment } from '@/lib/graphql/generated';
 import { ProfileTags } from '@/components/containers/profile-detail/components/profile-tags';
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger
-} from '@/components/ui/popover';
 import { ProductBadge } from './product-badge';
 
 export const ProfileCardFragment = graphql(`
@@ -235,9 +229,12 @@ export const ProfileCard = ({ profile: profileData }: ProfileCardCardProps) => {
             >
               <div className="flex h-full flex-wrap gap-2">
                 {profile.root?.products?.length ? (
-                  profile.root.products.map(product => (
-                    <ProductBadge key={product.id} product={product} />
-                  ))
+                  profile.root.products.map(
+                    product =>
+                      product && (
+                        <ProductBadge key={product.id} product={product} />
+                      )
+                  )
                 ) : (
                   <span className="mt-1 text-sm">-</span>
                 )}

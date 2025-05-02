@@ -8,13 +8,18 @@ export type SocialUrlType = {
   url?: string | null;
   type?: string | UrlType;
   tooltip?: string | null;
+  noTooltip?: boolean;
 };
 
 export type UrlTypeIconLinksProps = {
   urls: SocialUrlType[][];
+  noTooltip?: boolean;
 };
 
-export const UrlTypeIconLinks = ({ urls }: UrlTypeIconLinksProps) => {
+export const UrlTypeIconLinks = ({
+  urls,
+  noTooltip = false
+}: UrlTypeIconLinksProps) => {
   return (
     <div className="flex items-center gap-2">
       {urls.map((urlList, index) => (
@@ -27,6 +32,7 @@ export const UrlTypeIconLinks = ({ urls }: UrlTypeIconLinksProps) => {
                     key={`${url.url}-${index}-${subindex}`}
                     url={url.url}
                     tooltipLabel={url.tooltip || url.type}
+                    noTooltip={url.noTooltip || noTooltip}
                   >
                     <UrlTypeIcon type={url.type as UrlType} />
                   </IconLink>

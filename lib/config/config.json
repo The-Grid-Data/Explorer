@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "title": "The Grid | Data Explorer",
+    "title": "Starknet | Data Explorer",
     "description": "Powering Discoverability of Assets, Products, and Services in Web3.",
     "icon": "/favicon.ico"
   },
@@ -10,8 +10,8 @@
   },
   "header": {
     "logoSrc": {
-      "dark": "/thegrid-logo-white.svg",
-      "light": "/thegrid-logo.svg"
+      "dark": "https://ek7xukddlippimsx.public.blob.vercel-storage.com/SN-Linear-Flat%20colour%20-%20On%20dark%20bg-0bVQ8pkHHFRJtmuWDv6Mc0N3pXzdKy.svg",
+      "light": "https://ek7xukddlippimsx.public.blob.vercel-storage.com/SN-Linear-Flat%20colour-pxX5HlMR4CYtqEEZ6ikizN2NuWP5Xr.svg"
     },
     "docsButton": {
       "label": "Read the docs",
@@ -29,19 +29,27 @@
   "pages": {
     "home": {
       "hero": {
-        "badge": "For all of Web3 but currently focused on Solana.",
-        "title": "A Node of Truth on Assets, Products, and Services in Web3.",
-        "description": "Explore the largest offchain dataset for Solana projects, use the filters to find projects relevant to you."
+        "badge": "Starknet",
+        "title": "Starknet explorer",
+        "description": "Explore the Starknet ecosystem"
       }
     }
   },
   "overrideFilterValues": {
-    "productDeployedOn": [],
-    "supportsProducts": [],
+    "productDeployedOn": [
+      "id1738658613-GqqgXr_QRry2CEIf79h36Q"
+    ],
+    "supportsProducts": [
+      "id1738658613-GqqgXr_QRry2CEIf79h36Q"
+    ],
     "productTypes": [],
     "productAssetRelationships": [],
-    "tags": [],
-    "productIds": []
+    "tags": [
+      "id1738748042-W5oej0O8QJezGZ0RPXAHFg"
+    ],
+    "productIds": [
+      "id1738658613-GqqgXr_QRry2CEIf79h36Q"
+    ]
   },
   "overrideOptionsFilterValues": {
     "productTypes": [

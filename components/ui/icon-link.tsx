@@ -10,8 +10,21 @@ import { PropsWithChildren } from 'react';
 export const IconLink = ({
   children,
   url,
-  tooltipLabel
-}: PropsWithChildren<{ url: string; tooltipLabel?: string }>) => {
+  tooltipLabel,
+  noTooltip = false
+}: PropsWithChildren<{
+  url: string;
+  tooltipLabel?: string;
+  noTooltip?: boolean;
+}>) => {
+  if (noTooltip) {
+    return (
+      <Link href={url} target="_blank" rel="noopener noreferrer">
+        {children}
+      </Link>
+    );
+  }
+
   return (
     <TooltipProvider>
       <Tooltip delayDuration={100}>
