@@ -82,6 +82,7 @@ export const ProfileListHeroFilters = () => {
           )}
         </div>
         <CheckboxGrid
+          initialVisibleCount={12}
           isFetching={filters.profileSectorsFilter.options?.isFetching}
           isLoading={filters.profileSectorsFilter.options?.isLoading}
           selected={filters.profileSectorsFilter.value}
@@ -107,6 +108,7 @@ export const ProfileListHeroFilters = () => {
           )}
         </div>
         <CheckboxGrid
+          initialVisibleCount={12}
           isFetching={filters.productTypesFilter.options?.isFetching}
           isLoading={filters.productTypesFilter.options?.isLoading}
           selected={filters.productTypesFilter.value}
