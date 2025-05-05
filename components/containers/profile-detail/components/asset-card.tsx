@@ -122,6 +122,10 @@ export const AssetCard = ({ asset: assetData, variant }: AssetCardProps) => {
           value: asset.ticker || '-'
         },
         {
+          label: 'Asset Status',
+          value: asset.assetStatus?.name || '-'
+        },
+        {
           fullWidth: true,
           label: 'Deployed on',
           separator: false,
