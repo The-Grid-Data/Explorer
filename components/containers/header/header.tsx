@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { MenuIcon } from 'lucide-react';
 import { SiGithub } from 'react-icons/si';
+import { SiTwitter } from 'react-icons/si';
 
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
