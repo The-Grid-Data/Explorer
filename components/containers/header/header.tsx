@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { MenuIcon } from 'lucide-react';
 import { SiGithub } from 'react-icons/si';
+import { FaTwitter } from 'react-icons/fa';
 
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
@@ -41,7 +42,7 @@ const cloneRepoButton = (
     rel="noopener noreferrer"
   >
     <Button className="w-full md:w-fit" variant="outline">
-      <SiGithub className="mr-2" size={18} />
+      <FaTwitter className="mr-2" size={18} />
       {siteConfig.header.githubButton.label}
     </Button>
   </Link>
