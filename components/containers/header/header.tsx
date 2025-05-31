@@ -41,7 +41,7 @@ const cloneRepoButton = (
     rel="noopener noreferrer"
   >
     <Button className="w-full md:w-fit" variant="outline">
-      <SiGithub className="mr-2" size={18} />
+      <SiTwitter className="mr-2" size={18} />
       {siteConfig.header.githubButton.label}
     </Button>
   </Link>
