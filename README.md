@@ -43,6 +43,7 @@ Then Generate Blob:
 13. Ok normal store name and click create 
 14. Contuine (this will add the env var!) 
 15. Rejoice! You made it!
+16. REDEPLOY All your saved changes
 
 Now you can go to /admin and click restore to get started. 
 
