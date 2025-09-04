@@ -4,6 +4,40 @@ schema {
   subscription: Subscription
 }
 
+type AllowedUrlTypes {
+  coreTableName: CoreTableNames
+  id: String1!
+  tableId: String1!
+  urlType: UrlTypes
+  urlTypeId: String1!
+}
+
+type AllowedUrlTypesAggExp {
+  _count: Int!
+  id: StringAggExp!
+  tableId: StringAggExp!
+  urlTypeId: StringAggExp!
+}
+
+input AllowedUrlTypesBoolExp {
+  _and: [AllowedUrlTypesBoolExp!]
+  _not: AllowedUrlTypesBoolExp
+  _or: [AllowedUrlTypesBoolExp!]
+  coreTableName: CoreTableNamesBoolExp
+  id: StringBoolExp
+  tableId: StringBoolExp
+  urlType: UrlTypesBoolExp
+  urlTypeId: StringBoolExp
+}
+
+input AllowedUrlTypesFilterInput {
+  limit: Int
+  offset: Int
+  where: AllowedUrlTypesBoolExp
+}
+
+scalar AlphaVybe_RankingInterval
+
 type AssetDeployments {
   asset: Assets
   assetId: String1!
@@ -38,6 +72,7 @@ type AssetStandards {
   definition: String1!
   id: String1!
   name: String1!
+  slug: String1!
   smartContractDeployments(limit: Int, offset: Int, order_by: [SmartContractDeploymentsOrderBy!], where: SmartContractDeploymentsBoolExp): [SmartContractDeployments!]
   smartContractDeploymentsAggregate(filter_input: SmartContractDeploymentsFilterInput): SmartContractDeploymentsAggExp!
 }
@@ -47,6 +82,7 @@ type AssetStandardsAggExp {
   definition: StringAggExp!
   id: StringAggExp!
   name: StringAggExp!
+  slug: StringAggExp!
 }
 
 input AssetStandardsBoolExp {
@@ -56,6 +92,7 @@ input AssetStandardsBoolExp {
   definition: StringBoolExp
   id: StringBoolExp
   name: StringBoolExp
+  slug: StringBoolExp
   smartContractDeployments: SmartContractDeploymentsBoolExp
 }
 
@@ -70,6 +107,7 @@ input AssetStandardsOrderBy {
   definition: OrderBy
   id: OrderBy
   name: OrderBy
+  slug: OrderBy
 }
 
 type AssetStatuses {
@@ -78,6 +116,7 @@ type AssetStatuses {
   definition: String1!
   id: String1!
   name: String1!
+  slug: String1!
 }
 
 type AssetStatusesAggExp {
@@ -85,6 +124,7 @@ type AssetStatusesAggExp {
   definition: StringAggExp!
   id: StringAggExp!
   name: StringAggExp!
+  slug: StringAggExp!
 }
 
 input AssetStatusesBoolExp {
@@ -95,6 +135,7 @@ input AssetStatusesBoolExp {
   definition: StringBoolExp
   id: StringBoolExp
   name: StringBoolExp
+  slug: StringBoolExp
 }
 
 input AssetStatusesFilterInput {
@@ -108,6 +149,7 @@ input AssetStatusesOrderBy {
   definition: OrderBy
   id: OrderBy
   name: OrderBy
+  slug: OrderBy
 }
 
 type AssetSupportTypes {
@@ -116,6 +158,7 @@ type AssetSupportTypes {
   name: String1!
   productAssetRelationships(limit: Int, offset: Int, order_by: [ProductAssetRelationshipsOrderBy!], where: ProductAssetRelationshipsBoolExp): [ProductAssetRelationships!]
   productAssetRelationshipsAggregate(filter_input: ProductAssetRelationshipsFilterInput): ProductAssetRelationshipsAggExp!
+  slug: String1!
 }
 
 type AssetSupportTypesAggExp {
@@ -123,6 +166,7 @@ type AssetSupportTypesAggExp {
   definition: StringAggExp!
   id: StringAggExp!
   name: StringAggExp!
+  slug: StringAggExp!
 }
 
 input AssetSupportTypesBoolExp {
@@ -133,6 +177,7 @@ input AssetSupportTypesBoolExp {
   id: StringBoolExp
   name: StringBoolExp
   productAssetRelationships: ProductAssetRelationshipsBoolExp
+  slug: StringBoolExp
 }
 
 input AssetSupportTypesFilterInput {
@@ -146,6 +191,7 @@ input AssetSupportTypesOrderBy {
   definition: OrderBy
   id: OrderBy
   name: OrderBy
+  slug: OrderBy
 }
 
 type AssetTypes {
@@ -154,6 +200,7 @@ type AssetTypes {
   definition: String1!
   id: String1!
   name: String1!
+  slug: String1!
 }
 
 type AssetTypesAggExp {
@@ -161,6 +208,7 @@ type AssetTypesAggExp {
   definition: StringAggExp!
   id: StringAggExp!
   name: StringAggExp!
+  slug: StringAggExp!
 }
 
 input AssetTypesBoolExp {
@@ -171,6 +219,7 @@ input AssetTypesBoolExp {
   definition: StringBoolExp
   id: StringBoolExp
   name: StringBoolExp
+  slug: StringBoolExp
 }
 
 input AssetTypesFilterInput {
@@ -184,6 +233,7 @@ input AssetTypesOrderBy {
   definition: OrderBy
   id: OrderBy
   name: OrderBy
+  slug: OrderBy
 }
 
 type AssetUrls {
@@ -216,25 +266,46 @@ input AssetUrlsOrderBy {
   urlTypeId: OrderBy
 }
 
+"""
+A concise, one-sentence summary of the Asset's key characteristics, use case, or value proposition. Limit to 200 characters and avoid subjective claims.
+"""
 type Assets {
   assetDeployments(limit: Int, offset: Int, order_by: [AssetDeploymentsOrderBy!], where: assetDeploymentsBoolExp): [AssetDeployments!]
   assetDeploymentsAggregate(filter_input: AssetDeploymentsFilterInput): AssetDeploymentsAggExp!
   assetStatus: AssetStatuses
+  """
+  The current development or access stage of the asset. Refer to the standardized list of asset status options.
+  """
   assetStatusId: String1
   assetType: AssetTypes
+  """
+  The primary category or function of the Asset (e.g. Currency, Utility, Security) and what is does.
+  """
   assetTypeId: String1
   derivativeAssets(limit: Int, offset: Int, order_by: [DerivativeAssetsOrderBy!], where: DerivativeAssetsBoolExp): [DerivativeAssets!]
   derivativeAssetsAggregate(filter_input: DerivativeAssetsFilterInput): DerivativeAssetsAggExp!
   derivativeAssetsByBaseAssetId(limit: Int, offset: Int, order_by: [DerivativeAssetsOrderBy!], where: DerivativeAssetsBoolExp): [DerivativeAssets!]
   derivativeAssetsByBaseAssetIdAggregate(filter_input: DerivativeAssetsFilterInput): DerivativeAssetsAggExp!
+  """
+  A concise, one-sentence summary of the Asset's key characteristics, use case, or value proposition. Limit to 200 characters and avoid subjective claims.
+  """
   description: String1!
+  """
+  A square PNG but ideally an SVG image file representing the Asset's icon or logo, with a transparent background and a minimum resolution of 128x128 pixels.
+  """
   icon: String1!
   id: String1!
+  """
+  The official name of the Asset as used in its branding, marketing, and trading materials.
+  """
   name: String1!
   productAssetRelationships(limit: Int, offset: Int, order_by: [ProductAssetRelationshipsOrderBy!], where: ProductAssetRelationshipsBoolExp): [ProductAssetRelationships!]
   productAssetRelationshipsAggregate(filter_input: ProductAssetRelationshipsFilterInput): ProductAssetRelationshipsAggExp!
   root: Roots
   rootId: String1!
+  """
+  The unique trading symbol used to represent the Asset on exchanges and trading platforms. Use only capital letters and numbers.
+  """
   ticker: String1!
   urls(limit: Int, offset: Int, order_by: [AssetUrlsOrderBy!], where: AssetUrlsBoolExp): [AssetUrls!]
 }
@@ -386,6 +457,7 @@ type DeploymentTypes {
   definition: String1!
   id: String1!
   name: String1!
+  slug: String1!
   smartContractDeployments(limit: Int, offset: Int, order_by: [SmartContractDeploymentsOrderBy!], where: SmartContractDeploymentsBoolExp): [SmartContractDeployments!]
   smartContractDeploymentsAggregate(filter_input: SmartContractDeploymentsFilterInput): SmartContractDeploymentsAggExp!
 }
@@ -395,6 +467,7 @@ type DeploymentTypesAggExp {
   definition: StringAggExp!
   id: StringAggExp!
   name: StringAggExp!
+  slug: StringAggExp!
 }
 
 input DeploymentTypesBoolExp {
@@ -404,6 +477,7 @@ input DeploymentTypesBoolExp {
   definition: StringBoolExp
   id: StringBoolExp
   name: StringBoolExp
+  slug: StringBoolExp
   smartContractDeployments: SmartContractDeploymentsBoolExp
 }
 
@@ -418,6 +492,7 @@ input DeploymentTypesOrderBy {
   definition: OrderBy
   id: OrderBy
   name: OrderBy
+  slug: OrderBy
 }
 
 type DerivativeAssets {
@@ -462,19 +537,43 @@ input DerivativeAssetsOrderBy {
 }
 
 type Entities {
+  """
+  The registered physical address of the Entity, including street, city, state/province (if applicable), and postal code.
+  """
   address: String1!
   country: Countries
   countryId: String1
+  """
+  The date when the Entity was legally registered or incorporated. Use ISO 8601 format (YYYY-MM-DD) when possible.
+  """
   dateOfIncorporation: Date
   entityType: EntityTypes
+  """
+  The legal structure or registration category of the Entity (e.g. LLC, Foundation, Corporation).
+  """
   entityTypeId: String1
   id: String1!
+  """
+  The Legal Entity Identifier (LEI) code assigned to the Entity by the Global Legal Entity Identifier Foundation (GLEIF), if applicable.
+  """
   leiNumber: String1!
+  """
+  The registration number assigned to the Entity by the relevant regulatory body or government agency, if applicable.
+  """
   localRegistrationNumber: String1!
+  """
+  The legal name of the Entity as registered with the relevant regulatory bodies or government agencies.
+  """
   name: String1!
   root: Roots
   rootId: String1!
+  """
+  The unique tax identification number assigned to the Entity by the relevant tax authority, if applicable.
+  """
   taxIdentificationNumber: String1!
+  """
+  Any additional trading names, brands, or trademarks associated with the Entity, separate from its legal name.
+  """
   tradeName: String1!
   urls(limit: Int, offset: Int, order_by: [EntityUrlsOrderBy!], where: EntityUrlsBoolExp): [EntityUrls!]
 }
@@ -544,6 +643,7 @@ type EntityTypes {
   entitiesAggregate(filter_input: EntitiesFilterInput): EntitiesAggExp!
   id: String1!
   name: String1!
+  slug: String1!
 }
 
 type EntityTypesAggExp {
@@ -551,6 +651,7 @@ type EntityTypesAggExp {
   definition: StringAggExp!
   id: StringAggExp!
   name: StringAggExp!
+  slug: StringAggExp!
 }
 
 input EntityTypesBoolExp {
@@ -561,6 +662,7 @@ input EntityTypesBoolExp {
   entities: EntitiesBoolExp
   id: StringBoolExp
   name: StringBoolExp
+  slug: StringBoolExp
 }
 
 input EntityTypesFilterInput {
@@ -574,6 +676,7 @@ input EntityTypesOrderBy {
   definition: OrderBy
   id: OrderBy
   name: OrderBy
+  slug: OrderBy
 }
 
 type EntityUrls {
@@ -608,6 +711,8 @@ input EntityUrlsOrderBy {
 
 scalar Float64
 
+scalar Float641
+
 scalar Int8
 
 type Int8AggExp {
@@ -630,10 +735,65 @@ input Int8BoolExp {
   _lte: Int8
 }
 
+scalar Int32
+
 scalar Int64
 
+type Int64AggExp_1 {
+  _count: Int!
+  _count_distinct: Int!
+  avg: Float64!
+  count: Int64!
+  max: Int64!
+  min: Int64!
+  sum: Int64!
+}
+
+input Int64BoolExp_1 {
+  _eq: Int64
+  _gt: Int64
+  _gte: Int64
+  _in: [Int64!]
+  _is_null: Boolean
+  _lt: Int64
+  _lte: Int64
+}
+
+scalar Int64_1
+
+scalar Json
+
+type JsonAggExp_1 {
+  _count: Int!
+  _count_distinct: Int!
+}
+
+input JsonBoolExp_1 {
+  _contains: Json
+  _eq: Json
+  _is_null: Boolean
+}
+
+scalar Json_1
+
 type Mutation {
-  _no_fields_accessible: String
+  """Send an HTTP request"""
+  sendHttpRequest(
+    """Additional request headers"""
+    additionalHeaders: Json
+    """Request body"""
+    body: Json
+    """Headers forwarded from the Hasura engine"""
+    headers: Json
+    """Request method"""
+    method: RawHttpMethod
+    """Retry policy"""
+    retry: RetryPolicyInput
+    """Request timeout in seconds"""
+    timeout: Int32
+    """Request URL"""
+    url: String!
+  ): Json
 }
 
 enum OrderBy {
@@ -738,6 +898,7 @@ type ProductStatuses {
   name: String1!
   products(limit: Int, offset: Int, order_by: [ProductsOrderBy!], where: ProductsBoolExp): [Products!]
   productsAggregate(filter_input: ProductsFilterInput): ProductsAggExp!
+  slug: String1!
 }
 
 type ProductStatusesAggExp {
@@ -745,6 +906,7 @@ type ProductStatusesAggExp {
   definition: StringAggExp!
   id: StringAggExp!
   name: StringAggExp!
+  slug: StringAggExp!
 }
 
 input ProductStatusesBoolExp {
@@ -755,6 +917,7 @@ input ProductStatusesBoolExp {
   id: StringBoolExp
   name: StringBoolExp
   products: ProductsBoolExp
+  slug: StringBoolExp
 }
 
 input ProductStatusesFilterInput {
@@ -768,6 +931,7 @@ input ProductStatusesOrderBy {
   definition: OrderBy
   id: OrderBy
   name: OrderBy
+  slug: OrderBy
 }
 
 type ProductTypes {
@@ -776,6 +940,7 @@ type ProductTypes {
   name: String1!
   products(limit: Int, offset: Int, order_by: [ProductsOrderBy!], where: ProductsBoolExp): [Products!]
   productsAggregate(filter_input: ProductsFilterInput): ProductsAggExp!
+  slug: String1!
 }
 
 type ProductTypesAggExp {
@@ -783,6 +948,7 @@ type ProductTypesAggExp {
   definition: StringAggExp!
   id: StringAggExp!
   name: StringAggExp!
+  slug: StringAggExp!
 }
 
 input ProductTypesBoolExp {
@@ -793,6 +959,7 @@ input ProductTypesBoolExp {
   id: StringBoolExp
   name: StringBoolExp
   products: ProductsBoolExp
+  slug: StringBoolExp
 }
 
 input ProductTypesFilterInput {
@@ -806,6 +973,7 @@ input ProductTypesOrderBy {
   definition: OrderBy
   id: OrderBy
   name: OrderBy
+  slug: OrderBy
 }
 
 type ProductUrls {
@@ -838,19 +1006,40 @@ input ProductUrlsOrderBy {
   urlTypeId: OrderBy
 }
 
+"""
+A concise, objective statement explaining what the product does and who it is for.
+"""
 type Products {
+  """
+  A concise, objective statement explaining what the product does and who it is for.
+  """
   description: String1!
   id: String1!
+  """
+  A boolean value indicating whether the product is the Profile's primary or flagship offering.
+  """
   isMainProduct: Int8!
+  """
+  The date when the product was first launched or made publicly available. Use ISO 8601 format (YYYY-MM-DD) when possible.
+  """
   launchDate: Date
+  """
+  The official name of the product as used in its branding, marketing, and user-facing materials.
+  """
   name: String1!
   productAssetRelationships(limit: Int, offset: Int, order_by: [ProductAssetRelationshipsOrderBy!], where: ProductAssetRelationshipsBoolExp): [ProductAssetRelationships!]
   productAssetRelationshipsAggregate(filter_input: ProductAssetRelationshipsFilterInput): ProductAssetRelationshipsAggExp!
   productDeployments(limit: Int, offset: Int, order_by: [ProductDeploymentsOrderBy!], where: ProductDeploymentsBoolExp): [ProductDeployments!]
   productDeploymentsAggregate(filter_input: ProductDeploymentsFilterInput): ProductDeploymentsAggExp!
   productStatus: ProductStatuses
+  """
+  The current development or access stage of the product (e.g. Beta, Live, Deprecated).
+  """
   productStatusId: String1
   productType: ProductTypes
+  """
+  The primary category or function of the product (e.g. exchange, wallet, lending platform). Refer to standardized list of product types.
+  """
   productTypeId: String1
   root: Roots
   rootId: String1!
@@ -946,22 +1135,51 @@ input ProfileInfoUrlsOrderBy {
 }
 
 type ProfileInfos {
+  """
+  A more detailed overview of the Profile, including its mission, target audience, and key features or offerings. Limit to 500 characters and avoid subjective claims.
+  """
   descriptionLong: String1!
+  """
+  Provide an objective overview of the Profile's primary purpose, product, or service. Avoid subjective claims, marketing language, or unnecessary technical jargon. Focus on clear, factual information. Limit to 200 characters.
+  """
   descriptionShort: String1!
+  """
+  The date when the Profile was first established, registered, or publicly announced. Use ISO 8601 format (YYYY-MM-DD) when possible. Can usually be shortened to Month and Year.
+  """
   foundingDate: Date
+  """
+  Provide a profile icon that works on a white background and be transparent. Preferably an SVG image file. If it is a PNG, it should have a minimum resolution of 256px height.
+  """
   icon: String1!
   id: String1!
+  """
+  Provide your full logo (wordmark + icon) that works on a white background and be transparent. Preferably an SVG image file. If it is a PNG, it should have a minimum resolution of 256px height.
+  """
   logo: String1!
+  """
+  The full official name of the Profile as used in their branding and documentation.
+  """
   name: String1!
   profileSector: ProfileSectors
+  """
+  The primary industry, use case, or problem space the Profile operates in or serves. Refer to standardized list of sectors and subsectors.
+  """
   profileSectorId: String1
   profileStatus: ProfileStatuses
+  """
+  The current operational state of the Profile (e.g. Active, Inactive, Closed). Refer to the standardized list of status options.
+  """
   profileStatusId: String1
   profileType: ProfileTypes
+  """
+  The primary operational category or business model of the Profile (e.g. DAO, project, investor, government). Refer to standardized list of Profile types.
+  """
   profileTypeId: String1
   root: Roots
   rootId: String1!
-  """Self promotion field"""
+  """
+  A brief, memorable phrase or slogan used by the Profile to convey its mission or value proposition. If the tagline is in all caps or contains irregular spaces or line breaks, reformat it to a single line, single spaced, and sentence case.
+  """
   tagLine: String1!
   urls(limit: Int, offset: Int, order_by: [ProfileInfoUrlsOrderBy!], where: ProfileInfoUrlsBoolExp): [ProfileInfoUrls!]
 }
@@ -1036,6 +1254,7 @@ type ProfileSectors {
   name: String1!
   profileInfos(limit: Int, offset: Int, order_by: [ProfileInfosOrderBy!], where: ProfileInfosBoolExp): [ProfileInfos!]
   profileInfosAggregate(filter_input: ProfileInfosFilterInput): ProfileInfosAggExp!
+  slug: String1!
 }
 
 type ProfileSectorsAggExp {
@@ -1043,6 +1262,7 @@ type ProfileSectorsAggExp {
   definition: StringAggExp!
   id: StringAggExp!
   name: StringAggExp!
+  slug: StringAggExp!
 }
 
 input ProfileSectorsBoolExp {
@@ -1053,6 +1273,7 @@ input ProfileSectorsBoolExp {
   id: StringBoolExp
   name: StringBoolExp
   profileInfos: ProfileInfosBoolExp
+  slug: StringBoolExp
 }
 
 input ProfileSectorsFilterInput {
@@ -1066,6 +1287,7 @@ input ProfileSectorsOrderBy {
   definition: OrderBy
   id: OrderBy
   name: OrderBy
+  slug: OrderBy
 }
 
 type ProfileStatuses {
@@ -1074,6 +1296,7 @@ type ProfileStatuses {
   name: String1!
   profileInfos(limit: Int, offset: Int, order_by: [ProfileInfosOrderBy!], where: ProfileInfosBoolExp): [ProfileInfos!]
   profileInfosAggregate(filter_input: ProfileInfosFilterInput): ProfileInfosAggExp!
+  slug: String1!
 }
 
 type ProfileStatusesAggExp {
@@ -1081,6 +1304,7 @@ type ProfileStatusesAggExp {
   definition: StringAggExp!
   id: StringAggExp!
   name: StringAggExp!
+  slug: StringAggExp!
 }
 
 input ProfileStatusesBoolExp {
@@ -1091,6 +1315,7 @@ input ProfileStatusesBoolExp {
   id: StringBoolExp
   name: StringBoolExp
   profileInfos: ProfileInfosBoolExp
+  slug: StringBoolExp
 }
 
 input ProfileStatusesFilterInput {
@@ -1104,6 +1329,7 @@ input ProfileStatusesOrderBy {
   definition: OrderBy
   id: OrderBy
   name: OrderBy
+  slug: OrderBy
 }
 
 """ """
@@ -1154,6 +1380,7 @@ type ProfileTypes {
   name: String1!
   profileInfos(limit: Int, offset: Int, order_by: [ProfileInfosOrderBy!], where: ProfileInfosBoolExp): [ProfileInfos!]
   profileInfosAggregate(filter_input: ProfileInfosFilterInput): ProfileInfosAggExp!
+  slug: String1!
 }
 
 type ProfileTypesAggExp {
@@ -1161,6 +1388,7 @@ type ProfileTypesAggExp {
   definition: StringAggExp!
   id: StringAggExp!
   name: StringAggExp!
+  slug: StringAggExp!
 }
 
 input ProfileTypesBoolExp {
@@ -1171,6 +1399,7 @@ input ProfileTypesBoolExp {
   id: StringBoolExp
   name: StringBoolExp
   profileInfos: ProfileInfosBoolExp
+  slug: StringBoolExp
 }
 
 input ProfileTypesFilterInput {
@@ -1184,9 +1413,46 @@ input ProfileTypesOrderBy {
   definition: OrderBy
   id: OrderBy
   name: OrderBy
+  slug: OrderBy
+}
+
+type ProgramRanking {
+  """Solana program ID (address)"""
+  programId: String!
+  """Human-readable name of the program"""
+  programName: String!
+  """Numerical rank of the program"""
+  programRank: Int32!
+  """Ranking score between 0 and 1"""
+  score: Float641!
+  smartContract: SmartContracts
+}
+
+type ProgramRankingResponse {
+  data: [ProgramRanking!]!
+  """Unix timestamp of when the rankings were generated"""
+  date: Int32!
+  """Time interval used for ranking"""
+  interval: String!
+  """Maximum number of programs returned"""
+  limit: Int32!
 }
 
 type Query {
+  """Get ranked Solana programs"""
+  AlphaVybe_Ranking(
+    """Filter by program category"""
+    category: String
+    """Time interval for ranking"""
+    interval: AlphaVybe_RankingInterval
+    """Maximum number of programs to return"""
+    limit: Int32
+    """API Key for Vybe Network"""
+    xApiKey: String!
+  ): ProgramRankingResponse!
+  allowedUrlTypes(limit: Int, offset: Int, where: AllowedUrlTypesBoolExp): [AllowedUrlTypes!]
+  allowedUrlTypesAggregate(filter_input: AllowedUrlTypesFilterInput): AllowedUrlTypesAggExp
+  allowedUrlTypesById(id: String1!): AllowedUrlTypes
   assetDeployments(limit: Int, offset: Int, order_by: [AssetDeploymentsOrderBy!], where: assetDeploymentsBoolExp): [AssetDeployments!]
   assetDeploymentsAggregate(filter_input: AssetDeploymentsFilterInput): AssetDeploymentsAggExp
   assetStandards(limit: Int, offset: Int, order_by: [AssetStandardsOrderBy!], where: AssetStandardsBoolExp): [AssetStandards!]
@@ -1252,17 +1518,34 @@ type Query {
   tagTypesAggregate(filter_input: TagTypesFilterInput): TagTypesAggExp
   tags(limit: Int, offset: Int, order_by: [TagsOrderBy!], where: TagsBoolExp): [Tags!]
   tagsAggregate(filter_input: TagsFilterInput): TagsAggExp
+  theGridRankings(limit: Int, offset: Int, order_by: [theGridRankingOrderBy!], where: theGridRankingBoolExp): [theGridRanking!]
   urlTypes(limit: Int, offset: Int, order_by: [UrlTypesOrderBy!], where: UrlTypesBoolExp): [UrlTypes!]
   urlTypesAggregate(filter_input: UrlTypesFilterInput): UrlTypesAggExp
   urlTypesById(id: String1!): UrlTypes
   urls(limit: Int, offset: Int, order_by: [UrlsOrderBy!], where: UrlsBoolExp): [Urls!]
   urlsAggregate(filter_input: UrlsFilterInput): UrlsAggExp
   urlsById(id: String1!): Urls
+  validation(limit: Int, offset: Int, order_by: [validationOrderBy!], where: validationBoolExp): [Validation!]
+  validationAggregate(filter_input: validationFilterInput): validationAggExp
+  validationById(id: Int64_1): Validation
+}
+
+scalar RawHttpMethod
+
+"""Retry policy of request"""
+input RetryPolicyInput {
+  """Delay retry delay in milliseconds"""
+  delay: Int32
+  """List of HTTP status the connector will retry on"""
+  httpStatus: [Int32!]
+  """Number of retry times"""
+  times: Int32!
 }
 
 type Roots {
   assets(limit: Int, offset: Int, order_by: [AssetsOrderBy!], where: AssetsBoolExp): [Assets!]
   assetsAggregate(filter_input: AssetsFilterInput): AssetsAggExp!
+  connectionScoresAggregate(filter_input: theGridRankingFilterInput): theGridRankingAggExp!
   entities(limit: Int, offset: Int, order_by: [EntitiesOrderBy!], where: EntitiesBoolExp): [Entities!]
   entitiesAggregate(filter_input: EntitiesFilterInput): EntitiesAggExp!
   id: String1!
@@ -1275,7 +1558,10 @@ type Roots {
   slug: String1!
   socials(limit: Int, offset: Int, order_by: [SocialsOrderBy!], where: SocialsBoolExp): [Socials!]
   socialsAggregate(filter_input: SocialsFilterInput): SocialsAggExp!
+  theGridRanking(limit: Int, offset: Int, order_by: [theGridRankingOrderBy!], where: theGridRankingBoolExp): [theGridRanking!]
   urlMain: String1!
+  validationAggregate(filter_input: validationFilterInput): validationAggExp!
+  validations(limit: Int, offset: Int, order_by: [validationOrderBy!], where: validationBoolExp): [Validation!]
 }
 
 type RootsAggExp {
@@ -1297,7 +1583,9 @@ input RootsBoolExp {
   profileTags: ProfileTagsBoolExp
   slug: StringBoolExp
   socials: SocialsBoolExp
+  theGridRanking: theGridRankingBoolExp
   urlMain: StringBoolExp
+  validations: validationBoolExp
 }
 
 input RootsFilterInput {
@@ -1420,6 +1708,7 @@ type SocialTypes {
   definition: String1!
   id: String1!
   name: String1!
+  slug: String1!
   socials(limit: Int, offset: Int, order_by: [SocialsOrderBy!], where: SocialsBoolExp): [Socials!]
   socialsAggregate(filter_input: SocialsFilterInput): SocialsAggExp!
 }
@@ -1429,6 +1718,7 @@ type SocialTypesAggExp {
   definition: StringAggExp!
   id: StringAggExp!
   name: StringAggExp!
+  slug: StringAggExp!
 }
 
 input SocialTypesBoolExp {
@@ -1438,6 +1728,7 @@ input SocialTypesBoolExp {
   definition: StringBoolExp
   id: StringBoolExp
   name: StringBoolExp
+  slug: StringBoolExp
   socials: SocialsBoolExp
 }
 
@@ -1452,6 +1743,7 @@ input SocialTypesOrderBy {
   definition: OrderBy
   id: OrderBy
   name: OrderBy
+  slug: OrderBy
 }
 
 type SocialUrls {
@@ -1486,10 +1778,16 @@ input SocialUrlsOrderBy {
 
 type Socials {
   id: String1!
+  """
+  The name or handle associated with the Profile's social media account on the specified platform. This should match the name displayed on the social media profile page.
+  """
   name: String1!
   root: Roots
   rootId: String1!
   socialType: SocialTypes
+  """
+  The specific social media platform the URL belongs to (e.g. Twitter, Facebook, Discord). Refer to the standardized list of social media platforms.
+  """
   socialTypeId: String1
   urls(limit: Int, offset: Int, order_by: [SocialUrlsOrderBy!], where: SocialUrlsBoolExp): [SocialUrls!]
 }
@@ -1532,11 +1830,20 @@ input SocialsOrderBy {
 
 scalar String1
 
+scalar String2
+
 type StringAggExp {
   _count: Int!
   _count_distinct: Int!
   max: String1!
   min: String1!
+}
+
+type StringAggExp2 {
+  _count: Int!
+  _count_distinct: Int!
+  max: String2!
+  min: String2!
 }
 
 input StringBoolExp {
@@ -1547,8 +1854,19 @@ input StringBoolExp {
   _like: String1
 }
 
+input StringBoolExp2 {
+  _contains: String2
+  _eq: String2
+  _in: [String2!]
+  _is_null: Boolean
+  _like: String2
+}
+
 type Subscription {
-  _no_fields_accessible: String
+  allowedUrlTypes(limit: Int, offset: Int, where: AllowedUrlTypesBoolExp): [AllowedUrlTypes!]
+  allowedUrlTypesAggregate(filter_input: AllowedUrlTypesFilterInput): AllowedUrlTypesAggExp
+  allowedUrlTypesById(id: String1!): AllowedUrlTypes
+  validationAggregate(filter_input: validationFilterInput): validationAggExp
 }
 
 """Table mapping product support relationships"""
@@ -1597,6 +1915,7 @@ type TagTypes {
   definition: String1!
   id: String1!
   name: String1!
+  slug: String1!
   tags(limit: Int, offset: Int, order_by: [TagsOrderBy!], where: TagsBoolExp): [Tags!]
   tagsAggregate(filter_input: TagsFilterInput): TagsAggExp!
 }
@@ -1606,6 +1925,7 @@ type TagTypesAggExp {
   definition: StringAggExp!
   id: StringAggExp!
   name: StringAggExp!
+  slug: StringAggExp!
 }
 
 input TagTypesBoolExp {
@@ -1615,6 +1935,7 @@ input TagTypesBoolExp {
   definition: StringBoolExp
   id: StringBoolExp
   name: StringBoolExp
+  slug: StringBoolExp
   tags: TagsBoolExp
 }
 
@@ -1629,14 +1950,17 @@ input TagTypesOrderBy {
   definition: OrderBy
   id: OrderBy
   name: OrderBy
+  slug: OrderBy
 }
 
 type Tags {
   description: String1!
   id: String1!
+  is_archived: String1
   name: String1!
   profileTags(limit: Int, offset: Int, order_by: [ProfileTagsOrderBy!], where: ProfileTagsBoolExp): [ProfileTags!]
   profileTagsAggregate(filter_input: ProfileTagsFilterInput): ProfileTagsAggExp!
+  slug: String1!
   tagType: TagTypes
   tagTypeId: String1
 }
@@ -1645,7 +1969,9 @@ type TagsAggExp {
   _count: Int!
   description: StringAggExp!
   id: StringAggExp!
+  is_archived: StringAggExp!
   name: StringAggExp!
+  slug: StringAggExp!
   tagTypeId: StringAggExp!
 }
 
@@ -1655,8 +1981,10 @@ input TagsBoolExp {
   _or: [TagsBoolExp!]
   description: StringBoolExp
   id: StringBoolExp
+  is_archived: StringBoolExp
   name: StringBoolExp
   profileTags: ProfileTagsBoolExp
+  slug: StringBoolExp
   tagType: TagTypesBoolExp
   tagTypeId: StringBoolExp
 }
@@ -1671,15 +1999,35 @@ input TagsFilterInput {
 input TagsOrderBy {
   description: OrderBy
   id: OrderBy
+  is_archived: OrderBy
   name: OrderBy
+  slug: OrderBy
   tagType: TagTypesOrderBy
   tagTypeId: OrderBy
+}
+
+scalar Timestamp
+
+type TimestampAggExp {
+  _count: Int!
+  _count_distinct: Int!
+}
+
+input TimestampBoolExp {
+  _eq: Timestamp
+  _gt: Timestamp
+  _gte: Timestamp
+  _in: [Timestamp!]
+  _is_null: Boolean
+  _lt: Timestamp
+  _lte: Timestamp
 }
 
 type UrlTypes {
   definition: String1!
   id: String1!
   name: String1!
+  slug: String1!
   urls(limit: Int, offset: Int, order_by: [UrlsOrderBy!], where: UrlsBoolExp): [Urls!]
   urlsAggregate(filter_input: UrlsFilterInput): UrlsAggExp!
 }
@@ -1689,6 +2037,7 @@ type UrlTypesAggExp {
   definition: StringAggExp!
   id: StringAggExp!
   name: StringAggExp!
+  slug: StringAggExp!
 }
 
 input UrlTypesBoolExp {
@@ -1698,6 +2047,7 @@ input UrlTypesBoolExp {
   definition: StringBoolExp
   id: StringBoolExp
   name: StringBoolExp
+  slug: StringBoolExp
   urls: UrlsBoolExp
 }
 
@@ -1712,6 +2062,7 @@ input UrlTypesOrderBy {
   definition: OrderBy
   id: OrderBy
   name: OrderBy
+  slug: OrderBy
 }
 
 type Urls {
@@ -1719,8 +2070,14 @@ type Urls {
   id: String1!
   rowId: String1!
   tableId: String1!
+  """
+  This is a URL that links to different types, it must always start with a http:// or https://.
+  """
   url: String1!
   urlType: UrlTypes
+  """
+  Categorizes the purpose and content of a URL based on its table group in the TGS. The URL type must align with both the content it links to and the context of its parameter group (Profile/Product/Asset/Entity/Social).
+  """
   urlTypeId: String1
 }
 
@@ -1763,6 +2120,15 @@ input UrlsOrderBy {
   urlTypeId: OrderBy
 }
 
+type Validation {
+  id: Int64_1
+  resolution: Json_1
+  resolvedAt: Timestamp
+  rootId: String2
+  roots(limit: Int, offset: Int, order_by: [RootsOrderBy!], where: RootsBoolExp): [Roots!]
+  rootsAggregate(filter_input: RootsFilterInput): RootsAggExp!
+}
+
 input assetDeploymentsBoolExp {
   _and: [assetDeploymentsBoolExp!]
   _not: assetDeploymentsBoolExp
@@ -1772,4 +2138,75 @@ input assetDeploymentsBoolExp {
   deploymentId: StringBoolExp
   id: StringBoolExp
   smartContractDeployment: SmartContractDeploymentsBoolExp
+}
+
+type theGridRanking {
+  """
+  The Connection score (0-100) of the profile, supporting decimal values for more precision
+  """
+  connectionScore: String1!
+  """The root ID of the profile"""
+  rootId: String1!
+  roots(limit: Int, offset: Int, order_by: [RootsOrderBy!], where: RootsBoolExp): [Roots!]
+  theGridRankingsAggregate(filter_input: RootsFilterInput): RootsAggExp!
+}
+
+type theGridRankingAggExp {
+  _count: Int!
+  connectionScore: StringAggExp!
+  rootId: StringAggExp!
+}
+
+input theGridRankingBoolExp {
+  _and: [theGridRankingBoolExp!]
+  _not: theGridRankingBoolExp
+  _or: [theGridRankingBoolExp!]
+  connectionScore: StringBoolExp
+  rootId: StringBoolExp
+  roots: RootsBoolExp
+}
+
+input theGridRankingFilterInput {
+  limit: Int
+  offset: Int
+  order_by: [theGridRankingOrderBy!]
+  where: theGridRankingBoolExp
+}
+
+input theGridRankingOrderBy {
+  connectionScore: OrderBy
+  rootId: OrderBy
+}
+
+type validationAggExp {
+  _count: Int!
+  id: Int64AggExp_1!
+  resolution: JsonAggExp_1!
+  resolvedAt: TimestampAggExp!
+  rootId: StringAggExp2!
+}
+
+input validationBoolExp {
+  _and: [validationBoolExp!]
+  _not: validationBoolExp
+  _or: [validationBoolExp!]
+  id: Int64BoolExp_1
+  resolution: JsonBoolExp_1
+  resolvedAt: TimestampBoolExp
+  rootId: StringBoolExp2
+  roots: RootsBoolExp
+}
+
+input validationFilterInput {
+  limit: Int
+  offset: Int
+  order_by: [validationOrderBy!]
+  where: validationBoolExp
+}
+
+input validationOrderBy {
+  id: OrderBy
+  resolution: OrderBy
+  resolvedAt: OrderBy
+  rootId: OrderBy
 }

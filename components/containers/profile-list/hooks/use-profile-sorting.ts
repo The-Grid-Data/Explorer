@@ -4,8 +4,8 @@ import { useState } from 'react';
 export type Sorting = ReturnType<typeof useProfileSorting>;
 
 export const useProfileSorting = () => {
-  const [sortBy, setSortBy] = useState<string>('foundingDate');
-  const [sortOrder, setSortOrder] = useState<OrderBy>(OrderBy.Asc);
+  const [sortBy, setSortBy] = useState<string>('connectionScore');
+  const [sortOrder, setSortOrder] = useState<OrderBy>(OrderBy.Desc);
   const toQuerySortByFields = () => generateOrderByQuery(sortBy, sortOrder);
 
   const sorting = {
@@ -24,6 +24,13 @@ export const useProfileSorting = () => {
 const generateOrderByQuery = (sortBy: string, sortOrder: OrderBy) => {
   if (!sortBy) return [];
 
+  // For connectionScore, return the order_by directly since it's a flat field in theGridRankings
+  if (sortBy === 'connectionScore') {
+    return [{
+      connectionScore: sortOrder
+    }];
+  }
+
   const parts = sortBy.split('.');
   let orderBy: any = {};
   let current = orderBy;
@@ -37,5 +44,5 @@ const generateOrderByQuery = (sortBy: string, sortOrder: OrderBy) => {
     }
   });
 
-  return orderBy;
+  return [orderBy];
 };
