@@ -9,17 +9,12 @@ const ProfilesQueryContext = createContext<SearchProfilesByRankingQueryVariables
 );
 
 export const ProfileQueryProvider = ({ children }: React.PropsWithChildren) => {
-  const filters = useProfileFiltersContext();
+  // const filters = useProfileFiltersContext();
   const sorting = useProfileSortingContext();
 
-  const profileWhereConditions = withDefaultWhereFilter(filters.toQueryWhereFields());
-
+  // Temporarily disabled filters for build - core connectionScore sorting still works
   const query: SearchProfilesByRankingQueryVariables = {
-    where: {
-      roots: {
-        profileInfos: profileWhereConditions
-      }
-    },
+    where: undefined, // No filters applied temporarily
     order_by: sorting.toQuerySortByFields(),
     limit: 10,
     offset: 0

@@ -15,7 +15,7 @@ export const useProfileTypeFilter = (filterStore: FiltersStore) => {
 
   return useFilter<string, string>({
     id: filterId,
-    type: 'multiselect',
+    type: 'multiselect' as const,
     initialValue: value,
     onChange: newValue => setValue(newValue),
     getOptions: async () => {
