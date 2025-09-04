@@ -32,9 +32,9 @@ export const SearchProfilesQuery = graphql(`
 
 export const SearchProfilesByRankingQuery = graphql(`
   query SearchProfilesByRanking(
-    $limit: Int
     $order_by: [theGridRankingOrderBy!]
     $where: theGridRankingBoolExp
+    $limit: Int
     $offset: Int
   ) {
     theGridRankings(
@@ -123,8 +123,8 @@ export const ProfileListCards = () => {
     if (isUsingConnectionScore) {
       return data?.pages
         ?.flatMap(page => page.theGridRankings)
-        ?.map(ranking => ranking?.roots?.profileInfos?.[0])
-        ?.filter(Boolean);
+        .map(ranking => ranking?.roots?.profileInfos?.[0])
+        .filter(Boolean);
     } else {
       return data?.pages
         ?.flatMap(page => page.profileInfos)

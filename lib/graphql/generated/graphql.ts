@@ -3429,9 +3429,9 @@ export type SearchProfilesQuery = { __typename?: 'Query', profileInfos?: Array<(
   )> | null };
 
 export type SearchProfilesByRankingQueryVariables = Exact<{
-  limit?: InputMaybe<Scalars['Int']['input']>;
   order_by?: InputMaybe<Array<TheGridRankingOrderBy> | TheGridRankingOrderBy>;
   where?: InputMaybe<TheGridRankingBoolExp>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
 }>;
 
@@ -4541,7 +4541,7 @@ fragment ProfileCardFragment on ProfileInfos {
   }
 }`) as unknown as TypedDocumentString<SearchProfilesQuery, SearchProfilesQueryVariables>;
 export const SearchProfilesByRankingDocument = new TypedDocumentString(`
-    query SearchProfilesByRanking($limit: Int, $order_by: [theGridRankingOrderBy!], $where: theGridRankingBoolExp, $offset: Int) {
+    query SearchProfilesByRanking($order_by: [theGridRankingOrderBy!], $where: theGridRankingBoolExp, $limit: Int, $offset: Int) {
   theGridRankings(
     limit: $limit
     offset: $offset
