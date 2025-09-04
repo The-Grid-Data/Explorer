@@ -13,24 +13,6 @@ import { Progress } from '@/components/ui/progress';
 const defaultLimit = 10;
 
 export const SearchProfilesQuery = graphql(`
-  query SearchProfiles(
-    $order_by: [ProfileInfosOrderBy!]
-    $where: ProfileInfosBoolExp
-    $limit: Int
-    $offset: Int
-  ) {
-    profileInfos(
-      limit: $limit
-      offset: $offset
-      where: $where
-      order_by: $order_by
-    ) {
-      ...ProfileCardFragment
-    }
-  }
-`);
-
-export const SearchProfilesByRankingQuery = graphql(`
   query SearchProfilesByRanking(
     $order_by: [theGridRankingOrderBy!]
     $where: theGridRankingBoolExp
@@ -56,17 +38,14 @@ export const SearchProfilesByRankingQuery = graphql(`
 
 export const ProfileListCards = () => {
   const query = useProfilesQueryContext();
-  const sorting = useProfileSortingContext();
 
   const [debouncedQuery] = useDebounceValue(query, 500);
 
   const { ref: fetchNextPageTriggerRef, inView } = useInView({ threshold: 1 });
   const limit = query?.limit ?? defaultLimit;
 
-  const isUsingConnectionScore = sorting.sorting.sortBy === 'connectionScore';
-
   const { data, isFetching, isError, fetchNextPage } = useInfiniteQuery({
-    queryKey: ['searchProfiles', debouncedQuery, isUsingConnectionScore],
+    queryKey: ['searchProfiles', debouncedQuery],
     placeholderData: previousData => previousData,
     initialPageParam: {
       limit,
@@ -77,11 +56,7 @@ export const ProfileListCards = () => {
     getNextPageParam: (lastPage, allPages, lastPageParam) => {
       const lastOffset = ((lastPageParam as any)?.offset as number) ?? 0;
 
-      const hasResults = isUsingConnectionScore 
-        ? lastPage.theGridRankings?.length
-        : lastPage.profileInfos?.length;
-
-      if (hasResults) {
+      if (lastPage.theGridRankings?.length) {
         return {
           offset: lastOffset + limit,
           limit
@@ -92,24 +67,8 @@ export const ProfileListCards = () => {
       pageParam
     }: {
       pageParam: { limit: number; offset: number };
-    }) => {
-      if (isUsingConnectionScore) {
-        // Build the where clause for theGridRankings query
-        const rankingWhere = debouncedQuery?.where ? {
-          roots: {
-            profileInfos: debouncedQuery.where
-          }
-        } : undefined;
-
-        return await execute(SearchProfilesByRankingQuery, {
-          ...pageParam,
-          where: rankingWhere,
-          order_by: sorting.toQuerySortByFields()
-        });
-      } else {
-        return await execute(SearchProfilesQuery, { ...debouncedQuery, ...pageParam });
-      }
-    }
+    }) =>
+      await execute(SearchProfilesQuery, { ...debouncedQuery, ...pageParam })
   });
 
   useEffect(() => {
@@ -119,18 +78,11 @@ export const ProfileListCards = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [inView, isFetching, isError]);
 
-  const profiles = useMemo(() => {
-    if (isUsingConnectionScore) {
-      return data?.pages
-        ?.flatMap(page => page.theGridRankings)
-        .map(ranking => ranking?.roots?.profileInfos?.[0])
-        .filter(Boolean);
-    } else {
-      return data?.pages
-        ?.flatMap(page => page.profileInfos)
-        ?.filter(Boolean);
-    }
-  }, [data, isUsingConnectionScore]);
+  const profiles = data?.pages
+    ?.flatMap(page => page.theGridRankings)
+    .flatMap(ranking => ranking?.roots || [])
+    .flatMap(root => root?.profileInfos || [])
+    .filter(Boolean);
 
   const nrOfFetchedProfiles = profiles?.length ?? 0;
 
