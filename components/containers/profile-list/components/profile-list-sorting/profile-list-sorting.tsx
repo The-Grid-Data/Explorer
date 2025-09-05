@@ -194,12 +194,14 @@ const extractOrderByOptions = (
 
   extractFields(fields);
   
-  // Manually add connectionScore sorting option until server schema is updated
-  if (!options.includes('root.theGridRanking.connectionScore')) {
-    options.push('root.theGridRanking.connectionScore');
-  }
+  // Add connectionScore as a custom sorting option
+  options.unshift('connectionScore');
   
   return options.sort((a, b) => {
+    // Keep connectionScore at the top
+    if (a === 'connectionScore') return -1;
+    if (b === 'connectionScore') return 1;
+    
     if (a.split('.').length < b.split('.').length) {
       return -1;
     }

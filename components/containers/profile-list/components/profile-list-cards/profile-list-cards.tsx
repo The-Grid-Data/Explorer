@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import { ProfileCard, ProfileCardSkeleton } from '../profile-card';
 import { useDebounceValue } from 'usehooks-ts';
 import { useProfilesQueryContext } from '@/providers/profiles-query-provider';
+import { useProfileSortingContext } from '@/providers/sorting-provider';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { execute } from '@/lib/graphql/execute';
 import { graphql } from '@/lib/graphql/generated';
@@ -29,16 +30,44 @@ export const SearchProfilesQuery = graphql(`
   }
 `);
 
+export const SearchProfilesByRankingQuery = graphql(`
+  query SearchProfilesByRanking(
+    $order_by: [theGridRankingOrderBy!]
+    $where: theGridRankingBoolExp
+    $limit: Int
+    $offset: Int
+  ) {
+    theGridRankings(
+      limit: $limit
+      offset: $offset
+      where: $where
+      order_by: $order_by
+    ) {
+      connectionScore
+      rootId
+      roots {
+        profileInfos {
+          ...ProfileCardFragment
+        }
+      }
+    }
+  }
+`);
+
 export const ProfileListCards = () => {
   const query = useProfilesQueryContext();
+  const { sorting } = useProfileSortingContext();
 
   const [debouncedQuery] = useDebounceValue(query, 500);
+  
+  // Check if we're sorting by connectionScore to determine which query to use
+  const isConnectionScoreSort = sorting.sortBy === 'connectionScore';
 
   const { ref: fetchNextPageTriggerRef, inView } = useInView({ threshold: 1 });
   const limit = query?.limit ?? defaultLimit;
 
   const { data, isFetching, isError, fetchNextPage } = useInfiniteQuery({
-    queryKey: ['searchProfiles', debouncedQuery],
+    queryKey: ['searchProfiles', debouncedQuery, isConnectionScoreSort],
     placeholderData: previousData => previousData,
     initialPageParam: {
       limit,
@@ -49,7 +78,12 @@ export const ProfileListCards = () => {
     getNextPageParam: (lastPage, allPages, lastPageParam) => {
       const lastOffset = ((lastPageParam as any)?.offset as number) ?? 0;
 
-      if (lastPage.profileInfos?.length) {
+      // Check the appropriate data structure based on query type
+      const hasData = isConnectionScoreSort 
+        ? lastPage.theGridRankings?.length 
+        : lastPage.profileInfos?.length;
+
+      if (hasData) {
         return {
           offset: lastOffset + limit,
           limit
@@ -60,12 +94,40 @@ export const ProfileListCards = () => {
       pageParam
     }: {
       pageParam: { limit: number; offset: number };
-    }) =>
-      await execute(SearchProfilesQuery, { ...debouncedQuery, ...pageParam })
+    }) => {
+      if (isConnectionScoreSort) {
+        // Transform the query for theGridRankings structure
+        const rankingQuery = {
+          order_by: debouncedQuery.order_by,
+          where: debouncedQuery.where ? {
+            roots: {
+              profileInfos: debouncedQuery.where
+            }
+          } : undefined,
+          ...pageParam
+        };
+        return await execute(SearchProfilesByRankingQuery, rankingQuery);
+      } else {
+        return await execute(SearchProfilesQuery, { ...debouncedQuery, ...pageParam });
+      }
+    }
   });
 
+  // Extract profiles based on query type
+  const profiles = data?.pages?.flatMap(page => {
+    if (isConnectionScoreSort) {
+      // Extract profiles from theGridRankings structure
+      return page.theGridRankings
+        ?.map(ranking => ranking?.roots?.profileInfos?.[0])
+        ?.filter(Boolean);
+    } else {
+      // Extract profiles from direct profileInfos structure
+      return page.profileInfos;
+    }
+  }).filter(Boolean);
+
   console.table(
-    data?.pages?.[0]?.profileInfos?.map((record: any) => ({
+    profiles?.slice(0, 10).map((record: any) => ({
       connectionScore: record?.root?.theGridRanking?.[0]?.connectionScore,
       name: record?.name
     }))
@@ -77,10 +139,6 @@ export const ProfileListCards = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [inView, isFetching, isError]);
-
-  const profiles = data?.pages
-    ?.flatMap(page => page.profileInfos)
-    .filter(Boolean);
   const nrOfFetchedProfiles = profiles?.length ?? 0;
 
   return (

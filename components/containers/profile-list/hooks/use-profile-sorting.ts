@@ -24,6 +24,11 @@ export const useProfileSorting = () => {
 const generateOrderByQuery = (sortBy: string, sortOrder: OrderBy) => {
   if (!sortBy) return [];
 
+  // Handle connectionScore as a special case
+  if (sortBy === 'connectionScore') {
+    return { connectionScore: sortOrder };
+  }
+
   const parts = sortBy.split('.');
   let orderBy: any = {};
   let current = orderBy;

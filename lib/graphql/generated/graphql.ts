@@ -3407,7 +3407,7 @@ export type GetProfileDataQuery = { __typename?: 'Query', profileInfos?: Array<(
     & { ' $fragmentRefs'?: { 'ProfileFragmentFragment': ProfileFragmentFragment;'ProfileHeadingFragmentFragment': ProfileHeadingFragmentFragment } }
   )> | null };
 
-export type ProfileCardFragmentFragment = { __typename?: 'ProfileInfos', name: string, logo: string, id: string, tagLine: string, descriptionShort: string, profileTypeId?: string | null, profileStatusId?: string | null, profileSectorId?: string | null, foundingDate?: string | null, profileSector?: { __typename?: 'ProfileSectors', name: string, id: string, definition: string } | null, profileStatus?: { __typename?: 'ProfileStatuses', name: string, id: string, definition: string } | null, profileType?: { __typename?: 'ProfileTypes', name: string, id: string, definition: string } | null, urls?: Array<{ __typename?: 'ProfileInfoUrls', url?: string | null, urlType?: { __typename?: 'UrlTypes', name: string, id: string, definition: string } | null }> | null, mainProduct?: { __typename?: 'Roots', products?: Array<{ __typename?: 'Products', name: string, productType?: { __typename?: 'ProductTypes', name: string } | null }> | null } | null, root?: { __typename?: 'Roots', urlMain: string, slug: string, assets?: Array<(
+export type ProfileCardFragmentFragment = { __typename?: 'ProfileInfos', name: string, logo: string, id: string, tagLine: string, descriptionShort: string, profileTypeId?: string | null, profileStatusId?: string | null, profileSectorId?: string | null, foundingDate?: string | null, profileSector?: { __typename?: 'ProfileSectors', name: string, id: string, definition: string } | null, profileStatus?: { __typename?: 'ProfileStatuses', name: string, id: string, definition: string } | null, profileType?: { __typename?: 'ProfileTypes', name: string, id: string, definition: string } | null, urls?: Array<{ __typename?: 'ProfileInfoUrls', url?: string | null, urlType?: { __typename?: 'UrlTypes', name: string, id: string, definition: string } | null }> | null, mainProduct?: { __typename?: 'Roots', products?: Array<{ __typename?: 'Products', name: string, productType?: { __typename?: 'ProductTypes', name: string } | null }> | null } | null, root?: { __typename?: 'Roots', urlMain: string, slug: string, theGridRanking?: Array<{ __typename?: 'theGridRanking', connectionScore: string, rootId: string }> | null, assets?: Array<(
       { __typename?: 'Assets', ticker: string, name: string, id: string }
       & { ' $fragmentRefs'?: { 'AssetFieldsFragmentFragment': AssetFieldsFragmentFragment } }
     )> | null, socials?: Array<{ __typename?: 'Socials', name: string, socialType?: { __typename?: 'SocialTypes', name: string } | null, urls?: Array<{ __typename?: 'SocialUrls', url?: string | null }> | null }> | null, profileTags?: Array<{ __typename?: 'ProfileTags', tag?: { __typename?: 'Tags', name: string, id: string } | null }> | null, products?: Array<(
@@ -3427,6 +3427,19 @@ export type SearchProfilesQuery = { __typename?: 'Query', profileInfos?: Array<(
     { __typename?: 'ProfileInfos' }
     & { ' $fragmentRefs'?: { 'ProfileCardFragmentFragment': ProfileCardFragmentFragment } }
   )> | null };
+
+export type SearchProfilesByRankingQueryVariables = Exact<{
+  order_by?: InputMaybe<Array<TheGridRankingOrderBy> | TheGridRankingOrderBy>;
+  where?: InputMaybe<TheGridRankingBoolExp>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+}>;
+
+
+export type SearchProfilesByRankingQuery = { __typename?: 'Query', theGridRankings?: Array<{ __typename?: 'theGridRanking', connectionScore: string, rootId: string, roots?: Array<{ __typename?: 'Roots', profileInfos?: Array<(
+        { __typename?: 'ProfileInfos' }
+        & { ' $fragmentRefs'?: { 'ProfileCardFragmentFragment': ProfileCardFragmentFragment } }
+      )> | null }> | null }> | null };
 
 export type GetOrderByFieldsQueryVariables = Exact<{
   name: Scalars['String']['input'];
@@ -3851,6 +3864,10 @@ export const ProfileCardFragmentFragmentDoc = new TypedDocumentString(`
   root {
     urlMain
     slug
+    theGridRanking {
+      connectionScore
+      rootId
+    }
     assets {
       ticker
       name
@@ -4497,6 +4514,10 @@ fragment ProfileCardFragment on ProfileInfos {
   root {
     urlMain
     slug
+    theGridRanking {
+      connectionScore
+      rootId
+    }
     assets {
       ticker
       name
@@ -4527,6 +4548,252 @@ fragment ProfileCardFragment on ProfileInfos {
     }
   }
 }`) as unknown as TypedDocumentString<SearchProfilesQuery, SearchProfilesQueryVariables>;
+export const SearchProfilesByRankingDocument = new TypedDocumentString(`
+    query SearchProfilesByRanking($order_by: [theGridRankingOrderBy!], $where: theGridRankingBoolExp, $limit: Int, $offset: Int) {
+  theGridRankings(
+    limit: $limit
+    offset: $offset
+    where: $where
+    order_by: $order_by
+  ) {
+    connectionScore
+    rootId
+    roots {
+      profileInfos {
+        ...ProfileCardFragment
+      }
+    }
+  }
+}
+    fragment AssetFieldsFragment on Assets {
+  ticker
+  rootId
+  name
+  id
+  icon
+  description
+  assetTypeId
+  assetStatusId
+  assetType {
+    definition
+    id
+    name
+  }
+  assetStatus {
+    name
+    id
+    definition
+  }
+  assetDeployments {
+    id
+    deploymentId
+    assetId
+    smartContractDeployment {
+      id
+      deployedOnProduct {
+        id
+        name
+        root {
+          slug
+        }
+      }
+      assetStandard {
+        id
+      }
+      smartContracts {
+        name
+        id
+        deploymentId
+        deploymentDate
+        address
+      }
+      deploymentType {
+        name
+        id
+        definition
+      }
+    }
+  }
+  urls(order_by: {urlTypeId: Asc}) {
+    url
+    urlType {
+      name
+      id
+      definition
+    }
+  }
+}
+fragment ProductFieldsFragment on Products {
+  rootId
+  productTypeId
+  productStatusId
+  name
+  launchDate
+  isMainProduct
+  id
+  description
+  productType {
+    name
+    id
+    definition
+  }
+  productStatus {
+    name
+    id
+    definition
+  }
+  productDeployments {
+    smartContractDeployment {
+      deployedOnProduct {
+        id
+        name
+        root {
+          slug
+        }
+      }
+      assetStandard {
+        id
+      }
+      deploymentType {
+        name
+      }
+      smartContracts {
+        name
+        id
+        deploymentDate
+        address
+        deploymentId
+      }
+      isOfStandardId
+      id
+    }
+  }
+  supportsProducts {
+    supportsProduct {
+      name
+      id
+      root {
+        slug
+      }
+    }
+  }
+  supportedBy: supportsProductsBySupportsProductId {
+    product {
+      name
+      id
+      root {
+        slug
+      }
+    }
+  }
+  urls(order_by: {urlTypeId: Asc}) {
+    url
+    urlType {
+      name
+      id
+      definition
+    }
+  }
+  productAssetRelationships {
+    assetId
+    asset {
+      name
+      id
+      assetType {
+        name
+      }
+      root {
+        slug
+      }
+    }
+    assetSupportType {
+      name
+    }
+    product {
+      name
+      id
+      description
+    }
+  }
+}
+fragment ProfileCardFragment on ProfileInfos {
+  name
+  logo
+  id
+  tagLine
+  descriptionShort
+  profileTypeId
+  profileStatusId
+  profileSectorId
+  foundingDate
+  profileSector {
+    name
+    id
+    definition
+  }
+  profileStatus {
+    name
+    id
+    definition
+  }
+  profileType {
+    name
+    id
+    definition
+  }
+  urls(order_by: {urlTypeId: Asc}) {
+    url
+    urlType {
+      name
+      id
+      definition
+    }
+  }
+  mainProduct: root {
+    products(where: {isMainProduct: {_eq: "1"}}, limit: 1) {
+      name
+      productType {
+        name
+      }
+    }
+  }
+  root {
+    urlMain
+    slug
+    theGridRanking {
+      connectionScore
+      rootId
+    }
+    assets {
+      ticker
+      name
+      id
+    }
+    socials {
+      name
+      socialType {
+        name
+      }
+      urls(order_by: {urlTypeId: Asc}) {
+        url
+      }
+    }
+    profileTags {
+      tag {
+        name
+        id
+      }
+    }
+    products {
+      id
+      name
+      ...ProductFieldsFragment
+    }
+    assets {
+      ...AssetFieldsFragment
+    }
+  }
+}`) as unknown as TypedDocumentString<SearchProfilesByRankingQuery, SearchProfilesByRankingQueryVariables>;
 export const GetOrderByFieldsDocument = new TypedDocumentString(`
     query GetOrderByFields($name: String!) {
   __type(name: $name) {
