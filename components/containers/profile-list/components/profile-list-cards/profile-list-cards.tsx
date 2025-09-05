@@ -64,6 +64,13 @@ export const ProfileListCards = () => {
       await execute(SearchProfilesQuery, { ...debouncedQuery, ...pageParam })
   });
 
+  console.table(
+    data?.pages?.[0]?.profileInfos?.map((record: any) => ({
+      connectionScore: record?.root?.theGridRanking?.[0]?.connectionScore,
+      name: record?.name
+    }))
+  );
+
   useEffect(() => {
     if (inView && !isFetching && !isError) {
       fetchNextPage();

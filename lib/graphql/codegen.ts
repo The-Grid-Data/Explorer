@@ -47,6 +47,42 @@ const codegenConfig: CodegenConfig = {
           String1: {
             input: 'string',
             output: 'string'
+          },
+          AlphaVybe_RankingInterval: {
+            input: 'string',
+            output: 'string'
+          },
+          Float641: {
+            input: 'number',
+            output: 'number'
+          },
+          Int32: {
+            input: 'number',
+            output: 'number'
+          },
+          Int64_1: {
+            input: 'number',
+            output: 'number'
+          },
+          Json: {
+            input: 'any',
+            output: 'any'
+          },
+          Json_1: {
+            input: 'any',
+            output: 'any'
+          },
+          RawHttpMethod: {
+            input: 'string',
+            output: 'string'
+          },
+          String2: {
+            input: 'string',
+            output: 'string'
+          },
+          Timestamp: {
+            input: 'string',
+            output: 'string'
           }
         }
       }
