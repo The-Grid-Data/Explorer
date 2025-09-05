@@ -1,4 +1,4 @@
-import { createContext, useContext } from 'react';
+import { createContext, useContext, useMemo } from 'react';
 import { useProfileSortingContext } from '@/providers/sorting-provider';
 import { withDefaultWhereFilter } from '@/lib/utils/default-where-filter';
 import { useProfileFiltersContext } from './filters-provider';
@@ -12,12 +12,12 @@ export const ProfileQueryProvider = ({ children }: React.PropsWithChildren) => {
   const filters = useProfileFiltersContext();
   const sorting = useProfileSortingContext();
 
-  const query: SearchProfilesQueryVariables = {
+  const query = useMemo<SearchProfilesQueryVariables>(() => ({
     where: withDefaultWhereFilter(filters.toQueryWhereFields()),
     order_by: sorting.toQuerySortByFields(),
     limit: 10,
     offset: 0
-  };
+  }), [filters, sorting]);
 
   return (
     <ProfilesQueryContext.Provider value={query}>

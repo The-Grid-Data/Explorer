@@ -4,15 +4,13 @@ import {
   UrlTypeIconLinks
 } from '@/components/containers/url-type-icon/url-type-icon-list';
 import { Badge } from '@/components/ui/badge';
-import { Card, CardContent } from '@/components/ui/card';
 import {
   Popover,
   PopoverTrigger,
   PopoverContent
 } from '@/components/ui/popover';
 import { FragmentType, useFragment } from '@/lib/graphql/generated';
-import { Globe, Package } from 'lucide-react';
-import Link from 'next/link';
+import { Package } from 'lucide-react';
 import { useState } from 'react';
 
 type ProductBadgeProps = {
@@ -22,7 +20,6 @@ type ProductBadgeProps = {
 export const ProductBadge = ({ product: productData }: ProductBadgeProps) => {
   const product = useFragment(ProductFragment, productData);
   const [open, setOpen] = useState(false);
-  console.log(product);
 
   const handleMouseEnter = () => {
     setOpen(true);

@@ -67,6 +67,10 @@ export const ProfileCardFragment = graphql(`
     root {
       urlMain
       slug
+      theGridRanking {
+        connectionScore
+        rootId
+      }
       assets {
         ticker
         name
