@@ -78,8 +78,8 @@ export const ProfileListCards = () => {
 
       // Check the appropriate data structure based on query type
       const hasData = isConnectionScoreSort 
-        ? lastPage.theGridRankings?.length 
-        : lastPage.profileInfos?.length;
+        ? (lastPage as any).theGridRankings?.length 
+        : (lastPage as any).profileInfos?.length;
 
       if (hasData) {
         return {
@@ -115,12 +115,12 @@ export const ProfileListCards = () => {
   const profiles = data?.pages?.flatMap(page => {
     if (isConnectionScoreSort) {
       // Extract profiles from theGridRankings structure (matching discovery approach)
-      return page.theGridRankings
-        ?.flatMap(ranking => ranking?.roots || [])
-        ?.flatMap(root => root?.profileInfos || []);
+      return (page as any).theGridRankings
+        ?.flatMap((ranking: any) => ranking?.roots || [])
+        ?.flatMap((root: any) => root?.profileInfos || []);
     } else {
       // Extract profiles from direct profileInfos structure
-      return page.profileInfos;
+      return (page as any).profileInfos;
     }
   }).filter(Boolean);
 
