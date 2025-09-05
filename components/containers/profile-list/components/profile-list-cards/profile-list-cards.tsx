@@ -63,9 +63,12 @@ export const ProfileListCards = () => {
 
   const { ref: fetchNextPageTriggerRef, inView } = useInView({ threshold: 1 });
   const limit = query?.limit ?? defaultLimit;
+  
+  // Debounce the query to avoid excessive requests during rapid filter changes
+  const [debouncedQuery] = useDebounceValue(query, 300);
 
   const { data, isFetching, isError, fetchNextPage } = useInfiniteQuery({
-    queryKey: ['searchProfiles', isConnectionScoreSort, sorting.sortBy, sorting.sortOrder],
+    queryKey: ['searchProfiles', isConnectionScoreSort, sorting.sortBy, sorting.sortOrder, JSON.stringify(debouncedQuery)],
     placeholderData: previousData => previousData,
     initialPageParam: {
       limit,
@@ -96,17 +99,17 @@ export const ProfileListCards = () => {
       if (isConnectionScoreSort) {
         // Transform the query for theGridRankings structure
         const rankingQuery = {
-          order_by: query.order_by,
-          where: query.where ? {
+          order_by: debouncedQuery.order_by,
+          where: debouncedQuery.where ? {
             roots: {
-              profileInfos: query.where
+              profileInfos: debouncedQuery.where
             }
           } : undefined,
           ...pageParam
         };
         return await execute(SearchProfilesByRankingQuery, rankingQuery);
       } else {
-        return await execute(SearchProfilesQuery, { ...query, ...pageParam });
+        return await execute(SearchProfilesQuery, { ...debouncedQuery, ...pageParam });
       }
     }
   });
