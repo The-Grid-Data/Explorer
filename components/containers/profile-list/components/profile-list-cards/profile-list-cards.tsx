@@ -57,8 +57,6 @@ export const SearchProfilesByRankingQuery = graphql(`
 export const ProfileListCards = () => {
   const query = useProfilesQueryContext();
   const { sorting } = useProfileSortingContext();
-
-  const [debouncedQuery] = useDebounceValue(query, 500);
   
   // Check if we're sorting by connectionScore to determine which query to use
   const isConnectionScoreSort = sorting.sortBy === 'connectionScore';
@@ -67,7 +65,7 @@ export const ProfileListCards = () => {
   const limit = query?.limit ?? defaultLimit;
 
   const { data, isFetching, isError, fetchNextPage } = useInfiniteQuery({
-    queryKey: ['searchProfiles', debouncedQuery, isConnectionScoreSort],
+    queryKey: ['searchProfiles', isConnectionScoreSort, sorting.sortBy, sorting.sortOrder],
     placeholderData: previousData => previousData,
     initialPageParam: {
       limit,
@@ -98,17 +96,17 @@ export const ProfileListCards = () => {
       if (isConnectionScoreSort) {
         // Transform the query for theGridRankings structure
         const rankingQuery = {
-          order_by: debouncedQuery.order_by,
-          where: debouncedQuery.where ? {
+          order_by: query.order_by,
+          where: query.where ? {
             roots: {
-              profileInfos: debouncedQuery.where
+              profileInfos: query.where
             }
           } : undefined,
           ...pageParam
         };
         return await execute(SearchProfilesByRankingQuery, rankingQuery);
       } else {
-        return await execute(SearchProfilesQuery, { ...debouncedQuery, ...pageParam });
+        return await execute(SearchProfilesQuery, { ...query, ...pageParam });
       }
     }
   });
@@ -116,10 +114,10 @@ export const ProfileListCards = () => {
   // Extract profiles based on query type
   const profiles = data?.pages?.flatMap(page => {
     if (isConnectionScoreSort) {
-      // Extract profiles from theGridRankings structure
+      // Extract profiles from theGridRankings structure (matching discovery approach)
       return page.theGridRankings
-        ?.map(ranking => ranking?.roots?.profileInfos?.[0])
-        ?.filter(Boolean);
+        ?.flatMap(ranking => ranking?.roots || [])
+        ?.flatMap(root => root?.profileInfos || []);
     } else {
       // Extract profiles from direct profileInfos structure
       return page.profileInfos;
