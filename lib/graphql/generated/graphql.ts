@@ -994,19 +994,19 @@ export type ProductAssetRelationships = {
   asset?: Maybe<Assets>;
   assetId: Scalars['String1']['output'];
   assetSupportType?: Maybe<AssetSupportTypes>;
+  assetSupportTypeId?: Maybe<Scalars['String1']['output']>;
   id: Scalars['String1']['output'];
   product?: Maybe<Products>;
   productId: Scalars['String1']['output'];
-  typeOfSupportId?: Maybe<Scalars['String1']['output']>;
 };
 
 export type ProductAssetRelationshipsAggExp = {
   __typename?: 'ProductAssetRelationshipsAggExp';
   _count: Scalars['Int']['output'];
   assetId: StringAggExp;
+  assetSupportTypeId: StringAggExp;
   id: StringAggExp;
   productId: StringAggExp;
-  typeOfSupportId: StringAggExp;
 };
 
 export type ProductAssetRelationshipsBoolExp = {
@@ -1016,10 +1016,10 @@ export type ProductAssetRelationshipsBoolExp = {
   asset?: InputMaybe<AssetsBoolExp>;
   assetId?: InputMaybe<StringBoolExp>;
   assetSupportType?: InputMaybe<AssetSupportTypesBoolExp>;
+  assetSupportTypeId?: InputMaybe<StringBoolExp>;
   id?: InputMaybe<StringBoolExp>;
   product?: InputMaybe<ProductsBoolExp>;
   productId?: InputMaybe<StringBoolExp>;
-  typeOfSupportId?: InputMaybe<StringBoolExp>;
 };
 
 export type ProductAssetRelationshipsFilterInput = {
@@ -1033,10 +1033,10 @@ export type ProductAssetRelationshipsOrderBy = {
   asset?: InputMaybe<AssetsOrderBy>;
   assetId?: InputMaybe<OrderBy>;
   assetSupportType?: InputMaybe<AssetSupportTypesOrderBy>;
+  assetSupportTypeId?: InputMaybe<OrderBy>;
   id?: InputMaybe<OrderBy>;
   product?: InputMaybe<ProductsOrderBy>;
   productId?: InputMaybe<OrderBy>;
-  typeOfSupportId?: InputMaybe<OrderBy>;
 };
 
 export type ProductDeployments = {
@@ -1417,6 +1417,8 @@ export type ProfileInfos = {
   __typename?: 'ProfileInfos';
   /** A more detailed overview of the Profile, including its mission, target audience, and key features or offerings. Limit to 500 characters and avoid subjective claims. */
   descriptionLong: Scalars['String1']['output'];
+  /** Marketing-focused description intended for promotional contexts. */
+  descriptionMarketing?: Maybe<Scalars['String1']['output']>;
   /** Provide an objective overview of the Profile's primary purpose, product, or service. Avoid subjective claims, marketing language, or unnecessary technical jargon. Focus on clear, factual information. Limit to 200 characters. */
   descriptionShort: Scalars['String1']['output'];
   /** The date when the Profile was first established, registered, or publicly announced. Use ISO 8601 format (YYYY-MM-DD) when possible. Can usually be shortened to Month and Year. */
@@ -1456,6 +1458,7 @@ export type ProfileInfosAggExp = {
   __typename?: 'ProfileInfosAggExp';
   _count: Scalars['Int']['output'];
   descriptionLong: StringAggExp;
+  descriptionMarketing: StringAggExp;
   descriptionShort: StringAggExp;
   foundingDate: DateAggExp;
   icon: StringAggExp;
@@ -1474,6 +1477,7 @@ export type ProfileInfosBoolExp = {
   _not?: InputMaybe<ProfileInfosBoolExp>;
   _or?: InputMaybe<Array<ProfileInfosBoolExp>>;
   descriptionLong?: InputMaybe<StringBoolExp>;
+  descriptionMarketing?: InputMaybe<StringBoolExp>;
   descriptionShort?: InputMaybe<StringBoolExp>;
   foundingDate?: InputMaybe<DateBoolExp>;
   icon?: InputMaybe<StringBoolExp>;
@@ -1500,6 +1504,7 @@ export type ProfileInfosFilterInput = {
 
 export type ProfileInfosOrderBy = {
   descriptionLong?: InputMaybe<OrderBy>;
+  descriptionMarketing?: InputMaybe<OrderBy>;
   descriptionShort?: InputMaybe<OrderBy>;
   foundingDate?: InputMaybe<OrderBy>;
   icon?: InputMaybe<OrderBy>;
@@ -1809,12 +1814,21 @@ export type Query = {
   profileTagsAggregate?: Maybe<ProfileTagsAggExp>;
   profileTypes?: Maybe<Array<ProfileTypes>>;
   profileTypesAggregate?: Maybe<ProfileTypesAggExp>;
+  rootRelationshipTypes?: Maybe<Array<RootRelationshipTypes>>;
+  rootRelationshipTypesAggregate?: Maybe<RootRelationshipTypesAggExp>;
+  rootRelationshipTypesById?: Maybe<RootRelationshipTypes>;
+  rootRelationships?: Maybe<Array<RootRelationships>>;
+  rootRelationshipsAggregate?: Maybe<RootRelationshipsAggExp>;
+  rootRelationshipsById?: Maybe<RootRelationships>;
   roots?: Maybe<Array<Roots>>;
   rootsAggregate?: Maybe<RootsAggExp>;
   smartContractDeployments?: Maybe<Array<SmartContractDeployments>>;
   smartContractDeploymentsAggregate?: Maybe<SmartContractDeploymentsAggExp>;
   smartContracts?: Maybe<Array<SmartContracts>>;
   smartContractsAggregate?: Maybe<SmartContractsAggExp>;
+  socialStatuses?: Maybe<Array<SocialStatuses>>;
+  socialStatusesAggregate?: Maybe<SocialStatusesAggExp>;
+  socialStatusesById?: Maybe<SocialStatuses>;
   socialTypes?: Maybe<Array<SocialTypes>>;
   socialTypesAggregate?: Maybe<SocialTypesAggExp>;
   socials?: Maybe<Array<Socials>>;
@@ -2155,6 +2169,40 @@ export type QueryProfileTypesAggregateArgs = {
 };
 
 
+export type QueryRootRelationshipTypesArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<RootRelationshipTypesBoolExp>;
+};
+
+
+export type QueryRootRelationshipTypesAggregateArgs = {
+  filter_input?: InputMaybe<RootRelationshipTypesFilterInput>;
+};
+
+
+export type QueryRootRelationshipTypesByIdArgs = {
+  id: Scalars['String1']['input'];
+};
+
+
+export type QueryRootRelationshipsArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<RootRelationshipsBoolExp>;
+};
+
+
+export type QueryRootRelationshipsAggregateArgs = {
+  filter_input?: InputMaybe<RootRelationshipsFilterInput>;
+};
+
+
+export type QueryRootRelationshipsByIdArgs = {
+  id: Scalars['String1']['input'];
+};
+
+
 export type QueryRootsArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
@@ -2191,6 +2239,24 @@ export type QuerySmartContractsArgs = {
 
 export type QuerySmartContractsAggregateArgs = {
   filter_input?: InputMaybe<SmartContractsFilterInput>;
+};
+
+
+export type QuerySocialStatusesArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<SocialStatusesOrderBy>>;
+  where?: InputMaybe<SocialStatusesBoolExp>;
+};
+
+
+export type QuerySocialStatusesAggregateArgs = {
+  filter_input?: InputMaybe<SocialStatusesFilterInput>;
+};
+
+
+export type QuerySocialStatusesByIdArgs = {
+  id: Scalars['String1']['input'];
 };
 
 
@@ -2328,6 +2394,89 @@ export type RetryPolicyInput = {
   httpStatus?: InputMaybe<Array<Scalars['Int32']['input']>>;
   /** Number of retry times */
   times: Scalars['Int32']['input'];
+};
+
+export type RootRelationshipTypes = {
+  __typename?: 'RootRelationshipTypes';
+  definition: Scalars['String1']['output'];
+  id: Scalars['String1']['output'];
+  name: Scalars['String1']['output'];
+  rootRelationships?: Maybe<Array<RootRelationships>>;
+  rootRelationshipsAggregate: RootRelationshipsAggExp;
+  slug?: Maybe<Scalars['String1']['output']>;
+};
+
+
+export type RootRelationshipTypesRootRelationshipsArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<RootRelationshipsBoolExp>;
+};
+
+
+export type RootRelationshipTypesRootRelationshipsAggregateArgs = {
+  filter_input?: InputMaybe<RootRelationshipsFilterInput>;
+};
+
+export type RootRelationshipTypesAggExp = {
+  __typename?: 'RootRelationshipTypesAggExp';
+  _count: Scalars['Int']['output'];
+  definition: StringAggExp;
+  id: StringAggExp;
+  name: StringAggExp;
+  slug: StringAggExp;
+};
+
+export type RootRelationshipTypesBoolExp = {
+  _and?: InputMaybe<Array<RootRelationshipTypesBoolExp>>;
+  _not?: InputMaybe<RootRelationshipTypesBoolExp>;
+  _or?: InputMaybe<Array<RootRelationshipTypesBoolExp>>;
+  definition?: InputMaybe<StringBoolExp>;
+  id?: InputMaybe<StringBoolExp>;
+  name?: InputMaybe<StringBoolExp>;
+  rootRelationships?: InputMaybe<RootRelationshipsBoolExp>;
+  slug?: InputMaybe<StringBoolExp>;
+};
+
+export type RootRelationshipTypesFilterInput = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<RootRelationshipTypesBoolExp>;
+};
+
+export type RootRelationships = {
+  __typename?: 'RootRelationships';
+  childRootId: Scalars['String1']['output'];
+  id: Scalars['String1']['output'];
+  parentRootId: Scalars['String1']['output'];
+  relationshipTypeId?: Maybe<Scalars['String1']['output']>;
+  rootRelationshipType?: Maybe<RootRelationshipTypes>;
+};
+
+export type RootRelationshipsAggExp = {
+  __typename?: 'RootRelationshipsAggExp';
+  _count: Scalars['Int']['output'];
+  childRootId: StringAggExp;
+  id: StringAggExp;
+  parentRootId: StringAggExp;
+  relationshipTypeId: StringAggExp;
+};
+
+export type RootRelationshipsBoolExp = {
+  _and?: InputMaybe<Array<RootRelationshipsBoolExp>>;
+  _not?: InputMaybe<RootRelationshipsBoolExp>;
+  _or?: InputMaybe<Array<RootRelationshipsBoolExp>>;
+  childRootId?: InputMaybe<StringBoolExp>;
+  id?: InputMaybe<StringBoolExp>;
+  parentRootId?: InputMaybe<StringBoolExp>;
+  relationshipTypeId?: InputMaybe<StringBoolExp>;
+  rootRelationshipType?: InputMaybe<RootRelationshipTypesBoolExp>;
+};
+
+export type RootRelationshipsFilterInput = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<RootRelationshipsBoolExp>;
 };
 
 export type Roots = {
@@ -2500,12 +2649,12 @@ export type SmartContractDeployments = {
   assetDeployments?: Maybe<Array<AssetDeployments>>;
   assetDeploymentsAggregate: AssetDeploymentsAggExp;
   assetStandard?: Maybe<AssetStandards>;
+  assetStandardId?: Maybe<Scalars['String1']['output']>;
   deployedOnId?: Maybe<Scalars['String1']['output']>;
   deployedOnProduct?: Maybe<Products>;
   deploymentType?: Maybe<DeploymentTypes>;
   deploymentTypeId?: Maybe<Scalars['String1']['output']>;
   id: Scalars['String1']['output'];
-  isOfStandardId?: Maybe<Scalars['String1']['output']>;
   productDeployments?: Maybe<Array<ProductDeployments>>;
   productDeploymentsAggregate: ProductDeploymentsAggExp;
   smartContracts?: Maybe<Array<SmartContracts>>;
@@ -2554,10 +2703,10 @@ export type SmartContractDeploymentsSmartContractsAggregateArgs = {
 export type SmartContractDeploymentsAggExp = {
   __typename?: 'SmartContractDeploymentsAggExp';
   _count: Scalars['Int']['output'];
+  assetStandardId: StringAggExp;
   deployedOnId: StringAggExp;
   deploymentTypeId: StringAggExp;
   id: StringAggExp;
-  isOfStandardId: StringAggExp;
 };
 
 export type SmartContractDeploymentsBoolExp = {
@@ -2566,12 +2715,12 @@ export type SmartContractDeploymentsBoolExp = {
   _or?: InputMaybe<Array<SmartContractDeploymentsBoolExp>>;
   assetDeployments?: InputMaybe<AssetDeploymentsBoolExp>;
   assetStandard?: InputMaybe<AssetStandardsBoolExp>;
+  assetStandardId?: InputMaybe<StringBoolExp>;
   deployedOnId?: InputMaybe<StringBoolExp>;
   deployedOnProduct?: InputMaybe<ProductsBoolExp>;
   deploymentType?: InputMaybe<DeploymentTypesBoolExp>;
   deploymentTypeId?: InputMaybe<StringBoolExp>;
   id?: InputMaybe<StringBoolExp>;
-  isOfStandardId?: InputMaybe<StringBoolExp>;
   productDeployments?: InputMaybe<ProductDeploymentsBoolExp>;
   smartContracts?: InputMaybe<SmartContractsBoolExp>;
 };
@@ -2585,12 +2734,12 @@ export type SmartContractDeploymentsFilterInput = {
 
 export type SmartContractDeploymentsOrderBy = {
   assetStandard?: InputMaybe<AssetStandardsOrderBy>;
+  assetStandardId?: InputMaybe<OrderBy>;
   deployedOnId?: InputMaybe<OrderBy>;
   deployedOnProduct?: InputMaybe<ProductsOrderBy>;
   deploymentType?: InputMaybe<DeploymentTypesOrderBy>;
   deploymentTypeId?: InputMaybe<OrderBy>;
   id?: InputMaybe<OrderBy>;
-  isOfStandardId?: InputMaybe<OrderBy>;
 };
 
 export type SmartContracts = {
@@ -2639,6 +2788,63 @@ export type SmartContractsOrderBy = {
   id?: InputMaybe<OrderBy>;
   name?: InputMaybe<OrderBy>;
   smartContractDeployment?: InputMaybe<SmartContractDeploymentsOrderBy>;
+};
+
+export type SocialStatuses = {
+  __typename?: 'SocialStatuses';
+  definition: Scalars['String1']['output'];
+  id: Scalars['String1']['output'];
+  name: Scalars['String1']['output'];
+  slug: Scalars['String1']['output'];
+  socials?: Maybe<Array<Socials>>;
+  socialsAggregate: SocialsAggExp;
+};
+
+
+export type SocialStatusesSocialsArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<SocialsOrderBy>>;
+  where?: InputMaybe<SocialsBoolExp>;
+};
+
+
+export type SocialStatusesSocialsAggregateArgs = {
+  filter_input?: InputMaybe<SocialsFilterInput>;
+};
+
+export type SocialStatusesAggExp = {
+  __typename?: 'SocialStatusesAggExp';
+  _count: Scalars['Int']['output'];
+  definition: StringAggExp;
+  id: StringAggExp;
+  name: StringAggExp;
+  slug: StringAggExp;
+};
+
+export type SocialStatusesBoolExp = {
+  _and?: InputMaybe<Array<SocialStatusesBoolExp>>;
+  _not?: InputMaybe<SocialStatusesBoolExp>;
+  _or?: InputMaybe<Array<SocialStatusesBoolExp>>;
+  definition?: InputMaybe<StringBoolExp>;
+  id?: InputMaybe<StringBoolExp>;
+  name?: InputMaybe<StringBoolExp>;
+  slug?: InputMaybe<StringBoolExp>;
+  socials?: InputMaybe<SocialsBoolExp>;
+};
+
+export type SocialStatusesFilterInput = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<SocialStatusesOrderBy>>;
+  where?: InputMaybe<SocialStatusesBoolExp>;
+};
+
+export type SocialStatusesOrderBy = {
+  definition?: InputMaybe<OrderBy>;
+  id?: InputMaybe<OrderBy>;
+  name?: InputMaybe<OrderBy>;
+  slug?: InputMaybe<OrderBy>;
 };
 
 export type SocialTypes = {
@@ -2731,14 +2937,19 @@ export type SocialUrlsOrderBy = {
 
 export type Socials = {
   __typename?: 'Socials';
+  coreTableName?: Maybe<CoreTableNames>;
   id: Scalars['String1']['output'];
   /** The name or handle associated with the Profile's social media account on the specified platform. This should match the name displayed on the social media profile page. */
   name: Scalars['String1']['output'];
   root?: Maybe<Roots>;
   rootId: Scalars['String1']['output'];
+  rowId: Scalars['String1']['output'];
+  socialStatus?: Maybe<SocialStatuses>;
+  socialStatusId?: Maybe<Scalars['String1']['output']>;
   socialType?: Maybe<SocialTypes>;
   /** The specific social media platform the URL belongs to (e.g. Twitter, Facebook, Discord). Refer to the standardized list of social media platforms. */
   socialTypeId?: Maybe<Scalars['String1']['output']>;
+  tableId: Scalars['String1']['output'];
   urls?: Maybe<Array<SocialUrls>>;
 };
 
@@ -2756,7 +2967,10 @@ export type SocialsAggExp = {
   id: StringAggExp;
   name: StringAggExp;
   rootId: StringAggExp;
+  rowId: StringAggExp;
+  socialStatusId: StringAggExp;
   socialTypeId: StringAggExp;
+  tableId: StringAggExp;
 };
 
 export type SocialsBoolExp = {
@@ -2767,8 +2981,12 @@ export type SocialsBoolExp = {
   name?: InputMaybe<StringBoolExp>;
   root?: InputMaybe<RootsBoolExp>;
   rootId?: InputMaybe<StringBoolExp>;
+  rowId?: InputMaybe<StringBoolExp>;
+  socialStatus?: InputMaybe<SocialStatusesBoolExp>;
+  socialStatusId?: InputMaybe<StringBoolExp>;
   socialType?: InputMaybe<SocialTypesBoolExp>;
   socialTypeId?: InputMaybe<StringBoolExp>;
+  tableId?: InputMaybe<StringBoolExp>;
 };
 
 export type SocialsFilterInput = {
@@ -2779,12 +2997,17 @@ export type SocialsFilterInput = {
 };
 
 export type SocialsOrderBy = {
+  coreTableName?: InputMaybe<CoreTableNamesOrderBy>;
   id?: InputMaybe<OrderBy>;
   name?: InputMaybe<OrderBy>;
   root?: InputMaybe<RootsOrderBy>;
   rootId?: InputMaybe<OrderBy>;
+  rowId?: InputMaybe<OrderBy>;
+  socialStatus?: InputMaybe<SocialStatusesOrderBy>;
+  socialStatusId?: InputMaybe<OrderBy>;
   socialType?: InputMaybe<SocialTypesOrderBy>;
   socialTypeId?: InputMaybe<OrderBy>;
+  tableId?: InputMaybe<OrderBy>;
 };
 
 export type StringAggExp = {
@@ -2824,6 +3047,12 @@ export type Subscription = {
   allowedUrlTypes?: Maybe<Array<AllowedUrlTypes>>;
   allowedUrlTypesAggregate?: Maybe<AllowedUrlTypesAggExp>;
   allowedUrlTypesById?: Maybe<AllowedUrlTypes>;
+  rootRelationshipTypes?: Maybe<Array<RootRelationshipTypes>>;
+  rootRelationshipTypesAggregate?: Maybe<RootRelationshipTypesAggExp>;
+  rootRelationshipTypesById?: Maybe<RootRelationshipTypes>;
+  rootRelationships?: Maybe<Array<RootRelationships>>;
+  rootRelationshipsAggregate?: Maybe<RootRelationshipsAggExp>;
+  rootRelationshipsById?: Maybe<RootRelationships>;
   validationAggregate?: Maybe<ValidationAggExp>;
 };
 
@@ -2841,6 +3070,40 @@ export type SubscriptionAllowedUrlTypesAggregateArgs = {
 
 
 export type SubscriptionAllowedUrlTypesByIdArgs = {
+  id: Scalars['String1']['input'];
+};
+
+
+export type SubscriptionRootRelationshipTypesArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<RootRelationshipTypesBoolExp>;
+};
+
+
+export type SubscriptionRootRelationshipTypesAggregateArgs = {
+  filter_input?: InputMaybe<RootRelationshipTypesFilterInput>;
+};
+
+
+export type SubscriptionRootRelationshipTypesByIdArgs = {
+  id: Scalars['String1']['input'];
+};
+
+
+export type SubscriptionRootRelationshipsArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<RootRelationshipsBoolExp>;
+};
+
+
+export type SubscriptionRootRelationshipsAggregateArgs = {
+  filter_input?: InputMaybe<RootRelationshipsFilterInput>;
+};
+
+
+export type SubscriptionRootRelationshipsByIdArgs = {
   id: Scalars['String1']['input'];
 };
 
@@ -2954,7 +3217,7 @@ export type Tags = {
   __typename?: 'Tags';
   description: Scalars['String1']['output'];
   id: Scalars['String1']['output'];
-  is_archived?: Maybe<Scalars['String1']['output']>;
+  isArchived?: Maybe<Scalars['String1']['output']>;
   name: Scalars['String1']['output'];
   profileTags?: Maybe<Array<ProfileTags>>;
   profileTagsAggregate: ProfileTagsAggExp;
@@ -2981,7 +3244,7 @@ export type TagsAggExp = {
   _count: Scalars['Int']['output'];
   description: StringAggExp;
   id: StringAggExp;
-  is_archived: StringAggExp;
+  isArchived: StringAggExp;
   name: StringAggExp;
   slug: StringAggExp;
   tagTypeId: StringAggExp;
@@ -2993,7 +3256,7 @@ export type TagsBoolExp = {
   _or?: InputMaybe<Array<TagsBoolExp>>;
   description?: InputMaybe<StringBoolExp>;
   id?: InputMaybe<StringBoolExp>;
-  is_archived?: InputMaybe<StringBoolExp>;
+  isArchived?: InputMaybe<StringBoolExp>;
   name?: InputMaybe<StringBoolExp>;
   profileTags?: InputMaybe<ProfileTagsBoolExp>;
   slug?: InputMaybe<StringBoolExp>;
@@ -3011,7 +3274,7 @@ export type TagsFilterInput = {
 export type TagsOrderBy = {
   description?: InputMaybe<OrderBy>;
   id?: InputMaybe<OrderBy>;
-  is_archived?: InputMaybe<OrderBy>;
+  isArchived?: InputMaybe<OrderBy>;
   name?: InputMaybe<OrderBy>;
   slug?: InputMaybe<OrderBy>;
   tagType?: InputMaybe<TagTypesOrderBy>;
@@ -3384,7 +3647,7 @@ export type EntityFieldsFragmentFragment = { __typename?: 'Entities', name: stri
 
 export type ProfileFragmentFragment = { __typename?: 'ProfileInfos', profileSector?: { __typename?: 'ProfileSectors', name: string } | null, profileType?: { __typename?: 'ProfileTypes', name: string } | null, root?: { __typename?: 'Roots', assets?: Array<{ __typename?: 'Assets', ticker: string }> | null, profileTags?: Array<{ __typename?: 'ProfileTags', tag?: { __typename?: 'Tags', name: string, id: string } | null }> | null } | null, profileStatus?: { __typename?: 'ProfileStatuses', name: string, id: string } | null, mainProduct?: { __typename?: 'Roots', products?: Array<{ __typename?: 'Products', productType?: { __typename?: 'ProductTypes', name: string } | null }> | null } | null } & { ' $fragmentName'?: 'ProfileFragmentFragment' };
 
-export type ProductFieldsFragmentFragment = { __typename?: 'Products', rootId: string, productTypeId?: string | null, productStatusId?: string | null, name: string, launchDate?: string | null, isMainProduct: number, id: string, description: string, productType?: { __typename?: 'ProductTypes', name: string, id: string, definition: string } | null, productStatus?: { __typename?: 'ProductStatuses', name: string, id: string, definition: string } | null, productDeployments?: Array<{ __typename?: 'ProductDeployments', smartContractDeployment?: { __typename?: 'SmartContractDeployments', isOfStandardId?: string | null, id: string, deployedOnProduct?: { __typename?: 'Products', id: string, name: string, root?: { __typename?: 'Roots', slug: string } | null } | null, assetStandard?: { __typename?: 'AssetStandards', id: string } | null, deploymentType?: { __typename?: 'DeploymentTypes', name: string } | null, smartContracts?: Array<{ __typename?: 'SmartContracts', name: string, id: string, deploymentDate?: string | null, address: string, deploymentId?: string | null }> | null } | null }> | null, supportsProducts?: Array<{ __typename?: 'SupportsProducts', supportsProduct?: { __typename?: 'Products', name: string, id: string, root?: { __typename?: 'Roots', slug: string } | null } | null }> | null, supportedBy?: Array<{ __typename?: 'SupportsProducts', product?: { __typename?: 'Products', name: string, id: string, root?: { __typename?: 'Roots', slug: string } | null } | null }> | null, urls?: Array<{ __typename?: 'ProductUrls', url?: string | null, urlType?: { __typename?: 'UrlTypes', name: string, id: string, definition: string } | null }> | null, productAssetRelationships?: Array<{ __typename?: 'ProductAssetRelationships', assetId: string, asset?: { __typename?: 'Assets', name: string, id: string, assetType?: { __typename?: 'AssetTypes', name: string } | null, root?: { __typename?: 'Roots', slug: string } | null } | null, assetSupportType?: { __typename?: 'AssetSupportTypes', name: string } | null, product?: { __typename?: 'Products', name: string, id: string, description: string } | null }> | null } & { ' $fragmentName'?: 'ProductFieldsFragmentFragment' };
+export type ProductFieldsFragmentFragment = { __typename?: 'Products', rootId: string, productTypeId?: string | null, productStatusId?: string | null, name: string, launchDate?: string | null, isMainProduct: number, id: string, description: string, productType?: { __typename?: 'ProductTypes', name: string, id: string, definition: string } | null, productStatus?: { __typename?: 'ProductStatuses', name: string, id: string, definition: string } | null, productDeployments?: Array<{ __typename?: 'ProductDeployments', smartContractDeployment?: { __typename?: 'SmartContractDeployments', assetStandardId?: string | null, id: string, deployedOnProduct?: { __typename?: 'Products', id: string, name: string, root?: { __typename?: 'Roots', slug: string } | null } | null, assetStandard?: { __typename?: 'AssetStandards', id: string } | null, deploymentType?: { __typename?: 'DeploymentTypes', name: string } | null, smartContracts?: Array<{ __typename?: 'SmartContracts', name: string, id: string, deploymentDate?: string | null, address: string, deploymentId?: string | null }> | null } | null }> | null, supportsProducts?: Array<{ __typename?: 'SupportsProducts', supportsProduct?: { __typename?: 'Products', name: string, id: string, root?: { __typename?: 'Roots', slug: string } | null } | null }> | null, supportedBy?: Array<{ __typename?: 'SupportsProducts', product?: { __typename?: 'Products', name: string, id: string, root?: { __typename?: 'Roots', slug: string } | null } | null }> | null, urls?: Array<{ __typename?: 'ProductUrls', url?: string | null, urlType?: { __typename?: 'UrlTypes', name: string, id: string, definition: string } | null }> | null, productAssetRelationships?: Array<{ __typename?: 'ProductAssetRelationships', assetId: string, asset?: { __typename?: 'Assets', name: string, id: string, assetType?: { __typename?: 'AssetTypes', name: string } | null, root?: { __typename?: 'Roots', slug: string } | null } | null, assetSupportType?: { __typename?: 'AssetSupportTypes', name: string } | null, product?: { __typename?: 'Products', name: string, id: string, description: string } | null }> | null } & { ' $fragmentName'?: 'ProductFieldsFragmentFragment' };
 
 export type ProfileHeadingFragmentFragment = { __typename?: 'ProfileInfos', logo: string, name: string, urls?: Array<{ __typename?: 'ProfileInfoUrls', url?: string | null, urlType?: { __typename?: 'UrlTypes', name: string } | null }> | null, root?: { __typename?: 'Roots', socials?: Array<{ __typename?: 'Socials', name: string, socialType?: { __typename?: 'SocialTypes', name: string } | null, urls?: Array<{ __typename?: 'SocialUrls', url?: string | null }> | null }> | null } | null } & { ' $fragmentName'?: 'ProfileHeadingFragmentFragment' };
 
@@ -3706,7 +3969,7 @@ export const ProductFieldsFragmentFragmentDoc = new TypedDocumentString(`
         address
         deploymentId
       }
-      isOfStandardId
+      assetStandardId
       id
     }
   }
@@ -3997,7 +4260,7 @@ fragment ProductFieldsFragment on Products {
         address
         deploymentId
       }
-      isOfStandardId
+      assetStandardId
       id
     }
   }
@@ -4240,7 +4503,7 @@ fragment ProductFieldsFragment on Products {
         address
         deploymentId
       }
-      isOfStandardId
+      assetStandardId
       id
     }
   }
@@ -4418,7 +4681,7 @@ fragment ProductFieldsFragment on Products {
         address
         deploymentId
       }
-      isOfStandardId
+      assetStandardId
       id
     }
   }
@@ -4664,7 +4927,7 @@ fragment ProductFieldsFragment on Products {
         address
         deploymentId
       }
-      isOfStandardId
+      assetStandardId
       id
     }
   }

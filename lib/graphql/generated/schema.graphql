@@ -807,18 +807,18 @@ type ProductAssetRelationships {
   asset: Assets
   assetId: String1!
   assetSupportType: AssetSupportTypes
+  assetSupportTypeId: String1
   id: String1!
   product: Products
   productId: String1!
-  typeOfSupportId: String1
 }
 
 type ProductAssetRelationshipsAggExp {
   _count: Int!
   assetId: StringAggExp!
+  assetSupportTypeId: StringAggExp!
   id: StringAggExp!
   productId: StringAggExp!
-  typeOfSupportId: StringAggExp!
 }
 
 input ProductAssetRelationshipsBoolExp {
@@ -828,10 +828,10 @@ input ProductAssetRelationshipsBoolExp {
   asset: AssetsBoolExp
   assetId: StringBoolExp
   assetSupportType: AssetSupportTypesBoolExp
+  assetSupportTypeId: StringBoolExp
   id: StringBoolExp
   product: ProductsBoolExp
   productId: StringBoolExp
-  typeOfSupportId: StringBoolExp
 }
 
 input ProductAssetRelationshipsFilterInput {
@@ -845,10 +845,10 @@ input ProductAssetRelationshipsOrderBy {
   asset: AssetsOrderBy
   assetId: OrderBy
   assetSupportType: AssetSupportTypesOrderBy
+  assetSupportTypeId: OrderBy
   id: OrderBy
   product: ProductsOrderBy
   productId: OrderBy
-  typeOfSupportId: OrderBy
 }
 
 type ProductDeployments {
@@ -1139,6 +1139,8 @@ type ProfileInfos {
   A more detailed overview of the Profile, including its mission, target audience, and key features or offerings. Limit to 500 characters and avoid subjective claims.
   """
   descriptionLong: String1!
+  """Marketing-focused description intended for promotional contexts."""
+  descriptionMarketing: String1
   """
   Provide an objective overview of the Profile's primary purpose, product, or service. Avoid subjective claims, marketing language, or unnecessary technical jargon. Focus on clear, factual information. Limit to 200 characters.
   """
@@ -1187,6 +1189,7 @@ type ProfileInfos {
 type ProfileInfosAggExp {
   _count: Int!
   descriptionLong: StringAggExp!
+  descriptionMarketing: StringAggExp!
   descriptionShort: StringAggExp!
   foundingDate: DateAggExp!
   icon: StringAggExp!
@@ -1205,6 +1208,7 @@ input ProfileInfosBoolExp {
   _not: ProfileInfosBoolExp
   _or: [ProfileInfosBoolExp!]
   descriptionLong: StringBoolExp
+  descriptionMarketing: StringBoolExp
   descriptionShort: StringBoolExp
   foundingDate: DateBoolExp
   icon: StringBoolExp
@@ -1231,6 +1235,7 @@ input ProfileInfosFilterInput {
 
 input ProfileInfosOrderBy {
   descriptionLong: OrderBy
+  descriptionMarketing: OrderBy
   descriptionShort: OrderBy
   foundingDate: OrderBy
   icon: OrderBy
@@ -1499,12 +1504,21 @@ type Query {
   profileTagsAggregate(filter_input: ProfileTagsFilterInput): ProfileTagsAggExp
   profileTypes(limit: Int, offset: Int, order_by: [ProfileTypesOrderBy!], where: ProfileTypesBoolExp): [ProfileTypes!]
   profileTypesAggregate(filter_input: ProfileTypesFilterInput): ProfileTypesAggExp
+  rootRelationshipTypes(limit: Int, offset: Int, where: RootRelationshipTypesBoolExp): [RootRelationshipTypes!]
+  rootRelationshipTypesAggregate(filter_input: RootRelationshipTypesFilterInput): RootRelationshipTypesAggExp
+  rootRelationshipTypesById(id: String1!): RootRelationshipTypes
+  rootRelationships(limit: Int, offset: Int, where: RootRelationshipsBoolExp): [RootRelationships!]
+  rootRelationshipsAggregate(filter_input: RootRelationshipsFilterInput): RootRelationshipsAggExp
+  rootRelationshipsById(id: String1!): RootRelationships
   roots(limit: Int, offset: Int, order_by: [RootsOrderBy!], where: RootsBoolExp): [Roots!]
   rootsAggregate(filter_input: RootsFilterInput): RootsAggExp
   smartContractDeployments(limit: Int, offset: Int, order_by: [SmartContractDeploymentsOrderBy!], where: SmartContractDeploymentsBoolExp): [SmartContractDeployments!]
   smartContractDeploymentsAggregate(filter_input: SmartContractDeploymentsFilterInput): SmartContractDeploymentsAggExp
   smartContracts(limit: Int, offset: Int, order_by: [SmartContractsOrderBy!], where: SmartContractsBoolExp): [SmartContracts!]
   smartContractsAggregate(filter_input: SmartContractsFilterInput): SmartContractsAggExp
+  socialStatuses(limit: Int, offset: Int, order_by: [SocialStatusesOrderBy!], where: SocialStatusesBoolExp): [SocialStatuses!]
+  socialStatusesAggregate(filter_input: SocialStatusesFilterInput): SocialStatusesAggExp
+  socialStatusesById(id: String1!): SocialStatuses
   socialTypes(limit: Int, offset: Int, order_by: [SocialTypesOrderBy!], where: SocialTypesBoolExp): [SocialTypes!]
   socialTypesAggregate(filter_input: SocialTypesFilterInput): SocialTypesAggExp
   socials(limit: Int, offset: Int, order_by: [SocialsOrderBy!], where: SocialsBoolExp): [Socials!]
@@ -1540,6 +1554,73 @@ input RetryPolicyInput {
   httpStatus: [Int32!]
   """Number of retry times"""
   times: Int32!
+}
+
+type RootRelationshipTypes {
+  definition: String1!
+  id: String1!
+  name: String1!
+  rootRelationships(limit: Int, offset: Int, where: RootRelationshipsBoolExp): [RootRelationships!]
+  rootRelationshipsAggregate(filter_input: RootRelationshipsFilterInput): RootRelationshipsAggExp!
+  slug: String1
+}
+
+type RootRelationshipTypesAggExp {
+  _count: Int!
+  definition: StringAggExp!
+  id: StringAggExp!
+  name: StringAggExp!
+  slug: StringAggExp!
+}
+
+input RootRelationshipTypesBoolExp {
+  _and: [RootRelationshipTypesBoolExp!]
+  _not: RootRelationshipTypesBoolExp
+  _or: [RootRelationshipTypesBoolExp!]
+  definition: StringBoolExp
+  id: StringBoolExp
+  name: StringBoolExp
+  rootRelationships: RootRelationshipsBoolExp
+  slug: StringBoolExp
+}
+
+input RootRelationshipTypesFilterInput {
+  limit: Int
+  offset: Int
+  where: RootRelationshipTypesBoolExp
+}
+
+type RootRelationships {
+  childRootId: String1!
+  id: String1!
+  parentRootId: String1!
+  relationshipTypeId: String1
+  rootRelationshipType: RootRelationshipTypes
+}
+
+type RootRelationshipsAggExp {
+  _count: Int!
+  childRootId: StringAggExp!
+  id: StringAggExp!
+  parentRootId: StringAggExp!
+  relationshipTypeId: StringAggExp!
+}
+
+input RootRelationshipsBoolExp {
+  _and: [RootRelationshipsBoolExp!]
+  _not: RootRelationshipsBoolExp
+  _or: [RootRelationshipsBoolExp!]
+  childRootId: StringBoolExp
+  id: StringBoolExp
+  parentRootId: StringBoolExp
+  relationshipTypeId: StringBoolExp
+  rootRelationshipType: RootRelationshipTypesBoolExp
+}
+
+input RootRelationshipsFilterInput {
+  limit: Int
+  offset: Int
+  where: RootRelationshipsBoolExp
 }
 
 type Roots {
@@ -1605,12 +1686,12 @@ type SmartContractDeployments {
   assetDeployments(limit: Int, offset: Int, order_by: [AssetDeploymentsOrderBy!], where: assetDeploymentsBoolExp): [AssetDeployments!]
   assetDeploymentsAggregate(filter_input: AssetDeploymentsFilterInput): AssetDeploymentsAggExp!
   assetStandard: AssetStandards
+  assetStandardId: String1
   deployedOnId: String1
   deployedOnProduct: Products
   deploymentType: DeploymentTypes
   deploymentTypeId: String1
   id: String1!
-  isOfStandardId: String1
   productDeployments(limit: Int, offset: Int, order_by: [ProductDeploymentsOrderBy!], where: ProductDeploymentsBoolExp): [ProductDeployments!]
   productDeploymentsAggregate(filter_input: ProductDeploymentsFilterInput): ProductDeploymentsAggExp!
   smartContracts(limit: Int, offset: Int, order_by: [SmartContractsOrderBy!], where: SmartContractsBoolExp): [SmartContracts!]
@@ -1619,10 +1700,10 @@ type SmartContractDeployments {
 
 type SmartContractDeploymentsAggExp {
   _count: Int!
+  assetStandardId: StringAggExp!
   deployedOnId: StringAggExp!
   deploymentTypeId: StringAggExp!
   id: StringAggExp!
-  isOfStandardId: StringAggExp!
 }
 
 input SmartContractDeploymentsBoolExp {
@@ -1631,12 +1712,12 @@ input SmartContractDeploymentsBoolExp {
   _or: [SmartContractDeploymentsBoolExp!]
   assetDeployments: assetDeploymentsBoolExp
   assetStandard: AssetStandardsBoolExp
+  assetStandardId: StringBoolExp
   deployedOnId: StringBoolExp
   deployedOnProduct: ProductsBoolExp
   deploymentType: DeploymentTypesBoolExp
   deploymentTypeId: StringBoolExp
   id: StringBoolExp
-  isOfStandardId: StringBoolExp
   productDeployments: ProductDeploymentsBoolExp
   smartContracts: SmartContractsBoolExp
 }
@@ -1650,12 +1731,12 @@ input SmartContractDeploymentsFilterInput {
 
 input SmartContractDeploymentsOrderBy {
   assetStandard: AssetStandardsOrderBy
+  assetStandardId: OrderBy
   deployedOnId: OrderBy
   deployedOnProduct: ProductsOrderBy
   deploymentType: DeploymentTypesOrderBy
   deploymentTypeId: OrderBy
   id: OrderBy
-  isOfStandardId: OrderBy
 }
 
 type SmartContracts {
@@ -1702,6 +1783,48 @@ input SmartContractsOrderBy {
   id: OrderBy
   name: OrderBy
   smartContractDeployment: SmartContractDeploymentsOrderBy
+}
+
+type SocialStatuses {
+  definition: String1!
+  id: String1!
+  name: String1!
+  slug: String1!
+  socials(limit: Int, offset: Int, order_by: [SocialsOrderBy!], where: SocialsBoolExp): [Socials!]
+  socialsAggregate(filter_input: SocialsFilterInput): SocialsAggExp!
+}
+
+type SocialStatusesAggExp {
+  _count: Int!
+  definition: StringAggExp!
+  id: StringAggExp!
+  name: StringAggExp!
+  slug: StringAggExp!
+}
+
+input SocialStatusesBoolExp {
+  _and: [SocialStatusesBoolExp!]
+  _not: SocialStatusesBoolExp
+  _or: [SocialStatusesBoolExp!]
+  definition: StringBoolExp
+  id: StringBoolExp
+  name: StringBoolExp
+  slug: StringBoolExp
+  socials: SocialsBoolExp
+}
+
+input SocialStatusesFilterInput {
+  limit: Int
+  offset: Int
+  order_by: [SocialStatusesOrderBy!]
+  where: SocialStatusesBoolExp
+}
+
+input SocialStatusesOrderBy {
+  definition: OrderBy
+  id: OrderBy
+  name: OrderBy
+  slug: OrderBy
 }
 
 type SocialTypes {
@@ -1777,6 +1900,7 @@ input SocialUrlsOrderBy {
 }
 
 type Socials {
+  coreTableName: CoreTableNames
   id: String1!
   """
   The name or handle associated with the Profile's social media account on the specified platform. This should match the name displayed on the social media profile page.
@@ -1784,11 +1908,15 @@ type Socials {
   name: String1!
   root: Roots
   rootId: String1!
+  rowId: String1!
+  socialStatus: SocialStatuses
+  socialStatusId: String1
   socialType: SocialTypes
   """
   The specific social media platform the URL belongs to (e.g. Twitter, Facebook, Discord). Refer to the standardized list of social media platforms.
   """
   socialTypeId: String1
+  tableId: String1!
   urls(limit: Int, offset: Int, order_by: [SocialUrlsOrderBy!], where: SocialUrlsBoolExp): [SocialUrls!]
 }
 
@@ -1797,7 +1925,10 @@ type SocialsAggExp {
   id: StringAggExp!
   name: StringAggExp!
   rootId: StringAggExp!
+  rowId: StringAggExp!
+  socialStatusId: StringAggExp!
   socialTypeId: StringAggExp!
+  tableId: StringAggExp!
 }
 
 input SocialsBoolExp {
@@ -1808,8 +1939,12 @@ input SocialsBoolExp {
   name: StringBoolExp
   root: RootsBoolExp
   rootId: StringBoolExp
+  rowId: StringBoolExp
+  socialStatus: SocialStatusesBoolExp
+  socialStatusId: StringBoolExp
   socialType: SocialTypesBoolExp
   socialTypeId: StringBoolExp
+  tableId: StringBoolExp
 }
 
 input SocialsFilterInput {
@@ -1820,12 +1955,17 @@ input SocialsFilterInput {
 }
 
 input SocialsOrderBy {
+  coreTableName: CoreTableNamesOrderBy
   id: OrderBy
   name: OrderBy
   root: RootsOrderBy
   rootId: OrderBy
+  rowId: OrderBy
+  socialStatus: SocialStatusesOrderBy
+  socialStatusId: OrderBy
   socialType: SocialTypesOrderBy
   socialTypeId: OrderBy
+  tableId: OrderBy
 }
 
 scalar String1
@@ -1866,6 +2006,12 @@ type Subscription {
   allowedUrlTypes(limit: Int, offset: Int, where: AllowedUrlTypesBoolExp): [AllowedUrlTypes!]
   allowedUrlTypesAggregate(filter_input: AllowedUrlTypesFilterInput): AllowedUrlTypesAggExp
   allowedUrlTypesById(id: String1!): AllowedUrlTypes
+  rootRelationshipTypes(limit: Int, offset: Int, where: RootRelationshipTypesBoolExp): [RootRelationshipTypes!]
+  rootRelationshipTypesAggregate(filter_input: RootRelationshipTypesFilterInput): RootRelationshipTypesAggExp
+  rootRelationshipTypesById(id: String1!): RootRelationshipTypes
+  rootRelationships(limit: Int, offset: Int, where: RootRelationshipsBoolExp): [RootRelationships!]
+  rootRelationshipsAggregate(filter_input: RootRelationshipsFilterInput): RootRelationshipsAggExp
+  rootRelationshipsById(id: String1!): RootRelationships
   validationAggregate(filter_input: validationFilterInput): validationAggExp
 }
 
@@ -1956,7 +2102,7 @@ input TagTypesOrderBy {
 type Tags {
   description: String1!
   id: String1!
-  is_archived: String1
+  isArchived: String1
   name: String1!
   profileTags(limit: Int, offset: Int, order_by: [ProfileTagsOrderBy!], where: ProfileTagsBoolExp): [ProfileTags!]
   profileTagsAggregate(filter_input: ProfileTagsFilterInput): ProfileTagsAggExp!
@@ -1969,7 +2115,7 @@ type TagsAggExp {
   _count: Int!
   description: StringAggExp!
   id: StringAggExp!
-  is_archived: StringAggExp!
+  isArchived: StringAggExp!
   name: StringAggExp!
   slug: StringAggExp!
   tagTypeId: StringAggExp!
@@ -1981,7 +2127,7 @@ input TagsBoolExp {
   _or: [TagsBoolExp!]
   description: StringBoolExp
   id: StringBoolExp
-  is_archived: StringBoolExp
+  isArchived: StringBoolExp
   name: StringBoolExp
   profileTags: ProfileTagsBoolExp
   slug: StringBoolExp
@@ -1999,7 +2145,7 @@ input TagsFilterInput {
 input TagsOrderBy {
   description: OrderBy
   id: OrderBy
-  is_archived: OrderBy
+  isArchived: OrderBy
   name: OrderBy
   slug: OrderBy
   tagType: TagTypesOrderBy

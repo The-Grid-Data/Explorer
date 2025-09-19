@@ -1,21 +1,21 @@
 'use client';
 
-import { paths } from '@/lib/routes/paths';
-import { ProfileDataCard, ProfileDataCardProps } from './profile-data-card';
-import { Package } from 'lucide-react';
-import { DeepLinkBadge } from '@/components/ui/deep-link-badge';
-import { InlineDataPoint } from './inline-data-point';
-import Link from 'next/link';
-import { CardTitle } from '@/components/ui/card';
-import { Separator } from '@/components/ui/separator';
 import {
   extractUrls,
   UrlTypeIconLinks
 } from '@/components/containers/url-type-icon/url-type-icon-list';
 import { Badge } from '@/components/ui/badge';
-import { ContractAddressesBadge } from './contract-address-badge';
-import { FragmentType, graphql, useFragment } from '@/lib/graphql/generated';
+import { CardTitle } from '@/components/ui/card';
 import { CollapsibleList } from '@/components/ui/collapsible-list';
+import { DeepLinkBadge } from '@/components/ui/deep-link-badge';
+import { Separator } from '@/components/ui/separator';
+import { FragmentType, graphql, useFragment } from '@/lib/graphql/generated';
+import { paths } from '@/lib/routes/paths';
+import { Package } from 'lucide-react';
+import Link from 'next/link';
+import { ContractAddressesBadge } from './contract-address-badge';
+import { InlineDataPoint } from './inline-data-point';
+import { ProfileDataCard, ProfileDataCardProps } from './profile-data-card';
 
 export const ProductFragment = graphql(`
   fragment ProductFieldsFragment on Products {
@@ -59,7 +59,7 @@ export const ProductFragment = graphql(`
           address
           deploymentId
         }
-        isOfStandardId
+        assetStandardId
         id
       }
     }

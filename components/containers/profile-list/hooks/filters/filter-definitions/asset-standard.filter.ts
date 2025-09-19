@@ -1,9 +1,9 @@
 import { execute } from '@/lib/graphql/execute';
-import { useFilter, MultiSelectFilterProps } from '../../use-filter';
-import { validateAndFormatOptions, parseAsId } from '../utils';
-import { FiltersStore } from '../../use-profile-filters';
-import { useQueryState, parseAsArrayOf } from 'nuqs';
 import { graphql } from '@/lib/graphql/generated';
+import { parseAsArrayOf, useQueryState } from 'nuqs';
+import { useFilter } from '../../use-filter';
+import { FiltersStore } from '../../use-profile-filters';
+import { parseAsId, validateAndFormatOptions } from '../utils';
 
 const filterId = 'assetStandard';
 
@@ -40,7 +40,7 @@ export const useAssetStandardFilter = (filterStore: FiltersStore) => {
         assets: {
           assetDeployments: {
             smartContractDeployment: {
-              isOfStandardId: { _in: value }
+              assetStandardId: { _in: value }
             }
           }
         }
