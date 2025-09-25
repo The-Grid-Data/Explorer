@@ -11,6 +11,7 @@ import {
 import { FragmentType, graphql, useFragment } from '@/lib/graphql/generated';
 import { ProfileDetailQuery } from '../profile-detail';
 import { PoweredBy } from './powered-by';
+import { ClaimedBadge } from '@/components/claim-badge';
 
 export const ProfileHeadingFragment = graphql(`
   fragment ProfileHeadingFragment on ProfileInfos {
@@ -40,9 +41,11 @@ export type ProfileCardCardProps = {
   profile: FragmentType<typeof ProfileHeadingFragment>;
   queryVariables?: any;
   query: string;
+  isClaimed?: boolean;
 };
 
 export const ProfileHeading = ({
+  isClaimed,
   profile,
   queryVariables,
   query
@@ -69,6 +72,7 @@ export const ProfileHeading = ({
         <div className="flex flex-col gap-4 md:gap-2">
           <div className="flex flex-col gap-2 md:flex-row md:items-center md:gap-6">
             <h3 className="text-5xl font-bold">{profileData?.name}</h3>
+            {!isClaimed ? null : <ClaimedBadge />}
             <UrlTypeIconLinks
               urls={[
                 extractUrls(profileData.urls),
