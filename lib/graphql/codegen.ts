@@ -64,6 +64,10 @@ const codegenConfig: CodegenConfig = {
             input: 'number',
             output: 'number'
           },
+          Enum: {
+            input: 'string',
+            output: 'string'
+          },
           Json: {
             input: 'any',
             output: 'any'

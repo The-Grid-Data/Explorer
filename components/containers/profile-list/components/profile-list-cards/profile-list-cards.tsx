@@ -1,20 +1,20 @@
 'use client';
-import { useInView } from 'react-intersection-observer';
-import { useEffect } from 'react';
-import { ProfileCard, ProfileCardSkeleton } from '../profile-card';
-import { useDebounceValue } from 'usehooks-ts';
+import { Progress } from '@/components/ui/progress';
+import { execute } from '@/lib/graphql/execute';
+import { graphql } from '@/lib/graphql/generated';
 import { useProfilesQueryContext } from '@/providers/profiles-query-provider';
 import { useProfileSortingContext } from '@/providers/sorting-provider';
 import { useInfiniteQuery } from '@tanstack/react-query';
-import { execute } from '@/lib/graphql/execute';
-import { graphql } from '@/lib/graphql/generated';
-import { Progress } from '@/components/ui/progress';
+import { useEffect } from 'react';
+import { useInView } from 'react-intersection-observer';
+import { useDebounceValue } from 'usehooks-ts';
+import { ProfileCard, ProfileCardSkeleton } from '../profile-card';
 
 const defaultLimit = 10;
 
 export const SearchProfilesQuery = graphql(`
   query SearchProfiles(
-    $order_by: [ProfileInfosOrderBy!]
+    $order_by: [ProfileInfosOrderByExp!]
     $where: ProfileInfosBoolExp
     $limit: Int
     $offset: Int
@@ -57,13 +57,13 @@ export const SearchProfilesByRankingQuery = graphql(`
 export const ProfileListCards = () => {
   const query = useProfilesQueryContext();
   const { sorting } = useProfileSortingContext();
-  
+
   // Check if we're sorting by connectionScore to determine which query to use
   const isConnectionScoreSort = sorting.sortBy === 'connectionScore';
 
   const { ref: fetchNextPageTriggerRef, inView } = useInView({ threshold: 1 });
   const limit = query?.limit ?? defaultLimit;
-  
+
   // Debounce the query to avoid excessive requests during rapid filter changes
   const [debouncedQuery] = useDebounceValue(query, 300);
 
@@ -80,8 +80,8 @@ export const ProfileListCards = () => {
       const lastOffset = ((lastPageParam as any)?.offset as number) ?? 0;
 
       // Check the appropriate data structure based on query type
-      const hasData = isConnectionScoreSort 
-        ? (lastPage as any).theGridRankings?.length 
+      const hasData = isConnectionScoreSort
+        ? (lastPage as any).theGridRankings?.length
         : (lastPage as any).profileInfos?.length;
 
       if (hasData) {
