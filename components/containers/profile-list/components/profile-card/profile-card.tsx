@@ -21,6 +21,7 @@ import { format } from 'date-fns';
 import { graphql, FragmentType, useFragment } from '@/lib/graphql/generated';
 import { ProfileTags } from '@/components/containers/profile-detail/components/profile-tags';
 import { ProductBadge } from './product-badge';
+import { ClaimedBadge } from '@/components/claim-badge';
 
 export const ProfileCardFragment = graphql(`
   fragment ProfileCardFragment on ProfileInfos {
@@ -139,10 +140,11 @@ export const ProfileCard = ({ profile: profileData }: ProfileCardCardProps) => {
                 <h3 className="w-fit text-2xl font-bold hover:underline">
                   {profile.name}
                 </h3>
-                {profile.root?.profileTags?.find(
-                  tag => tag.tag?.id === siteConfig.verifiedTagId
-                ) && <Badge className="w-fit">Claimed</Badge>}
               </Link>
+
+              {profile.root?.profileTags?.find(
+                tag => tag.tag?.id === siteConfig.verifiedTagId
+              ) && <ClaimedBadge />}
             </div>
             <div className="flex flex-col gap-4 lg:mr-[-16px] lg:flex-row">
               <div className="w-fit flex-1">

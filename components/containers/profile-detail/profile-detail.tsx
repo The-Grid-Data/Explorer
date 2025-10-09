@@ -70,6 +70,7 @@ export const ProfileDetail = ({ profileId }: ProfileDetailProps) => {
         query={ProfileDetailQuery.toString()}
         queryVariables={query}
         profile={profile}
+        isClaimed={hasClaimedTag(profile as any)}
       />
 
       <section className="space-y-3">
@@ -128,3 +129,15 @@ export const ProfileDetail = ({ profileId }: ProfileDetailProps) => {
     </div>
   );
 };
+
+type Tag = { name: string; id: string };
+function hasClaimedTag(profile?: { root: { profileTags: { tag: Tag }[] } }) {
+  if (!profile?.root?.profileTags) return false;
+
+  const isClaimed = profile?.root?.profileTags?.some(
+    ({ tag }) => tag.id === '7'
+  );
+
+  if (isClaimed) return true;
+  return false;
+}
