@@ -32,8 +32,8 @@ export const SearchProfilesQuery = graphql(`
 
 export const SearchProfilesByRankingQuery = graphql(`
   query SearchProfilesByRanking(
-    $order_by: [theGridRankingOrderBy!]
-    $where: theGridRankingBoolExp
+    $order_by: [TheGridRankingOrderBy!]
+    $where: TheGridRankingBoolExp
     $limit: Int
     $offset: Int
   ) {

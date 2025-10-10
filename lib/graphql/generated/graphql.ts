@@ -4597,6 +4597,57 @@ export type TagsOrderByExp = {
   tagTypeId?: InputMaybe<OrderBy>;
 };
 
+export type TheGridRanking = {
+  __typename?: 'TheGridRanking';
+  /** The Connection score (0-100) of the profile, supporting decimal values for more precision */
+  connectionScore: Scalars['String']['output'];
+  /** The root ID of the profile */
+  rootId: Scalars['String']['output'];
+  roots?: Maybe<Array<Roots>>;
+  theGridRankingsAggregate: RootsAggExp;
+};
+
+
+export type TheGridRankingRootsArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<RootsOrderByExp>>;
+  where?: InputMaybe<RootsBoolExp>;
+};
+
+
+export type TheGridRankingTheGridRankingsAggregateArgs = {
+  filter_input?: InputMaybe<RootsFilterInput>;
+};
+
+export type TheGridRankingAggExp = {
+  __typename?: 'TheGridRankingAggExp';
+  _count: Scalars['Int']['output'];
+  connectionScore: StringAggExp;
+  rootId: StringAggExp;
+};
+
+export type TheGridRankingBoolExp = {
+  _and?: InputMaybe<Array<TheGridRankingBoolExp>>;
+  _not?: InputMaybe<TheGridRankingBoolExp>;
+  _or?: InputMaybe<Array<TheGridRankingBoolExp>>;
+  connectionScore?: InputMaybe<StringBoolExp>;
+  rootId?: InputMaybe<StringBoolExp>;
+  roots?: InputMaybe<RootsBoolExp>;
+};
+
+export type TheGridRankingFilterInput = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<TheGridRankingOrderBy>>;
+  where?: InputMaybe<TheGridRankingBoolExp>;
+};
+
+export type TheGridRankingOrderBy = {
+  connectionScore?: InputMaybe<OrderBy>;
+  rootId?: InputMaybe<OrderBy>;
+};
+
 export type UrlTypes = {
   __typename?: 'UrlTypes';
   allowedUrlTypes?: Maybe<Array<AllowedUrlTypes>>;
@@ -4719,57 +4770,6 @@ export type UrlsOrderByExp = {
   url?: InputMaybe<OrderBy>;
   urlType?: InputMaybe<UrlTypesOrderByExp>;
   urlTypeId?: InputMaybe<OrderBy>;
-};
-
-export type TheGridRanking = {
-  __typename?: 'theGridRanking';
-  /** The Connection score (0-100) of the profile, supporting decimal values for more precision */
-  connectionScore: Scalars['String']['output'];
-  /** The root ID of the profile */
-  rootId: Scalars['String']['output'];
-  roots?: Maybe<Array<Roots>>;
-  theGridRankingsAggregate: RootsAggExp;
-};
-
-
-export type TheGridRankingRootsArgs = {
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<RootsOrderByExp>>;
-  where?: InputMaybe<RootsBoolExp>;
-};
-
-
-export type TheGridRankingTheGridRankingsAggregateArgs = {
-  filter_input?: InputMaybe<RootsFilterInput>;
-};
-
-export type TheGridRankingAggExp = {
-  __typename?: 'theGridRankingAggExp';
-  _count: Scalars['Int']['output'];
-  connectionScore: StringAggExp;
-  rootId: StringAggExp;
-};
-
-export type TheGridRankingBoolExp = {
-  _and?: InputMaybe<Array<TheGridRankingBoolExp>>;
-  _not?: InputMaybe<TheGridRankingBoolExp>;
-  _or?: InputMaybe<Array<TheGridRankingBoolExp>>;
-  connectionScore?: InputMaybe<StringBoolExp>;
-  rootId?: InputMaybe<StringBoolExp>;
-  roots?: InputMaybe<RootsBoolExp>;
-};
-
-export type TheGridRankingFilterInput = {
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<TheGridRankingOrderBy>>;
-  where?: InputMaybe<TheGridRankingBoolExp>;
-};
-
-export type TheGridRankingOrderBy = {
-  connectionScore?: InputMaybe<OrderBy>;
-  rootId?: InputMaybe<OrderBy>;
 };
 
 /**
@@ -4916,7 +4916,7 @@ export type GetProfileDataQuery = { __typename?: 'Query', profileInfos?: Array<(
     & { ' $fragmentRefs'?: { 'ProfileFragmentFragment': ProfileFragmentFragment;'ProfileHeadingFragmentFragment': ProfileHeadingFragmentFragment } }
   )> | null };
 
-export type ProfileCardFragmentFragment = { __typename?: 'ProfileInfos', name: string, logo: string, id: string, tagLine: string, descriptionShort: string, profileTypeId?: string | null, profileStatusId?: string | null, profileSectorId?: string | null, foundingDate?: string | null, profileSector?: { __typename?: 'ProfileSectors', name: string, id: string, definition: string } | null, profileStatus?: { __typename?: 'ProfileStatuses', name: string, id: string, definition: string } | null, profileType?: { __typename?: 'ProfileTypes', name: string, id: string, definition: string } | null, urls?: Array<{ __typename?: 'ProfileInfoUrls', url: string, urlType?: { __typename?: 'UrlTypes', name: string, id: string, definition: string } | null }> | null, mainProduct?: { __typename?: 'Roots', products?: Array<{ __typename?: 'Products', name: string, productType?: { __typename?: 'ProductTypes', name: string } | null }> | null } | null, root?: { __typename?: 'Roots', urlMain: string, slug: string, theGridRanking?: Array<{ __typename?: 'theGridRanking', connectionScore: string, rootId: string }> | null, assets?: Array<(
+export type ProfileCardFragmentFragment = { __typename?: 'ProfileInfos', name: string, logo: string, id: string, tagLine: string, descriptionShort: string, profileTypeId?: string | null, profileStatusId?: string | null, profileSectorId?: string | null, foundingDate?: string | null, profileSector?: { __typename?: 'ProfileSectors', name: string, id: string, definition: string } | null, profileStatus?: { __typename?: 'ProfileStatuses', name: string, id: string, definition: string } | null, profileType?: { __typename?: 'ProfileTypes', name: string, id: string, definition: string } | null, urls?: Array<{ __typename?: 'ProfileInfoUrls', url: string, urlType?: { __typename?: 'UrlTypes', name: string, id: string, definition: string } | null }> | null, mainProduct?: { __typename?: 'Roots', products?: Array<{ __typename?: 'Products', name: string, productType?: { __typename?: 'ProductTypes', name: string } | null }> | null } | null, root?: { __typename?: 'Roots', urlMain: string, slug: string, theGridRanking?: Array<{ __typename?: 'TheGridRanking', connectionScore: string, rootId: string }> | null, assets?: Array<(
       { __typename?: 'Assets', ticker: string, name: string, id: string }
       & { ' $fragmentRefs'?: { 'AssetFieldsFragmentFragment': AssetFieldsFragmentFragment } }
     )> | null, socials?: Array<{ __typename?: 'Socials', name: string, socialType?: { __typename?: 'SocialTypes', name: string } | null, urls?: Array<{ __typename?: 'SocialUrls', url: string }> | null }> | null, profileTags?: Array<{ __typename?: 'ProfileTags', tag?: { __typename?: 'Tags', name: string, id: string } | null }> | null, products?: Array<(
@@ -4945,7 +4945,7 @@ export type SearchProfilesByRankingQueryVariables = Exact<{
 }>;
 
 
-export type SearchProfilesByRankingQuery = { __typename?: 'Query', theGridRankings?: Array<{ __typename?: 'theGridRanking', connectionScore: string, rootId: string, roots?: Array<{ __typename?: 'Roots', profileInfos?: Array<(
+export type SearchProfilesByRankingQuery = { __typename?: 'Query', theGridRankings?: Array<{ __typename?: 'TheGridRanking', connectionScore: string, rootId: string, roots?: Array<{ __typename?: 'Roots', profileInfos?: Array<(
         { __typename?: 'ProfileInfos' }
         & { ' $fragmentRefs'?: { 'ProfileCardFragmentFragment': ProfileCardFragmentFragment } }
       )> | null }> | null }> | null };
@@ -6058,7 +6058,7 @@ fragment ProfileCardFragment on ProfileInfos {
   }
 }`) as unknown as TypedDocumentString<SearchProfilesQuery, SearchProfilesQueryVariables>;
 export const SearchProfilesByRankingDocument = new TypedDocumentString(`
-    query SearchProfilesByRanking($order_by: [theGridRankingOrderBy!], $where: theGridRankingBoolExp, $limit: Int, $offset: Int) {
+    query SearchProfilesByRanking($order_by: [TheGridRankingOrderBy!], $where: TheGridRankingBoolExp, $limit: Int, $offset: Int) {
   theGridRankings(
     limit: $limit
     offset: $offset

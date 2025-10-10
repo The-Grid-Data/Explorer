@@ -1731,7 +1731,7 @@ type Query {
   tags(limit: Int, offset: Int, order_by: [TagsOrderByExp!], where: TagsBoolExp): [Tags!]
   tagsAggregate(filter_input: TagsFilterInput): TagsAggExp
   tagsById(id: String!): Tags
-  theGridRankings(limit: Int, offset: Int, order_by: [theGridRankingOrderBy!], where: theGridRankingBoolExp): [theGridRanking!]
+  theGridRankings(limit: Int, offset: Int, order_by: [TheGridRankingOrderBy!], where: TheGridRankingBoolExp): [TheGridRanking!]
   urlTypes(limit: Int, offset: Int, order_by: [UrlTypesOrderByExp!], where: UrlTypesBoolExp): [UrlTypes!]
   urlTypesAggregate(filter_input: UrlTypesFilterInput): UrlTypesAggExp
   urlTypesById(id: String!): UrlTypes
@@ -1853,7 +1853,7 @@ type Roots {
   assetsAggregate(filter_input: AssetsFilterInput): AssetsAggExp!
   childRootRelationships(limit: Int, offset: Int, order_by: [RootRelationshipsOrderByExp!], where: RootRelationshipsBoolExp): [RootRelationships!]
   childRootRelationshipsAggregate(filter_input: RootRelationshipsFilterInput): RootRelationshipsAggExp!
-  connectionScoresAggregate(filter_input: theGridRankingFilterInput): theGridRankingAggExp!
+  connectionScoresAggregate(filter_input: TheGridRankingFilterInput): TheGridRankingAggExp!
   entities(limit: Int, offset: Int, order_by: [EntitiesOrderByExp!], where: EntitiesBoolExp): [Entities!]
   entitiesAggregate(filter_input: EntitiesFilterInput): EntitiesAggExp!
   id: String!
@@ -1868,7 +1868,7 @@ type Roots {
   slug: String!
   socials(limit: Int, offset: Int, order_by: [SocialsOrderByExp!], where: SocialsBoolExp): [Socials!]
   socialsAggregate(filter_input: SocialsFilterInput): SocialsAggExp!
-  theGridRanking(limit: Int, offset: Int, order_by: [theGridRankingOrderBy!], where: theGridRankingBoolExp): [theGridRanking!]
+  theGridRanking(limit: Int, offset: Int, order_by: [TheGridRankingOrderBy!], where: TheGridRankingBoolExp): [TheGridRanking!]
   urlMain: String!
 }
 
@@ -1893,7 +1893,7 @@ input RootsBoolExp {
   profileTags: ProfileTagsBoolExp
   slug: StringBoolExp
   socials: SocialsBoolExp
-  theGridRanking: theGridRankingBoolExp
+  theGridRanking: TheGridRankingBoolExp
   urlMain: StringBoolExp
 }
 
@@ -2494,6 +2494,44 @@ input TagsOrderByExp {
   tagTypeId: OrderBy
 }
 
+type TheGridRanking {
+  """
+  The Connection score (0-100) of the profile, supporting decimal values for more precision
+  """
+  connectionScore: String!
+  """The root ID of the profile"""
+  rootId: String!
+  roots(limit: Int, offset: Int, order_by: [RootsOrderByExp!], where: RootsBoolExp): [Roots!]
+  theGridRankingsAggregate(filter_input: RootsFilterInput): RootsAggExp!
+}
+
+type TheGridRankingAggExp {
+  _count: Int!
+  connectionScore: StringAggExp!
+  rootId: StringAggExp!
+}
+
+input TheGridRankingBoolExp {
+  _and: [TheGridRankingBoolExp!]
+  _not: TheGridRankingBoolExp
+  _or: [TheGridRankingBoolExp!]
+  connectionScore: StringBoolExp
+  rootId: StringBoolExp
+  roots: RootsBoolExp
+}
+
+input TheGridRankingFilterInput {
+  limit: Int
+  offset: Int
+  order_by: [TheGridRankingOrderBy!]
+  where: TheGridRankingBoolExp
+}
+
+input TheGridRankingOrderBy {
+  connectionScore: OrderBy
+  rootId: OrderBy
+}
+
 type UrlTypes {
   allowedUrlTypes(limit: Int, offset: Int, order_by: [AllowedUrlTypesOrderByExp!], where: AllowedUrlTypesBoolExp): [AllowedUrlTypes!]
   allowedUrlTypesAggregate(filter_input: AllowedUrlTypesFilterInput): AllowedUrlTypesAggExp!
@@ -2586,42 +2624,4 @@ input UrlsOrderByExp {
   url: OrderBy
   urlType: UrlTypesOrderByExp
   urlTypeId: OrderBy
-}
-
-type theGridRanking {
-  """
-  The Connection score (0-100) of the profile, supporting decimal values for more precision
-  """
-  connectionScore: String!
-  """The root ID of the profile"""
-  rootId: String!
-  roots(limit: Int, offset: Int, order_by: [RootsOrderByExp!], where: RootsBoolExp): [Roots!]
-  theGridRankingsAggregate(filter_input: RootsFilterInput): RootsAggExp!
-}
-
-type theGridRankingAggExp {
-  _count: Int!
-  connectionScore: StringAggExp!
-  rootId: StringAggExp!
-}
-
-input theGridRankingBoolExp {
-  _and: [theGridRankingBoolExp!]
-  _not: theGridRankingBoolExp
-  _or: [theGridRankingBoolExp!]
-  connectionScore: StringBoolExp
-  rootId: StringBoolExp
-  roots: RootsBoolExp
-}
-
-input theGridRankingFilterInput {
-  limit: Int
-  offset: Int
-  order_by: [theGridRankingOrderBy!]
-  where: theGridRankingBoolExp
-}
-
-input theGridRankingOrderBy {
-  connectionScore: OrderBy
-  rootId: OrderBy
 }
