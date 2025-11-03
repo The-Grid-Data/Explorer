@@ -22,6 +22,8 @@ export const Logo = () => {
     return <Skeleton className="mt-2 h-[50px] w-[160px]" />;
   }
 
+  const scale = 1.35;
+
   return (
     <Image
       alt="The grid logo"
@@ -30,8 +32,8 @@ export const Logo = () => {
           currentTheme as keyof typeof siteConfig.header.logoSrc
         ]
       }
-      width={160}
-      height={50}
+      width={160 * scale}
+      height={50 * scale}
     />
   );
 };
