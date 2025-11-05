@@ -84,6 +84,18 @@ const getDefaultWhereFilter = (): ProfileInfosBoolExp => {
     });
   }
 
+  if (siteConfig.overrideFilterValues.productTypes?.length) {
+    orConditions.push({
+      root: {
+        products: {
+          productTypeId: {
+            _in: siteConfig.overrideFilterValues.productTypes
+          }
+        }
+      }
+    });
+  }
+
   return orConditions.length ? { _or: orConditions } : {};
 };
 
