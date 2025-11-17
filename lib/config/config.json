@@ -44,11 +44,7 @@
     "productIds": []
   },
   "overrideOptionsFilterValues": {
-    "productTypes": [
-      "15",
-      "16",
-      "17"
-    ]
+    "productTypes": []
   },
   "excludeTags": [],
   "featureFlags": {
