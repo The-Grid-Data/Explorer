@@ -75,12 +75,6 @@ function buildProfileSectorsWhere(
 ): ProductTypesBoolExp {
   const conditions: ProductTypesBoolExp[] = [];
 
-  // Limit product types to those specified in overrideOptionsFilterValues
-  // if (isNotEmpty(siteConfig.overrideOptionsFilterValues.productTypes)) {
-  //   conditions.push({
-  //     id: { _in: siteConfig.overrideOptionsFilterValues.productTypes }
-  //   });
-  // }
 
   if (
     isNotEmpty(filterStore.tagsFilter) ||
@@ -182,6 +176,20 @@ function buildAggregateInput(filterStore: FiltersStore): ProductsBoolExp {
             }
           }
         }
+      }
+    });
+  }
+
+  if (
+    isNotEmpty(filterStore.productTypesFilter) ||
+    isNotEmpty(siteConfig.overrideFilterValues.productTypes)
+  ) {
+    conditions.push({
+      productTypeId: {
+        _in: [
+          ...filterStore.productTypesFilter,
+          ...siteConfig.overrideFilterValues.productTypes
+        ]
       }
     });
   }
