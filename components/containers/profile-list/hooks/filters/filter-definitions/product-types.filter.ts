@@ -75,6 +75,24 @@ function buildProfileSectorsWhere(
 ): ProductTypesBoolExp {
   const conditions: ProductTypesBoolExp[] = [];
 
+  // Apply base config restriction for product types
+  if (isNotEmpty(siteConfig.overrideFilterValues.productTypes)) {
+    conditions.push({
+      products: {
+        root: {
+          profileInfos: {
+            root: {
+              products: {
+                productTypeId: {
+                  _in: siteConfig.overrideFilterValues.productTypes
+                }
+              }
+            }
+          }
+        }
+      }
+    });
+  }
 
   if (
     isNotEmpty(filterStore.tagsFilter) ||
@@ -180,19 +198,6 @@ function buildAggregateInput(filterStore: FiltersStore): ProductsBoolExp {
     });
   }
 
-  if (
-    isNotEmpty(filterStore.productTypesFilter) ||
-    isNotEmpty(siteConfig.overrideFilterValues.productTypes)
-  ) {
-    conditions.push({
-      productTypeId: {
-        _in: [
-          ...filterStore.productTypesFilter,
-          ...siteConfig.overrideFilterValues.productTypes
-        ]
-      }
-    });
-  }
 
   if (
     isNotEmpty(filterStore.productAssetRelationshipsFilter) ||
