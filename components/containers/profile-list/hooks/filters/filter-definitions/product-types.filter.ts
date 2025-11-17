@@ -185,11 +185,19 @@ function buildAggregateInput(filterStore: FiltersStore): ProductsBoolExp {
     isNotEmpty(siteConfig.overrideFilterValues.productTypes)
   ) {
     conditions.push({
-      productTypeId: {
-        _in: [
-          ...filterStore.productTypesFilter,
-          ...siteConfig.overrideFilterValues.productTypes
-        ]
+      root: {
+        profileInfos: {
+          root: {
+            products: {
+              productTypeId: {
+                _in: [
+                  ...filterStore.productTypesFilter,
+                  ...siteConfig.overrideFilterValues.productTypes
+                ]
+              }
+            }
+          }
+        }
       }
     });
   }
