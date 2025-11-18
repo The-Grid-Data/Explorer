@@ -15,11 +15,18 @@ import { ClaimedBadge } from '@/components/claim-badge';
 
 export const ProfileHeadingFragment = graphql(`
   fragment ProfileHeadingFragment on ProfileInfos {
-    logo
     name
     urls(order_by: { urlTypeId: Asc }) {
       url
       urlType {
+        name
+      }
+    }
+    media {
+      id
+      url
+      mediaType {
+        id
         name
       }
     }
@@ -51,8 +58,11 @@ export const ProfileHeading = ({
   query
 }: ProfileCardCardProps) => {
   const profileData = useFragment(ProfileHeadingFragment, profile);
-  const validLogoUrl =
-    profileData?.logo && profileData.logo.startsWith('https://');
+  console.log({ profileData });
+  const validLogoUrl = profileData.media?.find(
+    m => m.mediaType?.name === 'Logo Light BG'
+  )?.url;
+  console.log({ validLogoUrl });
 
   return (
     <div className="flex flex-col gap-6">
@@ -62,7 +72,7 @@ export const ProfileHeading = ({
             {validLogoUrl && (
               <AvatarImage
                 className="object-scale-down"
-                src={profileData?.logo}
+                src={validLogoUrl}
                 alt={profileData?.name}
               />
             )}
