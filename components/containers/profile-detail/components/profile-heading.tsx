@@ -24,7 +24,14 @@ export const ProfileHeadingFragment = graphql(`
         name
       }
     }
-    ...MediaFragment
+    media {
+      id
+      url
+      mediaType {
+        id
+        name
+      }
+    }
     root {
       socials {
         name

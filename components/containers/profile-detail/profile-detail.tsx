@@ -22,7 +22,14 @@ export const ProfileDetailQuery = graphql(`
       descriptionLong
       ...ProfileFragment
       ...ProfileHeadingFragment
-      ...MediaFragment
+      media {
+        id
+        url
+        mediaType {
+          id
+          name
+        }
+      }
       root {
         products {
           id
