@@ -13,6 +13,7 @@ import { ProfileDetailQuery } from '../profile-detail';
 import { PoweredBy } from './powered-by';
 import { ClaimedBadge } from '@/components/claim-badge';
 import { MediaDropdown } from './media-dropdown';
+import { findMedia } from '@/lib/utils/media-utils';
 
 export const ProfileHeadingFragment = graphql(`
   fragment ProfileHeadingFragment on ProfileInfos {
@@ -59,11 +60,7 @@ export const ProfileHeading = ({
   query
 }: ProfileCardCardProps) => {
   const profileData = useFragment(ProfileHeadingFragment, profile);
-  console.log({ profileData });
-  const validLogoUrl = profileData.media?.find(
-    m => m.mediaType?.name === 'Logo Light BG'
-  )?.url;
-  console.log({ validLogoUrl });
+  const validLogoUrl = profileData.media?.find(findMedia.logo)?.url;
 
   return (
     <div className="flex flex-col gap-6">
