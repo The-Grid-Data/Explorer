@@ -91,7 +91,7 @@ export type AssetCardProps = {
 
 export const AssetCard = ({ asset: assetData, variant }: AssetCardProps) => {
   const asset = useFragment(AssetFragment, assetData);
-  const validIconUrl = asset.media?.find(findMedia.logo)?.url;
+  const validIconUrl = asset.media?.find(findMedia.icon)?.url;
 
   return (
     <ProfileDataCard
