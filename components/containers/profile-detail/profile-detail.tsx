@@ -22,10 +22,11 @@ export const ProfileDetailQuery = graphql(`
       descriptionLong
       ...ProfileFragment
       ...ProfileHeadingFragment
-      media(where: { mediaType: { name: { _eq: "Logo Light BG" } } }) {
+      media {
         id
         url
         mediaType {
+          id
           name
         }
       }
