@@ -5089,7 +5089,7 @@ export type GetProfileDataQuery = { __typename?: 'Query', profileInfos?: Array<(
     & { ' $fragmentRefs'?: { 'ProfileFragmentFragment': ProfileFragmentFragment;'ProfileHeadingFragmentFragment': ProfileHeadingFragmentFragment } }
   )> | null };
 
-export type ProfileCardFragmentFragment = { __typename?: 'ProfileInfos', name: string, logo: string, id: string, tagLine: string, descriptionShort: string, profileTypeId?: string | null, profileStatusId?: string | null, profileSectorId?: string | null, foundingDate?: string | null, profileSector?: { __typename?: 'ProfileSectors', name: string, id: string, definition: string } | null, profileStatus?: { __typename?: 'ProfileStatuses', name: string, id: string, definition: string } | null, profileType?: { __typename?: 'ProfileTypes', name: string, id: string, definition: string } | null, urls?: Array<{ __typename?: 'ProfileInfoUrls', url: string, urlType?: { __typename?: 'UrlTypes', name: string, id: string, definition: string } | null }> | null, mainProduct?: { __typename?: 'Roots', products?: Array<{ __typename?: 'Products', name: string, productType?: { __typename?: 'ProductTypes', name: string } | null }> | null } | null, root?: { __typename?: 'Roots', urlMain: string, slug: string, theGridRanking?: { __typename?: 'TheGridRanking', connectionScore: string, rootId: string } | null, assets?: Array<(
+export type ProfileCardFragmentFragment = { __typename?: 'ProfileInfos', name: string, id: string, tagLine: string, descriptionShort: string, profileTypeId?: string | null, profileStatusId?: string | null, profileSectorId?: string | null, foundingDate?: string | null, profileSector?: { __typename?: 'ProfileSectors', name: string, id: string, definition: string } | null, profileStatus?: { __typename?: 'ProfileStatuses', name: string, id: string, definition: string } | null, profileType?: { __typename?: 'ProfileTypes', name: string, id: string, definition: string } | null, urls?: Array<{ __typename?: 'ProfileInfoUrls', url: string, urlType?: { __typename?: 'UrlTypes', name: string, id: string, definition: string } | null }> | null, media?: Array<{ __typename?: 'ProfileInfosMedia', id: string, url: string, mediaType?: { __typename?: 'MediaTypes', id: string, name: string } | null }> | null, mainProduct?: { __typename?: 'Roots', products?: Array<{ __typename?: 'Products', name: string, productType?: { __typename?: 'ProductTypes', name: string } | null }> | null } | null, root?: { __typename?: 'Roots', urlMain: string, slug: string, theGridRanking?: { __typename?: 'TheGridRanking', connectionScore: string, rootId: string } | null, assets?: Array<(
       { __typename?: 'Assets', ticker: string, name: string, id: string }
       & { ' $fragmentRefs'?: { 'AssetFieldsFragmentFragment': AssetFieldsFragmentFragment } }
     )> | null, socials?: Array<{ __typename?: 'Socials', name: string, socialType?: { __typename?: 'SocialTypes', name: string } | null, urls?: Array<{ __typename?: 'SocialUrls', url: string }> | null }> | null, profileTags?: Array<{ __typename?: 'ProfileTags', tag?: { __typename?: 'Tags', name: string, id: string } | null }> | null, products?: Array<(
@@ -5511,7 +5511,6 @@ export const AssetFieldsFragmentFragmentDoc = new TypedDocumentString(`
 export const ProfileCardFragmentFragmentDoc = new TypedDocumentString(`
     fragment ProfileCardFragment on ProfileInfos {
   name
-  logo
   id
   tagLine
   descriptionShort
@@ -5540,6 +5539,14 @@ export const ProfileCardFragmentFragmentDoc = new TypedDocumentString(`
       name
       id
       definition
+    }
+  }
+  media {
+    id
+    url
+    mediaType {
+      id
+      name
     }
   }
   mainProduct: root {
@@ -6176,7 +6183,6 @@ fragment ProductFieldsFragment on Products {
 }
 fragment ProfileCardFragment on ProfileInfos {
   name
-  logo
   id
   tagLine
   descriptionShort
@@ -6205,6 +6211,14 @@ fragment ProfileCardFragment on ProfileInfos {
       name
       id
       definition
+    }
+  }
+  media {
+    id
+    url
+    mediaType {
+      id
+      name
     }
   }
   mainProduct: root {
@@ -6422,7 +6436,6 @@ fragment ProductFieldsFragment on Products {
 }
 fragment ProfileCardFragment on ProfileInfos {
   name
-  logo
   id
   tagLine
   descriptionShort
@@ -6451,6 +6464,14 @@ fragment ProfileCardFragment on ProfileInfos {
       name
       id
       definition
+    }
+  }
+  media {
+    id
+    url
+    mediaType {
+      id
+      name
     }
   }
   mainProduct: root {
