@@ -198,6 +198,17 @@ function buildAggregateInput(filterStore: FiltersStore): ProductsBoolExp {
     });
   }
 
+  if (isNotEmpty(siteConfig.overrideFilterValues.productTypes)) {
+    conditions.push({
+      root: {
+        products: {
+          productTypeId: {
+            _in: siteConfig.overrideFilterValues.productTypes
+          }
+        }
+      }
+    });
+  }
 
   if (
     isNotEmpty(filterStore.productAssetRelationshipsFilter) ||
