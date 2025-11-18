@@ -57,14 +57,7 @@ export const ProfileCardFragment = graphql(`
         definition
       }
     }
-    media {
-      id
-      url
-      mediaType {
-        id
-        name
-      }
-    }
+    ...MediaFragment
     mainProduct: root {
       products(where: { isMainProduct: { _eq: "1" } }, limit: 1) {
         name

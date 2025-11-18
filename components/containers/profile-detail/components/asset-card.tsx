@@ -73,14 +73,7 @@ export const AssetFragment = graphql(`
         definition
       }
     }
-    media {
-      id
-      url
-      mediaType {
-        id
-        name
-      }
-    }
+    ...AssetMediaFragment
   }
 `);
 
