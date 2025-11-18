@@ -12,6 +12,25 @@ import { FragmentType, graphql, useFragment } from '@/lib/graphql/generated';
 import { ProfileDetailQuery } from '../profile-detail';
 import { PoweredBy } from './powered-by';
 import { ClaimedBadge } from '@/components/claim-badge';
+import { Button } from '@/components/ui/button';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+  DropdownMenuLabel,
+  DropdownMenuSeparator
+} from '@/components/ui/dropdown-menu';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+  DialogDescription
+} from '@/components/ui/dialog';
+import { Download, Eye } from 'lucide-react';
+import { useState } from 'react';
 
 export const ProfileHeadingFragment = graphql(`
   fragment ProfileHeadingFragment on ProfileInfos {
@@ -58,6 +77,7 @@ export const ProfileHeading = ({
   query
 }: ProfileCardCardProps) => {
   const profileData = useFragment(ProfileHeadingFragment, profile);
+  const [previewMedia, setPreviewMedia] = useState<{url: string, name: string} | null>(null);
   console.log({ profileData });
   const validLogoUrl = profileData.media?.find(
     m => m.mediaType?.name === 'Logo Light BG'
@@ -91,6 +111,32 @@ export const ProfileHeading = ({
             />
           </div>
           <div className="flex flex-col gap-2 md:flex-row md:items-center md:gap-4">
+            {profileData.media && profileData.media.length > 0 && (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="outline" size="sm">
+                    <Eye className="mr-2 h-4 w-4" />
+                    Media
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="start">
+                  <DropdownMenuLabel>Media Preview</DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  {profileData.media.map((media) => (
+                    <DropdownMenuItem 
+                      key={media.id}
+                      onClick={() => setPreviewMedia({
+                        url: media.url, 
+                        name: media.mediaType?.name || 'Media File'
+                      })}
+                    >
+                      <Eye className="mr-2 h-4 w-4" />
+                      {media.mediaType?.name}
+                    </DropdownMenuItem>
+                  ))}
+                </DropdownMenuContent>
+              </DropdownMenu>
+            )}
             {siteConfig.featureFlags?.displayQueriesButtons && (
               <QueryDialogButton
                 variables={queryVariables}
@@ -102,6 +148,41 @@ export const ProfileHeading = ({
           </div>
         </div>
       </div>
+      
+      <Dialog open={!!previewMedia} onOpenChange={() => setPreviewMedia(null)}>
+        <DialogContent className="max-w-4xl">
+          <DialogHeader>
+            <DialogTitle>{previewMedia?.name}</DialogTitle>
+            <DialogDescription>
+              Preview and download media file
+            </DialogDescription>
+          </DialogHeader>
+          {previewMedia && (
+            <div className="flex justify-center">
+              <img 
+                src={previewMedia.url} 
+                alt={previewMedia.name}
+                className="max-w-full max-h-[70vh] object-contain"
+              />
+            </div>
+          )}
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setPreviewMedia(null)}>
+              Close
+            </Button>
+            <a 
+              href={previewMedia?.url} 
+              download 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-9 px-4 py-2"
+            >
+              <Download className="mr-2 h-4 w-4" />
+              Download
+            </a>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
