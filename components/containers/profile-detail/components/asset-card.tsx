@@ -14,6 +14,7 @@ import Link from 'next/link';
 import { InlineDataPoint } from './inline-data-point';
 import { ContractAddressesBadge } from './contract-address-badge';
 import { FragmentType, graphql, useFragment } from '@/lib/graphql/generated';
+import { findMedia } from '@/lib/utils/media-utils';
 
 export const AssetFragment = graphql(`
   fragment AssetFieldsFragment on Assets {
@@ -21,7 +22,6 @@ export const AssetFragment = graphql(`
     rootId
     name
     id
-    icon
     description
     assetTypeId
     assetStatusId
@@ -73,6 +73,14 @@ export const AssetFragment = graphql(`
         definition
       }
     }
+    media {
+      id
+      url
+      mediaType {
+        id
+        name
+      }
+    }
   }
 `);
 
@@ -83,6 +91,7 @@ export type AssetCardProps = {
 
 export const AssetCard = ({ asset: assetData, variant }: AssetCardProps) => {
   const asset = useFragment(AssetFragment, assetData);
+  const validIconUrl = asset.media?.find(findMedia.logo)?.url;
 
   return (
     <ProfileDataCard
@@ -91,7 +100,7 @@ export const AssetCard = ({ asset: assetData, variant }: AssetCardProps) => {
         <div className="flex items-center gap-2">
           <Avatar className="h-[20px] w-[20px] rounded-xl">
             <AvatarImage
-              src={asset.icon}
+              src={validIconUrl}
               alt={asset.name}
               className="object-scale-down"
             />
