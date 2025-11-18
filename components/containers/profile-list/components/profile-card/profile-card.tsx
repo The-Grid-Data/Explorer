@@ -22,11 +22,11 @@ import { graphql, FragmentType, useFragment } from '@/lib/graphql/generated';
 import { ProfileTags } from '@/components/containers/profile-detail/components/profile-tags';
 import { ProductBadge } from './product-badge';
 import { ClaimedBadge } from '@/components/claim-badge';
+import { findMedia } from '@/lib/utils/media-utils';
 
 export const ProfileCardFragment = graphql(`
   fragment ProfileCardFragment on ProfileInfos {
     name
-    logo
     id
     tagLine
     descriptionShort
@@ -55,6 +55,14 @@ export const ProfileCardFragment = graphql(`
         name
         id
         definition
+      }
+    }
+    media {
+      id
+      url
+      mediaType {
+        id
+        name
       }
     }
     mainProduct: root {
@@ -110,7 +118,8 @@ export type ProfileCardCardProps = {
 
 export const ProfileCard = ({ profile: profileData }: ProfileCardCardProps) => {
   const profile = useFragment(ProfileCardFragment, profileData);
-  const validLogoUrl = profile.logo && profile.logo.startsWith('https://');
+
+  const validLogoUrl = profile.media?.find(findMedia.logo)?.url;
   const { filters } = useProfileFiltersContext();
 
   return (
@@ -123,7 +132,7 @@ export const ProfileCard = ({ profile: profileData }: ProfileCardCardProps) => {
                 {validLogoUrl && (
                   <AvatarImage
                     className="object-scale-down"
-                    src={profile.logo}
+                    src={validLogoUrl}
                     alt={profile.name}
                   />
                 )}

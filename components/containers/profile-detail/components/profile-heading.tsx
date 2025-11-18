@@ -12,14 +12,23 @@ import { FragmentType, graphql, useFragment } from '@/lib/graphql/generated';
 import { ProfileDetailQuery } from '../profile-detail';
 import { PoweredBy } from './powered-by';
 import { ClaimedBadge } from '@/components/claim-badge';
+import { MediaDropdown } from './media-dropdown';
+import { findMedia } from '@/lib/utils/media-utils';
 
 export const ProfileHeadingFragment = graphql(`
   fragment ProfileHeadingFragment on ProfileInfos {
-    logo
     name
     urls(order_by: { urlTypeId: Asc }) {
       url
       urlType {
+        name
+      }
+    }
+    media {
+      id
+      url
+      mediaType {
+        id
         name
       }
     }
@@ -51,8 +60,7 @@ export const ProfileHeading = ({
   query
 }: ProfileCardCardProps) => {
   const profileData = useFragment(ProfileHeadingFragment, profile);
-  const validLogoUrl =
-    profileData?.logo && profileData.logo.startsWith('https://');
+  const validLogoUrl = profileData.media?.find(findMedia.logo)?.url;
 
   return (
     <div className="flex flex-col gap-6">
@@ -62,7 +70,7 @@ export const ProfileHeading = ({
             {validLogoUrl && (
               <AvatarImage
                 className="object-scale-down"
-                src={profileData?.logo}
+                src={validLogoUrl}
                 alt={profileData?.name}
               />
             )}
@@ -81,6 +89,7 @@ export const ProfileHeading = ({
             />
           </div>
           <div className="flex flex-col gap-2 md:flex-row md:items-center md:gap-4">
+            <MediaDropdown media={profileData.media || []} />
             {siteConfig.featureFlags?.displayQueriesButtons && (
               <QueryDialogButton
                 variables={queryVariables}

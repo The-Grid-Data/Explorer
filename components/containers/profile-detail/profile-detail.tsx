@@ -22,6 +22,14 @@ export const ProfileDetailQuery = graphql(`
       descriptionLong
       ...ProfileFragment
       ...ProfileHeadingFragment
+      media {
+        id
+        url
+        mediaType {
+          id
+          name
+        }
+      }
       root {
         products {
           id
@@ -54,6 +62,7 @@ export const ProfileDetail = ({ profileId }: ProfileDetailProps) => {
     queryFn: () => execute(ProfileDetailQuery, query)
   });
 
+  console.log({ data });
   const profile = data?.profileInfos?.[0];
 
   if (isFetching) {

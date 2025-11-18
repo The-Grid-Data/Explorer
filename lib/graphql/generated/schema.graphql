@@ -86,6 +86,39 @@ input AssetDeploymentsOrderByExp {
   smartContractDeployment: SmartContractDeploymentsOrderByExp
 }
 
+type AssetMedia {
+  id: String!
+  mediaType: MediaTypes
+  mediaTypeId: String
+  rootId: String!
+  rowId: String!
+  tableId: String!
+  url: String!
+}
+
+input AssetMediaBoolExp {
+  _and: [AssetMediaBoolExp!]
+  _not: AssetMediaBoolExp
+  _or: [AssetMediaBoolExp!]
+  id: StringBoolExp
+  mediaType: MediaTypesBoolExp
+  mediaTypeId: StringBoolExp
+  rootId: StringBoolExp
+  rowId: StringBoolExp
+  tableId: StringBoolExp
+  url: StringBoolExp
+}
+
+input AssetMediaOrderBy {
+  id: OrderBy
+  mediaType: MediaTypesOrderByExp
+  mediaTypeId: OrderBy
+  rootId: OrderBy
+  rowId: OrderBy
+  tableId: OrderBy
+  url: OrderBy
+}
+
 type AssetSocials {
   id: String!
   name: String!
@@ -338,6 +371,7 @@ type Assets {
   description: String!
   icon: String!
   id: String!
+  media(limit: Int, offset: Int, order_by: [AssetMediaOrderBy!], where: AssetMediaBoolExp): [AssetMedia!]
   name: String!
   productAssetRelationships(limit: Int, offset: Int, order_by: [ProductAssetRelationshipsOrderByExp!], where: ProductAssetRelationshipsBoolExp): [ProductAssetRelationships!]
   productAssetRelationshipsAggregate(filter_input: ProductAssetRelationshipsFilterInput): ProductAssetRelationshipsAggExp!
@@ -546,7 +580,7 @@ input DeploymentTypesOrderByExp {
 
 type DerivativeAssets {
   asset: Assets
-  assetByDerivativeAssetId: Assets
+  assetByBaseAssetId: Assets
   baseAssetId: String!
   derivativeAssetId: String!
   id: String!
@@ -564,7 +598,7 @@ input DerivativeAssetsBoolExp {
   _not: DerivativeAssetsBoolExp
   _or: [DerivativeAssetsBoolExp!]
   asset: AssetsBoolExp
-  assetByDerivativeAssetId: AssetsBoolExp
+  assetByBaseAssetId: AssetsBoolExp
   baseAssetId: StringBoolExp
   derivativeAssetId: StringBoolExp
   id: StringBoolExp
@@ -579,7 +613,7 @@ input DerivativeAssetsFilterInput {
 
 input DerivativeAssetsOrderByExp {
   asset: AssetsOrderByExp
-  assetByDerivativeAssetId: AssetsOrderByExp
+  assetByBaseAssetId: AssetsOrderByExp
   baseAssetId: OrderBy
   derivativeAssetId: OrderBy
   id: OrderBy
@@ -595,6 +629,7 @@ type Entities {
   id: String!
   leiNumber: String!
   localRegistrationNumber: String!
+  media(limit: Int, offset: Int, order_by: [EntityMediaOrderBy!], where: EntityMediaBoolExp): [EntityMedia!]
   name: String!
   root: Roots
   rootId: String!
@@ -663,6 +698,39 @@ input EntitiesOrderByExp {
   rootId: OrderBy
   taxIdentificationNumber: OrderBy
   tradeName: OrderBy
+}
+
+type EntityMedia {
+  id: String!
+  mediaType: MediaTypes
+  mediaTypeId: String
+  rootId: String!
+  rowId: String!
+  tableId: String!
+  url: String!
+}
+
+input EntityMediaBoolExp {
+  _and: [EntityMediaBoolExp!]
+  _not: EntityMediaBoolExp
+  _or: [EntityMediaBoolExp!]
+  id: StringBoolExp
+  mediaType: MediaTypesBoolExp
+  mediaTypeId: StringBoolExp
+  rootId: StringBoolExp
+  rowId: StringBoolExp
+  tableId: StringBoolExp
+  url: StringBoolExp
+}
+
+input EntityMediaOrderBy {
+  id: OrderBy
+  mediaType: MediaTypesOrderByExp
+  mediaTypeId: OrderBy
+  rootId: OrderBy
+  rowId: OrderBy
+  tableId: OrderBy
+  url: OrderBy
 }
 
 type EntitySocials {
@@ -781,98 +849,6 @@ scalar Enum
 
 scalar Float64
 
-type ImageTypes {
-  definition: String!
-  id: String!
-  images(limit: Int, offset: Int, order_by: [ImagesOrderByExp!], where: ImagesBoolExp): [Images!]
-  imagesAggregate(filter_input: ImagesFilterInput): ImagesAggExp!
-  name: String!
-  slug: String
-}
-
-type ImageTypesAggExp {
-  _count: Int!
-  definition: StringAggExp!
-  id: StringAggExp!
-  name: StringAggExp!
-  slug: StringAggExp!
-}
-
-input ImageTypesBoolExp {
-  _and: [ImageTypesBoolExp!]
-  _not: ImageTypesBoolExp
-  _or: [ImageTypesBoolExp!]
-  definition: StringBoolExp
-  id: StringBoolExp
-  images: ImagesBoolExp
-  name: StringBoolExp
-  slug: StringBoolExp
-}
-
-input ImageTypesFilterInput {
-  limit: Int
-  offset: Int
-  order_by: [ImageTypesOrderByExp!]
-  where: ImageTypesBoolExp
-}
-
-input ImageTypesOrderByExp {
-  definition: OrderBy
-  id: OrderBy
-  name: OrderBy
-  slug: OrderBy
-}
-
-type Images {
-  id: String!
-  image: String!
-  imageType: ImageTypes
-  imageTypeId: String
-  rootId: String!
-  rowId: String!
-  tableId: String!
-}
-
-type ImagesAggExp {
-  _count: Int!
-  id: StringAggExp!
-  image: StringAggExp!
-  imageTypeId: StringAggExp!
-  rootId: StringAggExp!
-  rowId: StringAggExp!
-  tableId: StringAggExp!
-}
-
-input ImagesBoolExp {
-  _and: [ImagesBoolExp!]
-  _not: ImagesBoolExp
-  _or: [ImagesBoolExp!]
-  id: StringBoolExp
-  image: StringBoolExp
-  imageType: ImageTypesBoolExp
-  imageTypeId: StringBoolExp
-  rootId: StringBoolExp
-  rowId: StringBoolExp
-  tableId: StringBoolExp
-}
-
-input ImagesFilterInput {
-  limit: Int
-  offset: Int
-  order_by: [ImagesOrderByExp!]
-  where: ImagesBoolExp
-}
-
-input ImagesOrderByExp {
-  id: OrderBy
-  image: OrderBy
-  imageType: ImageTypesOrderByExp
-  imageTypeId: OrderBy
-  rootId: OrderBy
-  rowId: OrderBy
-  tableId: OrderBy
-}
-
 scalar Int8
 
 type Int8AggExp {
@@ -902,6 +878,101 @@ scalar Int32
 scalar Int64
 
 scalar Json
+
+type Media {
+  id: String!
+  mediaType: MediaTypes
+  mediaTypeId: String
+  root: Roots
+  rootId: String!
+  rowId: String!
+  tableId: String!
+  url: String!
+}
+
+type MediaAggExp {
+  _count: Int!
+  id: StringAggExp!
+  mediaTypeId: StringAggExp!
+  rootId: StringAggExp!
+  rowId: StringAggExp!
+  tableId: StringAggExp!
+  url: StringAggExp!
+}
+
+input MediaBoolExp {
+  _and: [MediaBoolExp!]
+  _not: MediaBoolExp
+  _or: [MediaBoolExp!]
+  id: StringBoolExp
+  mediaType: MediaTypesBoolExp
+  mediaTypeId: StringBoolExp
+  root: RootsBoolExp
+  rootId: StringBoolExp
+  rowId: StringBoolExp
+  tableId: StringBoolExp
+  url: StringBoolExp
+}
+
+input MediaFilterInput {
+  limit: Int
+  offset: Int
+  order_by: [MediaOrderByExp!]
+  where: MediaBoolExp
+}
+
+input MediaOrderByExp {
+  id: OrderBy
+  mediaType: MediaTypesOrderByExp
+  mediaTypeId: OrderBy
+  root: RootsOrderByExp
+  rootId: OrderBy
+  rowId: OrderBy
+  tableId: OrderBy
+  url: OrderBy
+}
+
+type MediaTypes {
+  definition: String!
+  id: String!
+  media(limit: Int, offset: Int, order_by: [MediaOrderByExp!], where: MediaBoolExp): [Media!]
+  mediaAggregate(filter_input: MediaFilterInput): MediaAggExp!
+  name: String!
+  slug: String
+}
+
+type MediaTypesAggExp {
+  _count: Int!
+  definition: StringAggExp!
+  id: StringAggExp!
+  name: StringAggExp!
+  slug: StringAggExp!
+}
+
+input MediaTypesBoolExp {
+  _and: [MediaTypesBoolExp!]
+  _not: MediaTypesBoolExp
+  _or: [MediaTypesBoolExp!]
+  definition: StringBoolExp
+  id: StringBoolExp
+  media: MediaBoolExp
+  name: StringBoolExp
+  slug: StringBoolExp
+}
+
+input MediaTypesFilterInput {
+  limit: Int
+  offset: Int
+  order_by: [MediaTypesOrderByExp!]
+  where: MediaTypesBoolExp
+}
+
+input MediaTypesOrderByExp {
+  definition: OrderBy
+  id: OrderBy
+  name: OrderBy
+  slug: OrderBy
+}
 
 type Mutation {
   """Send an HTTP request"""
@@ -1017,6 +1088,39 @@ input ProductDeploymentsOrderByExp {
   product: ProductsOrderByExp
   productId: OrderBy
   smartContractDeployment: SmartContractDeploymentsOrderByExp
+}
+
+type ProductMedia {
+  id: String!
+  mediaType: MediaTypes
+  mediaTypeId: String
+  rootId: String!
+  rowId: String!
+  tableId: String!
+  url: String!
+}
+
+input ProductMediaBoolExp {
+  _and: [ProductMediaBoolExp!]
+  _not: ProductMediaBoolExp
+  _or: [ProductMediaBoolExp!]
+  id: StringBoolExp
+  mediaType: MediaTypesBoolExp
+  mediaTypeId: StringBoolExp
+  rootId: StringBoolExp
+  rowId: StringBoolExp
+  tableId: StringBoolExp
+  url: StringBoolExp
+}
+
+input ProductMediaOrderBy {
+  id: OrderBy
+  mediaType: MediaTypesOrderByExp
+  mediaTypeId: OrderBy
+  rootId: OrderBy
+  rowId: OrderBy
+  tableId: OrderBy
+  url: OrderBy
 }
 
 type ProductSocials {
@@ -1178,6 +1282,7 @@ type Products {
   id: String!
   isMainProduct: Int8!
   launchDate: Date
+  media(limit: Int, offset: Int, order_by: [ProductMediaOrderBy!], where: ProductMediaBoolExp): [ProductMedia!]
   name: String!
   productAssetRelationships(limit: Int, offset: Int, order_by: [ProductAssetRelationshipsOrderByExp!], where: ProductAssetRelationshipsBoolExp): [ProductAssetRelationships!]
   productAssetRelationshipsAggregate(filter_input: ProductAssetRelationshipsFilterInput): ProductAssetRelationshipsAggExp!
@@ -1331,6 +1436,7 @@ type ProfileInfos {
   icon: String!
   id: String!
   logo: String!
+  media(limit: Int, offset: Int, order_by: [ProfileInfosMediaOrderBy!], where: ProfileInfosMediaBoolExp): [ProfileInfosMedia!]
   name: String!
   profileSector: ProfileSectors
   profileSectorId: String
@@ -1384,6 +1490,7 @@ input ProfileInfosBoolExp {
   root: RootsBoolExp
   rootId: StringBoolExp
   tagLine: StringBoolExp
+  urls: ProfileInfoUrlsBoolExp
 }
 
 input ProfileInfosFilterInput {
@@ -1391,6 +1498,39 @@ input ProfileInfosFilterInput {
   offset: Int
   order_by: [ProfileInfosOrderByExp!]
   where: ProfileInfosBoolExp
+}
+
+type ProfileInfosMedia {
+  id: String!
+  mediaType: MediaTypes
+  mediaTypeId: String
+  rootId: String!
+  rowId: String!
+  tableId: String!
+  url: String!
+}
+
+input ProfileInfosMediaBoolExp {
+  _and: [ProfileInfosMediaBoolExp!]
+  _not: ProfileInfosMediaBoolExp
+  _or: [ProfileInfosMediaBoolExp!]
+  id: StringBoolExp
+  mediaType: MediaTypesBoolExp
+  mediaTypeId: StringBoolExp
+  rootId: StringBoolExp
+  rowId: StringBoolExp
+  tableId: StringBoolExp
+  url: StringBoolExp
+}
+
+input ProfileInfosMediaOrderBy {
+  id: OrderBy
+  mediaType: MediaTypesOrderByExp
+  mediaTypeId: OrderBy
+  rootId: OrderBy
+  rowId: OrderBy
+  tableId: OrderBy
+  url: OrderBy
 }
 
 input ProfileInfosOrderByExp {
@@ -1654,12 +1794,12 @@ type Query {
   entityTypes(limit: Int, offset: Int, order_by: [EntityTypesOrderByExp!], where: EntityTypesBoolExp): [EntityTypes!]
   entityTypesAggregate(filter_input: EntityTypesFilterInput): EntityTypesAggExp
   entityTypesById(id: String!): EntityTypes
-  imageTypes(limit: Int, offset: Int, order_by: [ImageTypesOrderByExp!], where: ImageTypesBoolExp): [ImageTypes!]
-  imageTypesAggregate(filter_input: ImageTypesFilterInput): ImageTypesAggExp
-  imageTypesById(id: String!): ImageTypes
-  images(limit: Int, offset: Int, order_by: [ImagesOrderByExp!], where: ImagesBoolExp): [Images!]
-  imagesAggregate(filter_input: ImagesFilterInput): ImagesAggExp
-  imagesById(id: String!): Images
+  media(limit: Int, offset: Int, order_by: [MediaOrderByExp!], where: MediaBoolExp): [Media!]
+  mediaAggregate(filter_input: MediaFilterInput): MediaAggExp
+  mediaById(id: String!): Media
+  mediaTypes(limit: Int, offset: Int, order_by: [MediaTypesOrderByExp!], where: MediaTypesBoolExp): [MediaTypes!]
+  mediaTypesAggregate(filter_input: MediaTypesFilterInput): MediaTypesAggExp
+  mediaTypesById(id: String!): MediaTypes
   productAssetRelationships(limit: Int, offset: Int, order_by: [ProductAssetRelationshipsOrderByExp!], where: ProductAssetRelationshipsBoolExp): [ProductAssetRelationships!]
   productAssetRelationshipsAggregate(filter_input: ProductAssetRelationshipsFilterInput): ProductAssetRelationshipsAggExp
   productAssetRelationshipsById(id: String!): ProductAssetRelationships
@@ -1853,10 +1993,13 @@ type Roots {
   assetsAggregate(filter_input: AssetsFilterInput): AssetsAggExp!
   childRootRelationships(limit: Int, offset: Int, order_by: [RootRelationshipsOrderByExp!], where: RootRelationshipsBoolExp): [RootRelationships!]
   childRootRelationshipsAggregate(filter_input: RootRelationshipsFilterInput): RootRelationshipsAggExp!
-  connectionScoresAggregate(filter_input: TheGridRankingFilterInput): TheGridRankingAggExp!
   entities(limit: Int, offset: Int, order_by: [EntitiesOrderByExp!], where: EntitiesBoolExp): [Entities!]
   entitiesAggregate(filter_input: EntitiesFilterInput): EntitiesAggExp!
+  firstPublicValidation: Date
   id: String!
+  lastPublicValidation: Date
+  media(limit: Int, offset: Int, order_by: [MediaOrderByExp!], where: MediaBoolExp): [Media!]
+  mediaAggregate(filter_input: MediaFilterInput): MediaAggExp!
   parentRootRelationships(limit: Int, offset: Int, order_by: [RootRelationshipsOrderByExp!], where: RootRelationshipsBoolExp): [RootRelationships!]
   parentRootRelationshipsAggregate(filter_input: RootRelationshipsFilterInput): RootRelationshipsAggExp!
   products(limit: Int, offset: Int, order_by: [ProductsOrderByExp!], where: ProductsBoolExp): [Products!]
@@ -1868,13 +2011,15 @@ type Roots {
   slug: String!
   socials(limit: Int, offset: Int, order_by: [SocialsOrderByExp!], where: SocialsBoolExp): [Socials!]
   socialsAggregate(filter_input: SocialsFilterInput): SocialsAggExp!
-  theGridRanking(limit: Int, offset: Int, order_by: [TheGridRankingOrderBy!], where: TheGridRankingBoolExp): [TheGridRanking!]
+  theGridRanking: TheGridRanking
   urlMain: String!
 }
 
 type RootsAggExp {
   _count: Int!
+  firstPublicValidation: DateAggExp!
   id: StringAggExp!
+  lastPublicValidation: DateAggExp!
   slug: StringAggExp!
   urlMain: StringAggExp!
 }
@@ -1886,7 +2031,10 @@ input RootsBoolExp {
   assets: AssetsBoolExp
   childRootRelationships: RootRelationshipsBoolExp
   entities: EntitiesBoolExp
+  firstPublicValidation: DateBoolExp
   id: StringBoolExp
+  lastPublicValidation: DateBoolExp
+  media: MediaBoolExp
   parentRootRelationships: RootRelationshipsBoolExp
   products: ProductsBoolExp
   profileInfos: ProfileInfosBoolExp
@@ -1905,8 +2053,11 @@ input RootsFilterInput {
 }
 
 input RootsOrderByExp {
+  firstPublicValidation: OrderBy
   id: OrderBy
+  lastPublicValidation: OrderBy
   slug: OrderBy
+  theGridRanking: TheGridRankingOrderBy
   urlMain: OrderBy
 }
 
@@ -2280,12 +2431,12 @@ type Subscription {
   entityTypes(limit: Int, offset: Int, order_by: [EntityTypesOrderByExp!], where: EntityTypesBoolExp): [EntityTypes!]
   entityTypesAggregate(filter_input: EntityTypesFilterInput): EntityTypesAggExp
   entityTypesById(id: String!): EntityTypes
-  imageTypes(limit: Int, offset: Int, order_by: [ImageTypesOrderByExp!], where: ImageTypesBoolExp): [ImageTypes!]
-  imageTypesAggregate(filter_input: ImageTypesFilterInput): ImageTypesAggExp
-  imageTypesById(id: String!): ImageTypes
-  images(limit: Int, offset: Int, order_by: [ImagesOrderByExp!], where: ImagesBoolExp): [Images!]
-  imagesAggregate(filter_input: ImagesFilterInput): ImagesAggExp
-  imagesById(id: String!): Images
+  media(limit: Int, offset: Int, order_by: [MediaOrderByExp!], where: MediaBoolExp): [Media!]
+  mediaAggregate(filter_input: MediaFilterInput): MediaAggExp
+  mediaById(id: String!): Media
+  mediaTypes(limit: Int, offset: Int, order_by: [MediaTypesOrderByExp!], where: MediaTypesBoolExp): [MediaTypes!]
+  mediaTypesAggregate(filter_input: MediaTypesFilterInput): MediaTypesAggExp
+  mediaTypesById(id: String!): MediaTypes
   productAssetRelationships(limit: Int, offset: Int, order_by: [ProductAssetRelationshipsOrderByExp!], where: ProductAssetRelationshipsBoolExp): [ProductAssetRelationships!]
   productAssetRelationshipsAggregate(filter_input: ProductAssetRelationshipsFilterInput): ProductAssetRelationshipsAggExp
   productAssetRelationshipsById(id: String!): ProductAssetRelationships
@@ -2505,12 +2656,6 @@ type TheGridRanking {
   theGridRankingsAggregate(filter_input: RootsFilterInput): RootsAggExp!
 }
 
-type TheGridRankingAggExp {
-  _count: Int!
-  connectionScore: StringAggExp!
-  rootId: StringAggExp!
-}
-
 input TheGridRankingBoolExp {
   _and: [TheGridRankingBoolExp!]
   _not: TheGridRankingBoolExp
@@ -2518,13 +2663,6 @@ input TheGridRankingBoolExp {
   connectionScore: StringBoolExp
   rootId: StringBoolExp
   roots: RootsBoolExp
-}
-
-input TheGridRankingFilterInput {
-  limit: Int
-  offset: Int
-  order_by: [TheGridRankingOrderBy!]
-  where: TheGridRankingBoolExp
 }
 
 input TheGridRankingOrderBy {

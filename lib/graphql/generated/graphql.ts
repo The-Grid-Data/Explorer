@@ -109,6 +109,40 @@ export type AssetDeploymentsOrderByExp = {
   smartContractDeployment?: InputMaybe<SmartContractDeploymentsOrderByExp>;
 };
 
+export type AssetMedia = {
+  __typename?: 'AssetMedia';
+  id: Scalars['String']['output'];
+  mediaType?: Maybe<MediaTypes>;
+  mediaTypeId?: Maybe<Scalars['String']['output']>;
+  rootId: Scalars['String']['output'];
+  rowId: Scalars['String']['output'];
+  tableId: Scalars['String']['output'];
+  url: Scalars['String']['output'];
+};
+
+export type AssetMediaBoolExp = {
+  _and?: InputMaybe<Array<AssetMediaBoolExp>>;
+  _not?: InputMaybe<AssetMediaBoolExp>;
+  _or?: InputMaybe<Array<AssetMediaBoolExp>>;
+  id?: InputMaybe<StringBoolExp>;
+  mediaType?: InputMaybe<MediaTypesBoolExp>;
+  mediaTypeId?: InputMaybe<StringBoolExp>;
+  rootId?: InputMaybe<StringBoolExp>;
+  rowId?: InputMaybe<StringBoolExp>;
+  tableId?: InputMaybe<StringBoolExp>;
+  url?: InputMaybe<StringBoolExp>;
+};
+
+export type AssetMediaOrderBy = {
+  id?: InputMaybe<OrderBy>;
+  mediaType?: InputMaybe<MediaTypesOrderByExp>;
+  mediaTypeId?: InputMaybe<OrderBy>;
+  rootId?: InputMaybe<OrderBy>;
+  rowId?: InputMaybe<OrderBy>;
+  tableId?: InputMaybe<OrderBy>;
+  url?: InputMaybe<OrderBy>;
+};
+
 export type AssetSocials = {
   __typename?: 'AssetSocials';
   id: Scalars['String']['output'];
@@ -432,6 +466,7 @@ export type Assets = {
   description: Scalars['String']['output'];
   icon: Scalars['String']['output'];
   id: Scalars['String']['output'];
+  media?: Maybe<Array<AssetMedia>>;
   name: Scalars['String']['output'];
   productAssetRelationships?: Maybe<Array<ProductAssetRelationships>>;
   productAssetRelationshipsAggregate: ProductAssetRelationshipsAggExp;
@@ -479,6 +514,14 @@ export type AssetsDerivativeAssetsByBaseAssetIdArgs = {
 
 export type AssetsDerivativeAssetsByBaseAssetIdAggregateArgs = {
   filter_input?: InputMaybe<DerivativeAssetsFilterInput>;
+};
+
+
+export type AssetsMediaArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<AssetMediaOrderBy>>;
+  where?: InputMaybe<AssetMediaBoolExp>;
 };
 
 
@@ -780,7 +823,7 @@ export type DeploymentTypesOrderByExp = {
 export type DerivativeAssets = {
   __typename?: 'DerivativeAssets';
   asset?: Maybe<Assets>;
-  assetByDerivativeAssetId?: Maybe<Assets>;
+  assetByBaseAssetId?: Maybe<Assets>;
   baseAssetId: Scalars['String']['output'];
   derivativeAssetId: Scalars['String']['output'];
   id: Scalars['String']['output'];
@@ -799,7 +842,7 @@ export type DerivativeAssetsBoolExp = {
   _not?: InputMaybe<DerivativeAssetsBoolExp>;
   _or?: InputMaybe<Array<DerivativeAssetsBoolExp>>;
   asset?: InputMaybe<AssetsBoolExp>;
-  assetByDerivativeAssetId?: InputMaybe<AssetsBoolExp>;
+  assetByBaseAssetId?: InputMaybe<AssetsBoolExp>;
   baseAssetId?: InputMaybe<StringBoolExp>;
   derivativeAssetId?: InputMaybe<StringBoolExp>;
   id?: InputMaybe<StringBoolExp>;
@@ -814,7 +857,7 @@ export type DerivativeAssetsFilterInput = {
 
 export type DerivativeAssetsOrderByExp = {
   asset?: InputMaybe<AssetsOrderByExp>;
-  assetByDerivativeAssetId?: InputMaybe<AssetsOrderByExp>;
+  assetByBaseAssetId?: InputMaybe<AssetsOrderByExp>;
   baseAssetId?: InputMaybe<OrderBy>;
   derivativeAssetId?: InputMaybe<OrderBy>;
   id?: InputMaybe<OrderBy>;
@@ -831,6 +874,7 @@ export type Entities = {
   id: Scalars['String']['output'];
   leiNumber: Scalars['String']['output'];
   localRegistrationNumber: Scalars['String']['output'];
+  media?: Maybe<Array<EntityMedia>>;
   name: Scalars['String']['output'];
   root?: Maybe<Roots>;
   rootId: Scalars['String']['output'];
@@ -838,6 +882,14 @@ export type Entities = {
   taxIdentificationNumber: Scalars['String']['output'];
   tradeName: Scalars['String']['output'];
   urls?: Maybe<Array<EntityUrls>>;
+};
+
+
+export type EntitiesMediaArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<EntityMediaOrderBy>>;
+  where?: InputMaybe<EntityMediaBoolExp>;
 };
 
 
@@ -916,6 +968,40 @@ export type EntitiesOrderByExp = {
   rootId?: InputMaybe<OrderBy>;
   taxIdentificationNumber?: InputMaybe<OrderBy>;
   tradeName?: InputMaybe<OrderBy>;
+};
+
+export type EntityMedia = {
+  __typename?: 'EntityMedia';
+  id: Scalars['String']['output'];
+  mediaType?: Maybe<MediaTypes>;
+  mediaTypeId?: Maybe<Scalars['String']['output']>;
+  rootId: Scalars['String']['output'];
+  rowId: Scalars['String']['output'];
+  tableId: Scalars['String']['output'];
+  url: Scalars['String']['output'];
+};
+
+export type EntityMediaBoolExp = {
+  _and?: InputMaybe<Array<EntityMediaBoolExp>>;
+  _not?: InputMaybe<EntityMediaBoolExp>;
+  _or?: InputMaybe<Array<EntityMediaBoolExp>>;
+  id?: InputMaybe<StringBoolExp>;
+  mediaType?: InputMaybe<MediaTypesBoolExp>;
+  mediaTypeId?: InputMaybe<StringBoolExp>;
+  rootId?: InputMaybe<StringBoolExp>;
+  rowId?: InputMaybe<StringBoolExp>;
+  tableId?: InputMaybe<StringBoolExp>;
+  url?: InputMaybe<StringBoolExp>;
+};
+
+export type EntityMediaOrderBy = {
+  id?: InputMaybe<OrderBy>;
+  mediaType?: InputMaybe<MediaTypesOrderByExp>;
+  mediaTypeId?: InputMaybe<OrderBy>;
+  rootId?: InputMaybe<OrderBy>;
+  rowId?: InputMaybe<OrderBy>;
+  tableId?: InputMaybe<OrderBy>;
+  url?: InputMaybe<OrderBy>;
 };
 
 export type EntitySocials = {
@@ -1055,115 +1141,6 @@ export type EntityUrlsOrderBy = {
   urlTypeId?: InputMaybe<OrderBy>;
 };
 
-export type ImageTypes = {
-  __typename?: 'ImageTypes';
-  definition: Scalars['String']['output'];
-  id: Scalars['String']['output'];
-  images?: Maybe<Array<Images>>;
-  imagesAggregate: ImagesAggExp;
-  name: Scalars['String']['output'];
-  slug?: Maybe<Scalars['String']['output']>;
-};
-
-
-export type ImageTypesImagesArgs = {
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<ImagesOrderByExp>>;
-  where?: InputMaybe<ImagesBoolExp>;
-};
-
-
-export type ImageTypesImagesAggregateArgs = {
-  filter_input?: InputMaybe<ImagesFilterInput>;
-};
-
-export type ImageTypesAggExp = {
-  __typename?: 'ImageTypesAggExp';
-  _count: Scalars['Int']['output'];
-  definition: StringAggExp;
-  id: StringAggExp;
-  name: StringAggExp;
-  slug: StringAggExp;
-};
-
-export type ImageTypesBoolExp = {
-  _and?: InputMaybe<Array<ImageTypesBoolExp>>;
-  _not?: InputMaybe<ImageTypesBoolExp>;
-  _or?: InputMaybe<Array<ImageTypesBoolExp>>;
-  definition?: InputMaybe<StringBoolExp>;
-  id?: InputMaybe<StringBoolExp>;
-  images?: InputMaybe<ImagesBoolExp>;
-  name?: InputMaybe<StringBoolExp>;
-  slug?: InputMaybe<StringBoolExp>;
-};
-
-export type ImageTypesFilterInput = {
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<ImageTypesOrderByExp>>;
-  where?: InputMaybe<ImageTypesBoolExp>;
-};
-
-export type ImageTypesOrderByExp = {
-  definition?: InputMaybe<OrderBy>;
-  id?: InputMaybe<OrderBy>;
-  name?: InputMaybe<OrderBy>;
-  slug?: InputMaybe<OrderBy>;
-};
-
-export type Images = {
-  __typename?: 'Images';
-  id: Scalars['String']['output'];
-  image: Scalars['String']['output'];
-  imageType?: Maybe<ImageTypes>;
-  imageTypeId?: Maybe<Scalars['String']['output']>;
-  rootId: Scalars['String']['output'];
-  rowId: Scalars['String']['output'];
-  tableId: Scalars['String']['output'];
-};
-
-export type ImagesAggExp = {
-  __typename?: 'ImagesAggExp';
-  _count: Scalars['Int']['output'];
-  id: StringAggExp;
-  image: StringAggExp;
-  imageTypeId: StringAggExp;
-  rootId: StringAggExp;
-  rowId: StringAggExp;
-  tableId: StringAggExp;
-};
-
-export type ImagesBoolExp = {
-  _and?: InputMaybe<Array<ImagesBoolExp>>;
-  _not?: InputMaybe<ImagesBoolExp>;
-  _or?: InputMaybe<Array<ImagesBoolExp>>;
-  id?: InputMaybe<StringBoolExp>;
-  image?: InputMaybe<StringBoolExp>;
-  imageType?: InputMaybe<ImageTypesBoolExp>;
-  imageTypeId?: InputMaybe<StringBoolExp>;
-  rootId?: InputMaybe<StringBoolExp>;
-  rowId?: InputMaybe<StringBoolExp>;
-  tableId?: InputMaybe<StringBoolExp>;
-};
-
-export type ImagesFilterInput = {
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<ImagesOrderByExp>>;
-  where?: InputMaybe<ImagesBoolExp>;
-};
-
-export type ImagesOrderByExp = {
-  id?: InputMaybe<OrderBy>;
-  image?: InputMaybe<OrderBy>;
-  imageType?: InputMaybe<ImageTypesOrderByExp>;
-  imageTypeId?: InputMaybe<OrderBy>;
-  rootId?: InputMaybe<OrderBy>;
-  rowId?: InputMaybe<OrderBy>;
-  tableId?: InputMaybe<OrderBy>;
-};
-
 export type Int8AggExp = {
   __typename?: 'Int8AggExp';
   _count: Scalars['Int']['output'];
@@ -1185,6 +1162,118 @@ export type Int8BoolExp = {
   _lte?: InputMaybe<Scalars['Int8']['input']>;
   _not?: InputMaybe<Int8BoolExp>;
   _or?: InputMaybe<Array<Int8BoolExp>>;
+};
+
+export type Media = {
+  __typename?: 'Media';
+  id: Scalars['String']['output'];
+  mediaType?: Maybe<MediaTypes>;
+  mediaTypeId?: Maybe<Scalars['String']['output']>;
+  root?: Maybe<Roots>;
+  rootId: Scalars['String']['output'];
+  rowId: Scalars['String']['output'];
+  tableId: Scalars['String']['output'];
+  url: Scalars['String']['output'];
+};
+
+export type MediaAggExp = {
+  __typename?: 'MediaAggExp';
+  _count: Scalars['Int']['output'];
+  id: StringAggExp;
+  mediaTypeId: StringAggExp;
+  rootId: StringAggExp;
+  rowId: StringAggExp;
+  tableId: StringAggExp;
+  url: StringAggExp;
+};
+
+export type MediaBoolExp = {
+  _and?: InputMaybe<Array<MediaBoolExp>>;
+  _not?: InputMaybe<MediaBoolExp>;
+  _or?: InputMaybe<Array<MediaBoolExp>>;
+  id?: InputMaybe<StringBoolExp>;
+  mediaType?: InputMaybe<MediaTypesBoolExp>;
+  mediaTypeId?: InputMaybe<StringBoolExp>;
+  root?: InputMaybe<RootsBoolExp>;
+  rootId?: InputMaybe<StringBoolExp>;
+  rowId?: InputMaybe<StringBoolExp>;
+  tableId?: InputMaybe<StringBoolExp>;
+  url?: InputMaybe<StringBoolExp>;
+};
+
+export type MediaFilterInput = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<MediaOrderByExp>>;
+  where?: InputMaybe<MediaBoolExp>;
+};
+
+export type MediaOrderByExp = {
+  id?: InputMaybe<OrderBy>;
+  mediaType?: InputMaybe<MediaTypesOrderByExp>;
+  mediaTypeId?: InputMaybe<OrderBy>;
+  root?: InputMaybe<RootsOrderByExp>;
+  rootId?: InputMaybe<OrderBy>;
+  rowId?: InputMaybe<OrderBy>;
+  tableId?: InputMaybe<OrderBy>;
+  url?: InputMaybe<OrderBy>;
+};
+
+export type MediaTypes = {
+  __typename?: 'MediaTypes';
+  definition: Scalars['String']['output'];
+  id: Scalars['String']['output'];
+  media?: Maybe<Array<Media>>;
+  mediaAggregate: MediaAggExp;
+  name: Scalars['String']['output'];
+  slug?: Maybe<Scalars['String']['output']>;
+};
+
+
+export type MediaTypesMediaArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<MediaOrderByExp>>;
+  where?: InputMaybe<MediaBoolExp>;
+};
+
+
+export type MediaTypesMediaAggregateArgs = {
+  filter_input?: InputMaybe<MediaFilterInput>;
+};
+
+export type MediaTypesAggExp = {
+  __typename?: 'MediaTypesAggExp';
+  _count: Scalars['Int']['output'];
+  definition: StringAggExp;
+  id: StringAggExp;
+  name: StringAggExp;
+  slug: StringAggExp;
+};
+
+export type MediaTypesBoolExp = {
+  _and?: InputMaybe<Array<MediaTypesBoolExp>>;
+  _not?: InputMaybe<MediaTypesBoolExp>;
+  _or?: InputMaybe<Array<MediaTypesBoolExp>>;
+  definition?: InputMaybe<StringBoolExp>;
+  id?: InputMaybe<StringBoolExp>;
+  media?: InputMaybe<MediaBoolExp>;
+  name?: InputMaybe<StringBoolExp>;
+  slug?: InputMaybe<StringBoolExp>;
+};
+
+export type MediaTypesFilterInput = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<MediaTypesOrderByExp>>;
+  where?: InputMaybe<MediaTypesBoolExp>;
+};
+
+export type MediaTypesOrderByExp = {
+  definition?: InputMaybe<OrderBy>;
+  id?: InputMaybe<OrderBy>;
+  name?: InputMaybe<OrderBy>;
+  slug?: InputMaybe<OrderBy>;
 };
 
 export type Mutation = {
@@ -1302,6 +1391,40 @@ export type ProductDeploymentsOrderByExp = {
   product?: InputMaybe<ProductsOrderByExp>;
   productId?: InputMaybe<OrderBy>;
   smartContractDeployment?: InputMaybe<SmartContractDeploymentsOrderByExp>;
+};
+
+export type ProductMedia = {
+  __typename?: 'ProductMedia';
+  id: Scalars['String']['output'];
+  mediaType?: Maybe<MediaTypes>;
+  mediaTypeId?: Maybe<Scalars['String']['output']>;
+  rootId: Scalars['String']['output'];
+  rowId: Scalars['String']['output'];
+  tableId: Scalars['String']['output'];
+  url: Scalars['String']['output'];
+};
+
+export type ProductMediaBoolExp = {
+  _and?: InputMaybe<Array<ProductMediaBoolExp>>;
+  _not?: InputMaybe<ProductMediaBoolExp>;
+  _or?: InputMaybe<Array<ProductMediaBoolExp>>;
+  id?: InputMaybe<StringBoolExp>;
+  mediaType?: InputMaybe<MediaTypesBoolExp>;
+  mediaTypeId?: InputMaybe<StringBoolExp>;
+  rootId?: InputMaybe<StringBoolExp>;
+  rowId?: InputMaybe<StringBoolExp>;
+  tableId?: InputMaybe<StringBoolExp>;
+  url?: InputMaybe<StringBoolExp>;
+};
+
+export type ProductMediaOrderBy = {
+  id?: InputMaybe<OrderBy>;
+  mediaType?: InputMaybe<MediaTypesOrderByExp>;
+  mediaTypeId?: InputMaybe<OrderBy>;
+  rootId?: InputMaybe<OrderBy>;
+  rowId?: InputMaybe<OrderBy>;
+  tableId?: InputMaybe<OrderBy>;
+  url?: InputMaybe<OrderBy>;
 };
 
 export type ProductSocials = {
@@ -1504,6 +1627,7 @@ export type Products = {
   id: Scalars['String']['output'];
   isMainProduct: Scalars['Int8']['output'];
   launchDate?: Maybe<Scalars['Date']['output']>;
+  media?: Maybe<Array<ProductMedia>>;
   name: Scalars['String']['output'];
   productAssetRelationships?: Maybe<Array<ProductAssetRelationships>>;
   productAssetRelationshipsAggregate: ProductAssetRelationshipsAggExp;
@@ -1521,6 +1645,14 @@ export type Products = {
   supportsProductsBySupportsProductId?: Maybe<Array<SupportsProducts>>;
   supportsProductsBySupportsProductIdAggregate: SupportsProductsAggExp;
   urls?: Maybe<Array<ProductUrls>>;
+};
+
+
+export type ProductsMediaArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<ProductMediaOrderBy>>;
+  where?: InputMaybe<ProductMediaBoolExp>;
 };
 
 
@@ -1737,6 +1869,7 @@ export type ProfileInfos = {
   icon: Scalars['String']['output'];
   id: Scalars['String']['output'];
   logo: Scalars['String']['output'];
+  media?: Maybe<Array<ProfileInfosMedia>>;
   name: Scalars['String']['output'];
   profileSector?: Maybe<ProfileSectors>;
   profileSectorId?: Maybe<Scalars['String']['output']>;
@@ -1750,6 +1883,14 @@ export type ProfileInfos = {
   /** Self promotion field */
   tagLine: Scalars['String']['output'];
   urls?: Maybe<Array<ProfileInfoUrls>>;
+};
+
+
+export type ProfileInfosMediaArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<ProfileInfosMediaOrderBy>>;
+  where?: InputMaybe<ProfileInfosMediaBoolExp>;
 };
 
 
@@ -1807,6 +1948,7 @@ export type ProfileInfosBoolExp = {
   root?: InputMaybe<RootsBoolExp>;
   rootId?: InputMaybe<StringBoolExp>;
   tagLine?: InputMaybe<StringBoolExp>;
+  urls?: InputMaybe<ProfileInfoUrlsBoolExp>;
 };
 
 export type ProfileInfosFilterInput = {
@@ -1814,6 +1956,40 @@ export type ProfileInfosFilterInput = {
   offset?: InputMaybe<Scalars['Int']['input']>;
   order_by?: InputMaybe<Array<ProfileInfosOrderByExp>>;
   where?: InputMaybe<ProfileInfosBoolExp>;
+};
+
+export type ProfileInfosMedia = {
+  __typename?: 'ProfileInfosMedia';
+  id: Scalars['String']['output'];
+  mediaType?: Maybe<MediaTypes>;
+  mediaTypeId?: Maybe<Scalars['String']['output']>;
+  rootId: Scalars['String']['output'];
+  rowId: Scalars['String']['output'];
+  tableId: Scalars['String']['output'];
+  url: Scalars['String']['output'];
+};
+
+export type ProfileInfosMediaBoolExp = {
+  _and?: InputMaybe<Array<ProfileInfosMediaBoolExp>>;
+  _not?: InputMaybe<ProfileInfosMediaBoolExp>;
+  _or?: InputMaybe<Array<ProfileInfosMediaBoolExp>>;
+  id?: InputMaybe<StringBoolExp>;
+  mediaType?: InputMaybe<MediaTypesBoolExp>;
+  mediaTypeId?: InputMaybe<StringBoolExp>;
+  rootId?: InputMaybe<StringBoolExp>;
+  rowId?: InputMaybe<StringBoolExp>;
+  tableId?: InputMaybe<StringBoolExp>;
+  url?: InputMaybe<StringBoolExp>;
+};
+
+export type ProfileInfosMediaOrderBy = {
+  id?: InputMaybe<OrderBy>;
+  mediaType?: InputMaybe<MediaTypesOrderByExp>;
+  mediaTypeId?: InputMaybe<OrderBy>;
+  rootId?: InputMaybe<OrderBy>;
+  rowId?: InputMaybe<OrderBy>;
+  tableId?: InputMaybe<OrderBy>;
+  url?: InputMaybe<OrderBy>;
 };
 
 export type ProfileInfosOrderByExp = {
@@ -2118,12 +2294,12 @@ export type Query = {
   entityTypes?: Maybe<Array<EntityTypes>>;
   entityTypesAggregate?: Maybe<EntityTypesAggExp>;
   entityTypesById?: Maybe<EntityTypes>;
-  imageTypes?: Maybe<Array<ImageTypes>>;
-  imageTypesAggregate?: Maybe<ImageTypesAggExp>;
-  imageTypesById?: Maybe<ImageTypes>;
-  images?: Maybe<Array<Images>>;
-  imagesAggregate?: Maybe<ImagesAggExp>;
-  imagesById?: Maybe<Images>;
+  media?: Maybe<Array<Media>>;
+  mediaAggregate?: Maybe<MediaAggExp>;
+  mediaById?: Maybe<Media>;
+  mediaTypes?: Maybe<Array<MediaTypes>>;
+  mediaTypesAggregate?: Maybe<MediaTypesAggExp>;
+  mediaTypesById?: Maybe<MediaTypes>;
   productAssetRelationships?: Maybe<Array<ProductAssetRelationships>>;
   productAssetRelationshipsAggregate?: Maybe<ProductAssetRelationshipsAggExp>;
   productAssetRelationshipsById?: Maybe<ProductAssetRelationships>;
@@ -2443,38 +2619,38 @@ export type QueryEntityTypesByIdArgs = {
 };
 
 
-export type QueryImageTypesArgs = {
+export type QueryMediaArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<ImageTypesOrderByExp>>;
-  where?: InputMaybe<ImageTypesBoolExp>;
+  order_by?: InputMaybe<Array<MediaOrderByExp>>;
+  where?: InputMaybe<MediaBoolExp>;
 };
 
 
-export type QueryImageTypesAggregateArgs = {
-  filter_input?: InputMaybe<ImageTypesFilterInput>;
+export type QueryMediaAggregateArgs = {
+  filter_input?: InputMaybe<MediaFilterInput>;
 };
 
 
-export type QueryImageTypesByIdArgs = {
+export type QueryMediaByIdArgs = {
   id: Scalars['String']['input'];
 };
 
 
-export type QueryImagesArgs = {
+export type QueryMediaTypesArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<ImagesOrderByExp>>;
-  where?: InputMaybe<ImagesBoolExp>;
+  order_by?: InputMaybe<Array<MediaTypesOrderByExp>>;
+  where?: InputMaybe<MediaTypesBoolExp>;
 };
 
 
-export type QueryImagesAggregateArgs = {
-  filter_input?: InputMaybe<ImagesFilterInput>;
+export type QueryMediaTypesAggregateArgs = {
+  filter_input?: InputMaybe<MediaTypesFilterInput>;
 };
 
 
-export type QueryImagesByIdArgs = {
+export type QueryMediaTypesByIdArgs = {
   id: Scalars['String']['input'];
 };
 
@@ -3027,10 +3203,13 @@ export type Roots = {
   assetsAggregate: AssetsAggExp;
   childRootRelationships?: Maybe<Array<RootRelationships>>;
   childRootRelationshipsAggregate: RootRelationshipsAggExp;
-  connectionScoresAggregate: TheGridRankingAggExp;
   entities?: Maybe<Array<Entities>>;
   entitiesAggregate: EntitiesAggExp;
+  firstPublicValidation?: Maybe<Scalars['Date']['output']>;
   id: Scalars['String']['output'];
+  lastPublicValidation?: Maybe<Scalars['Date']['output']>;
+  media?: Maybe<Array<Media>>;
+  mediaAggregate: MediaAggExp;
   parentRootRelationships?: Maybe<Array<RootRelationships>>;
   parentRootRelationshipsAggregate: RootRelationshipsAggExp;
   products?: Maybe<Array<Products>>;
@@ -3042,7 +3221,7 @@ export type Roots = {
   slug: Scalars['String']['output'];
   socials?: Maybe<Array<Socials>>;
   socialsAggregate: SocialsAggExp;
-  theGridRanking?: Maybe<Array<TheGridRanking>>;
+  theGridRanking?: Maybe<TheGridRanking>;
   urlMain: Scalars['String']['output'];
 };
 
@@ -3073,11 +3252,6 @@ export type RootsChildRootRelationshipsAggregateArgs = {
 };
 
 
-export type RootsConnectionScoresAggregateArgs = {
-  filter_input?: InputMaybe<TheGridRankingFilterInput>;
-};
-
-
 export type RootsEntitiesArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
@@ -3088,6 +3262,19 @@ export type RootsEntitiesArgs = {
 
 export type RootsEntitiesAggregateArgs = {
   filter_input?: InputMaybe<EntitiesFilterInput>;
+};
+
+
+export type RootsMediaArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<MediaOrderByExp>>;
+  where?: InputMaybe<MediaBoolExp>;
+};
+
+
+export type RootsMediaAggregateArgs = {
+  filter_input?: InputMaybe<MediaFilterInput>;
 };
 
 
@@ -3155,18 +3342,12 @@ export type RootsSocialsAggregateArgs = {
   filter_input?: InputMaybe<SocialsFilterInput>;
 };
 
-
-export type RootsTheGridRankingArgs = {
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<TheGridRankingOrderBy>>;
-  where?: InputMaybe<TheGridRankingBoolExp>;
-};
-
 export type RootsAggExp = {
   __typename?: 'RootsAggExp';
   _count: Scalars['Int']['output'];
+  firstPublicValidation: DateAggExp;
   id: StringAggExp;
+  lastPublicValidation: DateAggExp;
   slug: StringAggExp;
   urlMain: StringAggExp;
 };
@@ -3178,7 +3359,10 @@ export type RootsBoolExp = {
   assets?: InputMaybe<AssetsBoolExp>;
   childRootRelationships?: InputMaybe<RootRelationshipsBoolExp>;
   entities?: InputMaybe<EntitiesBoolExp>;
+  firstPublicValidation?: InputMaybe<DateBoolExp>;
   id?: InputMaybe<StringBoolExp>;
+  lastPublicValidation?: InputMaybe<DateBoolExp>;
+  media?: InputMaybe<MediaBoolExp>;
   parentRootRelationships?: InputMaybe<RootRelationshipsBoolExp>;
   products?: InputMaybe<ProductsBoolExp>;
   profileInfos?: InputMaybe<ProfileInfosBoolExp>;
@@ -3197,8 +3381,11 @@ export type RootsFilterInput = {
 };
 
 export type RootsOrderByExp = {
+  firstPublicValidation?: InputMaybe<OrderBy>;
   id?: InputMaybe<OrderBy>;
+  lastPublicValidation?: InputMaybe<OrderBy>;
   slug?: InputMaybe<OrderBy>;
+  theGridRanking?: InputMaybe<TheGridRankingOrderBy>;
   urlMain?: InputMaybe<OrderBy>;
 };
 
@@ -3667,12 +3854,12 @@ export type Subscription = {
   entityTypes?: Maybe<Array<EntityTypes>>;
   entityTypesAggregate?: Maybe<EntityTypesAggExp>;
   entityTypesById?: Maybe<EntityTypes>;
-  imageTypes?: Maybe<Array<ImageTypes>>;
-  imageTypesAggregate?: Maybe<ImageTypesAggExp>;
-  imageTypesById?: Maybe<ImageTypes>;
-  images?: Maybe<Array<Images>>;
-  imagesAggregate?: Maybe<ImagesAggExp>;
-  imagesById?: Maybe<Images>;
+  media?: Maybe<Array<Media>>;
+  mediaAggregate?: Maybe<MediaAggExp>;
+  mediaById?: Maybe<Media>;
+  mediaTypes?: Maybe<Array<MediaTypes>>;
+  mediaTypesAggregate?: Maybe<MediaTypesAggExp>;
+  mediaTypesById?: Maybe<MediaTypes>;
   productAssetRelationships?: Maybe<Array<ProductAssetRelationships>>;
   productAssetRelationshipsAggregate?: Maybe<ProductAssetRelationshipsAggExp>;
   productAssetRelationshipsById?: Maybe<ProductAssetRelationships>;
@@ -3979,38 +4166,38 @@ export type SubscriptionEntityTypesByIdArgs = {
 };
 
 
-export type SubscriptionImageTypesArgs = {
+export type SubscriptionMediaArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<ImageTypesOrderByExp>>;
-  where?: InputMaybe<ImageTypesBoolExp>;
+  order_by?: InputMaybe<Array<MediaOrderByExp>>;
+  where?: InputMaybe<MediaBoolExp>;
 };
 
 
-export type SubscriptionImageTypesAggregateArgs = {
-  filter_input?: InputMaybe<ImageTypesFilterInput>;
+export type SubscriptionMediaAggregateArgs = {
+  filter_input?: InputMaybe<MediaFilterInput>;
 };
 
 
-export type SubscriptionImageTypesByIdArgs = {
+export type SubscriptionMediaByIdArgs = {
   id: Scalars['String']['input'];
 };
 
 
-export type SubscriptionImagesArgs = {
+export type SubscriptionMediaTypesArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<ImagesOrderByExp>>;
-  where?: InputMaybe<ImagesBoolExp>;
+  order_by?: InputMaybe<Array<MediaTypesOrderByExp>>;
+  where?: InputMaybe<MediaTypesBoolExp>;
 };
 
 
-export type SubscriptionImagesAggregateArgs = {
-  filter_input?: InputMaybe<ImagesFilterInput>;
+export type SubscriptionMediaTypesAggregateArgs = {
+  filter_input?: InputMaybe<MediaTypesFilterInput>;
 };
 
 
-export type SubscriptionImagesByIdArgs = {
+export type SubscriptionMediaTypesByIdArgs = {
   id: Scalars['String']['input'];
 };
 
@@ -4620,13 +4807,6 @@ export type TheGridRankingTheGridRankingsAggregateArgs = {
   filter_input?: InputMaybe<RootsFilterInput>;
 };
 
-export type TheGridRankingAggExp = {
-  __typename?: 'TheGridRankingAggExp';
-  _count: Scalars['Int']['output'];
-  connectionScore: StringAggExp;
-  rootId: StringAggExp;
-};
-
 export type TheGridRankingBoolExp = {
   _and?: InputMaybe<Array<TheGridRankingBoolExp>>;
   _not?: InputMaybe<TheGridRankingBoolExp>;
@@ -4634,13 +4814,6 @@ export type TheGridRankingBoolExp = {
   connectionScore?: InputMaybe<StringBoolExp>;
   rootId?: InputMaybe<StringBoolExp>;
   roots?: InputMaybe<RootsBoolExp>;
-};
-
-export type TheGridRankingFilterInput = {
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<TheGridRankingOrderBy>>;
-  where?: InputMaybe<TheGridRankingBoolExp>;
 };
 
 export type TheGridRankingOrderBy = {
@@ -4887,7 +5060,7 @@ export type GetProfileNameQueryVariables = Exact<{
 
 export type GetProfileNameQuery = { __typename?: 'Query', profileInfos?: Array<{ __typename?: 'ProfileInfos', name: string, descriptionShort: string }> | null };
 
-export type AssetFieldsFragmentFragment = { __typename?: 'Assets', ticker: string, rootId: string, name: string, id: string, icon: string, description: string, assetTypeId?: string | null, assetStatusId?: string | null, assetType?: { __typename?: 'AssetTypes', definition: string, id: string, name: string } | null, assetStatus?: { __typename?: 'AssetStatuses', name: string, id: string, definition: string } | null, assetDeployments?: Array<{ __typename?: 'AssetDeployments', id: string, deploymentId: string, assetId: string, smartContractDeployment?: { __typename?: 'SmartContractDeployments', id: string, deployedOnProduct?: { __typename?: 'Products', id: string, name: string, root?: { __typename?: 'Roots', slug: string } | null } | null, assetStandard?: { __typename?: 'AssetStandards', id: string } | null, smartContracts?: Array<{ __typename?: 'SmartContracts', name: string, id: string, deploymentId?: string | null, deploymentDate?: string | null, address: string }> | null, deploymentType?: { __typename?: 'DeploymentTypes', name: string, id: string, definition: string } | null } | null }> | null, urls?: Array<{ __typename?: 'AssetUrls', url: string, urlType?: { __typename?: 'UrlTypes', name: string, id: string, definition: string } | null }> | null } & { ' $fragmentName'?: 'AssetFieldsFragmentFragment' };
+export type AssetFieldsFragmentFragment = { __typename?: 'Assets', ticker: string, rootId: string, name: string, id: string, description: string, assetTypeId?: string | null, assetStatusId?: string | null, assetType?: { __typename?: 'AssetTypes', definition: string, id: string, name: string } | null, assetStatus?: { __typename?: 'AssetStatuses', name: string, id: string, definition: string } | null, assetDeployments?: Array<{ __typename?: 'AssetDeployments', id: string, deploymentId: string, assetId: string, smartContractDeployment?: { __typename?: 'SmartContractDeployments', id: string, deployedOnProduct?: { __typename?: 'Products', id: string, name: string, root?: { __typename?: 'Roots', slug: string } | null } | null, assetStandard?: { __typename?: 'AssetStandards', id: string } | null, smartContracts?: Array<{ __typename?: 'SmartContracts', name: string, id: string, deploymentId?: string | null, deploymentDate?: string | null, address: string }> | null, deploymentType?: { __typename?: 'DeploymentTypes', name: string, id: string, definition: string } | null } | null }> | null, urls?: Array<{ __typename?: 'AssetUrls', url: string, urlType?: { __typename?: 'UrlTypes', name: string, id: string, definition: string } | null }> | null, media?: Array<{ __typename?: 'AssetMedia', id: string, url: string, mediaType?: { __typename?: 'MediaTypes', id: string, name: string } | null }> | null } & { ' $fragmentName'?: 'AssetFieldsFragmentFragment' };
 
 export type EntityFieldsFragmentFragment = { __typename?: 'Entities', name: string, tradeName: string, taxIdentificationNumber: string, localRegistrationNumber: string, leiNumber: string, id: string, dateOfIncorporation?: string | null, address: string, entityType?: { __typename?: 'EntityTypes', name: string, id: string, definition: string } | null, country?: { __typename?: 'Countries', name: string, id: string, code: string } | null, urls?: Array<{ __typename?: 'EntityUrls', url: string, urlType?: { __typename?: 'UrlTypes', name: string, id: string, definition: string } | null }> | null } & { ' $fragmentName'?: 'EntityFieldsFragmentFragment' };
 
@@ -4895,7 +5068,7 @@ export type ProfileFragmentFragment = { __typename?: 'ProfileInfos', profileSect
 
 export type ProductFieldsFragmentFragment = { __typename?: 'Products', rootId: string, productTypeId?: string | null, productStatusId?: string | null, name: string, launchDate?: string | null, isMainProduct: number, id: string, description: string, productType?: { __typename?: 'ProductTypes', name: string, id: string, definition: string } | null, productStatus?: { __typename?: 'ProductStatuses', name: string, id: string, definition: string } | null, productDeployments?: Array<{ __typename?: 'ProductDeployments', smartContractDeployment?: { __typename?: 'SmartContractDeployments', assetStandardId?: string | null, id: string, deployedOnProduct?: { __typename?: 'Products', id: string, name: string, root?: { __typename?: 'Roots', slug: string } | null } | null, assetStandard?: { __typename?: 'AssetStandards', id: string } | null, deploymentType?: { __typename?: 'DeploymentTypes', name: string } | null, smartContracts?: Array<{ __typename?: 'SmartContracts', name: string, id: string, deploymentDate?: string | null, address: string, deploymentId?: string | null }> | null } | null }> | null, supportsProducts?: Array<{ __typename?: 'SupportsProducts', supportsProduct?: { __typename?: 'Products', name: string, id: string, root?: { __typename?: 'Roots', slug: string } | null } | null }> | null, supportedBy?: Array<{ __typename?: 'SupportsProducts', product?: { __typename?: 'Products', name: string, id: string, root?: { __typename?: 'Roots', slug: string } | null } | null }> | null, urls?: Array<{ __typename?: 'ProductUrls', url: string, urlType?: { __typename?: 'UrlTypes', name: string, id: string, definition: string } | null }> | null, productAssetRelationships?: Array<{ __typename?: 'ProductAssetRelationships', assetId: string, asset?: { __typename?: 'Assets', name: string, id: string, assetType?: { __typename?: 'AssetTypes', name: string } | null, root?: { __typename?: 'Roots', slug: string } | null } | null, assetSupportType?: { __typename?: 'AssetSupportTypes', name: string } | null, product?: { __typename?: 'Products', name: string, id: string, description: string } | null }> | null } & { ' $fragmentName'?: 'ProductFieldsFragmentFragment' };
 
-export type ProfileHeadingFragmentFragment = { __typename?: 'ProfileInfos', logo: string, name: string, urls?: Array<{ __typename?: 'ProfileInfoUrls', url: string, urlType?: { __typename?: 'UrlTypes', name: string } | null }> | null, root?: { __typename?: 'Roots', socials?: Array<{ __typename?: 'Socials', name: string, socialType?: { __typename?: 'SocialTypes', name: string } | null, urls?: Array<{ __typename?: 'SocialUrls', url: string }> | null }> | null } | null } & { ' $fragmentName'?: 'ProfileHeadingFragmentFragment' };
+export type ProfileHeadingFragmentFragment = { __typename?: 'ProfileInfos', name: string, urls?: Array<{ __typename?: 'ProfileInfoUrls', url: string, urlType?: { __typename?: 'UrlTypes', name: string } | null }> | null, media?: Array<{ __typename?: 'ProfileInfosMedia', id: string, url: string, mediaType?: { __typename?: 'MediaTypes', id: string, name: string } | null }> | null, root?: { __typename?: 'Roots', socials?: Array<{ __typename?: 'Socials', name: string, socialType?: { __typename?: 'SocialTypes', name: string } | null, urls?: Array<{ __typename?: 'SocialUrls', url: string }> | null }> | null } | null } & { ' $fragmentName'?: 'ProfileHeadingFragmentFragment' };
 
 export type GetProfileDataQueryVariables = Exact<{
   where?: InputMaybe<ProfileInfosBoolExp>;
@@ -4903,7 +5076,7 @@ export type GetProfileDataQueryVariables = Exact<{
 
 
 export type GetProfileDataQuery = { __typename?: 'Query', profileInfos?: Array<(
-    { __typename?: 'ProfileInfos', tagLine: string, descriptionShort: string, descriptionLong: string, root?: { __typename?: 'Roots', products?: Array<(
+    { __typename?: 'ProfileInfos', tagLine: string, descriptionShort: string, descriptionLong: string, media?: Array<{ __typename?: 'ProfileInfosMedia', id: string, url: string, mediaType?: { __typename?: 'MediaTypes', id: string, name: string } | null }> | null, root?: { __typename?: 'Roots', products?: Array<(
         { __typename?: 'Products', id: string }
         & { ' $fragmentRefs'?: { 'ProductFieldsFragmentFragment': ProductFieldsFragmentFragment } }
       )> | null, assets?: Array<(
@@ -4916,7 +5089,7 @@ export type GetProfileDataQuery = { __typename?: 'Query', profileInfos?: Array<(
     & { ' $fragmentRefs'?: { 'ProfileFragmentFragment': ProfileFragmentFragment;'ProfileHeadingFragmentFragment': ProfileHeadingFragmentFragment } }
   )> | null };
 
-export type ProfileCardFragmentFragment = { __typename?: 'ProfileInfos', name: string, logo: string, id: string, tagLine: string, descriptionShort: string, profileTypeId?: string | null, profileStatusId?: string | null, profileSectorId?: string | null, foundingDate?: string | null, profileSector?: { __typename?: 'ProfileSectors', name: string, id: string, definition: string } | null, profileStatus?: { __typename?: 'ProfileStatuses', name: string, id: string, definition: string } | null, profileType?: { __typename?: 'ProfileTypes', name: string, id: string, definition: string } | null, urls?: Array<{ __typename?: 'ProfileInfoUrls', url: string, urlType?: { __typename?: 'UrlTypes', name: string, id: string, definition: string } | null }> | null, mainProduct?: { __typename?: 'Roots', products?: Array<{ __typename?: 'Products', name: string, productType?: { __typename?: 'ProductTypes', name: string } | null }> | null } | null, root?: { __typename?: 'Roots', urlMain: string, slug: string, theGridRanking?: Array<{ __typename?: 'TheGridRanking', connectionScore: string, rootId: string }> | null, assets?: Array<(
+export type ProfileCardFragmentFragment = { __typename?: 'ProfileInfos', name: string, id: string, tagLine: string, descriptionShort: string, profileTypeId?: string | null, profileStatusId?: string | null, profileSectorId?: string | null, foundingDate?: string | null, profileSector?: { __typename?: 'ProfileSectors', name: string, id: string, definition: string } | null, profileStatus?: { __typename?: 'ProfileStatuses', name: string, id: string, definition: string } | null, profileType?: { __typename?: 'ProfileTypes', name: string, id: string, definition: string } | null, urls?: Array<{ __typename?: 'ProfileInfoUrls', url: string, urlType?: { __typename?: 'UrlTypes', name: string, id: string, definition: string } | null }> | null, media?: Array<{ __typename?: 'ProfileInfosMedia', id: string, url: string, mediaType?: { __typename?: 'MediaTypes', id: string, name: string } | null }> | null, mainProduct?: { __typename?: 'Roots', products?: Array<{ __typename?: 'Products', name: string, productType?: { __typename?: 'ProductTypes', name: string } | null }> | null } | null, root?: { __typename?: 'Roots', urlMain: string, slug: string, theGridRanking?: { __typename?: 'TheGridRanking', connectionScore: string, rootId: string } | null, assets?: Array<(
       { __typename?: 'Assets', ticker: string, name: string, id: string }
       & { ' $fragmentRefs'?: { 'AssetFieldsFragmentFragment': AssetFieldsFragmentFragment } }
     )> | null, socials?: Array<{ __typename?: 'Socials', name: string, socialType?: { __typename?: 'SocialTypes', name: string } | null, urls?: Array<{ __typename?: 'SocialUrls', url: string }> | null }> | null, profileTags?: Array<{ __typename?: 'ProfileTags', tag?: { __typename?: 'Tags', name: string, id: string } | null }> | null, products?: Array<(
@@ -5152,11 +5325,18 @@ export const ProfileFragmentFragmentDoc = new TypedDocumentString(`
     `, {"fragmentName":"ProfileFragment"}) as unknown as TypedDocumentString<ProfileFragmentFragment, unknown>;
 export const ProfileHeadingFragmentFragmentDoc = new TypedDocumentString(`
     fragment ProfileHeadingFragment on ProfileInfos {
-  logo
   name
   urls(order_by: {urlTypeId: Asc}) {
     url
     urlType {
+      name
+    }
+  }
+  media {
+    id
+    url
+    mediaType {
+      id
       name
     }
   }
@@ -5274,7 +5454,6 @@ export const AssetFieldsFragmentFragmentDoc = new TypedDocumentString(`
   rootId
   name
   id
-  icon
   description
   assetTypeId
   assetStatusId
@@ -5326,12 +5505,19 @@ export const AssetFieldsFragmentFragmentDoc = new TypedDocumentString(`
       definition
     }
   }
+  media {
+    id
+    url
+    mediaType {
+      id
+      name
+    }
+  }
 }
     `, {"fragmentName":"AssetFieldsFragment"}) as unknown as TypedDocumentString<AssetFieldsFragmentFragment, unknown>;
 export const ProfileCardFragmentFragmentDoc = new TypedDocumentString(`
     fragment ProfileCardFragment on ProfileInfos {
   name
-  logo
   id
   tagLine
   descriptionShort
@@ -5360,6 +5546,14 @@ export const ProfileCardFragmentFragmentDoc = new TypedDocumentString(`
       name
       id
       definition
+    }
+  }
+  media {
+    id
+    url
+    mediaType {
+      id
+      name
     }
   }
   mainProduct: root {
@@ -5412,7 +5606,6 @@ export const ProfileCardFragmentFragmentDoc = new TypedDocumentString(`
   rootId
   name
   id
-  icon
   description
   assetTypeId
   assetStatusId
@@ -5462,6 +5655,14 @@ export const ProfileCardFragmentFragmentDoc = new TypedDocumentString(`
       name
       id
       definition
+    }
+  }
+  media {
+    id
+    url
+    mediaType {
+      id
+      name
     }
   }
 }
@@ -5574,6 +5775,14 @@ export const GetProfileDataDocument = new TypedDocumentString(`
     descriptionLong
     ...ProfileFragment
     ...ProfileHeadingFragment
+    media {
+      id
+      url
+      mediaType {
+        id
+        name
+      }
+    }
     root {
       products {
         id
@@ -5595,7 +5804,6 @@ export const GetProfileDataDocument = new TypedDocumentString(`
   rootId
   name
   id
-  icon
   description
   assetTypeId
   assetStatusId
@@ -5645,6 +5853,14 @@ export const GetProfileDataDocument = new TypedDocumentString(`
       name
       id
       definition
+    }
+  }
+  media {
+    id
+    url
+    mediaType {
+      id
+      name
     }
   }
 }
@@ -5802,11 +6018,18 @@ fragment ProductFieldsFragment on Products {
   }
 }
 fragment ProfileHeadingFragment on ProfileInfos {
-  logo
   name
   urls(order_by: {urlTypeId: Asc}) {
     url
     urlType {
+      name
+    }
+  }
+  media {
+    id
+    url
+    mediaType {
+      id
       name
     }
   }
@@ -5833,7 +6056,6 @@ export const SearchProfilesDocument = new TypedDocumentString(`
   rootId
   name
   id
-  icon
   description
   assetTypeId
   assetStatusId
@@ -5883,6 +6105,14 @@ export const SearchProfilesDocument = new TypedDocumentString(`
       name
       id
       definition
+    }
+  }
+  media {
+    id
+    url
+    mediaType {
+      id
+      name
     }
   }
 }
@@ -5981,7 +6211,6 @@ fragment ProductFieldsFragment on Products {
 }
 fragment ProfileCardFragment on ProfileInfos {
   name
-  logo
   id
   tagLine
   descriptionShort
@@ -6010,6 +6239,14 @@ fragment ProfileCardFragment on ProfileInfos {
       name
       id
       definition
+    }
+  }
+  media {
+    id
+    url
+    mediaType {
+      id
+      name
     }
   }
   mainProduct: root {
@@ -6079,7 +6316,6 @@ export const SearchProfilesByRankingDocument = new TypedDocumentString(`
   rootId
   name
   id
-  icon
   description
   assetTypeId
   assetStatusId
@@ -6129,6 +6365,14 @@ export const SearchProfilesByRankingDocument = new TypedDocumentString(`
       name
       id
       definition
+    }
+  }
+  media {
+    id
+    url
+    mediaType {
+      id
+      name
     }
   }
 }
@@ -6227,7 +6471,6 @@ fragment ProductFieldsFragment on Products {
 }
 fragment ProfileCardFragment on ProfileInfos {
   name
-  logo
   id
   tagLine
   descriptionShort
@@ -6256,6 +6499,14 @@ fragment ProfileCardFragment on ProfileInfos {
       name
       id
       definition
+    }
+  }
+  media {
+    id
+    url
+    mediaType {
+      id
+      name
     }
   }
   mainProduct: root {
