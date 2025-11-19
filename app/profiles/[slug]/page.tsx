@@ -25,9 +25,26 @@ export async function generateMetadata({ params }: PageProps) {
 
   const profile = profileData?.profileInfos?.[0];
   if (!profile) return null;
+  
+  const canonicalUrl = `https://thegrid.id/profiles/${slug}`;
+  
   return {
     title: `${profile.name} Profile`,
-    description: profile.descriptionShort
+    description: profile.descriptionShort,
+    alternates: {
+      canonical: canonicalUrl
+    },
+    openGraph: {
+      title: `${profile.name} Profile`,
+      description: profile.descriptionShort,
+      url: canonicalUrl,
+      type: 'profile'
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `${profile.name} Profile`,
+      description: profile.descriptionShort
+    }
   };
 }
 

@@ -12,3 +12,14 @@ export const paths = {
     }
   }
 } as const;
+
+export const getCanonicalProfileUrl = (slug: string) => {
+  return `${paths.thegrid.base}/profiles/${slug}`;
+};
+
+export const getProfileUrl = (slug: string, preferCanonical = true) => {
+  if (preferCanonical) {
+    return getCanonicalProfileUrl(slug);
+  }
+  return paths.profile.detail(slug);
+};
