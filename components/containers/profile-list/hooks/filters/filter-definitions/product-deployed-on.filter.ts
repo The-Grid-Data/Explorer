@@ -81,19 +81,15 @@ function buildDeployedOnProductsWhere(
     });
   }
 
-  if (isNotEmpty(siteConfig.overrideOptionsFilterValues.productTypes)) {
+  if (isNotEmpty(siteConfig.overrideFilterValues.productTypes)) {
     conditions.push({
-      _or: [
-        {
-          root: {
-            products: {
-              productTypeId: {
-                _in: siteConfig.overrideOptionsFilterValues.productTypes
-              }
-            }
+      root: {
+        products: {
+          productTypeId: {
+            _in: siteConfig.overrideFilterValues.productTypes
           }
         }
-      ]
+      }
     });
   }
 

@@ -1,15 +1,14 @@
 import { execute } from '@/lib/graphql/execute';
 import { useFilter } from '../../use-filter';
-import { validateAndFormatOptions, parseAsId, mergeConditions } from '../utils';
+import { validateAndFormatOptions, parseAsId } from '../utils';
 import { FiltersStore } from '../../use-profile-filters';
 import { useQueryState, parseAsArrayOf } from 'nuqs';
 import { graphql } from '@/lib/graphql/generated';
-import { isNotEmpty } from '@/lib/utils/is-not-empty';
-import {
-  TagsBoolExp,
-  ProfileTagsBoolExp
-} from '@/lib/graphql/generated/graphql';
 import { siteConfig } from '@/lib/site-config';
+import { 
+  buildTagsWhereConstraints,
+  buildProfileTagsConstraints
+} from '../constraint-builders';
 
 const filterId = 'tags';
 
@@ -43,8 +42,8 @@ export const useTagsFilter = (filterStore: FiltersStore) => {
           }
         `),
         {
-          where: buildTagsWhere(filterStore),
-          aggregateInput: { where: buildAggregateInput(filterStore) }
+          where: buildTagsWhereConstraints(filterStore),
+          aggregateInput: { where: buildProfileTagsConstraints(filterStore) }
         }
       );
 
@@ -80,125 +79,3 @@ export const useTagsFilter = (filterStore: FiltersStore) => {
   });
 };
 
-function buildTagsWhere(filterStore: FiltersStore): TagsBoolExp {
-  const conditions: TagsBoolExp[] = [];
-
-  if (isNotEmpty(filterStore.profileSectorsFilter)) {
-    conditions.push({
-      profileTags: {
-        root: {
-          products: {
-            root: {
-              profileInfos: {
-                profileSectorId: { _in: filterStore.profileSectorsFilter }
-              }
-            }
-          }
-        }
-      }
-    });
-  }
-
-  if (
-    isNotEmpty(filterStore.productTypesFilter) ||
-    isNotEmpty(siteConfig.overrideFilterValues.productTypes)
-  ) {
-    conditions.push({
-      profileTags: {
-        root: {
-          products: {
-            productTypeId: {
-              _in: [
-                ...filterStore.productTypesFilter,
-                ...siteConfig.overrideFilterValues.productTypes
-              ]
-            }
-          }
-        }
-      }
-    });
-  }
-
-  if (
-    isNotEmpty(filterStore.productAssetRelationshipsFilter) ||
-    isNotEmpty(siteConfig.overrideFilterValues.productAssetRelationships)
-  ) {
-    conditions.push({
-      profileTags: {
-        root: {
-          products: {
-            productAssetRelationships: {
-              asset: {
-                ticker: {
-                  _in: siteConfig.overrideFilterValues.productAssetRelationships
-                }
-              }
-            }
-          }
-        }
-      }
-    });
-  }
-
-  if (isNotEmpty(siteConfig.overrideFilterValues.tags)) {
-    conditions.push({
-      profileTags: {
-        tagId: { _in: siteConfig.overrideFilterValues.tags }
-      }
-    });
-  }
-
-  return mergeConditions(conditions);
-}
-
-function buildAggregateInput(filterStore: FiltersStore): ProfileTagsBoolExp {
-  const conditions: Array<ProfileTagsBoolExp> = [];
-
-  if (isNotEmpty(filterStore.profileSectorsFilter)) {
-    conditions.push({
-      root: {
-        products: {
-          root: {
-            profileInfos: {
-              profileSectorId: { _in: filterStore.profileSectorsFilter }
-            }
-          }
-        }
-      }
-    });
-  }
-
-  if (isNotEmpty(filterStore.productTypesFilter)) {
-    conditions.push({
-      root: {
-        products: {
-          productTypeId: { _in: filterStore.productTypesFilter }
-        }
-      }
-    });
-  }
-
-  if (
-    isNotEmpty(filterStore.productAssetRelationshipsFilter) ||
-    isNotEmpty(siteConfig.overrideFilterValues.productAssetRelationships)
-  ) {
-    conditions.push({
-      root: {
-        products: {
-          productAssetRelationships: {
-            asset: {
-              ticker: {
-                _in: [
-                  ...filterStore.productAssetRelationshipsFilter,
-                  ...siteConfig.overrideFilterValues.productAssetRelationships
-                ]
-              }
-            }
-          }
-        }
-      }
-    });
-  }
-
-  return mergeConditions(conditions);
-}

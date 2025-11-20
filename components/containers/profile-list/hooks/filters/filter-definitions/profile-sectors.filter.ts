@@ -1,15 +1,13 @@
 import { execute } from '@/lib/graphql/execute';
 import { useFilter } from '../../use-filter';
-import { validateAndFormatOptions, parseAsId, mergeConditions } from '../utils';
+import { validateAndFormatOptions, parseAsId } from '../utils';
 import { FiltersStore } from '../../use-profile-filters';
 import { useQueryState, parseAsArrayOf } from 'nuqs';
 import { graphql } from '@/lib/graphql/generated';
-import { isNotEmpty } from '@/lib/utils/is-not-empty';
-import {
-  ProfileInfosBoolExp,
-  ProfileSectorsBoolExp
-} from '@/lib/graphql/generated/graphql';
-import { siteConfig } from '@/lib/site-config';
+import { 
+  buildProfileSectorsWhereConstraints,
+  buildProfileInfosConstraints
+} from '../constraint-builders';
 
 const filterId = 'profileSectors';
 
@@ -43,8 +41,8 @@ export const useProfileSectorsFilter = (filterStore: FiltersStore) => {
           }
         `),
         {
-          where: buildProfileSectorsWhere(filterStore),
-          aggregateInput: { where: buildAggregateInput(filterStore) }
+          where: buildProfileSectorsWhereConstraints(filterStore),
+          aggregateInput: { where: buildProfileInfosConstraints(filterStore) }
         }
       );
 
@@ -66,135 +64,3 @@ export const useProfileSectorsFilter = (filterStore: FiltersStore) => {
   });
 };
 
-function buildProfileSectorsWhere(
-  filterStore: FiltersStore
-): ProfileSectorsBoolExp {
-  const conditions: ProfileSectorsBoolExp[] = [];
-
-  if (
-    isNotEmpty(filterStore.tagsFilter) ||
-    isNotEmpty(siteConfig.overrideFilterValues.tags)
-  ) {
-    conditions.push({
-      profileInfos: {
-        root: {
-          profileTags: {
-            tagId: {
-              _in: [
-                ...filterStore.tagsFilter,
-                ...siteConfig.overrideFilterValues.tags
-              ]
-            }
-          }
-        }
-      }
-    });
-  }
-
-  if (
-    isNotEmpty(filterStore.productTypesFilter) ||
-    isNotEmpty(siteConfig.overrideFilterValues.productTypes)
-  ) {
-    conditions.push({
-      profileInfos: {
-        root: {
-          products: {
-            productTypeId: {
-              _in: [
-                ...filterStore.productTypesFilter,
-                ...siteConfig.overrideFilterValues.productTypes
-              ]
-            }
-          }
-        }
-      }
-    });
-  }
-
-  if (
-    isNotEmpty(filterStore.productAssetRelationshipsFilter) ||
-    isNotEmpty(siteConfig.overrideFilterValues.productAssetRelationships)
-  ) {
-    conditions.push({
-      profileInfos: {
-        root: {
-          products: {
-            productAssetRelationships: {
-              asset: {
-                ticker: {
-                  _in: siteConfig.overrideFilterValues.productAssetRelationships
-                }
-              }
-            }
-          }
-        }
-      }
-    });
-  }
-
-  return mergeConditions(conditions);
-}
-
-function buildAggregateInput(filterStore: FiltersStore): ProfileInfosBoolExp {
-  const conditions: Array<ProfileInfosBoolExp> = [];
-
-  if (
-    isNotEmpty(filterStore.tagsFilter) ||
-    isNotEmpty(siteConfig.overrideFilterValues.tags)
-  ) {
-    conditions.push({
-      root: {
-        profileTags: {
-          tagId: {
-            _in: [
-              ...filterStore.tagsFilter,
-              ...siteConfig.overrideFilterValues.tags
-            ]
-          }
-        }
-      }
-    });
-  }
-
-  if (
-    isNotEmpty(filterStore.productTypesFilter) ||
-    isNotEmpty(siteConfig.overrideFilterValues.productTypes)
-  ) {
-    conditions.push({
-      root: {
-        products: {
-          productTypeId: {
-            _in: [
-              ...filterStore.productTypesFilter,
-              ...siteConfig.overrideFilterValues.productTypes
-            ]
-          }
-        }
-      }
-    });
-  }
-
-  if (
-    isNotEmpty(filterStore.productAssetRelationshipsFilter) ||
-    isNotEmpty(siteConfig.overrideFilterValues.productAssetRelationships)
-  ) {
-    conditions.push({
-      root: {
-        products: {
-          productAssetRelationships: {
-            asset: {
-              ticker: {
-                _in: [
-                  ...filterStore.productAssetRelationshipsFilter,
-                  ...siteConfig.overrideFilterValues.productAssetRelationships
-                ]
-              }
-            }
-          }
-        }
-      }
-    });
-  }
-
-  return mergeConditions(conditions);
-}

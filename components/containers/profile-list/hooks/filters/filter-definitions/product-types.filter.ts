@@ -1,15 +1,13 @@
 import { execute } from '@/lib/graphql/execute';
 import { useFilter, MultiSelectFilterProps } from '../../use-filter';
-import { validateAndFormatOptions, parseAsId, mergeConditions } from '../utils';
+import { validateAndFormatOptions, parseAsId } from '../utils';
 import { FiltersStore } from '../../use-profile-filters';
 import { useQueryState, parseAsArrayOf } from 'nuqs';
 import { graphql } from '@/lib/graphql/generated';
-import { isNotEmpty } from '@/lib/utils/is-not-empty';
-import {
-  ProductsBoolExp,
-  ProductTypesBoolExp
-} from '@/lib/graphql/generated/graphql';
-import { siteConfig } from '@/lib/site-config';
+import { 
+  buildProductTypesWhereConstraints,
+  buildProductsConstraints
+} from '../constraint-builders';
 
 const filterId = 'productTypes';
 
@@ -43,8 +41,8 @@ export const useProductTypesFilter = (filterStore: FiltersStore) => {
           }
         `),
         {
-          where: buildProfileSectorsWhere(filterStore),
-          aggregateInput: { where: buildAggregateInput(filterStore) }
+          where: buildProductTypesWhereConstraints(filterStore),
+          aggregateInput: { where: buildProductsConstraints(filterStore) }
         }
       );
 
@@ -70,167 +68,3 @@ export const useProductTypesFilter = (filterStore: FiltersStore) => {
   });
 };
 
-function buildProfileSectorsWhere(
-  filterStore: FiltersStore
-): ProductTypesBoolExp {
-  const conditions: ProductTypesBoolExp[] = [];
-
-  // Apply base config restriction for product types
-  if (isNotEmpty(siteConfig.overrideFilterValues.productTypes)) {
-    conditions.push({
-      products: {
-        root: {
-          profileInfos: {
-            root: {
-              products: {
-                productTypeId: {
-                  _in: siteConfig.overrideFilterValues.productTypes
-                }
-              }
-            }
-          }
-        }
-      }
-    });
-  }
-
-  if (
-    isNotEmpty(filterStore.tagsFilter) ||
-    isNotEmpty(siteConfig.overrideFilterValues.tags)
-  ) {
-    conditions.push({
-      products: {
-        root: {
-          profileInfos: {
-            root: {
-              profileTags: {
-                tagId: {
-                  _in: [
-                    ...filterStore.tagsFilter,
-                    ...siteConfig.overrideFilterValues.tags
-                  ]
-                }
-              }
-            }
-          }
-        }
-      }
-    });
-  }
-
-  if (isNotEmpty(filterStore.profileSectorsFilter)) {
-    conditions.push({
-      products: {
-        root: {
-          profileInfos: {
-            profileSectorId: {
-              _in: filterStore.profileSectorsFilter
-            }
-          }
-        }
-      }
-    });
-  }
-
-  if (
-    isNotEmpty(filterStore.productAssetRelationshipsFilter) ||
-    isNotEmpty(siteConfig.overrideFilterValues.productAssetRelationships)
-  ) {
-    conditions.push({
-      products: {
-        root: {
-          profileInfos: {
-            root: {
-              products: {
-                productAssetRelationships: {
-                  asset: {
-                    ticker: {
-                      _in: siteConfig.overrideFilterValues
-                        .productAssetRelationships
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    });
-  }
-
-  return mergeConditions(conditions);
-}
-
-function buildAggregateInput(filterStore: FiltersStore): ProductsBoolExp {
-  const conditions: Array<ProductsBoolExp> = [];
-
-  if (
-    isNotEmpty(filterStore.tagsFilter) ||
-    isNotEmpty(siteConfig.overrideFilterValues.tags)
-  ) {
-    conditions.push({
-      root: {
-        profileTags: {
-          tagId: {
-            _in: [
-              ...filterStore.tagsFilter,
-              ...siteConfig.overrideFilterValues.tags
-            ]
-          }
-        }
-      }
-    });
-  }
-
-  if (isNotEmpty(filterStore.profileSectorsFilter)) {
-    conditions.push({
-      root: {
-        products: {
-          root: {
-            profileInfos: {
-              profileSectorId: {
-                _in: filterStore.profileSectorsFilter
-              }
-            }
-          }
-        }
-      }
-    });
-  }
-
-  if (isNotEmpty(siteConfig.overrideFilterValues.productTypes)) {
-    conditions.push({
-      root: {
-        products: {
-          productTypeId: {
-            _in: siteConfig.overrideFilterValues.productTypes
-          }
-        }
-      }
-    });
-  }
-
-  if (
-    isNotEmpty(filterStore.productAssetRelationshipsFilter) ||
-    isNotEmpty(siteConfig.overrideFilterValues.productAssetRelationships)
-  ) {
-    conditions.push({
-      root: {
-        products: {
-          productAssetRelationships: {
-            asset: {
-              ticker: {
-                _in: [
-                  ...filterStore.productAssetRelationshipsFilter,
-                  ...siteConfig.overrideFilterValues.productAssetRelationships
-                ]
-              }
-            }
-          }
-        }
-      }
-    });
-  }
-
-  return mergeConditions(conditions);
-}
