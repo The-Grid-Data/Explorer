@@ -140,6 +140,52 @@ function buildTagsWhere(filterStore: FiltersStore): TagsBoolExp {
     });
   }
 
+  if (isNotEmpty(siteConfig.overrideFilterValues.productIds)) {
+    conditions.push({
+      _or: [
+        {
+          profileTags: {
+            root: {
+              products: {
+                supportsProducts: {
+                  supportsProductId: {
+                    _in: siteConfig.overrideFilterValues.productIds
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          profileTags: {
+            root: {
+              products: {
+                productDeployments: {
+                  smartContractDeployment: {
+                    deployedOnId: {
+                      _in: siteConfig.overrideFilterValues.productIds
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          profileTags: {
+            root: {
+              products: {
+                id: {
+                  _in: siteConfig.overrideFilterValues.productIds
+                }
+              }
+            }
+          }
+        }
+      ]
+    });
+  }
+
   if (isNotEmpty(siteConfig.overrideFilterValues.tags)) {
     conditions.push({
       profileTags: {
@@ -168,11 +214,19 @@ function buildAggregateInput(filterStore: FiltersStore): ProfileTagsBoolExp {
     });
   }
 
-  if (isNotEmpty(filterStore.productTypesFilter)) {
+  if (
+    isNotEmpty(filterStore.productTypesFilter) ||
+    isNotEmpty(siteConfig.overrideFilterValues.productTypes)
+  ) {
     conditions.push({
       root: {
         products: {
-          productTypeId: { _in: filterStore.productTypesFilter }
+          productTypeId: {
+            _in: [
+              ...filterStore.productTypesFilter,
+              ...siteConfig.overrideFilterValues.productTypes
+            ]
+          }
         }
       }
     });
@@ -197,6 +251,46 @@ function buildAggregateInput(filterStore: FiltersStore): ProfileTagsBoolExp {
           }
         }
       }
+    });
+  }
+
+  if (isNotEmpty(siteConfig.overrideFilterValues.productIds)) {
+    conditions.push({
+      _or: [
+        {
+          root: {
+            products: {
+              supportsProducts: {
+                supportsProductId: {
+                  _in: siteConfig.overrideFilterValues.productIds
+                }
+              }
+            }
+          }
+        },
+        {
+          root: {
+            products: {
+              productDeployments: {
+                smartContractDeployment: {
+                  deployedOnId: {
+                    _in: siteConfig.overrideFilterValues.productIds
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          root: {
+            products: {
+              id: {
+                _in: siteConfig.overrideFilterValues.productIds
+              }
+            }
+          }
+        }
+      ]
     });
   }
 

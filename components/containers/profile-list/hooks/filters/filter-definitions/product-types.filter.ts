@@ -158,6 +158,64 @@ function buildProfileSectorsWhere(
     });
   }
 
+  if (isNotEmpty(siteConfig.overrideFilterValues.productIds)) {
+    conditions.push({
+      _or: [
+        {
+          products: {
+            root: {
+              profileInfos: {
+                root: {
+                  products: {
+                    supportsProducts: {
+                      supportsProductId: {
+                        _in: siteConfig.overrideFilterValues.productIds
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          products: {
+            root: {
+              profileInfos: {
+                root: {
+                  products: {
+                    productDeployments: {
+                      smartContractDeployment: {
+                        deployedOnId: {
+                          _in: siteConfig.overrideFilterValues.productIds
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          products: {
+            root: {
+              profileInfos: {
+                root: {
+                  products: {
+                    id: {
+                      _in: siteConfig.overrideFilterValues.productIds
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    });
+  }
+
   return mergeConditions(conditions);
 }
 
@@ -229,6 +287,46 @@ function buildAggregateInput(filterStore: FiltersStore): ProductsBoolExp {
           }
         }
       }
+    });
+  }
+
+  if (isNotEmpty(siteConfig.overrideFilterValues.productIds)) {
+    conditions.push({
+      _or: [
+        {
+          root: {
+            products: {
+              supportsProducts: {
+                supportsProductId: {
+                  _in: siteConfig.overrideFilterValues.productIds
+                }
+              }
+            }
+          }
+        },
+        {
+          root: {
+            products: {
+              productDeployments: {
+                smartContractDeployment: {
+                  deployedOnId: {
+                    _in: siteConfig.overrideFilterValues.productIds
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          root: {
+            products: {
+              id: {
+                _in: siteConfig.overrideFilterValues.productIds
+              }
+            }
+          }
+        }
+      ]
     });
   }
 
