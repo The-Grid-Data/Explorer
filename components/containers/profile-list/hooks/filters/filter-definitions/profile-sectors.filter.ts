@@ -132,6 +132,52 @@ function buildProfileSectorsWhere(
     });
   }
 
+  if (isNotEmpty(siteConfig.overrideFilterValues.productIds)) {
+    conditions.push({
+      _or: [
+        {
+          profileInfos: {
+            root: {
+              products: {
+                supportsProducts: {
+                  supportsProductId: {
+                    _in: siteConfig.overrideFilterValues.productIds
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          profileInfos: {
+            root: {
+              products: {
+                productDeployments: {
+                  smartContractDeployment: {
+                    deployedOnId: {
+                      _in: siteConfig.overrideFilterValues.productIds
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          profileInfos: {
+            root: {
+              products: {
+                id: {
+                  _in: siteConfig.overrideFilterValues.productIds
+                }
+              }
+            }
+          }
+        }
+      ]
+    });
+  }
+
   return mergeConditions(conditions);
 }
 
@@ -193,6 +239,46 @@ function buildAggregateInput(filterStore: FiltersStore): ProfileInfosBoolExp {
           }
         }
       }
+    });
+  }
+
+  if (isNotEmpty(siteConfig.overrideFilterValues.productIds)) {
+    conditions.push({
+      _or: [
+        {
+          root: {
+            products: {
+              supportsProducts: {
+                supportsProductId: {
+                  _in: siteConfig.overrideFilterValues.productIds
+                }
+              }
+            }
+          }
+        },
+        {
+          root: {
+            products: {
+              productDeployments: {
+                smartContractDeployment: {
+                  deployedOnId: {
+                    _in: siteConfig.overrideFilterValues.productIds
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          root: {
+            products: {
+              id: {
+                _in: siteConfig.overrideFilterValues.productIds
+              }
+            }
+          }
+        }
+      ]
     });
   }
 
