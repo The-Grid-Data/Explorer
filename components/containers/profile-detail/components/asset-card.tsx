@@ -15,6 +15,8 @@ import { InlineDataPoint } from './inline-data-point';
 import { ContractAddressesBadge } from './contract-address-badge';
 import { FragmentType, graphql, useFragment } from '@/lib/graphql/generated';
 import { findMedia } from '@/lib/utils/media-utils';
+import { CollapsibleList } from '@/components/ui/collapsible-list';
+import { DeepLinkBadge } from '@/components/ui/deep-link-badge';
 
 export const AssetFragment = graphql(`
   fragment AssetFieldsFragment on Assets {
@@ -34,6 +36,18 @@ export const AssetFragment = graphql(`
       name
       id
       definition
+    }
+    productAssetRelationships {
+      product {
+        name
+        rootId
+        media {
+          url
+          mediaType {
+            name
+          }
+        }
+      }
     }
     assetDeployments {
       id
@@ -133,6 +147,25 @@ export const AssetCard = ({ asset: assetData, variant }: AssetCardProps) => {
         {
           label: 'Asset Status',
           value: asset.assetStatus?.name || '-'
+        },
+        {
+          label: 'Used by products',
+          fullWidth: true,
+          children: (
+            <CollapsibleList
+              items={asset.productAssetRelationships}
+              renderEmpty={() => <span className="text-sm">-</span>}
+              renderItem={relationship => (
+                <div className="flex gap-2">
+                  <DeepLinkBadge
+                    icon={<Package size={16} />}
+                    href={'#'}
+                    value={relationship.product?.name}
+                  />
+                </div>
+              )}
+            />
+          )
         },
         {
           fullWidth: true,

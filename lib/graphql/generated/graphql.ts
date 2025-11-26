@@ -5060,11 +5060,18 @@ export type GetProfileNameQueryVariables = Exact<{
 
 export type GetProfileNameQuery = { __typename?: 'Query', profileInfos?: Array<{ __typename?: 'ProfileInfos', name: string, descriptionShort: string }> | null };
 
-export type AssetFieldsFragmentFragment = { __typename?: 'Assets', ticker: string, rootId: string, name: string, id: string, description: string, assetTypeId?: string | null, assetStatusId?: string | null, assetType?: { __typename?: 'AssetTypes', definition: string, id: string, name: string } | null, assetStatus?: { __typename?: 'AssetStatuses', name: string, id: string, definition: string } | null, assetDeployments?: Array<{ __typename?: 'AssetDeployments', id: string, deploymentId: string, assetId: string, smartContractDeployment?: { __typename?: 'SmartContractDeployments', id: string, deployedOnProduct?: { __typename?: 'Products', id: string, name: string, root?: { __typename?: 'Roots', slug: string } | null } | null, assetStandard?: { __typename?: 'AssetStandards', id: string } | null, smartContracts?: Array<{ __typename?: 'SmartContracts', name: string, id: string, deploymentId?: string | null, deploymentDate?: string | null, address: string }> | null, deploymentType?: { __typename?: 'DeploymentTypes', name: string, id: string, definition: string } | null } | null }> | null, urls?: Array<{ __typename?: 'AssetUrls', url: string, urlType?: { __typename?: 'UrlTypes', name: string, id: string, definition: string } | null }> | null, media?: Array<{ __typename?: 'AssetMedia', id: string, url: string, mediaType?: { __typename?: 'MediaTypes', id: string, name: string } | null }> | null } & { ' $fragmentName'?: 'AssetFieldsFragmentFragment' };
+export type AssetFieldsFragmentFragment = { __typename?: 'Assets', ticker: string, rootId: string, name: string, id: string, description: string, assetTypeId?: string | null, assetStatusId?: string | null, assetType?: { __typename?: 'AssetTypes', definition: string, id: string, name: string } | null, assetStatus?: { __typename?: 'AssetStatuses', name: string, id: string, definition: string } | null, productAssetRelationships?: Array<{ __typename?: 'ProductAssetRelationships', product?: { __typename?: 'Products', name: string, rootId: string, media?: Array<{ __typename?: 'ProductMedia', url: string, mediaType?: { __typename?: 'MediaTypes', name: string } | null }> | null } | null }> | null, assetDeployments?: Array<{ __typename?: 'AssetDeployments', id: string, deploymentId: string, assetId: string, smartContractDeployment?: { __typename?: 'SmartContractDeployments', id: string, deployedOnProduct?: { __typename?: 'Products', id: string, name: string, root?: { __typename?: 'Roots', slug: string } | null } | null, assetStandard?: { __typename?: 'AssetStandards', id: string } | null, smartContracts?: Array<{ __typename?: 'SmartContracts', name: string, id: string, deploymentId?: string | null, deploymentDate?: string | null, address: string }> | null, deploymentType?: { __typename?: 'DeploymentTypes', name: string, id: string, definition: string } | null } | null }> | null, urls?: Array<{ __typename?: 'AssetUrls', url: string, urlType?: { __typename?: 'UrlTypes', name: string, id: string, definition: string } | null }> | null, media?: Array<{ __typename?: 'AssetMedia', id: string, url: string, mediaType?: { __typename?: 'MediaTypes', id: string, name: string } | null }> | null } & { ' $fragmentName'?: 'AssetFieldsFragmentFragment' };
 
 export type EntityFieldsFragmentFragment = { __typename?: 'Entities', name: string, tradeName: string, taxIdentificationNumber: string, localRegistrationNumber: string, leiNumber: string, id: string, dateOfIncorporation?: string | null, address: string, entityType?: { __typename?: 'EntityTypes', name: string, id: string, definition: string } | null, country?: { __typename?: 'Countries', name: string, id: string, code: string } | null, urls?: Array<{ __typename?: 'EntityUrls', url: string, urlType?: { __typename?: 'UrlTypes', name: string, id: string, definition: string } | null }> | null } & { ' $fragmentName'?: 'EntityFieldsFragmentFragment' };
 
-export type ProfileFragmentFragment = { __typename?: 'ProfileInfos', profileSector?: { __typename?: 'ProfileSectors', name: string } | null, profileType?: { __typename?: 'ProfileTypes', name: string } | null, root?: { __typename?: 'Roots', assets?: Array<{ __typename?: 'Assets', ticker: string }> | null, profileTags?: Array<{ __typename?: 'ProfileTags', tag?: { __typename?: 'Tags', name: string, id: string } | null }> | null } | null, profileStatus?: { __typename?: 'ProfileStatuses', name: string, id: string } | null, mainProduct?: { __typename?: 'Roots', products?: Array<{ __typename?: 'Products', productType?: { __typename?: 'ProductTypes', name: string } | null }> | null } | null } & { ' $fragmentName'?: 'ProfileFragmentFragment' };
+export type ProfileFragmentFragment = { __typename?: 'ProfileInfos', profileSector?: { __typename?: 'ProfileSectors', name: string } | null, profileType?: { __typename?: 'ProfileTypes', name: string } | null, root?: { __typename?: 'Roots', firstPublicValidation?: string | null, lastPublicValidation?: string | null, assets?: Array<{ __typename?: 'Assets', ticker: string }> | null, profileTags?: Array<{ __typename?: 'ProfileTags', tag?: { __typename?: 'Tags', name: string, id: string } | null }> | null } | null, profileStatus?: { __typename?: 'ProfileStatuses', name: string, id: string } | null, mainProduct?: { __typename?: 'Roots', products?: Array<{ __typename?: 'Products', productType?: { __typename?: 'ProductTypes', name: string } | null }> | null } | null } & { ' $fragmentName'?: 'ProfileFragmentFragment' };
+
+export type GetParentProfileQueryVariables = Exact<{
+  where?: InputMaybe<RootsBoolExp>;
+}>;
+
+
+export type GetParentProfileQuery = { __typename?: 'Query', roots?: Array<{ __typename?: 'Roots', slug: string, lastPublicValidation?: string | null, profileInfos?: Array<{ __typename?: 'ProfileInfos', foundingDate?: string | null, name: string, logo: string, icon: string, descriptionShort: string, media?: Array<{ __typename?: 'ProfileInfosMedia', url: string, mediaType?: { __typename?: 'MediaTypes', id: string, name: string } | null }> | null, profileType?: { __typename?: 'ProfileTypes', name: string } | null }> | null }> | null };
 
 export type ProductFieldsFragmentFragment = { __typename?: 'Products', rootId: string, productTypeId?: string | null, productStatusId?: string | null, name: string, launchDate?: string | null, isMainProduct: number, id: string, description: string, productType?: { __typename?: 'ProductTypes', name: string, id: string, definition: string } | null, productStatus?: { __typename?: 'ProductStatuses', name: string, id: string, definition: string } | null, productDeployments?: Array<{ __typename?: 'ProductDeployments', smartContractDeployment?: { __typename?: 'SmartContractDeployments', assetStandardId?: string | null, id: string, deployedOnProduct?: { __typename?: 'Products', id: string, name: string, root?: { __typename?: 'Roots', slug: string } | null } | null, assetStandard?: { __typename?: 'AssetStandards', id: string } | null, deploymentType?: { __typename?: 'DeploymentTypes', name: string } | null, smartContracts?: Array<{ __typename?: 'SmartContracts', name: string, id: string, deploymentDate?: string | null, address: string, deploymentId?: string | null }> | null } | null }> | null, supportsProducts?: Array<{ __typename?: 'SupportsProducts', supportsProduct?: { __typename?: 'Products', name: string, id: string, root?: { __typename?: 'Roots', slug: string } | null } | null }> | null, supportedBy?: Array<{ __typename?: 'SupportsProducts', product?: { __typename?: 'Products', name: string, id: string, root?: { __typename?: 'Roots', slug: string } | null } | null }> | null, urls?: Array<{ __typename?: 'ProductUrls', url: string, urlType?: { __typename?: 'UrlTypes', name: string, id: string, definition: string } | null }> | null, productAssetRelationships?: Array<{ __typename?: 'ProductAssetRelationships', assetId: string, asset?: { __typename?: 'Assets', name: string, id: string, assetType?: { __typename?: 'AssetTypes', name: string } | null, root?: { __typename?: 'Roots', slug: string } | null } | null, assetSupportType?: { __typename?: 'AssetSupportTypes', name: string } | null, product?: { __typename?: 'Products', name: string, id: string, description: string } | null }> | null } & { ' $fragmentName'?: 'ProductFieldsFragmentFragment' };
 
@@ -5076,7 +5083,7 @@ export type GetProfileDataQueryVariables = Exact<{
 
 
 export type GetProfileDataQuery = { __typename?: 'Query', profileInfos?: Array<(
-    { __typename?: 'ProfileInfos', tagLine: string, descriptionShort: string, descriptionLong: string, media?: Array<{ __typename?: 'ProfileInfosMedia', id: string, url: string, mediaType?: { __typename?: 'MediaTypes', id: string, name: string } | null }> | null, root?: { __typename?: 'Roots', products?: Array<(
+    { __typename?: 'ProfileInfos', tagLine: string, descriptionShort: string, descriptionLong: string, media?: Array<{ __typename?: 'ProfileInfosMedia', id: string, url: string, mediaType?: { __typename?: 'MediaTypes', id: string, name: string } | null }> | null, root?: { __typename?: 'Roots', firstPublicValidation?: string | null, lastPublicValidation?: string | null, parentRootRelationships?: Array<{ __typename?: 'RootRelationships', childRootId: string, parentRootId: string, id: string, rootRelationshipType?: { __typename?: 'RootRelationshipTypes', name: string } | null }> | null, childRootRelationships?: Array<{ __typename?: 'RootRelationships', parentRootId: string, childRootId: string, rootRelationshipType?: { __typename?: 'RootRelationshipTypes', name: string } | null }> | null, products?: Array<(
         { __typename?: 'Products', id: string }
         & { ' $fragmentRefs'?: { 'ProductFieldsFragmentFragment': ProductFieldsFragmentFragment } }
       )> | null, assets?: Array<(
@@ -5298,6 +5305,8 @@ export const ProfileFragmentFragmentDoc = new TypedDocumentString(`
     name
   }
   root {
+    firstPublicValidation
+    lastPublicValidation
     assets {
       ticker
     }
@@ -5467,6 +5476,18 @@ export const AssetFieldsFragmentFragmentDoc = new TypedDocumentString(`
     id
     definition
   }
+  productAssetRelationships {
+    product {
+      name
+      rootId
+      media {
+        url
+        mediaType {
+          name
+        }
+      }
+    }
+  }
   assetDeployments {
     id
     deploymentId
@@ -5619,6 +5640,18 @@ export const ProfileCardFragmentFragmentDoc = new TypedDocumentString(`
     id
     definition
   }
+  productAssetRelationships {
+    product {
+      name
+      rootId
+      media {
+        url
+        mediaType {
+          name
+        }
+      }
+    }
+  }
   assetDeployments {
     id
     deploymentId
@@ -5767,6 +5800,31 @@ export const GetProfileNameDocument = new TypedDocumentString(`
   }
 }
     `) as unknown as TypedDocumentString<GetProfileNameQuery, GetProfileNameQueryVariables>;
+export const GetParentProfileDocument = new TypedDocumentString(`
+    query getParentProfile($where: RootsBoolExp) {
+  roots(limit: 1, offset: 0, where: $where) {
+    slug
+    lastPublicValidation
+    profileInfos {
+      foundingDate
+      media {
+        mediaType {
+          id
+          name
+        }
+        url
+      }
+      name
+      logo
+      icon
+      descriptionShort
+      profileType {
+        name
+      }
+    }
+  }
+}
+    `) as unknown as TypedDocumentString<GetParentProfileQuery, GetParentProfileQueryVariables>;
 export const GetProfileDataDocument = new TypedDocumentString(`
     query getProfileData($where: ProfileInfosBoolExp) {
   profileInfos(limit: 1, offset: 0, where: $where) {
@@ -5784,6 +5842,23 @@ export const GetProfileDataDocument = new TypedDocumentString(`
       }
     }
     root {
+      firstPublicValidation
+      lastPublicValidation
+      parentRootRelationships {
+        childRootId
+        parentRootId
+        id
+        rootRelationshipType {
+          name
+        }
+      }
+      childRootRelationships {
+        parentRootId
+        childRootId
+        rootRelationshipType {
+          name
+        }
+      }
       products {
         id
         ...ProductFieldsFragment
@@ -5816,6 +5891,18 @@ export const GetProfileDataDocument = new TypedDocumentString(`
     name
     id
     definition
+  }
+  productAssetRelationships {
+    product {
+      name
+      rootId
+      media {
+        url
+        mediaType {
+          name
+        }
+      }
+    }
   }
   assetDeployments {
     id
@@ -5900,6 +5987,8 @@ fragment ProfileFragment on ProfileInfos {
     name
   }
   root {
+    firstPublicValidation
+    lastPublicValidation
     assets {
       ticker
     }
@@ -6068,6 +6157,18 @@ export const SearchProfilesDocument = new TypedDocumentString(`
     name
     id
     definition
+  }
+  productAssetRelationships {
+    product {
+      name
+      rootId
+      media {
+        url
+        mediaType {
+          name
+        }
+      }
+    }
   }
   assetDeployments {
     id
@@ -6328,6 +6429,18 @@ export const SearchProfilesByRankingDocument = new TypedDocumentString(`
     name
     id
     definition
+  }
+  productAssetRelationships {
+    product {
+      name
+      rootId
+      media {
+        url
+        mediaType {
+          name
+        }
+      }
+    }
   }
   assetDeployments {
     id
