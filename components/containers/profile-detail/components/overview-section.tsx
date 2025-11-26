@@ -14,6 +14,8 @@ export const ProfileFragment = graphql(`
       name
     }
     root {
+      firstPublicValidation
+      lastPublicValidation
       assets {
         ticker
       }
@@ -77,7 +79,15 @@ export const OverviewSection = ({ profile }: OverviewSectionProps) => {
     {
       label: 'Tags',
       value: <ProfileTags profileTags={profileData?.root?.profileTags} />
-    }
+    },
+    ...(profileData?.root?.firstPublicValidation ? [{
+      label: 'First added to The Grid',
+      value: new Date(profileData?.root?.firstPublicValidation)?.toDateString()
+    }] : []),
+    ...(profileData?.root?.lastPublicValidation ? [{
+      label: 'Last Updated on the Grid',
+      value: new Date(profileData?.root?.lastPublicValidation)?.toDateString()
+    }] : [])
   ];
 
   return (

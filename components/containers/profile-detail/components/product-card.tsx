@@ -144,6 +144,11 @@ export const ProductCard = ({
       description={product.description || 'No description available'}
       dataPoints={[
         {
+          label: 'Product type',
+          fullWidth: true,
+          children: <span className="text-sm">{product.productType?.name}</span>
+        },
+        {
           label: 'Product Status',
           value: <Badge>{product.productStatus?.name}</Badge>
         },
@@ -155,11 +160,7 @@ export const ProductCard = ({
           label: 'Is Main Product',
           value: product.isMainProduct ? 'Yes' : 'No'
         },
-        {
-          label: 'Product type',
-          fullWidth: true,
-          children: <span className="text-sm">{product.productType?.name}</span>
-        },
+
         {
           label: 'Supports',
           fullWidth: true,
