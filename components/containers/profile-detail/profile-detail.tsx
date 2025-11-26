@@ -10,6 +10,7 @@ import { AssetCard } from './components/asset-card';
 import { EntityCard } from './components/entity-card';
 import { Banknote, Building2, Package } from 'lucide-react';
 import { OverviewSection } from './components/overview-section';
+import { ParentRelationshipsSection } from './components/parent-relationships-section';
 import { graphql } from '@/lib/graphql/generated';
 import { execute } from '@/lib/graphql/execute';
 import { useQuery } from '@tanstack/react-query';
@@ -31,6 +32,23 @@ export const ProfileDetailQuery = graphql(`
         }
       }
       root {
+        firstPublicValidation
+        lastPublicValidation
+        parentRootRelationships {
+          childRootId
+          parentRootId
+          id
+          rootRelationshipType {
+            name
+          }
+        }
+        childRootRelationships {
+          parentRootId
+          childRootId
+          rootRelationshipType {
+            name
+          }
+        }
         products {
           id
           ...ProductFieldsFragment
@@ -57,7 +75,7 @@ export const ProfileDetail = ({ profileId }: ProfileDetailProps) => {
     where: { root: { slug: { _eq: profileId } } }
   };
 
-  const { data, isFetching } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ['profile', profileId],
     queryFn: () => execute(ProfileDetailQuery, query)
   });
@@ -65,7 +83,7 @@ export const ProfileDetail = ({ profileId }: ProfileDetailProps) => {
   console.log({ data });
   const profile = data?.profileInfos?.[0];
 
-  if (isFetching) {
+  if (isLoading) {
     return <ProfileLoading />;
   }
 
@@ -75,24 +93,45 @@ export const ProfileDetail = ({ profileId }: ProfileDetailProps) => {
 
   return (
     <div className="container w-full space-y-10 pb-12">
-      <ProfileHeading
-        query={ProfileDetailQuery.toString()}
-        queryVariables={query}
-        profile={profile}
-        isClaimed={hasClaimedTag(profile as any)}
-      />
+      <div className="flex flex-col gap-8 lg:gap-1 xl:flex-row">
+        <div className="flex flex-col gap-1">
+          <ProfileHeading
+            query={ProfileDetailQuery.toString()}
+            queryVariables={query}
+            profile={profile}
+            fullProfile={profile}
+          />
 
-      <section className="space-y-3">
-        <ProfileDataPoint label="Tagline" value={profile.tagLine} />
-        <ProfileDataPoint
-          label="Short Description"
-          value={profile.descriptionShort}
+          <section className="space-y-3">
+            <ProfileDataPoint label="Tagline" value={profile.tagLine} />
+            <ProfileDataPoint
+              label="Short Description"
+              value={profile.descriptionShort}
+            />
+            <ProfileDataPoint
+              label="Long Description"
+              value={profile.descriptionLong}
+            />
+          </section>
+        </div>
+
+        <ParentRelationshipsSection
+          isParentOf={profile.root?.parentRootRelationships?.map(
+            relationship => ({
+              rootId: relationship.childRootId,
+              relationshipType:
+                relationship?.rootRelationshipType?.name ?? 'CHILD'
+            })
+          )}
+          isChildOf={profile.root?.childRootRelationships?.map(
+            relationship => ({
+              rootId: relationship.parentRootId,
+              relationshipType:
+                relationship.rootRelationshipType?.name ?? 'PARENT'
+            })
+          )}
         />
-        <ProfileDataPoint
-          label="Long Description"
-          value={profile.descriptionLong}
-        />
-      </section>
+      </div>
 
       <OverviewSection profile={profile} />
 
@@ -139,14 +178,3 @@ export const ProfileDetail = ({ profileId }: ProfileDetailProps) => {
   );
 };
 
-type Tag = { name: string; id: string };
-function hasClaimedTag(profile?: { root: { profileTags: { tag: Tag }[] } }) {
-  if (!profile?.root?.profileTags) return false;
-
-  const isClaimed = profile?.root?.profileTags?.some(
-    ({ tag }) => tag.id === '7'
-  );
-
-  if (isClaimed) return true;
-  return false;
-}
