@@ -99,7 +99,6 @@ export const ProfileDetail = ({ profileId }: ProfileDetailProps) => {
             query={ProfileDetailQuery.toString()}
             queryVariables={query}
             profile={profile}
-            fullProfile={profile}
           />
 
           <section className="space-y-3">
