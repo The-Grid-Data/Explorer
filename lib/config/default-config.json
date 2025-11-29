@@ -56,5 +56,236 @@
     "allowHeroFiltersSearch": true,
     "displayTagsFilter": true,
     "displayPoweredBy": true
-  }
+  },
+  "productTypeGroups": [
+    {
+      "id": "trading-exchanges",
+      "label": "Trading & Exchanges",
+      "description": "Platforms and tools for buying, selling, and trading digital assets across centralized and decentralized venues.",
+      "productTypeSlugs": [
+        "centralised_exchange",
+        "decentralised_exchange",
+        "dex_aggregator",
+        "otc",
+        "trading_bot",
+        "trading_terminal",
+        "social_trading",
+        "market_maker"
+      ],
+      "order": 1
+    },
+    {
+      "id": "defi-protocols",
+      "label": "DeFi Protocols",
+      "description": "Decentralized financial services including lending, staking, yield optimization, and derivatives protocols.",
+      "productTypeSlugs": [
+        "decentralised_borrowing_and_lending",
+        "liquid_staking",
+        "yield_aggregator",
+        "derivatives",
+        "index_platform",
+        "pool_software"
+      ],
+      "order": 2
+    },
+    {
+      "id": "blockchain-infrastructure",
+      "label": "Blockchain Infrastructure",
+      "description": "Core blockchain networks, data feeds, node infrastructure, and validation services powering the decentralized web.",
+      "productTypeSlugs": [
+        "l1",
+        "l2",
+        "l3",
+        "oracle",
+        "rpc_provider",
+        "staking_service",
+        "node_software",
+        "node_hosting",
+        "node_hardware",
+        "validator",
+        "shared_sequencer"
+      ],
+      "order": 3
+    },
+    {
+      "id": "cross-chain-interoperability",
+      "label": "Cross-chain & Interoperability",
+      "description": "Technologies enabling asset transfers and communication between different blockchain networks.",
+      "productTypeSlugs": [
+        "bridge",
+        "bridge_aggregator",
+        "cross_chain_infrastructure",
+        "messaging_protocol"
+      ],
+      "order": 4
+    },
+    {
+      "id": "wallets-custody",
+      "label": "Wallets & Custody",
+      "description": "Solutions for storing, securing, and managing digital assets from consumer wallets to institutional custody.",
+      "productTypeSlugs": [
+        "wallet",
+        "hardware_wallet",
+        "multi_sig_wallet",
+        "embedded_wallet",
+        "custody_technology_provider",
+        "custodian"
+      ],
+      "order": 5
+    },
+    {
+      "id": "data-analytics",
+      "label": "Data & Analytics",
+      "description": "Blockchain data indexing, analytics, explorers, and risk assessment tools for onchain insights.",
+      "productTypeSlugs": [
+        "onchain_data_api",
+        "data",
+        "pricing_data_api",
+        "staking_data",
+        "block_explorer",
+        "data_terminal",
+        "risk_assessment"
+      ],
+      "order": 6
+    },
+    {
+      "id": "developer-tools",
+      "label": "Developer Tools",
+      "description": "Development frameworks, security auditing, testing tools, and bug bounty platforms for blockchain builders.",
+      "productTypeSlugs": [
+        "developer_tooling",
+        "smart_contract_audits",
+        "blockchain_development_security_tools",
+        "bug_bounty_competitions"
+      ],
+      "order": 7
+    },
+    {
+      "id": "payments",
+      "label": "Payments",
+      "description": "Comprehensive payment infrastructure including fiat on/off-ramps, merchant solutions, cards, invoicing, and accounting.",
+      "productTypeSlugs": [
+        "on_off_ramp",
+        "merchant_payment_gateway",
+        "payment_network",
+        "payments_infrastructure_and_orchestration",
+        "card",
+        "card_issuance",
+        "peer_to_peer_and_remittance",
+        "b2b_invoicing_and_billing",
+        "payroll",
+        "bill_pay_tools",
+        "tax_tooling_and_accounting",
+        "token_distribution_tool",
+        "payment_links_and_request_tools",
+        "subscription_and_streaming_payments",
+        "social_payments",
+        "gift_cards_and_digital_vouchers",
+        "trade_finance"
+      ],
+      "order": 8
+    },
+    {
+      "id": "nfts-digital-assets",
+      "label": "NFTs & Digital Assets",
+      "description": "Marketplaces and platforms for creating, launching, and trading NFTs, stablecoins, and real-world asset tokens.",
+      "productTypeSlugs": [
+        "nft_marketplace",
+        "nft_issuance_platform",
+        "launch_pad",
+        "stablecoin_issuance",
+        "rwa_tokenisation_platform"
+      ],
+      "order": 9
+    },
+    {
+      "id": "gaming",
+      "label": "Gaming",
+      "description": "Blockchain-based games, gaming infrastructure, and gambling platforms utilizing digital assets.",
+      "productTypeSlugs": [
+        "game",
+        "blockchain_gaming_infrastructure",
+        "gambling_casino"
+      ],
+      "order": 10
+    },
+    {
+      "id": "ai-agents",
+      "label": "AI & Agents",
+      "description": "Autonomous AI agents, platforms, and frameworks for intelligent onchain automation and decision-making.",
+      "productTypeSlugs": [
+        "ai_agent",
+        "ai_agent_platform",
+        "ai_agent_framework"
+      ],
+      "order": 11
+    },
+    {
+      "id": "social-identity",
+      "label": "Social & Identity",
+      "description": "Decentralized social networks, identity solutions, and DAO governance platforms for communities.",
+      "productTypeSlugs": [
+        "social_platform",
+        "social_infrastructure",
+        "decentralised_identity",
+        "dao_management_platform"
+      ],
+      "order": 12
+    },
+    {
+      "id": "specialized-services",
+      "label": "Specialized Services",
+      "description": "Niche infrastructure including compute networks, decentralized storage, DePIN, IoT, and privacy solutions.",
+      "productTypeSlugs": [
+        "compute_network",
+        "decentralized_file_storage",
+        "depin",
+        "internet_of_things_iot",
+        "privacy_pool",
+        "onchain_insurance",
+        "offchain_insurance",
+        "onchain_compliance_and_investigations"
+      ],
+      "order": 13
+    },
+    {
+      "id": "business-services",
+      "label": "Business Services",
+      "description": "Professional services, education, venture support, events, media, and business platforms for the crypto ecosystem.",
+      "productTypeSlugs": [
+        "service_provider",
+        "customer_engagement_platform",
+        "financial_services_platform",
+        "education_and_training",
+        "venture_services",
+        "managed_fund",
+        "events_and_conferences",
+        "hackathon",
+        "news_and_media",
+        "grants_platform"
+      ],
+      "order": 14
+    },
+    {
+      "id": "other-products",
+      "label": "Other Products",
+      "description": "Miscellaneous products and services including browsers, prediction markets, ticketing, retail, and more.",
+      "productTypeSlugs": [
+        "browser",
+        "mobile_phone",
+        "music",
+        "dust_collector",
+        "prediction_markets",
+        "impact_initiative",
+        "ticketing",
+        "travel_booking_site",
+        "online_retail_platform",
+        "talent_marketplace",
+        "transport",
+        "blockchain_as_a_service_baas_",
+        "e_commerce"
+      ],
+      "order": 15
+    }
+  ]
 }

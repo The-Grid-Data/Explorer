@@ -16,4 +16,5 @@ export { useProfileTypeFilter } from './profile-type.filter';
 export { useProfileSectorsFilter } from './profile-sectors.filter';
 export { useProfileStatusesFilter } from './profile-statuses.filter';
 export { useProfileFoundingDateFilter } from './profile-founding-date.filter';
+export { useProductTypeGroupsFilter } from './product-type-groups.filter';
 export { useProductAssetRelationshipsFilter } from './product-asset-relationships.filter';

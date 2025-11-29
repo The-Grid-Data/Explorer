@@ -22,8 +22,18 @@ export const findMedia = {
    * */
   logo: findMediaByType('LogoLightBg'),
   /**
+   * Return Logo Dark BG from the media array
+   * @example const validLogoUrl = profile.media?.find(findMedia.logoDark)?.url;
+   * */
+  logoDark: findMediaByType('LogoDarkBG'),
+  /**
    * Return Icon Light BG from the media array
    * @example const validIconUrl = profile.media?.find(findMedia.icon)?.url;
    * */
-  icon: findMediaByType('IconLightBG')
+  icon: findMediaByType('IconLightBG'),
+  /**
+   * Return Icon Dark BG from the media array
+   * @example const validIconUrl = profile.media?.find(findMedia.iconDark)?.url;
+   * */
+  iconDark: findMediaByType('IconDarkBG')
 };

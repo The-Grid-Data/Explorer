@@ -34,5 +34,6 @@ export const parseAsId = createParser({
 });
 
 export const mergeConditions = (conditions: Array<object>) => {
+  if (conditions.length === 0) return {};
   return deepmerge.all(conditions);
 };

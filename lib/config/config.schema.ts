@@ -81,7 +81,19 @@ export const configSchema = z.object({
     displayPoweredBy: z
       .boolean()
       .default(defaultConfig.featureFlags.displayPoweredBy)
-  })
+  }),
+  productTypeGroups: z
+    .array(
+      z.object({
+        id: z.string(),
+        label: z.string(),
+        description: z.string(),
+        productTypeSlugs: z.array(z.string()),
+        icon: z.string().optional(),
+        order: z.number().optional()
+      })
+    )
+    .default(defaultConfig.productTypeGroups || [])
 });
 
 export type Config = z.infer<typeof configSchema>;

@@ -25,7 +25,8 @@ import {
   useProfileSectorsFilter,
   useProfileStatusesFilter,
   useProfileFoundingDateFilter,
-  useProductAssetRelationshipsFilter
+  useProductAssetRelationshipsFilter,
+  useProductTypeGroupsFilter
 } from './filters/filter-definitions';
 import { ProfileInfosBoolExp } from '@/lib/graphql/generated/graphql';
 
@@ -37,6 +38,7 @@ export type FiltersStore = {
   profileFoundingDateFilter: RangeReturn<string>['value'];
   productStatusFilter: MultiSelectReturn<string, string>['value'];
   productTypesFilter: MultiSelectReturn<string, string>['value'];
+  productTypeGroupsFilter: MultiSelectReturn<string, string>['value'];
   productLaunchDateFilter: RangeReturn<string>['value'];
   supportsProductsFilter: MultiSelectReturn<string, string>['value'];
   productDeployedOnFilter: MultiSelectReturn<string, string>['value'];
@@ -67,6 +69,7 @@ export function useProfileFilters() {
     profileFoundingDateFilter: useProfileFoundingDateFilter(),
     productStatusFilter: useProductStatusFilter(filterStore),
     productTypesFilter: useProductTypesFilter(filterStore),
+    productTypeGroupsFilter: useProductTypeGroupsFilter(filterStore),
     productLaunchDateFilter: useProductLaunchDateFilter(),
     supportsProductsFilter: useSupportsProductsFilter(filterStore),
     productDeployedOnFilter: useProductDeployedOnFilter(filterStore),
