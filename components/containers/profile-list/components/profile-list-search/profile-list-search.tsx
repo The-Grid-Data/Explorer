@@ -6,9 +6,9 @@ export const ProfileListSearch = () => {
   const { filters } = useProfileFiltersContext();
 
   return (
-    <div className="relative flex h-14 flex-col justify-end">
+    <div className="relative flex w-full flex-col gap-2">
       <Label
-        className="absolute -top-4 text-xl font-bold lg:text-base"
+        className="text-sm font-medium"
         htmlFor="search"
         id="search-bar"
       >
@@ -22,6 +22,7 @@ export const ProfileListSearch = () => {
         onChange={event => {
           filters.searchFilter.setValue(event.target.value);
         }}
+        className="h-10"
       />
     </div>
   );

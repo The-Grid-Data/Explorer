@@ -145,18 +145,33 @@ export const ProfileCard = ({ profile: profileData }: ProfileCardCardProps) => {
   const [focusedProductIndex, setFocusedProductIndex] = useState<number | null>(null);
   const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(false);
   const [isProductsExpanded, setIsProductsExpanded] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
-  // Check which logos/icons are available
+  // Handle hydration - theme is only available after mount
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // Check which logos/icons are available from PROFILE media only
   const darkLogoUrl = profile.media?.find(findMedia.logoDark)?.url;
   const lightLogoUrl = profile.media?.find(findMedia.logo)?.url;
-  const iconUrl = profile.media?.find(findMedia.icon)?.url;
+  const lightIconUrl = profile.media?.find(findMedia.icon)?.url;
+  const darkIconUrl = profile.media?.find(findMedia.iconDark)?.url;
   
-  // Use theme-aware logo or icon
-  const isDarkMode = resolvedTheme === 'dark';
-  const useDarkLogo = isDarkMode && darkLogoUrl;
-  const validLogoUrl = useDarkLogo ? darkLogoUrl : lightLogoUrl;
-  const validIconUrl = iconUrl;
-  const logoBgClass = useDarkLogo ? 'bg-black' : 'bg-white';
+  // Use theme-aware logo or icon - ALWAYS prefer icon over logo
+  // Use light theme as default during SSR to avoid hydration mismatch
+  const isDarkMode = mounted && resolvedTheme === 'dark';
+  
+  // Icon selection: prefer theme-specific icon, fallback to light icon
+  const validIconUrl = isDarkMode && darkIconUrl ? darkIconUrl : lightIconUrl;
+  
+  // Logo selection: only used if no icon is available
+  const validLogoUrl = isDarkMode && darkLogoUrl ? darkLogoUrl : lightLogoUrl;
+  
+  // Background class based on what we're showing
+  const logoBgClass = validIconUrl
+    ? (isDarkMode && darkIconUrl ? 'bg-black' : 'bg-white')
+    : (isDarkMode && darkLogoUrl ? 'bg-black' : 'bg-white');
 
   // Get all products - fragment the products using a helper that calls useFragment properly
   const rawProducts = profile.root?.products || [];

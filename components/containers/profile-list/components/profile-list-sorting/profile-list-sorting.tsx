@@ -58,16 +58,16 @@ const ProfileListSortingComponent = () => {
   const options = useMemo(() => extractOrderByOptions(data), [data]);
 
   return (
-    <div className="flex w-full flex-col justify-end gap-4 md:flex-row">
-      <div className="flex flex-col gap-1">
-        <Label className="text-xs">Sort by</Label>
+    <div className="flex w-full flex-col gap-4 md:flex-row">
+      <div className="flex flex-col gap-2">
+        <Label className="text-sm font-medium">Sort by</Label>
         <Popover open={openSortBy} onOpenChange={setOpenSortBy}>
           <PopoverTrigger asChild>
             <Button
               variant="outline"
               role="combobox"
               aria-expanded={openSortBy}
-              className="w-full justify-between md:w-[180px]"
+              className="h-10 w-full justify-between md:w-[180px]"
             >
               <span className="truncate">
                 {sorting.sortBy || 'Select field...'}
@@ -105,15 +105,15 @@ const ProfileListSortingComponent = () => {
           </PopoverContent>
         </Popover>
       </div>
-      <div className="flex flex-col gap-1">
-        <Label className="text-xs">Sort order</Label>
+      <div className="flex flex-col gap-2">
+        <Label className="text-sm font-medium">Sort order</Label>
         <Popover open={openSortOrder} onOpenChange={setOpenSortOrder}>
           <PopoverTrigger asChild>
             <Button
               variant="outline"
               role="combobox"
               aria-expanded={openSortOrder}
-              className="w-full justify-between md:w-[130px]"
+              className="h-10 w-full justify-between md:w-[130px]"
             >
               {sorting.sortOrder === OrderBy.Asc ? 'Ascending' : 'Descending'}
               <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />

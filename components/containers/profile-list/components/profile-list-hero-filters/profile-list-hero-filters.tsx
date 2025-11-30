@@ -225,32 +225,6 @@ export const ProfileListHeroFilters = () => {
       <div className="space-y-4">
         <div className="flex flex-col gap-2 md:flex-row">
           <FilterTitle
-            title="Profile Sectors"
-            count={filteredSectors.length}
-            isFetching={filters.profileSectorsFilter.options?.isFetching}
-          />
-          {siteConfig.featureFlags?.allowHeroFiltersSearch && (
-            <SearchInput
-              value={sectorSearch}
-              onChange={setSectorSearch}
-              placeholder="Search sectors..."
-            />
-          )}
-        </div>
-        <CheckboxGrid
-          initialVisibleCount={12}
-          isFetching={filters.profileSectorsFilter.options?.isFetching}
-          isLoading={filters.profileSectorsFilter.options?.isLoading}
-          selected={filters.profileSectorsFilter.value}
-          options={filteredSectors}
-          onChange={selected => {
-            filters.profileSectorsFilter.setValue(selected);
-          }}
-        />
-      </div>
-      <div className="space-y-4">
-        <div className="flex flex-col gap-2 md:flex-row">
-          <FilterTitle
             title="Product types"
             count={filteredProducts.length}
             isFetching={filters.productTypesFilter.options?.isFetching}
@@ -271,6 +245,32 @@ export const ProfileListHeroFilters = () => {
           options={filteredProducts}
           onChange={selected => {
             filters.productTypesFilter.setValue(selected);
+          }}
+        />
+      </div>
+      <div className="space-y-4">
+        <div className="flex flex-col gap-2 md:flex-row">
+          <FilterTitle
+            title="Profile Sectors"
+            count={filteredSectors.length}
+            isFetching={filters.profileSectorsFilter.options?.isFetching}
+          />
+          {siteConfig.featureFlags?.allowHeroFiltersSearch && (
+            <SearchInput
+              value={sectorSearch}
+              onChange={setSectorSearch}
+              placeholder="Search sectors..."
+            />
+          )}
+        </div>
+        <CheckboxGrid
+          initialVisibleCount={12}
+          isFetching={filters.profileSectorsFilter.options?.isFetching}
+          isLoading={filters.profileSectorsFilter.options?.isLoading}
+          selected={filters.profileSectorsFilter.value}
+          options={filteredSectors}
+          onChange={selected => {
+            filters.profileSectorsFilter.setValue(selected);
           }}
         />
       </div>

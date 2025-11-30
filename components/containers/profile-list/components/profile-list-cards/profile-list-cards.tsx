@@ -9,6 +9,8 @@ import { useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { useDebounceValue } from 'usehooks-ts';
 import { ProfileCard, ProfileCardSkeleton } from '../profile-card';
+import { cn } from '@/lib/utils';
+import { GridScanLoader } from '@/components/ui/grid-scan-loader';
 
 const defaultLimit = 10;
 
@@ -144,6 +146,7 @@ export const ProfileListCards = () => {
 
   return (
     <div className="pb-2">
+      <GridScanLoader isLoading={isFetching} />
       {isFetching && <Progress className="mt-2" indeterminate />}
       {isError ? (
         <p className="text-center text-muted-foreground">
@@ -158,7 +161,12 @@ export const ProfileListCards = () => {
           </p>
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
+        <div
+          className={cn(
+            "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6 transition-all duration-500",
+            isFetching ? "opacity-20 blur-sm scale-[0.98]" : "opacity-100 blur-0 scale-100"
+          )}
+        >
           {profiles?.map(
             (profile, index) =>
               profile && <ProfileCard key={index} profile={profile} />
