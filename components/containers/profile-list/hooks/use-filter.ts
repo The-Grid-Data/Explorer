@@ -127,7 +127,10 @@ export function useFilter<T, O = unknown>(
   const optionsQueryResult = { ...options, data };
 
   const setValue = (newValue: typeof initialValue) => {
+    console.log(`[useFilter:${id}] setValue called with:`, newValue);
+    console.log(`[useFilter:${id}] Current internal state:`, value);
     _setValue(newValue);
+    console.log(`[useFilter:${id}] Calling onChange callback`);
     onChange?.(newValue as any);
   };
 
