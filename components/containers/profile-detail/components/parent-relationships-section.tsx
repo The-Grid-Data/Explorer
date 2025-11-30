@@ -6,6 +6,7 @@ import { execute } from '@/lib/graphql/execute';
 import { useQuery } from '@tanstack/react-query';
 import { GalleryThumbnailsIcon } from 'lucide-react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { findMedia } from '@/lib/utils/media-utils';
 
 const ParentProfileQuery = graphql(`
@@ -92,9 +93,11 @@ const ParentProfileCard = ({
         <Link href={`/profiles/${relatedProfile?.slug}`}>
           <div className="flex items-center space-x-3">
             {imageUrl ? (
-              <img
+              <Image
                 src={imageUrl}
                 alt={`${profileInfo.name} logo`}
+                width={40}
+                height={40}
                 className="h-10 w-10 rounded object-cover transition-transform group-hover:scale-105 group-hover:saturate-200"
               />
             ) : (

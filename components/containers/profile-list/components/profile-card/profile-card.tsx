@@ -3,6 +3,7 @@
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
+import Image from 'next/image';
 import { paths } from '@/lib/routes/paths';
 import { Badge } from '@/components/ui/badge';
 import { siteConfig } from '@/lib/site-config';
@@ -148,10 +149,11 @@ export const ProfileCard = ({ profile: profileData }: ProfileCardCardProps) => {
   const validIconUrl = iconUrl;
   const logoBgClass = useDarkLogo ? 'bg-black' : 'bg-white';
 
-  // Get all products
-  const allProducts = profile.root?.products?.map(p => useFragment(ProductFragment, p)) || [];
-  const mainProduct = allProducts.find(p => p.isMainProduct === 1);
-  const otherProducts = allProducts.filter(p => p.isMainProduct !== 1);
+  // Get all products - useFragment must be called at component level, not in callbacks
+  const allProducts = profile.root?.products || [];
+  const fragmentedProducts = allProducts.map(p => useFragment(ProductFragment, p));
+  const mainProduct = fragmentedProducts.find(p => p.isMainProduct === 1);
+  const otherProducts = fragmentedProducts.filter(p => p.isMainProduct !== 1);
 
   // Filter products based on active filters
   const activeProductTypeIds = filters.productTypesFilter.value;
@@ -160,7 +162,7 @@ export const ProfileCard = ({ profile: profileData }: ProfileCardCardProps) => {
   // Determine featured product
   const getFeaturedProduct = () => {
     if (focusedProductIndex !== null) {
-      return allProducts[focusedProductIndex];
+      return fragmentedProducts[focusedProductIndex];
     }
 
     if (hasActiveProductFilters) {
@@ -192,12 +194,12 @@ export const ProfileCard = ({ profile: profileData }: ProfileCardCardProps) => {
     return 'Featured Product';
   };
 
-  const displayedOtherProducts = allProducts.filter(p => p !== featuredProduct);
+  const displayedOtherProducts = fragmentedProducts.filter(p => p !== featuredProduct);
   const hasOtherProducts = displayedOtherProducts.length > 0;
   const hasAssets = (profile.root?.assets?.length ?? 0) > 0;
   
   // Product and asset counts
-  const totalProducts = allProducts.length;
+  const totalProducts = fragmentedProducts.length;
   const totalAssets = profile.root?.assets?.length ?? 0;
 
   const INITIAL_VISIBLE_PRODUCTS = 3;
@@ -226,15 +228,19 @@ export const ProfileCard = ({ profile: profileData }: ProfileCardCardProps) => {
                 logoBgClass
               )}>
                 {validIconUrl ? (
-                  <img
+                  <Image
                     src={validIconUrl}
                     alt={profile.name}
+                    width={48}
+                    height={48}
                     className="w-full h-full object-contain"
                   />
                 ) : validLogoUrl ? (
-                  <img
+                  <Image
                     src={validLogoUrl}
                     alt={profile.name}
+                    width={48}
+                    height={48}
                     className="w-full h-full object-contain p-1"
                   />
                 ) : (
@@ -320,7 +326,7 @@ export const ProfileCard = ({ profile: profileData }: ProfileCardCardProps) => {
           {/* Tagline */}
           {profile.tagLine && (
             <p className="text-xs text-muted-foreground italic mt-2">
-              "{profile.tagLine}"
+              &ldquo;{profile.tagLine}&rdquo;
             </p>
           )}
         </div>
@@ -474,7 +480,7 @@ export const ProfileCard = ({ profile: profileData }: ProfileCardCardProps) => {
                       {displayedOtherProducts
                         .slice(0, isProductsExpanded ? undefined : INITIAL_VISIBLE_PRODUCTS)
                         .map((product, idx) => {
-                          const actualIndex = allProducts.indexOf(product);
+                          const actualIndex = fragmentedProducts.indexOf(product);
                           const isMainProduct = product.isMainProduct === 1;
                           const isHighlighted = product.productTypeId &&
                             activeProductTypeIds.includes(product.productTypeId);

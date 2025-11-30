@@ -19,6 +19,7 @@ import {
 } from '@/components/ui/dialog';
 import { Download, Eye } from 'lucide-react';
 import { useState } from 'react';
+import Image from 'next/image';
 
 export type MediaItem = {
   id: string;
@@ -77,9 +78,11 @@ export const MediaDropdown = ({ media }: MediaDropdownProps) => {
           </DialogHeader>
           {previewMedia && (
             <div className="flex justify-center">
-              <img 
-                src={previewMedia.url} 
+              <Image
+                src={previewMedia.url}
                 alt={previewMedia.name}
+                width={800}
+                height={600}
                 className="max-w-full max-h-[70vh] object-contain"
               />
             </div>
