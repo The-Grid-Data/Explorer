@@ -10,8 +10,8 @@
   },
   "header": {
     "logoSrc": {
-      "dark": "https://media.thegrid.id/3/15/id1764517612-k7TsZ3IpTuiVaqYMyiPb0g/id1761223238-EgaOPgNrT5ysUewsKDXo3Q/image-1764517760.svg",
-      "light": "https://media.thegrid.id/3/15/id1764517612-k7TsZ3IpTuiVaqYMyiPb0g/id1761223238-EgaOPgNrT5ysUewsKDXo3Q/image-1764517760.svg"
+      "dark": "/thegrid-logo-white.svg",
+      "light": "/thegrid-logo.svg"
     },
     "docsButton": {
       "label": "Read the docs",
@@ -29,9 +29,9 @@
   "pages": {
     "home": {
       "hero": {
-        "badge": "An experimental UI by The Grid",
-        "title": "Breakpoint in a way you haven't seen before.",
-        "description": "Sponsors and attendees can list on the grid, search, and filter through all Breakpoint profiles in one place."
+        "badge": "For all of Web3 but currently focused on Solana.",
+        "title": "A Node of Truth on Assets, Products, and Services in Web3.",
+        "description": "Explore the largest offchain dataset for Solana projects, use the filters to find projects relevant to you."
       }
     }
   },
@@ -40,7 +40,7 @@
     "supportsProducts": [],
     "productTypes": [],
     "productAssetRelationships": [],
-    "tags": ["id1760088086-NEyjzLNeTcyFkhytuCu6RQ","id1764510343-B2cGA6yvSZCKuLEgF4x__w"],
+    "tags": [],
     "productIds": []
   },
   "overrideOptionsFilterValues": {
