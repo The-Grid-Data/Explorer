@@ -143,7 +143,7 @@ export const ProfileListCards = () => {
   const nrOfFetchedProfiles = profiles?.length ?? 0;
 
   return (
-    <div className="flex flex-col gap-8 pb-2">
+    <div className="pb-2">
       {isFetching && <Progress className="mt-2" indeterminate />}
       {isError ? (
         <p className="text-center text-muted-foreground">
@@ -158,12 +158,20 @@ export const ProfileListCards = () => {
           </p>
         </div>
       ) : (
-        profiles?.map(
-          (profile, index) =>
-            profile && <ProfileCard key={index} profile={profile} />
-        )
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
+          {profiles?.map(
+            (profile, index) =>
+              profile && <ProfileCard key={index} profile={profile} />
+          )}
+        </div>
       )}
-      {isFetching && <ProfileCardSkeleton />}
+      {isFetching && (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
+          <ProfileCardSkeleton />
+          <ProfileCardSkeleton />
+          <ProfileCardSkeleton />
+        </div>
+      )}
       {/* Infinite scroll trigger */}
       {!isFetching && <div className="h-40" ref={fetchNextPageTriggerRef} />}
     </div>
