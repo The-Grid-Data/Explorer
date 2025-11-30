@@ -4,6 +4,7 @@ import { execute } from '@/lib/graphql/execute';
 import { graphql } from '@/lib/graphql/generated';
 import { useProfilesQueryContext } from '@/providers/profiles-query-provider';
 import { useProfileSortingContext } from '@/providers/sorting-provider';
+import { useProfileFiltersContext } from '@/providers/filters-provider';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
@@ -59,6 +60,7 @@ export const SearchProfilesByRankingQuery = graphql(`
 export const ProfileListCards = () => {
   const query = useProfilesQueryContext();
   const { sorting } = useProfileSortingContext();
+  const { isScanning } = useProfileFiltersContext();
 
   // Check if we're sorting by connectionScore to determine which query to use
   const isConnectionScoreSort = sorting.sortBy === 'connectionScore';
@@ -145,9 +147,9 @@ export const ProfileListCards = () => {
   const nrOfFetchedProfiles = profiles?.length ?? 0;
 
   return (
-    <div className="pb-2">
-      <GridScanLoader isLoading={isFetching} />
-      {isFetching && <Progress className="mt-2" indeterminate />}
+    <div id="results-section" className="scroll-mt-20 pb-2">
+      <GridScanLoader isLoading={isFetching || isScanning} />
+      {(isFetching || isScanning) && <Progress className="mt-2" indeterminate />}
       {isError ? (
         <p className="text-center text-muted-foreground">
           There was an error with your search, please try again or contact the
@@ -164,7 +166,7 @@ export const ProfileListCards = () => {
         <div
           className={cn(
             "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6 transition-all duration-500",
-            isFetching ? "opacity-20 blur-sm scale-[0.98]" : "opacity-100 blur-0 scale-100"
+            (isFetching || isScanning) ? "opacity-20 blur-sm scale-[0.98]" : "opacity-100 blur-0 scale-100"
           )}
         >
           {profiles?.map(

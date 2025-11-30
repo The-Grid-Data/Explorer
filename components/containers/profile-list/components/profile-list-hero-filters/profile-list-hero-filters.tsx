@@ -1,9 +1,10 @@
 import CheckboxGrid from '@/components/ui/checkbox-grid';
 import { Spinner } from '@/components/ui/spinner';
 import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
 import { siteConfig } from '@/lib/site-config';
 import { useProfileFiltersContext } from '@/providers/filters-provider';
-import { useState, useMemo, useCallback } from 'react';
+import { useState, useMemo, useCallback, useRef, useEffect } from 'react';
 import { MagnifyingGlassIcon } from '@radix-ui/react-icons';
 
 // Build a map of group ID -> product type IDs for quick lookup
@@ -26,11 +27,44 @@ const buildGroupToProductTypeIdsMap = (
 };
 
 export const ProfileListHeroFilters = () => {
-  const { filters } = useProfileFiltersContext();
+  const { pendingFilters, triggerScan, isScanning } = useProfileFiltersContext();
+  const filters = pendingFilters.filters;
   const [sectorSearch, setSectorSearch] = useState('');
   const [productSearch, setProductSearch] = useState('');
   const [tagSearch, setTagSearch] = useState('');
   const [groupSearch, setGroupSearch] = useState('');
+  const scanButtonRef = useRef<HTMLButtonElement>(null);
+
+  // Handle Enter key to trigger scan
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Enter' && !e.shiftKey && !e.ctrlKey && !e.metaKey) {
+        e.preventDefault();
+        triggerScan();
+        // Scroll to results after a short delay
+        setTimeout(() => {
+          const resultsSection = document.getElementById('results-section');
+          if (resultsSection) {
+            resultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        }, 100);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [triggerScan]);
+
+  const handleScanClick = () => {
+    triggerScan();
+    // Scroll to results after a short delay
+    setTimeout(() => {
+      const resultsSection = document.getElementById('results-section');
+      if (resultsSection) {
+        resultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }, 100);
+  };
 
   // Get the mapping from group IDs to product type IDs
   const groupToProductTypeIds = useMemo(() => {
@@ -171,7 +205,7 @@ export const ProfileListHeroFilters = () => {
   return (
     <>
       {Boolean(siteConfig.featureFlags?.displayTagsFilter) && (
-        <div className="space-y-4">
+        <div className="space-y-4 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-100">
           <div className="flex flex-col gap-2 md:flex-row">
             <FilterTitle
               title="Tags"
@@ -198,7 +232,7 @@ export const ProfileListHeroFilters = () => {
           />
         </div>
       )}
-      <div className="space-y-4">
+      <div className="space-y-4 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-200">
         <div className="flex flex-col gap-2 md:flex-row">
           <FilterTitle
             title="Product Categories"
@@ -222,7 +256,7 @@ export const ProfileListHeroFilters = () => {
           onChange={handleGroupToggle}
         />
       </div>
-      <div className="space-y-4">
+      <div className="space-y-4 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-300">
         <div className="flex flex-col gap-2 md:flex-row">
           <FilterTitle
             title="Product types"
@@ -248,7 +282,7 @@ export const ProfileListHeroFilters = () => {
           }}
         />
       </div>
-      <div className="space-y-4">
+      <div className="space-y-4 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-[400ms]">
         <div className="flex flex-col gap-2 md:flex-row">
           <FilterTitle
             title="Profile Sectors"
