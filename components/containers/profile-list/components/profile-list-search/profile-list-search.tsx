@@ -5,8 +5,6 @@ import { useProfileFiltersContext } from '@/providers/filters-provider';
 export const ProfileListSearch = () => {
   const { filters } = useProfileFiltersContext();
 
-  console.log('[ProfileListSearch] Current search value:', filters.searchFilter.value);
-
   return (
     <div className="relative flex w-full flex-col gap-2">
       <Label
@@ -22,10 +20,7 @@ export const ProfileListSearch = () => {
         placeholder="Search by profile name or product name"
         value={filters.searchFilter.value ?? ''}
         onChange={event => {
-          const newValue = event.target.value;
-          console.log('[ProfileListSearch] onChange triggered with:', newValue);
-          filters.searchFilter.setValue(newValue);
-          console.log('[ProfileListSearch] After setValue, filter value is:', filters.searchFilter.value);
+          filters.searchFilter.setValue(event.target.value);
         }}
         className="h-10"
       />

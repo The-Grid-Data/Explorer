@@ -39,8 +39,10 @@ const PageContent = () => {
 
 export default function Page() {
   return (
-    <ProfileFiltersProvider>
-      <PageContent />
-    </ProfileFiltersProvider>
+    <Suspense fallback={<GridSplashScreen onComplete={() => {}} isLoading={true} loadingMessage="Loading..." />}>
+      <ProfileFiltersProvider>
+        <PageContent />
+      </ProfileFiltersProvider>
+    </Suspense>
   );
 }
