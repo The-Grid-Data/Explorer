@@ -153,25 +153,13 @@ export const ProfileCard = ({ profile: profileData }: ProfileCardCardProps) => {
   }, []);
 
   // Check which logos/icons are available from PROFILE media only
-  const darkLogoUrl = profile.media?.find(findMedia.logoDark)?.url;
-  const lightLogoUrl = profile.media?.find(findMedia.logo)?.url;
   const lightIconUrl = profile.media?.find(findMedia.icon)?.url;
-  const darkIconUrl = profile.media?.find(findMedia.iconDark)?.url;
+  const lightLogoUrl = profile.media?.find(findMedia.logo)?.url;
   
-  // Use theme-aware logo or icon - ALWAYS prefer icon over logo
-  // Use light theme as default during SSR to avoid hydration mismatch
-  const isDarkMode = mounted && resolvedTheme === 'dark';
-  
-  // Icon selection: prefer theme-specific icon, fallback to light icon
-  const validIconUrl = isDarkMode && darkIconUrl ? darkIconUrl : lightIconUrl;
-  
-  // Logo selection: only used if no icon is available
-  const validLogoUrl = isDarkMode && darkLogoUrl ? darkLogoUrl : lightLogoUrl;
-  
-  // Background class based on what we're showing
-  const logoBgClass = validIconUrl
-    ? (isDarkMode && darkIconUrl ? 'bg-black' : 'bg-white')
-    : (isDarkMode && darkLogoUrl ? 'bg-black' : 'bg-white');
+  // Breakpoint approach: Single icon source with white background
+  // No theme-based switching - white background ensures visibility in dark mode
+  const validIconUrl = lightIconUrl;
+  const validLogoUrl = lightLogoUrl;
 
   // Get all products - fragment the products using a helper that calls useFragment properly
   const rawProducts = profile.root?.products || [];
@@ -239,19 +227,16 @@ export const ProfileCard = ({ profile: profileData }: ProfileCardCardProps) => {
 
   return (
     <div className="w-full h-full">
-      <div className="relative rounded-2xl border border-border bg-card shadow-lg overflow-hidden h-full flex flex-col">
+      <div className="relative rounded-3xl border border-zinc-800/50 bg-gradient-to-br from-zinc-900 to-zinc-950 shadow-lg sm:shadow-2xl overflow-hidden h-full flex flex-col">
         {/* Header Section */}
         <div className="p-3 sm:p-4">
           <div className="flex gap-3">
-            {/* Logo - Square with icon fallback */}
+            {/* Logo - Square with white background (Breakpoint pattern) */}
             <Link
               href={paths.profile.detail(profile.root?.slug ?? '')}
               className="flex-shrink-0"
             >
-              <div className={cn(
-                "relative h-12 w-12 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow",
-                logoBgClass
-              )}>
+              <div className="relative h-10 w-10 sm:h-12 sm:w-12 rounded-lg overflow-hidden bg-white shadow-inner">
                 {validIconUrl ? (
                   <Image
                     src={validIconUrl}
@@ -259,6 +244,9 @@ export const ProfileCard = ({ profile: profileData }: ProfileCardCardProps) => {
                     width={48}
                     height={48}
                     className="w-full h-full object-contain"
+                    onError={(e) => {
+                      e.currentTarget.src = "/placeholder.svg"
+                    }}
                   />
                 ) : validLogoUrl ? (
                   <Image
@@ -267,9 +255,12 @@ export const ProfileCard = ({ profile: profileData }: ProfileCardCardProps) => {
                     width={48}
                     height={48}
                     className="w-full h-full object-contain p-1"
+                    onError={(e) => {
+                      e.currentTarget.src = "/placeholder.svg"
+                    }}
                   />
                 ) : (
-                  <div className="w-full h-full flex items-center justify-center text-muted-foreground text-xs">
+                  <div className="w-full h-full flex items-center justify-center text-zinc-400 text-[10px]">
                     No logo
                   </div>
                 )}
@@ -297,7 +288,7 @@ export const ProfileCard = ({ profile: profileData }: ProfileCardCardProps) => {
                     "h-5 px-1.5 text-[10px] font-medium capitalize",
                     profile.profileStatus?.name?.toLowerCase() === 'active'
                       ? "text-primary bg-primary/10 border-primary/20"
-                      : "text-muted-foreground"
+                      : "text-zinc-400 bg-zinc-800/50 border-zinc-700"
                   )}
                 >
                   {profile.profileStatus?.name?.toLowerCase() === 'active' && (
@@ -305,17 +296,17 @@ export const ProfileCard = ({ profile: profileData }: ProfileCardCardProps) => {
                   )}
                   {profile.profileStatus?.name}
                 </Badge>
-                <Badge variant="secondary" className="h-5 px-1.5 text-[10px] capitalize">
+                <Badge className="h-5 px-1.5 text-[10px] capitalize bg-zinc-800 text-zinc-300 border-zinc-700">
                   <Building2 className="w-3 h-3 mr-1 opacity-70" />
                   {profile.profileType?.name}
                 </Badge>
                 {profile.foundingDate && (
-                  <Badge variant="secondary" className="h-5 px-1.5 text-[10px]">
+                  <Badge className="h-5 px-1.5 text-[10px] bg-zinc-800 text-zinc-300 border-zinc-700">
                     <Calendar className="w-3 h-3 mr-1 opacity-70" />
                     Est. {new Date(profile.foundingDate).getFullYear()}
                   </Badge>
                 )}
-                <Badge variant="secondary" className="h-5 px-1.5 text-[10px] capitalize">
+                <Badge className="h-5 px-1.5 text-[10px] capitalize bg-zinc-800 text-zinc-300 border-zinc-700">
                   {profile.profileSector?.name}
                 </Badge>
               </div>
@@ -350,7 +341,7 @@ export const ProfileCard = ({ profile: profileData }: ProfileCardCardProps) => {
 
           {/* Tagline */}
           {profile.tagLine && (
-            <p className="text-xs text-muted-foreground italic mt-2">
+            <p className="text-xs text-zinc-400 italic mt-2">
               &ldquo;{profile.tagLine}&rdquo;
             </p>
           )}
@@ -363,16 +354,16 @@ export const ProfileCard = ({ profile: profileData }: ProfileCardCardProps) => {
             <div className="relative">
               <div
                 className={cn(
-                  "relative border rounded-xl p-3.5 transition-all duration-300",
+                  "relative border rounded-xl p-3.5 transition-all duration-300 bg-black/20",
                   isMainProductFeatured
-                    ? "border-yellow-500/20 bg-yellow-500/5"
-                    : "border-primary/20 bg-primary/5"
+                    ? "border-yellow-500/30 ring-2 ring-yellow-500/20"
+                    : "border-primary/30 ring-2 ring-primary/20"
                 )}
               >
                 <div className="absolute top-0 right-0 p-1">
                   <Box
                     className={cn(
-                      "w-12 h-12 -mr-3 -mt-3 opacity-5",
+                      "w-12 h-12 -mr-3 -mt-3 opacity-10",
                       isMainProductFeatured ? "text-yellow-500" : "text-primary"
                     )}
                   />
@@ -423,8 +414,8 @@ export const ProfileCard = ({ profile: profileData }: ProfileCardCardProps) => {
                   <div className="relative">
                     <p
                       className={cn(
-                        "text-sm text-muted-foreground leading-relaxed mb-2 border-l-2 pl-2.5",
-                        isMainProductFeatured ? "border-yellow-500/20" : "border-primary/20",
+                        "text-sm text-zinc-300 leading-relaxed mb-2 border-l-2 pl-2.5",
+                        isMainProductFeatured ? "border-yellow-500/30" : "border-primary/30",
                         !isDescriptionExpanded && "line-clamp-3"
                       )}
                     >
@@ -461,11 +452,11 @@ export const ProfileCard = ({ profile: profileData }: ProfileCardCardProps) => {
               {hasAssets && (
                 <div
                   className={cn(
-                    "rounded-md border bg-muted/20 p-2.5",
+                    "rounded-lg border border-zinc-800 bg-black/20 p-2.5",
                     hasOtherProducts ? "sm:col-span-5" : "sm:col-span-12"
                   )}
                 >
-                  <div className="flex items-center gap-1.5 mb-2 text-muted-foreground">
+                  <div className="flex items-center gap-1.5 mb-2 text-zinc-400">
                     <Coins className="w-3.5 h-3.5" />
                     <span className="text-[10px] font-bold uppercase tracking-wider">
                       Assets
@@ -475,10 +466,10 @@ export const ProfileCard = ({ profile: profileData }: ProfileCardCardProps) => {
                       {profile.root?.assets?.map((asset, idx) => (
                         <div
                           key={`${asset.ticker}-${idx}`}
-                          className="flex items-center gap-1.5 rounded bg-background/50 border px-2 py-1.5"
+                          className="flex items-center gap-1.5 rounded bg-zinc-900/50 border border-zinc-800 px-2 py-1.5 hover:bg-zinc-900/70 transition-colors"
                         >
                           <Banknote className="w-3.5 h-3.5 text-primary" />
-                          <span className="font-medium text-xs truncate">
+                          <span className="font-medium text-xs truncate text-zinc-200">
                             {asset.ticker}
                           </span>
                         </div>
@@ -491,11 +482,11 @@ export const ProfileCard = ({ profile: profileData }: ProfileCardCardProps) => {
               {hasOtherProducts && (
                 <div
                   className={cn(
-                    "rounded-md border bg-muted/20 p-2.5",
+                    "rounded-lg border border-zinc-800 bg-black/20 p-2.5",
                     hasAssets ? "sm:col-span-7" : "sm:col-span-12"
                   )}
                 >
-                  <div className="flex items-center gap-1.5 mb-2 text-muted-foreground">
+                  <div className="flex items-center gap-1.5 mb-2 text-zinc-400">
                     <Layers className="w-3.5 h-3.5" />
                     <span className="text-[10px] font-bold uppercase tracking-wider">
                       Other Products
@@ -517,10 +508,10 @@ export const ProfileCard = ({ profile: profileData }: ProfileCardCardProps) => {
                               className={cn(
                                 "w-full flex flex-col gap-0.5 rounded border px-2 py-1.5 transition-all text-left group/product",
                                 isMainProduct
-                                  ? "bg-yellow-500/10 border-yellow-500/30 hover:bg-yellow-500/20"
+                                  ? "bg-yellow-500/10 border-yellow-500/30 ring-2 ring-yellow-500/50 hover:bg-yellow-500/20"
                                   : isHighlighted
-                                    ? "bg-primary/10 border-primary/30 hover:bg-primary/20"
-                                    : "bg-background/50 hover:bg-background/80"
+                                    ? "bg-primary/10 border-primary/30 ring-2 ring-primary/50 hover:bg-primary/20"
+                                    : "bg-black/20 border-white/5 hover:bg-black/30 hover:ring-2 hover:ring-white/20"
                               )}
                             >
                               <div className="flex items-center justify-between gap-1.5">
@@ -561,14 +552,14 @@ export const ProfileCard = ({ profile: profileData }: ProfileCardCardProps) => {
                                         ? "text-yellow-500/70"
                                         : isHighlighted
                                           ? "text-primary/70"
-                                          : "text-muted-foreground"
+                                          : "text-zinc-400"
                                     )}
                                   >
                                     {product.productType.name}
                                   </span>
                                 )}
                                 {product.supportedBy && product.supportedBy.length > 0 && (
-                                  <span className="text-[10px] text-muted-foreground whitespace-nowrap">
+                                  <span className="text-[10px] text-zinc-400 whitespace-nowrap">
                                     Supported by {product.supportedBy.length}
                                   </span>
                                 )}
@@ -579,7 +570,7 @@ export const ProfileCard = ({ profile: profileData }: ProfileCardCardProps) => {
                       {displayedOtherProducts.length > INITIAL_VISIBLE_PRODUCTS && (
                         <button
                           onClick={() => setIsProductsExpanded(!isProductsExpanded)}
-                          className="text-[10px] text-muted-foreground hover:text-foreground px-1 mt-1 font-medium transition-colors"
+                          className="text-[10px] text-zinc-400 hover:text-zinc-200 px-1 mt-1 font-medium transition-colors"
                         >
                           {isProductsExpanded
                             ? 'Show less'
@@ -593,8 +584,8 @@ export const ProfileCard = ({ profile: profileData }: ProfileCardCardProps) => {
           )}
 
           {/* Footer - Action Button */}
-          <div className="pt-2 border-t mt-auto">
-            <Button className="w-full h-8 text-xs" variant="default" asChild>
+          <div className="pt-2 border-t border-zinc-800 mt-auto">
+            <Button className="w-full h-8 text-xs bg-primary hover:bg-primary/90" variant="default" asChild>
               <Link href={paths.profile.detail(profile.root?.slug ?? '')}>
                 View Full Profile
               </Link>
