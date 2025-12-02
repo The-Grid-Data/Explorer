@@ -57,6 +57,20 @@
     "displayTagsFilter": true,
     "displayPoweredBy": true
   },
+  "loadingFacts": [
+    "The Grid indexes over 10,000+ Web3 products and protocols",
+    "Our data is sourced from 50+ verified blockchain networks",
+    "The Grid tracks relationships between 5,000+ entities",
+    "We monitor real-time status of DeFi protocols across all chains",
+    "The Grid's taxonomy covers 100+ product categories",
+    "Our database includes assets from Ethereum, Solana, and 40+ other chains",
+    "The Grid provides verified smart contract addresses for 8,000+ assets",
+    "We track founding dates and team information for 3,000+ projects",
+    "The Grid maps parent-child relationships between protocols",
+    "Our data powers research for institutions and developers worldwide",
+    "The Grid updates its database multiple times per day",
+    "We verify data through multiple independent sources"
+  ],
   "productTypeGroups": [
     {
       "id": "trading-exchanges",

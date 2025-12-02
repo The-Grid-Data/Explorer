@@ -60,7 +60,7 @@ export const SearchProfilesByRankingQuery = graphql(`
 export const ProfileListCards = () => {
   const query = useProfilesQueryContext();
   const { sorting } = useProfileSortingContext();
-  const { isScanning } = useProfileFiltersContext();
+  const { isScanning, setQueryFetching } = useProfileFiltersContext();
 
   // Check if we're sorting by connectionScore to determine which query to use
   const isConnectionScoreSort = sorting.sortBy === 'connectionScore';
@@ -138,6 +138,11 @@ export const ProfileListCards = () => {
     }))
   );
 
+  // Report fetching state to filters provider for scan loader timing
+  useEffect(() => {
+    setQueryFetching(isFetching);
+  }, [isFetching, setQueryFetching]);
+
   useEffect(() => {
     if (inView && !isFetching && !isError) {
       fetchNextPage();
@@ -148,8 +153,7 @@ export const ProfileListCards = () => {
 
   return (
     <div id="results-section" className="scroll-mt-20 pb-2">
-      <GridScanLoader isLoading={isFetching || isScanning} />
-      {(isFetching || isScanning) && <Progress className="mt-2" indeterminate />}
+      {isFetching && <Progress className="mt-2" indeterminate />}
       {isError ? (
         <p className="text-center text-muted-foreground">
           There was an error with your search, please try again or contact the
@@ -163,16 +167,22 @@ export const ProfileListCards = () => {
           </p>
         </div>
       ) : (
-        <div
-          className={cn(
-            "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6 transition-all duration-500",
-            (isFetching || isScanning) ? "opacity-20 blur-sm scale-[0.98]" : "opacity-100 blur-0 scale-100"
-          )}
-        >
-          {profiles?.map(
-            (profile, index) =>
-              profile && <ProfileCard key={index} profile={profile} />
-          )}
+        <div className="relative mt-6">
+          {/* Scan loader overlay - positioned over the cards */}
+          <GridScanLoader isLoading={isScanning} />
+          
+          {/* Cards grid with pulse animation when scanning */}
+          <div
+            className={cn(
+              "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 transition-all duration-500",
+              isScanning && "animate-pulse"
+            )}
+          >
+            {profiles?.map(
+              (profile, index) =>
+                profile && <ProfileCard key={index} profile={profile} />
+            )}
+          </div>
         </div>
       )}
       {isFetching && (

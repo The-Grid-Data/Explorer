@@ -20,88 +20,23 @@ import {
   useProfilesQueryContext
 } from '@/providers/profiles-query-provider';
 import { ProfileListFiltersList } from './components/profile-list-filters/profile-list-filters-list';
-import { ForceFieldBarrier } from '@/components/ui/force-field-barrier';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 
 const ProfileListContent = () => {
-  const { triggerScan, isScanning, pendingFilters } = useProfileFiltersContext();
-  const [showForceField, setShowForceField] = useState(false);
-  const [pushProgress, setPushProgress] = useState(0);
-  const [hasTriggered, setHasTriggered] = useState(false);
-  const filtersEndRef = useRef<HTMLDivElement>(null);
-  const lastScrollY = useRef(0);
-  const scrollStartY = useRef(0);
-  const scrollAttemptsRef = useRef(0);
+  const { triggerScan } = useProfileFiltersContext();
+  const [hasInitialScan, setHasInitialScan] = useState(false);
 
-  // Reset hasTriggered when any filter changes
+  // Trigger initial scan on mount so users see results immediately
+  // Pass false to not show the scan loader on initial load
   useEffect(() => {
-    setHasTriggered(false);
-  }, [
-    pendingFilters.filters.productTypesFilter.value,
-    pendingFilters.filters.profileSectorsFilter.value,
-    pendingFilters.filters.tagsFilter.value,
-    pendingFilters.filters.searchFilter.value
-  ]);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (hasTriggered || isScanning) return;
-
-      const filtersEnd = filtersEndRef.current;
-      if (!filtersEnd) return;
-
-      const rect = filtersEnd.getBoundingClientRect();
-      const viewportHeight = window.innerHeight;
-      const scrollThreshold = viewportHeight * 0.6;
-
-      const currentScrollY = window.scrollY;
-      const isScrollingDown = currentScrollY > lastScrollY.current;
-      lastScrollY.current = currentScrollY;
-
-      if (rect.top <= scrollThreshold && isScrollingDown) {
-        if (!showForceField) {
-          setShowForceField(true);
-          scrollStartY.current = currentScrollY;
-        }
-        
-        // Calculate push progress based on how far past threshold
-        const distancePastThreshold = scrollThreshold - rect.top;
-        const maxPushDistance = 250; // pixels to push through
-        const progress = Math.min((distancePastThreshold / maxPushDistance) * 100, 100);
-        setPushProgress(progress);
-      } else if (rect.top > scrollThreshold) {
-        setShowForceField(false);
-        setPushProgress(0);
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [hasTriggered, isScanning, showForceField]);
-
-  const handleBreakthrough = () => {
-    setHasTriggered(true);
-    setShowForceField(false);
-    setPushProgress(0);
-    triggerScan();
-    
-    // Scroll to results
-    setTimeout(() => {
-      const resultsSection = document.getElementById('results-section');
-      if (resultsSection) {
-        resultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
-    }, 100);
-  };
+    if (!hasInitialScan) {
+      setHasInitialScan(true);
+      triggerScan(false);
+    }
+  }, [hasInitialScan, triggerScan]);
 
   return (
     <div className="w-full space-y-4">
-      <ForceFieldBarrier
-        isActive={showForceField}
-        pushProgress={pushProgress}
-        onBreakthrough={handleBreakthrough}
-      />
-      
       <div className="container space-y-4 md:space-y-10">
         {/* Control Bar: Search, Scan with Filters, Clear Filters */}
         <ProfileListControlBar />
@@ -109,7 +44,7 @@ const ProfileListContent = () => {
         {/* Filter Sections */}
         <ProfileListHeroFilters />
 
-        <div ref={filtersEndRef} className="w-full">
+        <div className="w-full">
           <div className="flex flex-col items-start gap-4 pt-4 lg:flex-row lg:items-center lg:justify-between">
             <div className="flex w-full flex-col gap-4 lg:flex-row lg:items-center">
               <ProfileListFilters />

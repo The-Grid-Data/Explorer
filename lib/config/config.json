@@ -6,12 +6,12 @@
   },
   "verifiedTagId": "7",
   "banner": {
-    "text": "YOU SHOULD NOT USE THIS AS A DAILY DRIVER. This is a reference implementation of <a target='_blank' href='https://thegrid.id/legal/web-services-terms' class='underline'>The Grid&apos;s data</a>  which is in Beta - API users can pick and show data relevant to their users."
+    "text": "This is a toy new version, feedback welcome! This is a reference implementation of <a target='_blank' href='https://thegrid.id/legal/web-services-terms' class='underline'>The Grid&apos;s data</a>  which is in Beta - API users can pick and show data relevant to their users."
   },
   "header": {
     "logoSrc": {
-      "dark": "/thegrid-logo-white.svg",
-      "light": "/thegrid-logo.svg"
+      "dark": "https://media.thegrid.id/3/15/id1764517612-k7TsZ3IpTuiVaqYMyiPb0g/id1761223238-EgaOPgNrT5ysUewsKDXo3Q/image-1764517760.svg",
+      "light": "https://media.thegrid.id/3/15/id1764517612-k7TsZ3IpTuiVaqYMyiPb0g/id1761223238-EgaOPgNrT5ysUewsKDXo3Q/image-1764517760.svg"
     },
     "docsButton": {
       "label": "Read the docs",
@@ -29,9 +29,9 @@
   "pages": {
     "home": {
       "hero": {
-        "badge": "For all of Web3 but currently focused on Solana.",
-        "title": "A Node of Truth on Assets, Products, and Services in Web3.",
-        "description": "Explore the largest offchain dataset for Solana projects, use the filters to find projects relevant to you."
+        "badge": "An experimental UI by The Grid",
+        "title": "Breakpoint in a way you haven't seen before.",
+        "description": "Sponsors and attendees can list on the grid, search, and filter through all Breakpoint profiles in one place."
       }
     }
   },
@@ -40,7 +40,7 @@
     "supportsProducts": [],
     "productTypes": [],
     "productAssetRelationships": [],
-    "tags": [],
+    "tags": ["id1760088086-NEyjzLNeTcyFkhytuCu6RQ","id1764510343-B2cGA6yvSZCKuLEgF4x__w"],
     "productIds": []
   },
   "overrideOptionsFilterValues": {
@@ -57,6 +57,33 @@
     "displayTagsFilter": true,
     "displayPoweredBy": true
   },
+"loadingFacts": [
+    "101 sponsors are backing Breakpoint 2025—discover them all",
+    "72 new sponsors joined this year—fresh projects, fresh opportunities",
+    "All 4 major Solana wallets are sponsors: Phantom, Solflare, Backpack, and Ledger",
+    "Gaming sponsors doubled from 10 to 20+ projects since last year",
+    "94% of sponsors are actively shipping products right now",
+    "Finance companies represent 20% of sponsors—DeFi is betting on Solana",
+    "8 DAOs are sponsoring—decentralized organizations are here",
+    "Security firms tripled: OtterSec, Asymmetric, FailSafe, and Kerberus are keeping Solana safe",
+    "Pudgy Penguins made their Solana debut as a 2025 sponsor",
+    "15 infrastructure companies power the Solana network",
+    "Only 29% of sponsors returned from 2024—most are brand new",
+    "Crypto.com, Coinbase, Kraken, and Bybit are all here",
+    "From healthcare to memes: sponsors span 15+ different sectors",
+    "Jupiter, Kamino, Drift, and Sanctum—top DeFi protocols are sponsors",
+    "Wormhole connects 30+ blockchains but chose to sponsor Solana",
+    "Dubai's government (DMCC) is sponsoring Breakpoint 2025",
+    "MonkeDAO represents the NFT community as a sponsor",
+    "Circle brings USDC infrastructure to Breakpoint",
+    "Render Network brings Hollywood-grade rendering to crypto",
+    "Metaplex powered most NFTs you've seen on Solana",
+    "The Graph is indexing Solana data for developers",
+    "Chainlink oracles are expanding to Solana",
+    "Bonk—yes, the memecoin—is a two-time sponsor",
+    "Solayer and Jito are pioneering restaking on Solana",
+    "Anza and Firedancer are building the next-gen validator clients"
+  ],
   "productTypeGroups": [
     {
       "id": "trading-exchanges",

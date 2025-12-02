@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useCallback } from 'react';
+import { createContext, useContext, useState, useCallback, useEffect, useRef } from 'react';
 import {
   Filters,
   useProfileFilters
@@ -7,7 +7,8 @@ import {
 type FiltersContextValue = Filters & {
   pendingFilters: Filters;
   isScanning: boolean;
-  triggerScan: () => void;
+  triggerScan: (showLoader?: boolean) => void;
+  setQueryFetching: (isFetching: boolean) => void;
   updatePendingFilter: <K extends keyof Filters['filters']>(
     filterKey: K,
     value: Filters['filters'][K]['value']
@@ -22,6 +23,16 @@ export const ProfileFiltersProvider = ({
   const activeFilters = useProfileFilters();
   const pendingFilters = useProfileFilters();
   const [isScanning, setIsScanning] = useState(false);
+  const [isQueryFetching, setIsQueryFetching] = useState(false);
+  const scanRequestedRef = useRef(false);
+
+  // When scan is requested and query finishes, hide loader
+  useEffect(() => {
+    if (scanRequestedRef.current && !isQueryFetching) {
+      setIsScanning(false);
+      scanRequestedRef.current = false;
+    }
+  }, [isQueryFetching]);
 
   const updatePendingFilter = useCallback(
     <K extends keyof Filters['filters']>(
@@ -33,8 +44,11 @@ export const ProfileFiltersProvider = ({
     [pendingFilters]
   );
 
-  const triggerScan = useCallback(() => {
-    setIsScanning(true);
+  const triggerScan = useCallback((showLoader: boolean = true) => {
+    if (showLoader) {
+      setIsScanning(true);
+      scanRequestedRef.current = true;
+    }
     
     // Copy all pending filter values to active filters
     Object.keys(pendingFilters.filters).forEach((key) => {
@@ -42,12 +56,11 @@ export const ProfileFiltersProvider = ({
       const pendingValue = pendingFilters.filters[filterKey].value;
       (activeFilters.filters[filterKey].setValue as any)(pendingValue);
     });
-
-    // Reset scanning state after animation
-    setTimeout(() => {
-      setIsScanning(false);
-    }, 1500);
   }, [activeFilters, pendingFilters]);
+
+  const setQueryFetching = useCallback((isFetching: boolean) => {
+    setIsQueryFetching(isFetching);
+  }, []);
 
   return (
     <ProfileFiltersContext.Provider
@@ -56,6 +69,7 @@ export const ProfileFiltersProvider = ({
         pendingFilters,
         isScanning,
         triggerScan,
+        setQueryFetching,
         updatePendingFilter
       }}
     >

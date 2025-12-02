@@ -82,6 +82,10 @@ export const configSchema = z.object({
       .boolean()
       .default(defaultConfig.featureFlags.displayPoweredBy)
   }),
+  loadingFacts: z
+    .array(z.string())
+    .default(defaultConfig.loadingFacts)
+    .describe('Fun facts to display during loading screens'),
   productTypeGroups: z
     .array(
       z.object({
