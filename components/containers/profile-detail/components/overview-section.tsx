@@ -4,6 +4,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { ReactNode } from 'react';
 import { FragmentType, graphql, useFragment } from '@/lib/graphql/generated';
 import { ProfileTags } from './profile-tags';
+import { siteConfig } from '@/lib/site-config';
 
 export const ProfileFragment = graphql(`
   fragment ProfileFragment on ProfileInfos {
@@ -76,10 +77,10 @@ export const OverviewSection = ({ profile }: OverviewSectionProps) => {
         Boolean(profileData?.root?.assets?.length) &&
         profileData?.root?.assets?.map(asset => asset.ticker).join(', ')
     },
-    {
+    ...(!siteConfig.featureFlags.hideTagsOnProfileCards ? [{
       label: 'Tags',
       value: <ProfileTags profileTags={profileData?.root?.profileTags} />
-    },
+    }] : []),
     ...(profileData?.root?.firstPublicValidation ? [{
       label: 'First added to The Grid',
       value: new Date(profileData?.root?.firstPublicValidation)?.toDateString()
