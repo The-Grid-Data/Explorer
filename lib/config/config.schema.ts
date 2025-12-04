@@ -80,7 +80,10 @@ export const configSchema = z.object({
       .default(defaultConfig.featureFlags.displayTagsFilter),
     displayPoweredBy: z
       .boolean()
-      .default(defaultConfig.featureFlags.displayPoweredBy)
+      .default(defaultConfig.featureFlags.displayPoweredBy),
+    hideTagsOnProfileCards: z
+      .boolean()
+      .default(defaultConfig.featureFlags.hideTagsOnProfileCards)
   })
 });
 

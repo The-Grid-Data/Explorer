@@ -1,4 +1,5 @@
 import { Skeleton } from '@/components/ui/skeleton';
+import { siteConfig } from '@/lib/site-config';
 
 export const ProfileCardSkeleton = () => (
   <div className="">
@@ -18,11 +19,13 @@ export const ProfileCardSkeleton = () => (
           </div>
         </div>
       </div>
-      <div className="flex w-full gap-2">
-        <Skeleton className="h-12 w-20" />
-        <Skeleton className="h-12 w-20" />
-        <Skeleton className="h-12 w-20" />
-      </div>
+      {!siteConfig.featureFlags.hideTagsOnProfileCards && (
+        <div className="flex w-full gap-2">
+          <Skeleton className="h-12 w-20" />
+          <Skeleton className="h-12 w-20" />
+          <Skeleton className="h-12 w-20" />
+        </div>
+      )}
       <div className="w-full space-y-2">
         <Skeleton className="h-4 w-1/2" />
         <Skeleton className="h-4 w-2/3" />

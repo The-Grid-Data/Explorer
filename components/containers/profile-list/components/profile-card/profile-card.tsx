@@ -216,13 +216,15 @@ export const ProfileCard = ({ profile: profileData }: ProfileCardCardProps) => {
               label="Short Description"
               value={profile.descriptionShort}
             />
-            <ProfileCardDataPoint
-              label="Tags"
-              active={filters.tagsFilter.active}
-              className="items-start"
-            >
-              <ProfileTags profileTags={profile.root?.profileTags} />
-            </ProfileCardDataPoint>
+            {!siteConfig.featureFlags.hideTagsOnProfileCards && (
+              <ProfileCardDataPoint
+                label="Tags"
+                active={filters.tagsFilter.active}
+                className="items-start"
+              >
+                <ProfileTags profileTags={profile.root?.profileTags} />
+              </ProfileCardDataPoint>
+            )}
             {/* <ProfileCardDataPoint
               label="Product types"
               value={profile.root?.products

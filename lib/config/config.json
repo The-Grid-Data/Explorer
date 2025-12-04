@@ -1,37 +1,37 @@
 {
   "metadata": {
-    "title": "The Grid | Data Explorer",
-    "description": "Powering Discoverability of Assets, Products, and Services in Web3.",
+    "title": "Stablecoin Standard Directory",
+    "description": "Explore the issuers of stablecoins around the world, use the filters to find projects relevant to you.",
     "icon": "/favicon.ico"
   },
   "verifiedTagId": "7",
   "banner": {
-    "text": "YOU SHOULD NOT USE THIS AS A DAILY DRIVER. This is a reference implementation of <a target='_blank' href='https://thegrid.id/legal/web-services-terms' class='underline'>The Grid&apos;s data</a>  which is in Beta - API users can pick and show data relevant to their users."
+    "text": "Powered By: <a target='_blank' href='https://about.thegrid.id/legal/web-services-terms' class='underline'>The Grid&apos;s data</a>  which is in Beta - API / AI users can pick and show data relevant to their users."
   },
   "header": {
     "logoSrc": {
-      "dark": "/thegrid-logo-white.svg",
-      "light": "/thegrid-logo.svg"
+      "dark": "https://media.thegrid.id/id1763118772-CqjALLnpQueaS4G5FYIVKQ/7/id1763118772-LXPKMgPPT0WDabptNd1h6Q/id1762357333-cKJgnZ6jRfOrq1U38IpxgQ/image-1764248658.svg",
+      "light": "https://media.thegrid.id/id1763118772-CqjALLnpQueaS4G5FYIVKQ/7/id1763118772-LXPKMgPPT0WDabptNd1h6Q/id1761223238-EgaOPgNrT5ysUewsKDXo3Q/image-1764248639.svg"
     },
     "docsButton": {
-      "label": "Read the docs",
-      "href": "https://docs.thegrid.id"
+      "label": "Learn about Stablecoin Standard",
+      "href": "https://www.stablecoinstandard.com"
     },
     "claimProfileButton": {
       "label": "Claim your profile",
-      "href": "https://enter.thegrid.id/claimprofile"
+      "href": "https://network.thegrid.id"
     },
     "githubButton": {
-      "label": "Clone project",
-      "href": "https://github.com/The-Grid-Data/Explorer"
+      "label": "@StablecoinStnd on X",
+      "href": "https://x.com/StablecoinStnd"
     }
   },
   "pages": {
     "home": {
       "hero": {
-        "badge": "For all of Web3 but currently focused on Solana.",
-        "title": "A Node of Truth on Assets, Products, and Services in Web3.",
-        "description": "Explore the largest offchain dataset for Solana projects, use the filters to find projects relevant to you."
+        "badge": "The global industry body for stablecoins",
+        "title": "Members and partners of Stablecoin Standard",
+        "description": "Explore the issuers of stablecoins around the world, use the filters to find projects relevant to you."
       }
     }
   },
@@ -40,7 +40,9 @@
     "supportsProducts": [],
     "productTypes": [],
     "productAssetRelationships": [],
-    "tags": [],
+    "tags": [
+      "id1763118198-8S_Brqj3Q8q8Lhs7YT0wZA"
+    ],
     "productIds": []
   },
   "overrideOptionsFilterValues": {
@@ -52,9 +54,10 @@
   },
   "excludeTags": [],
   "featureFlags": {
-    "displayQueriesButtons": true,
+    "displayQueriesButtons": false,
     "allowHeroFiltersSearch": true,
-    "displayTagsFilter": true,
-    "displayPoweredBy": true
+    "displayTagsFilter": false,
+    "displayPoweredBy": true, 
+    "hideTagsOnProfileCards": true    
   }
 }
