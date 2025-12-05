@@ -63,6 +63,7 @@ export const ProfileCardFragment = graphql(`
       mediaType {
         id
         name
+        slug
       }
     }
     mainProduct: root {

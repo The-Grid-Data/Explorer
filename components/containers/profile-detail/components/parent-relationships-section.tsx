@@ -19,6 +19,7 @@ const ParentProfileQuery = graphql(`
           mediaType {
             id
             name
+            slug
           }
           url
         }

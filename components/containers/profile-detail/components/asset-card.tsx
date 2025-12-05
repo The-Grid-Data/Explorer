@@ -45,6 +45,7 @@ export const AssetFragment = graphql(`
           url
           mediaType {
             name
+            slug
           }
         }
       }
@@ -93,6 +94,7 @@ export const AssetFragment = graphql(`
       mediaType {
         id
         name
+        slug
       }
     }
   }

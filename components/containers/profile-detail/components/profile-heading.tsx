@@ -30,6 +30,7 @@ export const ProfileHeadingFragment = graphql(`
       mediaType {
         id
         name
+        slug
       }
     }
     root {

@@ -1,18 +1,17 @@
-type MediaTypeObject = { mediaType?: { name?: string | null } | null };
+type MediaTypeObject = { mediaType?: { slug?: string | null } | null };
 
 // TODO: should extract this from TGS
-const MEDIA_NAMES = {
-  LogoLightBg: 'Logo Light BG',
-  IconDarkBG: 'Icon Dark BG',
-  IconLightBG: 'Icon Light BG',
-  LogoDarkBG: 'Logo Dark BG',
-  LogoLightBG: 'Logo Light BG',
-  ProfileHeader: 'Profile Header'
+const MEDIA_SLUGS = {
+  LogoLightBg: 'logo_light_bg',
+  IconDarkBG: 'icon_dark_bg',
+  IconLightBG: 'icon_light_bg',
+  LogoDarkBG: 'logo_dark_bg',
+  ProfileHeader: 'profile_header'
 };
 
-function findMediaByType(type: keyof typeof MEDIA_NAMES) {
+function findMediaByType(type: keyof typeof MEDIA_SLUGS) {
   return (media: MediaTypeObject | null) =>
-    !media ? undefined : media.mediaType?.name === MEDIA_NAMES[type];
+    !media ? undefined : media.mediaType?.slug === MEDIA_SLUGS[type];
 }
 
 export const findMedia = {

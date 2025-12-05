@@ -29,6 +29,7 @@ export const ProfileDetailQuery = graphql(`
         mediaType {
           id
           name
+          slug
         }
       }
       root {

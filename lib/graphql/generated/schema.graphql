@@ -366,8 +366,6 @@ type Assets {
   assetTypeId: String
   derivativeAssets(limit: Int, offset: Int, order_by: [DerivativeAssetsOrderByExp!], where: DerivativeAssetsBoolExp): [DerivativeAssets!]
   derivativeAssetsAggregate(filter_input: DerivativeAssetsFilterInput): DerivativeAssetsAggExp!
-  derivativeAssetsByBaseAssetId(limit: Int, offset: Int, order_by: [DerivativeAssetsOrderByExp!], where: DerivativeAssetsBoolExp): [DerivativeAssets!]
-  derivativeAssetsByBaseAssetIdAggregate(filter_input: DerivativeAssetsFilterInput): DerivativeAssetsAggExp!
   description: String!
   icon: String!
   id: String!
@@ -404,7 +402,6 @@ input AssetsBoolExp {
   assetType: AssetTypesBoolExp
   assetTypeId: StringBoolExp
   derivativeAssets: DerivativeAssetsBoolExp
-  derivativeAssetsByBaseAssetId: DerivativeAssetsBoolExp
   description: StringBoolExp
   icon: StringBoolExp
   id: StringBoolExp
