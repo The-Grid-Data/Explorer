@@ -16,6 +16,7 @@ export type Scalars = {
   Float: { input: number; output: number; }
   Date: { input: string; output: string; }
   Enum: { input: string; output: string; }
+  Float32: { input: number; output: number; }
   Float64: { input: number; output: number; }
   Int8: { input: number; output: number; }
   Int32: { input: number; output: number; }
@@ -1123,6 +1124,69 @@ export type EntityUrlsOrderBy = {
   url?: InputMaybe<OrderBy>;
   urlType?: InputMaybe<UrlTypesOrderByExp>;
   urlTypeId?: InputMaybe<OrderBy>;
+};
+
+export type Float32AggExp = {
+  __typename?: 'Float32AggExp';
+  _count: Scalars['Int']['output'];
+  _count_distinct: Scalars['Int']['output'];
+  avg: Scalars['Float64']['output'];
+  max: Scalars['Float32']['output'];
+  min: Scalars['Float32']['output'];
+  sum: Scalars['Float32']['output'];
+};
+
+export type Float32BoolExp = {
+  _and?: InputMaybe<Array<Float32BoolExp>>;
+  _eq?: InputMaybe<Scalars['Float32']['input']>;
+  _gt?: InputMaybe<Scalars['Float32']['input']>;
+  _gte?: InputMaybe<Scalars['Float32']['input']>;
+  _in?: InputMaybe<Array<Scalars['Float32']['input']>>;
+  _is_null?: InputMaybe<Scalars['Boolean']['input']>;
+  _lt?: InputMaybe<Scalars['Float32']['input']>;
+  _lte?: InputMaybe<Scalars['Float32']['input']>;
+  _not?: InputMaybe<Float32BoolExp>;
+  _or?: InputMaybe<Array<Float32BoolExp>>;
+};
+
+export type GridRank = {
+  __typename?: 'GridRank';
+  id: Scalars['String']['output'];
+  root?: Maybe<Roots>;
+  rootId: Scalars['String']['output'];
+  score?: Maybe<Scalars['Float32']['output']>;
+};
+
+export type GridRankAggExp = {
+  __typename?: 'GridRankAggExp';
+  _count: Scalars['Int']['output'];
+  id: StringAggExp;
+  rootId: StringAggExp;
+  score: Float32AggExp;
+};
+
+export type GridRankBoolExp = {
+  _and?: InputMaybe<Array<GridRankBoolExp>>;
+  _not?: InputMaybe<GridRankBoolExp>;
+  _or?: InputMaybe<Array<GridRankBoolExp>>;
+  id?: InputMaybe<StringBoolExp>;
+  root?: InputMaybe<RootsBoolExp>;
+  rootId?: InputMaybe<StringBoolExp>;
+  score?: InputMaybe<Float32BoolExp>;
+};
+
+export type GridRankFilterInput = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<GridRankOrderByExp>>;
+  where?: InputMaybe<GridRankBoolExp>;
+};
+
+export type GridRankOrderByExp = {
+  id?: InputMaybe<OrderBy>;
+  root?: InputMaybe<RootsOrderByExp>;
+  rootId?: InputMaybe<OrderBy>;
+  score?: InputMaybe<OrderBy>;
 };
 
 export type Int8AggExp = {
@@ -2278,6 +2342,9 @@ export type Query = {
   entityTypes?: Maybe<Array<EntityTypes>>;
   entityTypesAggregate?: Maybe<EntityTypesAggExp>;
   entityTypesById?: Maybe<EntityTypes>;
+  gridRank?: Maybe<Array<GridRank>>;
+  gridRankAggregate?: Maybe<GridRankAggExp>;
+  gridRankById?: Maybe<GridRank>;
   media?: Maybe<Array<Media>>;
   mediaAggregate?: Maybe<MediaAggExp>;
   mediaById?: Maybe<Media>;
@@ -2351,7 +2418,6 @@ export type Query = {
   tags?: Maybe<Array<Tags>>;
   tagsAggregate?: Maybe<TagsAggExp>;
   tagsById?: Maybe<Tags>;
-  theGridRankings?: Maybe<Array<TheGridRanking>>;
   urlTypes?: Maybe<Array<UrlTypes>>;
   urlTypesAggregate?: Maybe<UrlTypesAggExp>;
   urlTypesById?: Maybe<UrlTypes>;
@@ -2599,6 +2665,24 @@ export type QueryEntityTypesAggregateArgs = {
 
 
 export type QueryEntityTypesByIdArgs = {
+  id: Scalars['String']['input'];
+};
+
+
+export type QueryGridRankArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<GridRankOrderByExp>>;
+  where?: InputMaybe<GridRankBoolExp>;
+};
+
+
+export type QueryGridRankAggregateArgs = {
+  filter_input?: InputMaybe<GridRankFilterInput>;
+};
+
+
+export type QueryGridRankByIdArgs = {
   id: Scalars['String']['input'];
 };
 
@@ -3017,14 +3101,6 @@ export type QueryTagsByIdArgs = {
 };
 
 
-export type QueryTheGridRankingsArgs = {
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<TheGridRankingOrderBy>>;
-  where?: InputMaybe<TheGridRankingBoolExp>;
-};
-
-
 export type QueryUrlTypesArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
@@ -3190,6 +3266,7 @@ export type Roots = {
   entities?: Maybe<Array<Entities>>;
   entitiesAggregate: EntitiesAggExp;
   firstPublicValidation?: Maybe<Scalars['Date']['output']>;
+  gridRank?: Maybe<GridRank>;
   id: Scalars['String']['output'];
   lastPublicValidation?: Maybe<Scalars['Date']['output']>;
   media?: Maybe<Array<Media>>;
@@ -3205,7 +3282,6 @@ export type Roots = {
   slug: Scalars['String']['output'];
   socials?: Maybe<Array<Socials>>;
   socialsAggregate: SocialsAggExp;
-  theGridRanking?: Maybe<TheGridRanking>;
   urlMain: Scalars['String']['output'];
 };
 
@@ -3344,6 +3420,7 @@ export type RootsBoolExp = {
   childRootRelationships?: InputMaybe<RootRelationshipsBoolExp>;
   entities?: InputMaybe<EntitiesBoolExp>;
   firstPublicValidation?: InputMaybe<DateBoolExp>;
+  gridRank?: InputMaybe<GridRankBoolExp>;
   id?: InputMaybe<StringBoolExp>;
   lastPublicValidation?: InputMaybe<DateBoolExp>;
   media?: InputMaybe<MediaBoolExp>;
@@ -3353,7 +3430,6 @@ export type RootsBoolExp = {
   profileTags?: InputMaybe<ProfileTagsBoolExp>;
   slug?: InputMaybe<StringBoolExp>;
   socials?: InputMaybe<SocialsBoolExp>;
-  theGridRanking?: InputMaybe<TheGridRankingBoolExp>;
   urlMain?: InputMaybe<StringBoolExp>;
 };
 
@@ -3366,10 +3442,10 @@ export type RootsFilterInput = {
 
 export type RootsOrderByExp = {
   firstPublicValidation?: InputMaybe<OrderBy>;
+  gridRank?: InputMaybe<GridRankOrderByExp>;
   id?: InputMaybe<OrderBy>;
   lastPublicValidation?: InputMaybe<OrderBy>;
   slug?: InputMaybe<OrderBy>;
-  theGridRanking?: InputMaybe<TheGridRankingOrderBy>;
   urlMain?: InputMaybe<OrderBy>;
 };
 
@@ -3838,6 +3914,9 @@ export type Subscription = {
   entityTypes?: Maybe<Array<EntityTypes>>;
   entityTypesAggregate?: Maybe<EntityTypesAggExp>;
   entityTypesById?: Maybe<EntityTypes>;
+  gridRank?: Maybe<Array<GridRank>>;
+  gridRankAggregate?: Maybe<GridRankAggExp>;
+  gridRankById?: Maybe<GridRank>;
   media?: Maybe<Array<Media>>;
   mediaAggregate?: Maybe<MediaAggExp>;
   mediaById?: Maybe<Media>;
@@ -4146,6 +4225,24 @@ export type SubscriptionEntityTypesAggregateArgs = {
 
 
 export type SubscriptionEntityTypesByIdArgs = {
+  id: Scalars['String']['input'];
+};
+
+
+export type SubscriptionGridRankArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<GridRankOrderByExp>>;
+  where?: InputMaybe<GridRankBoolExp>;
+};
+
+
+export type SubscriptionGridRankAggregateArgs = {
+  filter_input?: InputMaybe<GridRankFilterInput>;
+};
+
+
+export type SubscriptionGridRankByIdArgs = {
   id: Scalars['String']['input'];
 };
 
@@ -4768,43 +4865,6 @@ export type TagsOrderByExp = {
   tagTypeId?: InputMaybe<OrderBy>;
 };
 
-export type TheGridRanking = {
-  __typename?: 'TheGridRanking';
-  /** The Connection score (0-100) of the profile, supporting decimal values for more precision */
-  connectionScore: Scalars['String']['output'];
-  /** The root ID of the profile */
-  rootId: Scalars['String']['output'];
-  roots?: Maybe<Array<Roots>>;
-  theGridRankingsAggregate: RootsAggExp;
-};
-
-
-export type TheGridRankingRootsArgs = {
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<RootsOrderByExp>>;
-  where?: InputMaybe<RootsBoolExp>;
-};
-
-
-export type TheGridRankingTheGridRankingsAggregateArgs = {
-  filter_input?: InputMaybe<RootsFilterInput>;
-};
-
-export type TheGridRankingBoolExp = {
-  _and?: InputMaybe<Array<TheGridRankingBoolExp>>;
-  _not?: InputMaybe<TheGridRankingBoolExp>;
-  _or?: InputMaybe<Array<TheGridRankingBoolExp>>;
-  connectionScore?: InputMaybe<StringBoolExp>;
-  rootId?: InputMaybe<StringBoolExp>;
-  roots?: InputMaybe<RootsBoolExp>;
-};
-
-export type TheGridRankingOrderBy = {
-  connectionScore?: InputMaybe<OrderBy>;
-  rootId?: InputMaybe<OrderBy>;
-};
-
 export type UrlTypes = {
   __typename?: 'UrlTypes';
   allowedUrlTypes?: Maybe<Array<AllowedUrlTypes>>;
@@ -5080,7 +5140,7 @@ export type GetProfileDataQuery = { __typename?: 'Query', profileInfos?: Array<(
     & { ' $fragmentRefs'?: { 'ProfileFragmentFragment': ProfileFragmentFragment;'ProfileHeadingFragmentFragment': ProfileHeadingFragmentFragment } }
   )> | null };
 
-export type ProfileCardFragmentFragment = { __typename?: 'ProfileInfos', name: string, id: string, tagLine: string, descriptionShort: string, profileTypeId?: string | null, profileStatusId?: string | null, profileSectorId?: string | null, foundingDate?: string | null, profileSector?: { __typename?: 'ProfileSectors', name: string, id: string, definition: string } | null, profileStatus?: { __typename?: 'ProfileStatuses', name: string, id: string, definition: string } | null, profileType?: { __typename?: 'ProfileTypes', name: string, id: string, definition: string } | null, urls?: Array<{ __typename?: 'ProfileInfoUrls', url: string, urlType?: { __typename?: 'UrlTypes', name: string, id: string, definition: string } | null }> | null, media?: Array<{ __typename?: 'ProfileInfosMedia', id: string, url: string, mediaType?: { __typename?: 'MediaTypes', id: string, name: string, slug?: string | null } | null }> | null, mainProduct?: { __typename?: 'Roots', products?: Array<{ __typename?: 'Products', name: string, productType?: { __typename?: 'ProductTypes', name: string } | null }> | null } | null, root?: { __typename?: 'Roots', urlMain: string, slug: string, theGridRanking?: { __typename?: 'TheGridRanking', connectionScore: string, rootId: string } | null, assets?: Array<(
+export type ProfileCardFragmentFragment = { __typename?: 'ProfileInfos', name: string, id: string, tagLine: string, descriptionShort: string, profileTypeId?: string | null, profileStatusId?: string | null, profileSectorId?: string | null, foundingDate?: string | null, profileSector?: { __typename?: 'ProfileSectors', name: string, id: string, definition: string } | null, profileStatus?: { __typename?: 'ProfileStatuses', name: string, id: string, definition: string } | null, profileType?: { __typename?: 'ProfileTypes', name: string, id: string, definition: string } | null, urls?: Array<{ __typename?: 'ProfileInfoUrls', url: string, urlType?: { __typename?: 'UrlTypes', name: string, id: string, definition: string } | null }> | null, media?: Array<{ __typename?: 'ProfileInfosMedia', id: string, url: string, mediaType?: { __typename?: 'MediaTypes', id: string, name: string, slug?: string | null } | null }> | null, mainProduct?: { __typename?: 'Roots', products?: Array<{ __typename?: 'Products', name: string, productType?: { __typename?: 'ProductTypes', name: string } | null }> | null } | null, root?: { __typename?: 'Roots', urlMain: string, slug: string, gridRank?: { __typename?: 'GridRank', score?: number | null } | null, assets?: Array<(
       { __typename?: 'Assets', ticker: string, name: string, id: string }
       & { ' $fragmentRefs'?: { 'AssetFieldsFragmentFragment': AssetFieldsFragmentFragment } }
     )> | null, socials?: Array<{ __typename?: 'Socials', name: string, socialType?: { __typename?: 'SocialTypes', name: string } | null, urls?: Array<{ __typename?: 'SocialUrls', url: string }> | null }> | null, profileTags?: Array<{ __typename?: 'ProfileTags', tag?: { __typename?: 'Tags', name: string, id: string } | null }> | null, products?: Array<(
@@ -5102,17 +5162,17 @@ export type SearchProfilesQuery = { __typename?: 'Query', profileInfos?: Array<(
   )> | null };
 
 export type SearchProfilesByRankingQueryVariables = Exact<{
-  order_by?: InputMaybe<Array<TheGridRankingOrderBy> | TheGridRankingOrderBy>;
-  where?: InputMaybe<TheGridRankingBoolExp>;
+  sortOrder: OrderBy;
+  where?: InputMaybe<RootsBoolExp>;
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
 }>;
 
 
-export type SearchProfilesByRankingQuery = { __typename?: 'Query', theGridRankings?: Array<{ __typename?: 'TheGridRanking', connectionScore: string, rootId: string, roots?: Array<{ __typename?: 'Roots', profileInfos?: Array<(
-        { __typename?: 'ProfileInfos' }
-        & { ' $fragmentRefs'?: { 'ProfileCardFragmentFragment': ProfileCardFragmentFragment } }
-      )> | null }> | null }> | null };
+export type SearchProfilesByRankingQuery = { __typename?: 'Query', roots?: Array<{ __typename?: 'Roots', profileInfos?: Array<(
+      { __typename?: 'ProfileInfos' }
+      & { ' $fragmentRefs'?: { 'ProfileCardFragmentFragment': ProfileCardFragmentFragment } }
+    )> | null }> | null };
 
 export type GetOrderByFieldsQueryVariables = Exact<{
   name: Scalars['String']['input'];
@@ -5576,9 +5636,8 @@ export const ProfileCardFragmentFragmentDoc = new TypedDocumentString(`
   root {
     urlMain
     slug
-    theGridRanking {
-      connectionScore
-      rootId
+    gridRank {
+      score
     }
     assets {
       ticker
@@ -6359,9 +6418,8 @@ fragment ProfileCardFragment on ProfileInfos {
   root {
     urlMain
     slug
-    theGridRanking {
-      connectionScore
-      rootId
+    gridRank {
+      score
     }
     assets {
       ticker
@@ -6394,19 +6452,15 @@ fragment ProfileCardFragment on ProfileInfos {
   }
 }`) as unknown as TypedDocumentString<SearchProfilesQuery, SearchProfilesQueryVariables>;
 export const SearchProfilesByRankingDocument = new TypedDocumentString(`
-    query SearchProfilesByRanking($order_by: [TheGridRankingOrderBy!], $where: TheGridRankingBoolExp, $limit: Int, $offset: Int) {
-  theGridRankings(
+    query SearchProfilesByRanking($sortOrder: OrderBy!, $where: RootsBoolExp, $limit: Int, $offset: Int) {
+  roots(
     limit: $limit
     offset: $offset
     where: $where
-    order_by: $order_by
+    order_by: {gridRank: {score: $sortOrder}}
   ) {
-    connectionScore
-    rootId
-    roots {
-      profileInfos {
-        ...ProfileCardFragment
-      }
+    profileInfos {
+      ...ProfileCardFragment
     }
   }
 }
@@ -6634,9 +6688,8 @@ fragment ProfileCardFragment on ProfileInfos {
   root {
     urlMain
     slug
-    theGridRanking {
-      connectionScore
-      rootId
+    gridRank {
+      score
     }
     assets {
       ticker
