@@ -32,23 +32,19 @@ export const SearchProfilesQuery = graphql(`
 
 export const SearchProfilesByRankingQuery = graphql(`
   query SearchProfilesByRanking(
-    $order_by: [TheGridRankingOrderBy!]
-    $where: TheGridRankingBoolExp
+    $sortOrder: OrderBy!
+    $where: RootsBoolExp
     $limit: Int
     $offset: Int
   ) {
-    theGridRankings(
+    roots(
       limit: $limit
       offset: $offset
       where: $where
-      order_by: $order_by
+      order_by: { gridRank: { score: $sortOrder } }
     ) {
-      connectionScore
-      rootId
-      roots {
-        profileInfos {
-          ...ProfileCardFragment
-        }
+      profileInfos {
+        ...ProfileCardFragment
       }
     }
   }
@@ -81,7 +77,7 @@ export const ProfileListCards = () => {
 
       // Check the appropriate data structure based on query type
       const hasData = isConnectionScoreSort
-        ? (lastPage as any).theGridRankings?.length
+        ? (lastPage as any).roots?.length
         : (lastPage as any).profileInfos?.length;
 
       if (hasData) {
@@ -97,17 +93,21 @@ export const ProfileListCards = () => {
       pageParam: { limit: number; offset: number };
     }) => {
       if (isConnectionScoreSort) {
-        // Transform the query for theGridRankings structure
-        const rankingQuery = {
-          order_by: debouncedQuery.order_by,
-          where: debouncedQuery.where ? {
-            roots: {
-              profileInfos: debouncedQuery.where
-            }
-          } : undefined,
+        const gridRankNotNull: any = { gridRank: { score: { _is_null: false } } };
+        const profileInfosWhere: any = debouncedQuery.where
+          ? { profileInfos: debouncedQuery.where }
+          : undefined;
+
+        const where =
+          profileInfosWhere
+            ? { _and: [gridRankNotNull, profileInfosWhere] }
+            : gridRankNotNull;
+
+        return await execute(SearchProfilesByRankingQuery, {
+          sortOrder: sorting.sortOrder,
+          where,
           ...pageParam
-        };
-        return await execute(SearchProfilesByRankingQuery, rankingQuery);
+        });
       } else {
         return await execute(SearchProfilesQuery, { ...debouncedQuery, ...pageParam });
       }
@@ -117,10 +117,8 @@ export const ProfileListCards = () => {
   // Extract profiles based on query type
   const profiles = data?.pages?.flatMap(page => {
     if (isConnectionScoreSort) {
-      // Extract profiles from theGridRankings structure (matching discovery approach)
-      return (page as any).theGridRankings
-        ?.flatMap((ranking: any) => ranking?.roots || [])
-        ?.flatMap((root: any) => root?.profileInfos || []);
+      // Extract profiles from Roots -> ProfileInfos
+      return (page as any).roots?.flatMap((root: any) => root?.profileInfos || []);
     } else {
       // Extract profiles from direct profileInfos structure
       return (page as any).profileInfos;
@@ -129,7 +127,7 @@ export const ProfileListCards = () => {
 
   console.table(
     profiles?.slice(0, 10).map((record: any) => ({
-      connectionScore: record?.root?.theGridRanking?.[0]?.connectionScore,
+      connectionScore: record?.root?.gridRank?.score,
       name: record?.name
     }))
   );

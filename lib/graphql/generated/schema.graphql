@@ -844,7 +844,69 @@ input EntityUrlsOrderBy {
 
 scalar Enum
 
+scalar Float32
+
+type Float32AggExp {
+  _count: Int!
+  _count_distinct: Int!
+  avg: Float64!
+  max: Float32!
+  min: Float32!
+  sum: Float32!
+}
+
+input Float32BoolExp {
+  _and: [Float32BoolExp!]
+  _eq: Float32
+  _gt: Float32
+  _gte: Float32
+  _in: [Float32!]
+  _is_null: Boolean
+  _lt: Float32
+  _lte: Float32
+  _not: Float32BoolExp
+  _or: [Float32BoolExp!]
+}
+
 scalar Float64
+
+type GridRank {
+  id: String!
+  root: Roots
+  rootId: String!
+  score: Float32
+}
+
+type GridRankAggExp {
+  _count: Int!
+  id: StringAggExp!
+  rootId: StringAggExp!
+  score: Float32AggExp!
+}
+
+input GridRankBoolExp {
+  _and: [GridRankBoolExp!]
+  _not: GridRankBoolExp
+  _or: [GridRankBoolExp!]
+  id: StringBoolExp
+  root: RootsBoolExp
+  rootId: StringBoolExp
+  score: Float32BoolExp
+}
+
+input GridRankFilterInput {
+  limit: Int
+  offset: Int
+  order_by: [GridRankOrderByExp!]
+  where: GridRankBoolExp
+}
+
+input GridRankOrderByExp {
+  id: OrderBy
+  root: RootsOrderByExp
+  rootId: OrderBy
+  score: OrderBy
+}
 
 scalar Int8
 
@@ -1791,6 +1853,9 @@ type Query {
   entityTypes(limit: Int, offset: Int, order_by: [EntityTypesOrderByExp!], where: EntityTypesBoolExp): [EntityTypes!]
   entityTypesAggregate(filter_input: EntityTypesFilterInput): EntityTypesAggExp
   entityTypesById(id: String!): EntityTypes
+  gridRank(limit: Int, offset: Int, order_by: [GridRankOrderByExp!], where: GridRankBoolExp): [GridRank!]
+  gridRankAggregate(filter_input: GridRankFilterInput): GridRankAggExp
+  gridRankById(id: String!): GridRank
   media(limit: Int, offset: Int, order_by: [MediaOrderByExp!], where: MediaBoolExp): [Media!]
   mediaAggregate(filter_input: MediaFilterInput): MediaAggExp
   mediaById(id: String!): Media
@@ -1868,7 +1933,6 @@ type Query {
   tags(limit: Int, offset: Int, order_by: [TagsOrderByExp!], where: TagsBoolExp): [Tags!]
   tagsAggregate(filter_input: TagsFilterInput): TagsAggExp
   tagsById(id: String!): Tags
-  theGridRankings(limit: Int, offset: Int, order_by: [TheGridRankingOrderBy!], where: TheGridRankingBoolExp): [TheGridRanking!]
   urlTypes(limit: Int, offset: Int, order_by: [UrlTypesOrderByExp!], where: UrlTypesBoolExp): [UrlTypes!]
   urlTypesAggregate(filter_input: UrlTypesFilterInput): UrlTypesAggExp
   urlTypesById(id: String!): UrlTypes
@@ -1993,6 +2057,7 @@ type Roots {
   entities(limit: Int, offset: Int, order_by: [EntitiesOrderByExp!], where: EntitiesBoolExp): [Entities!]
   entitiesAggregate(filter_input: EntitiesFilterInput): EntitiesAggExp!
   firstPublicValidation: Date
+  gridRank: GridRank
   id: String!
   lastPublicValidation: Date
   media(limit: Int, offset: Int, order_by: [MediaOrderByExp!], where: MediaBoolExp): [Media!]
@@ -2008,7 +2073,6 @@ type Roots {
   slug: String!
   socials(limit: Int, offset: Int, order_by: [SocialsOrderByExp!], where: SocialsBoolExp): [Socials!]
   socialsAggregate(filter_input: SocialsFilterInput): SocialsAggExp!
-  theGridRanking: TheGridRanking
   urlMain: String!
 }
 
@@ -2029,6 +2093,7 @@ input RootsBoolExp {
   childRootRelationships: RootRelationshipsBoolExp
   entities: EntitiesBoolExp
   firstPublicValidation: DateBoolExp
+  gridRank: GridRankBoolExp
   id: StringBoolExp
   lastPublicValidation: DateBoolExp
   media: MediaBoolExp
@@ -2038,7 +2103,6 @@ input RootsBoolExp {
   profileTags: ProfileTagsBoolExp
   slug: StringBoolExp
   socials: SocialsBoolExp
-  theGridRanking: TheGridRankingBoolExp
   urlMain: StringBoolExp
 }
 
@@ -2051,10 +2115,10 @@ input RootsFilterInput {
 
 input RootsOrderByExp {
   firstPublicValidation: OrderBy
+  gridRank: GridRankOrderByExp
   id: OrderBy
   lastPublicValidation: OrderBy
   slug: OrderBy
-  theGridRanking: TheGridRankingOrderBy
   urlMain: OrderBy
 }
 
@@ -2428,6 +2492,9 @@ type Subscription {
   entityTypes(limit: Int, offset: Int, order_by: [EntityTypesOrderByExp!], where: EntityTypesBoolExp): [EntityTypes!]
   entityTypesAggregate(filter_input: EntityTypesFilterInput): EntityTypesAggExp
   entityTypesById(id: String!): EntityTypes
+  gridRank(limit: Int, offset: Int, order_by: [GridRankOrderByExp!], where: GridRankBoolExp): [GridRank!]
+  gridRankAggregate(filter_input: GridRankFilterInput): GridRankAggExp
+  gridRankById(id: String!): GridRank
   media(limit: Int, offset: Int, order_by: [MediaOrderByExp!], where: MediaBoolExp): [Media!]
   mediaAggregate(filter_input: MediaFilterInput): MediaAggExp
   mediaById(id: String!): Media
@@ -2640,31 +2707,6 @@ input TagsOrderByExp {
   slug: OrderBy
   tagType: TagTypesOrderByExp
   tagTypeId: OrderBy
-}
-
-type TheGridRanking {
-  """
-  The Connection score (0-100) of the profile, supporting decimal values for more precision
-  """
-  connectionScore: String!
-  """The root ID of the profile"""
-  rootId: String!
-  roots(limit: Int, offset: Int, order_by: [RootsOrderByExp!], where: RootsBoolExp): [Roots!]
-  theGridRankingsAggregate(filter_input: RootsFilterInput): RootsAggExp!
-}
-
-input TheGridRankingBoolExp {
-  _and: [TheGridRankingBoolExp!]
-  _not: TheGridRankingBoolExp
-  _or: [TheGridRankingBoolExp!]
-  connectionScore: StringBoolExp
-  rootId: StringBoolExp
-  roots: RootsBoolExp
-}
-
-input TheGridRankingOrderBy {
-  connectionScore: OrderBy
-  rootId: OrderBy
 }
 
 type UrlTypes {

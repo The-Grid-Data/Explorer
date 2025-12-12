@@ -36,6 +36,10 @@ const codegenConfig: CodegenConfig = {
             input: 'number',
             output: 'number'
           },
+          Float32: {
+            input: 'number',
+            output: 'number'
+          },
           Int8: {
             input: 'number',
             output: 'number'
