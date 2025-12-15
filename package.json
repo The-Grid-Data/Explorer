@@ -44,7 +44,7 @@
     "framer-motion": "^11.13.5",
     "graphql": "^16.10.0",
     "lucide-react": "^0.378.0",
-    "next": "15.1.5",
+    "next": "15.1.11",
     "next-themes": "^0.4.4",
     "nuqs": "^2.3.1",
     "pluralize": "^8.0.0",
