@@ -3,8 +3,8 @@ type MediaTypeObject = { mediaType?: { slug?: string | null } | null };
 // TODO: should extract this from TGS
 const MEDIA_SLUGS = {
   LogoLightBg: 'logo_light_bg',
-  IconDarkBG: 'icon_dark_bg',
-  IconLightBG: 'icon_light_bg',
+  IconDarkBG: 'icon',
+  IconLightBG: 'icon',
   LogoDarkBG: 'logo_dark_bg',
   ProfileHeader: 'profile_header'
 };
