@@ -4,7 +4,7 @@ import { useState } from 'react';
 export type Sorting = ReturnType<typeof useProfileSorting>;
 
 export const useProfileSorting = () => {
-  const [sortBy, setSortBy] = useState<string>('connectionScore');
+  const [sortBy, setSortBy] = useState<string>('gridRank.score');
   const [sortOrder, setSortOrder] = useState<OrderBy>(OrderBy.Desc);
   const toQuerySortByFields = () => generateOrderByQuery(sortBy, sortOrder);
 
@@ -24,9 +24,9 @@ export const useProfileSorting = () => {
 const generateOrderByQuery = (sortBy: string, sortOrder: OrderBy) => {
   if (!sortBy) return [];
 
-  // Handle connectionScore as a special case
-  if (sortBy === 'connectionScore') {
-    return { connectionScore: sortOrder };
+  // Handle gridRank.score as a special case since it's the main ranking
+  if (sortBy === 'gridRank.score') {
+    return { gridRank: { score: sortOrder } };
   }
 
   const parts = sortBy.split('.');

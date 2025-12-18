@@ -194,13 +194,13 @@ const extractOrderByOptions = (
 
   extractFields(fields);
   
-  // Add connectionScore as a custom sorting option
-  options.unshift('connectionScore');
+  // Add gridRank.score as a custom sorting option
+  options.unshift('gridRank.score');
   
   return options.sort((a, b) => {
-    // Keep connectionScore at the top
-    if (a === 'connectionScore') return -1;
-    if (b === 'connectionScore') return 1;
+    // Keep gridRank.score at the top
+    if (a === 'gridRank.score') return -1;
+    if (b === 'gridRank.score') return 1;
     
     if (a.split('.').length < b.split('.').length) {
       return -1;

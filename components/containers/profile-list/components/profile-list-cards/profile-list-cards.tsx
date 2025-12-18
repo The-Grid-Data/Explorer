@@ -54,8 +54,8 @@ export const ProfileListCards = () => {
   const query = useProfilesQueryContext();
   const { sorting } = useProfileSortingContext();
 
-  // Check if we're sorting by connectionScore to determine which query to use
-  const isConnectionScoreSort = sorting.sortBy === 'connectionScore';
+  // Check if we're sorting by gridRank.score to determine which query to use
+  const isGridRankSort = sorting.sortBy === 'gridRank.score';
 
   const { ref: fetchNextPageTriggerRef, inView } = useInView({ threshold: 1 });
   const limit = query?.limit ?? defaultLimit;
@@ -64,7 +64,7 @@ export const ProfileListCards = () => {
   const [debouncedQuery] = useDebounceValue(query, 300);
 
   const { data, isFetching, isError, fetchNextPage } = useInfiniteQuery({
-    queryKey: ['searchProfiles', isConnectionScoreSort, sorting.sortBy, sorting.sortOrder, JSON.stringify(debouncedQuery)],
+    queryKey: ['searchProfiles', isGridRankSort, sorting.sortBy, sorting.sortOrder, JSON.stringify(debouncedQuery)],
     placeholderData: previousData => previousData,
     initialPageParam: {
       limit,
@@ -76,7 +76,7 @@ export const ProfileListCards = () => {
       const lastOffset = ((lastPageParam as any)?.offset as number) ?? 0;
 
       // Check the appropriate data structure based on query type
-      const hasData = isConnectionScoreSort
+      const hasData = isGridRankSort
         ? (lastPage as any).roots?.length
         : (lastPage as any).profileInfos?.length;
 
@@ -92,7 +92,7 @@ export const ProfileListCards = () => {
     }: {
       pageParam: { limit: number; offset: number };
     }) => {
-      if (isConnectionScoreSort) {
+      if (isGridRankSort) {
         const gridRankNotNull: any = { gridRank: { score: { _is_null: false } } };
         const profileInfosWhere: any = debouncedQuery.where
           ? { profileInfos: debouncedQuery.where }
@@ -116,7 +116,7 @@ export const ProfileListCards = () => {
 
   // Extract profiles based on query type
   const profiles = data?.pages?.flatMap(page => {
-    if (isConnectionScoreSort) {
+    if (isGridRankSort) {
       // Extract profiles from Roots -> ProfileInfos
       return (page as any).roots?.flatMap((root: any) => root?.profileInfos || []);
     } else {
@@ -127,7 +127,7 @@ export const ProfileListCards = () => {
 
   console.table(
     profiles?.slice(0, 10).map((record: any) => ({
-      connectionScore: record?.root?.gridRank?.score,
+      gridRankScore: record?.root?.gridRank?.score,
       name: record?.name
     }))
   );
