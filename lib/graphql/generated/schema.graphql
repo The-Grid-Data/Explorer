@@ -4,6 +4,58 @@ schema {
   subscription: Subscription
 }
 
+type AllowedAttributeTypes {
+  attributeType: AttributeTypes
+  attributeTypeId: String!
+  coreTableName: CoreTableNames
+  enumRowId: String!
+  enumTableId: String!
+  enumTableName: EnumTableNames
+  id: String!
+  tableId: String!
+}
+
+type AllowedAttributeTypesAggExp {
+  _count: Int!
+  attributeTypeId: StringAggExp!
+  enumRowId: StringAggExp!
+  enumTableId: StringAggExp!
+  id: StringAggExp!
+  tableId: StringAggExp!
+}
+
+input AllowedAttributeTypesBoolExp {
+  _and: [AllowedAttributeTypesBoolExp!]
+  _not: AllowedAttributeTypesBoolExp
+  _or: [AllowedAttributeTypesBoolExp!]
+  attributeType: AttributeTypesBoolExp
+  attributeTypeId: StringBoolExp
+  coreTableName: CoreTableNamesBoolExp
+  enumRowId: StringBoolExp
+  enumTableId: StringBoolExp
+  enumTableName: EnumTableNamesBoolExp
+  id: StringBoolExp
+  tableId: StringBoolExp
+}
+
+input AllowedAttributeTypesFilterInput {
+  limit: Int
+  offset: Int
+  order_by: [AllowedAttributeTypesOrderByExp!]
+  where: AllowedAttributeTypesBoolExp
+}
+
+input AllowedAttributeTypesOrderByExp {
+  attributeType: AttributeTypesOrderByExp
+  attributeTypeId: OrderBy
+  coreTableName: CoreTableNamesOrderByExp
+  enumRowId: OrderBy
+  enumTableId: OrderBy
+  enumTableName: EnumTableNamesOrderByExp
+  id: OrderBy
+  tableId: OrderBy
+}
+
 type AllowedUrlTypes {
   coreTableName: CoreTableNames
   id: String!
@@ -43,6 +95,56 @@ input AllowedUrlTypesOrderByExp {
   tableId: OrderBy
   urlType: UrlTypesOrderByExp
   urlTypeId: OrderBy
+}
+
+type AssetAttributes {
+  attributeType: AttributeTypes
+  attributeTypeId: String!
+  id: String!
+  rootId: String!
+  rowId: String!
+  tableId: String!
+  value: String!
+}
+
+type AssetAttributesAggExp {
+  _count: Int!
+  attributeTypeId: StringAggExp!
+  id: StringAggExp!
+  rootId: StringAggExp!
+  rowId: StringAggExp!
+  tableId: StringAggExp!
+  value: StringAggExp!
+}
+
+input AssetAttributesBoolExp {
+  _and: [AssetAttributesBoolExp!]
+  _not: AssetAttributesBoolExp
+  _or: [AssetAttributesBoolExp!]
+  attributeType: AttributeTypesBoolExp
+  attributeTypeId: StringBoolExp
+  id: StringBoolExp
+  rootId: StringBoolExp
+  rowId: StringBoolExp
+  tableId: StringBoolExp
+  value: StringBoolExp
+}
+
+input AssetAttributesFilterInput {
+  limit: Int
+  offset: Int
+  order_by: [AssetAttributesOrderBy!]
+  where: AssetAttributesBoolExp
+}
+
+input AssetAttributesOrderBy {
+  attributeType: AttributeTypesOrderByExp
+  attributeTypeId: OrderBy
+  id: OrderBy
+  rootId: OrderBy
+  rowId: OrderBy
+  tableId: OrderBy
+  value: OrderBy
 }
 
 type AssetDeployments {
@@ -364,6 +466,7 @@ type Assets {
   assetStatusId: String
   assetType: AssetTypes
   assetTypeId: String
+  attributes(limit: Int, offset: Int, order_by: [AssetAttributesOrderBy!], where: AssetAttributesBoolExp): [AssetAttributes!]
   derivativeAssets(limit: Int, offset: Int, order_by: [DerivativeAssetsOrderByExp!], where: DerivativeAssetsBoolExp): [DerivativeAssets!]
   derivativeAssetsAggregate(filter_input: DerivativeAssetsFilterInput): DerivativeAssetsAggExp!
   description: String!
@@ -401,6 +504,7 @@ input AssetsBoolExp {
   assetStatusId: StringBoolExp
   assetType: AssetTypesBoolExp
   assetTypeId: StringBoolExp
+  attributes: AssetAttributesBoolExp
   derivativeAssets: DerivativeAssetsBoolExp
   description: StringBoolExp
   icon: StringBoolExp
@@ -433,6 +537,107 @@ input AssetsOrderByExp {
   root: RootsOrderByExp
   rootId: OrderBy
   ticker: OrderBy
+}
+
+type AttributeTypes {
+  allowedAttributeTypes(limit: Int, offset: Int, order_by: [AllowedAttributeTypesOrderByExp!], where: AllowedAttributeTypesBoolExp): [AllowedAttributeTypes!]
+  allowedAttributeTypesAggregate(filter_input: AllowedAttributeTypesFilterInput): AllowedAttributeTypesAggExp!
+  attributes(limit: Int, offset: Int, order_by: [AttributesOrderByExp!], where: AttributesBoolExp): [Attributes!]
+  attributesAggregate(filter_input: AttributesFilterInput): AttributesAggExp!
+  definition: String!
+  id: String!
+  name: String!
+  slug: String
+}
+
+type AttributeTypesAggExp {
+  _count: Int!
+  definition: StringAggExp!
+  id: StringAggExp!
+  name: StringAggExp!
+  slug: StringAggExp!
+}
+
+input AttributeTypesBoolExp {
+  _and: [AttributeTypesBoolExp!]
+  _not: AttributeTypesBoolExp
+  _or: [AttributeTypesBoolExp!]
+  allowedAttributeTypes: AllowedAttributeTypesBoolExp
+  attributes: AttributesBoolExp
+  definition: StringBoolExp
+  id: StringBoolExp
+  name: StringBoolExp
+  slug: StringBoolExp
+}
+
+input AttributeTypesFilterInput {
+  limit: Int
+  offset: Int
+  order_by: [AttributeTypesOrderByExp!]
+  where: AttributeTypesBoolExp
+}
+
+input AttributeTypesOrderByExp {
+  definition: OrderBy
+  id: OrderBy
+  name: OrderBy
+  slug: OrderBy
+}
+
+type Attributes {
+  attributeType: AttributeTypes
+  attributeTypeId: String
+  coreTableName: CoreTableNames
+  id: String!
+  root: Roots
+  rootId: String!
+  rowId: String
+  tableId: String
+  value: String!
+}
+
+type AttributesAggExp {
+  _count: Int!
+  attributeTypeId: StringAggExp!
+  id: StringAggExp!
+  rootId: StringAggExp!
+  rowId: StringAggExp!
+  tableId: StringAggExp!
+  value: StringAggExp!
+}
+
+input AttributesBoolExp {
+  _and: [AttributesBoolExp!]
+  _not: AttributesBoolExp
+  _or: [AttributesBoolExp!]
+  attributeType: AttributeTypesBoolExp
+  attributeTypeId: StringBoolExp
+  coreTableName: CoreTableNamesBoolExp
+  id: StringBoolExp
+  root: RootsBoolExp
+  rootId: StringBoolExp
+  rowId: StringBoolExp
+  tableId: StringBoolExp
+  value: StringBoolExp
+}
+
+input AttributesFilterInput {
+  limit: Int
+  offset: Int
+  order_by: [AttributesOrderByExp!]
+  where: AttributesBoolExp
+}
+
+input AttributesOrderByExp {
+  attributeType: AttributeTypesOrderByExp
+  attributeTypeId: OrderBy
+  coreTableName: CoreTableNamesOrderByExp
+  id: OrderBy
+  root: RootsOrderByExp
+  rootId: OrderBy
+  rowId: OrderBy
+  tableId: OrderBy
+  value: OrderBy
 }
 
 type CoreTableNames {
@@ -844,6 +1049,40 @@ input EntityUrlsOrderBy {
 
 scalar Enum
 
+type EnumTableNames {
+  allowedAttributeTypes(limit: Int, offset: Int, order_by: [AllowedAttributeTypesOrderByExp!], where: AllowedAttributeTypesBoolExp): [AllowedAttributeTypes!]
+  allowedAttributeTypesAggregate(filter_input: AllowedAttributeTypesFilterInput): AllowedAttributeTypesAggExp!
+  id: String!
+  tableName: String!
+}
+
+type EnumTableNamesAggExp {
+  _count: Int!
+  id: StringAggExp!
+  tableName: StringAggExp!
+}
+
+input EnumTableNamesBoolExp {
+  _and: [EnumTableNamesBoolExp!]
+  _not: EnumTableNamesBoolExp
+  _or: [EnumTableNamesBoolExp!]
+  allowedAttributeTypes: AllowedAttributeTypesBoolExp
+  id: StringBoolExp
+  tableName: StringBoolExp
+}
+
+input EnumTableNamesFilterInput {
+  limit: Int
+  offset: Int
+  order_by: [EnumTableNamesOrderByExp!]
+  where: EnumTableNamesBoolExp
+}
+
+input EnumTableNamesOrderByExp {
+  id: OrderBy
+  tableName: OrderBy
+}
+
 scalar Float32
 
 type Float32AggExp {
@@ -1108,6 +1347,56 @@ input ProductAssetRelationshipsOrderByExp {
   productId: OrderBy
 }
 
+type ProductAttributes {
+  attributeType: AttributeTypes
+  attributeTypeId: String!
+  id: String!
+  rootId: String!
+  rowId: String!
+  tableId: String!
+  value: String!
+}
+
+type ProductAttributesAggExp {
+  _count: Int!
+  attributeTypeId: StringAggExp!
+  id: StringAggExp!
+  rootId: StringAggExp!
+  rowId: StringAggExp!
+  tableId: StringAggExp!
+  value: StringAggExp!
+}
+
+input ProductAttributesBoolExp {
+  _and: [ProductAttributesBoolExp!]
+  _not: ProductAttributesBoolExp
+  _or: [ProductAttributesBoolExp!]
+  attributeType: AttributeTypesBoolExp
+  attributeTypeId: StringBoolExp
+  id: StringBoolExp
+  rootId: StringBoolExp
+  rowId: StringBoolExp
+  tableId: StringBoolExp
+  value: StringBoolExp
+}
+
+input ProductAttributesFilterInput {
+  limit: Int
+  offset: Int
+  order_by: [ProductAttributesOrderBy!]
+  where: ProductAttributesBoolExp
+}
+
+input ProductAttributesOrderBy {
+  attributeType: AttributeTypesOrderByExp
+  attributeTypeId: OrderBy
+  id: OrderBy
+  rootId: OrderBy
+  rowId: OrderBy
+  tableId: OrderBy
+  value: OrderBy
+}
+
 type ProductDeployments {
   deploymentId: String!
   id: String!
@@ -1337,6 +1626,7 @@ input ProductUrlsOrderBy {
 }
 
 type Products {
+  attributes(limit: Int, offset: Int, order_by: [ProductAttributesOrderBy!], where: ProductAttributesBoolExp): [ProductAttributes!]
   description: String!
   id: String!
   isMainProduct: Int8!
@@ -1377,6 +1667,7 @@ input ProductsBoolExp {
   _and: [ProductsBoolExp!]
   _not: ProductsBoolExp
   _or: [ProductsBoolExp!]
+  attributes: ProductAttributesBoolExp
   description: StringBoolExp
   id: StringBoolExp
   isMainProduct: Int8BoolExp
@@ -1415,6 +1706,56 @@ input ProductsOrderByExp {
   productTypeId: OrderBy
   root: RootsOrderByExp
   rootId: OrderBy
+}
+
+type ProfileInfoAttributes {
+  attributeType: AttributeTypes
+  attributeTypeId: String!
+  id: String!
+  rootId: String!
+  rowId: String!
+  tableId: String!
+  value: String!
+}
+
+type ProfileInfoAttributesAggExp {
+  _count: Int!
+  attributeTypeId: StringAggExp!
+  id: StringAggExp!
+  rootId: StringAggExp!
+  rowId: StringAggExp!
+  tableId: StringAggExp!
+  value: StringAggExp!
+}
+
+input ProfileInfoAttributesBoolExp {
+  _and: [ProfileInfoAttributesBoolExp!]
+  _not: ProfileInfoAttributesBoolExp
+  _or: [ProfileInfoAttributesBoolExp!]
+  attributeType: AttributeTypesBoolExp
+  attributeTypeId: StringBoolExp
+  id: StringBoolExp
+  rootId: StringBoolExp
+  rowId: StringBoolExp
+  tableId: StringBoolExp
+  value: StringBoolExp
+}
+
+input ProfileInfoAttributesFilterInput {
+  limit: Int
+  offset: Int
+  order_by: [ProfileInfoAttributesOrderBy!]
+  where: ProfileInfoAttributesBoolExp
+}
+
+input ProfileInfoAttributesOrderBy {
+  attributeType: AttributeTypesOrderByExp
+  attributeTypeId: OrderBy
+  id: OrderBy
+  rootId: OrderBy
+  rowId: OrderBy
+  tableId: OrderBy
+  value: OrderBy
 }
 
 type ProfileInfoSocials {
@@ -1488,13 +1829,14 @@ input ProfileInfoUrlsOrderBy {
 }
 
 type ProfileInfos {
+  attributes(limit: Int, offset: Int, order_by: [ProfileInfoAttributesOrderBy!], where: ProfileInfoAttributesBoolExp): [ProfileInfoAttributes!]
   descriptionLong: String!
   descriptionMarketing: String!
   descriptionShort: String!
   foundingDate: Date
-  icon: String!
+  icon: String! @deprecated(reason: "Use ProfileInfos.media with the appropriate media type instead")
   id: String!
-  logo: String!
+  logo: String! @deprecated(reason: "Use ProfileInfos.media with the appropriate media type instead")
   media(limit: Int, offset: Int, order_by: [ProfileInfosMediaOrderBy!], where: ProfileInfosMediaBoolExp): [ProfileInfosMedia!]
   name: String!
   profileSector: ProfileSectors
@@ -1517,9 +1859,9 @@ type ProfileInfosAggExp {
   descriptionMarketing: StringAggExp!
   descriptionShort: StringAggExp!
   foundingDate: DateAggExp!
-  icon: StringAggExp!
+  icon: StringAggExp! @deprecated(reason: "Use ProfileInfos.media with the appropriate media type instead")
   id: StringAggExp!
-  logo: StringAggExp!
+  logo: StringAggExp! @deprecated(reason: "Use ProfileInfos.media with the appropriate media type instead")
   name: StringAggExp!
   profileSectorId: StringAggExp!
   profileStatusId: StringAggExp!
@@ -1532,13 +1874,12 @@ input ProfileInfosBoolExp {
   _and: [ProfileInfosBoolExp!]
   _not: ProfileInfosBoolExp
   _or: [ProfileInfosBoolExp!]
+  attributes: ProfileInfoAttributesBoolExp
   descriptionLong: StringBoolExp
   descriptionMarketing: StringBoolExp
   descriptionShort: StringBoolExp
   foundingDate: DateBoolExp
-  icon: StringBoolExp
   id: StringBoolExp
-  logo: StringBoolExp
   name: StringBoolExp
   profileSector: ProfileSectorsBoolExp
   profileSectorId: StringBoolExp
@@ -1803,6 +2144,9 @@ type ProgramRankingResponse {
 }
 
 type Query {
+  allowedAttributeTypes(limit: Int, offset: Int, order_by: [AllowedAttributeTypesOrderByExp!], where: AllowedAttributeTypesBoolExp): [AllowedAttributeTypes!]
+  allowedAttributeTypesAggregate(filter_input: AllowedAttributeTypesFilterInput): AllowedAttributeTypesAggExp
+  allowedAttributeTypesById(id: String!): AllowedAttributeTypes
   allowedUrlTypes(limit: Int, offset: Int, order_by: [AllowedUrlTypesOrderByExp!], where: AllowedUrlTypesBoolExp): [AllowedUrlTypes!]
   allowedUrlTypesAggregate(filter_input: AllowedUrlTypesFilterInput): AllowedUrlTypesAggExp
   allowedUrlTypesById(id: String!): AllowedUrlTypes
@@ -1817,6 +2161,8 @@ type Query {
     """API Key for Vybe Network"""
     xApiKey: String!
   ): ProgramRankingResponse!
+  assetAttributes(limit: Int, offset: Int, order_by: [AssetAttributesOrderBy!], where: AssetAttributesBoolExp): [AssetAttributes!]
+  assetAttributesAggregate(filter_input: AssetAttributesFilterInput): AssetAttributesAggExp
   assetDeployments(limit: Int, offset: Int, order_by: [AssetDeploymentsOrderByExp!], where: AssetDeploymentsBoolExp): [AssetDeployments!]
   assetDeploymentsAggregate(filter_input: AssetDeploymentsFilterInput): AssetDeploymentsAggExp
   assetDeploymentsById(id: String!): AssetDeployments
@@ -1835,6 +2181,12 @@ type Query {
   assets(limit: Int, offset: Int, order_by: [AssetsOrderByExp!], where: AssetsBoolExp): [Assets!]
   assetsAggregate(filter_input: AssetsFilterInput): AssetsAggExp
   assetsById(id: String!): Assets
+  attributeTypes(limit: Int, offset: Int, order_by: [AttributeTypesOrderByExp!], where: AttributeTypesBoolExp): [AttributeTypes!]
+  attributeTypesAggregate(filter_input: AttributeTypesFilterInput): AttributeTypesAggExp
+  attributeTypesById(id: String!): AttributeTypes
+  attributes(limit: Int, offset: Int, order_by: [AttributesOrderByExp!], where: AttributesBoolExp): [Attributes!]
+  attributesAggregate(filter_input: AttributesFilterInput): AttributesAggExp
+  attributesById(id: String!): Attributes
   coreTableNames(limit: Int, offset: Int, order_by: [CoreTableNamesOrderByExp!], where: CoreTableNamesBoolExp): [CoreTableNames!]
   coreTableNamesAggregate(filter_input: CoreTableNamesFilterInput): CoreTableNamesAggExp
   coreTableNamesById(id: String!): CoreTableNames
@@ -1853,6 +2205,9 @@ type Query {
   entityTypes(limit: Int, offset: Int, order_by: [EntityTypesOrderByExp!], where: EntityTypesBoolExp): [EntityTypes!]
   entityTypesAggregate(filter_input: EntityTypesFilterInput): EntityTypesAggExp
   entityTypesById(id: String!): EntityTypes
+  enumTableNames(limit: Int, offset: Int, order_by: [EnumTableNamesOrderByExp!], where: EnumTableNamesBoolExp): [EnumTableNames!]
+  enumTableNamesAggregate(filter_input: EnumTableNamesFilterInput): EnumTableNamesAggExp
+  enumTableNamesById(id: String!): EnumTableNames
   gridRank(limit: Int, offset: Int, order_by: [GridRankOrderByExp!], where: GridRankBoolExp): [GridRank!]
   gridRankAggregate(filter_input: GridRankFilterInput): GridRankAggExp
   gridRankById(id: String!): GridRank
@@ -1865,6 +2220,8 @@ type Query {
   productAssetRelationships(limit: Int, offset: Int, order_by: [ProductAssetRelationshipsOrderByExp!], where: ProductAssetRelationshipsBoolExp): [ProductAssetRelationships!]
   productAssetRelationshipsAggregate(filter_input: ProductAssetRelationshipsFilterInput): ProductAssetRelationshipsAggExp
   productAssetRelationshipsById(id: String!): ProductAssetRelationships
+  productAttributes(limit: Int, offset: Int, order_by: [ProductAttributesOrderBy!], where: ProductAttributesBoolExp): [ProductAttributes!]
+  productAttributesAggregate(filter_input: ProductAttributesFilterInput): ProductAttributesAggExp
   productDeployments(limit: Int, offset: Int, order_by: [ProductDeploymentsOrderByExp!], where: ProductDeploymentsBoolExp): [ProductDeployments!]
   productDeploymentsAggregate(filter_input: ProductDeploymentsFilterInput): ProductDeploymentsAggExp
   productDeploymentsById(id: String!): ProductDeployments
@@ -1877,6 +2234,8 @@ type Query {
   products(limit: Int, offset: Int, order_by: [ProductsOrderByExp!], where: ProductsBoolExp): [Products!]
   productsAggregate(filter_input: ProductsFilterInput): ProductsAggExp
   productsById(id: String!): Products
+  profileInfoAttributes(limit: Int, offset: Int, order_by: [ProfileInfoAttributesOrderBy!], where: ProfileInfoAttributesBoolExp): [ProfileInfoAttributes!]
+  profileInfoAttributesAggregate(filter_input: ProfileInfoAttributesFilterInput): ProfileInfoAttributesAggExp
   profileInfos(limit: Int, offset: Int, order_by: [ProfileInfosOrderByExp!], where: ProfileInfosBoolExp): [ProfileInfos!]
   profileInfosAggregate(filter_input: ProfileInfosFilterInput): ProfileInfosAggExp
   profileInfosById(id: String!): ProfileInfos
@@ -2052,6 +2411,8 @@ input RootRelationshipsOrderByExp {
 type Roots {
   assets(limit: Int, offset: Int, order_by: [AssetsOrderByExp!], where: AssetsBoolExp): [Assets!]
   assetsAggregate(filter_input: AssetsFilterInput): AssetsAggExp!
+  attributes(limit: Int, offset: Int, order_by: [AttributesOrderByExp!], where: AttributesBoolExp): [Attributes!]
+  attributesAggregate(filter_input: AttributesFilterInput): AttributesAggExp!
   childRootRelationships(limit: Int, offset: Int, order_by: [RootRelationshipsOrderByExp!], where: RootRelationshipsBoolExp): [RootRelationships!]
   childRootRelationshipsAggregate(filter_input: RootRelationshipsFilterInput): RootRelationshipsAggExp!
   entities(limit: Int, offset: Int, order_by: [EntitiesOrderByExp!], where: EntitiesBoolExp): [Entities!]
@@ -2074,6 +2435,8 @@ type Roots {
   socials(limit: Int, offset: Int, order_by: [SocialsOrderByExp!], where: SocialsBoolExp): [Socials!]
   socialsAggregate(filter_input: SocialsFilterInput): SocialsAggExp!
   urlMain: String!
+  urls(limit: Int, offset: Int, order_by: [UrlsOrderByExp!], where: UrlsBoolExp): [Urls!]
+  urlsAggregate(filter_input: UrlsFilterInput): UrlsAggExp!
 }
 
 type RootsAggExp {
@@ -2090,6 +2453,7 @@ input RootsBoolExp {
   _not: RootsBoolExp
   _or: [RootsBoolExp!]
   assets: AssetsBoolExp
+  attributes: AttributesBoolExp
   childRootRelationships: RootRelationshipsBoolExp
   entities: EntitiesBoolExp
   firstPublicValidation: DateBoolExp
@@ -2104,6 +2468,7 @@ input RootsBoolExp {
   slug: StringBoolExp
   socials: SocialsBoolExp
   urlMain: StringBoolExp
+  urls: UrlsBoolExp
 }
 
 input RootsFilterInput {
@@ -2453,9 +2818,14 @@ input StringBoolExp {
 }
 
 type Subscription {
+  allowedAttributeTypes(limit: Int, offset: Int, order_by: [AllowedAttributeTypesOrderByExp!], where: AllowedAttributeTypesBoolExp): [AllowedAttributeTypes!]
+  allowedAttributeTypesAggregate(filter_input: AllowedAttributeTypesFilterInput): AllowedAttributeTypesAggExp
+  allowedAttributeTypesById(id: String!): AllowedAttributeTypes
   allowedUrlTypes(limit: Int, offset: Int, order_by: [AllowedUrlTypesOrderByExp!], where: AllowedUrlTypesBoolExp): [AllowedUrlTypes!]
   allowedUrlTypesAggregate(filter_input: AllowedUrlTypesFilterInput): AllowedUrlTypesAggExp
   allowedUrlTypesById(id: String!): AllowedUrlTypes
+  assetAttributes(limit: Int, offset: Int, order_by: [AssetAttributesOrderBy!], where: AssetAttributesBoolExp): [AssetAttributes!]
+  assetAttributesAggregate(filter_input: AssetAttributesFilterInput): AssetAttributesAggExp
   assetDeployments(limit: Int, offset: Int, order_by: [AssetDeploymentsOrderByExp!], where: AssetDeploymentsBoolExp): [AssetDeployments!]
   assetDeploymentsAggregate(filter_input: AssetDeploymentsFilterInput): AssetDeploymentsAggExp
   assetDeploymentsById(id: String!): AssetDeployments
@@ -2474,6 +2844,12 @@ type Subscription {
   assets(limit: Int, offset: Int, order_by: [AssetsOrderByExp!], where: AssetsBoolExp): [Assets!]
   assetsAggregate(filter_input: AssetsFilterInput): AssetsAggExp
   assetsById(id: String!): Assets
+  attributeTypes(limit: Int, offset: Int, order_by: [AttributeTypesOrderByExp!], where: AttributeTypesBoolExp): [AttributeTypes!]
+  attributeTypesAggregate(filter_input: AttributeTypesFilterInput): AttributeTypesAggExp
+  attributeTypesById(id: String!): AttributeTypes
+  attributes(limit: Int, offset: Int, order_by: [AttributesOrderByExp!], where: AttributesBoolExp): [Attributes!]
+  attributesAggregate(filter_input: AttributesFilterInput): AttributesAggExp
+  attributesById(id: String!): Attributes
   coreTableNames(limit: Int, offset: Int, order_by: [CoreTableNamesOrderByExp!], where: CoreTableNamesBoolExp): [CoreTableNames!]
   coreTableNamesAggregate(filter_input: CoreTableNamesFilterInput): CoreTableNamesAggExp
   coreTableNamesById(id: String!): CoreTableNames
@@ -2492,6 +2868,9 @@ type Subscription {
   entityTypes(limit: Int, offset: Int, order_by: [EntityTypesOrderByExp!], where: EntityTypesBoolExp): [EntityTypes!]
   entityTypesAggregate(filter_input: EntityTypesFilterInput): EntityTypesAggExp
   entityTypesById(id: String!): EntityTypes
+  enumTableNames(limit: Int, offset: Int, order_by: [EnumTableNamesOrderByExp!], where: EnumTableNamesBoolExp): [EnumTableNames!]
+  enumTableNamesAggregate(filter_input: EnumTableNamesFilterInput): EnumTableNamesAggExp
+  enumTableNamesById(id: String!): EnumTableNames
   gridRank(limit: Int, offset: Int, order_by: [GridRankOrderByExp!], where: GridRankBoolExp): [GridRank!]
   gridRankAggregate(filter_input: GridRankFilterInput): GridRankAggExp
   gridRankById(id: String!): GridRank
@@ -2504,6 +2883,8 @@ type Subscription {
   productAssetRelationships(limit: Int, offset: Int, order_by: [ProductAssetRelationshipsOrderByExp!], where: ProductAssetRelationshipsBoolExp): [ProductAssetRelationships!]
   productAssetRelationshipsAggregate(filter_input: ProductAssetRelationshipsFilterInput): ProductAssetRelationshipsAggExp
   productAssetRelationshipsById(id: String!): ProductAssetRelationships
+  productAttributes(limit: Int, offset: Int, order_by: [ProductAttributesOrderBy!], where: ProductAttributesBoolExp): [ProductAttributes!]
+  productAttributesAggregate(filter_input: ProductAttributesFilterInput): ProductAttributesAggExp
   productDeployments(limit: Int, offset: Int, order_by: [ProductDeploymentsOrderByExp!], where: ProductDeploymentsBoolExp): [ProductDeployments!]
   productDeploymentsAggregate(filter_input: ProductDeploymentsFilterInput): ProductDeploymentsAggExp
   productDeploymentsById(id: String!): ProductDeployments
@@ -2516,6 +2897,8 @@ type Subscription {
   products(limit: Int, offset: Int, order_by: [ProductsOrderByExp!], where: ProductsBoolExp): [Products!]
   productsAggregate(filter_input: ProductsFilterInput): ProductsAggExp
   productsById(id: String!): Products
+  profileInfoAttributes(limit: Int, offset: Int, order_by: [ProfileInfoAttributesOrderBy!], where: ProfileInfoAttributesBoolExp): [ProfileInfoAttributes!]
+  profileInfoAttributesAggregate(filter_input: ProfileInfoAttributesFilterInput): ProfileInfoAttributesAggExp
   profileInfos(limit: Int, offset: Int, order_by: [ProfileInfosOrderByExp!], where: ProfileInfosBoolExp): [ProfileInfos!]
   profileInfosAggregate(filter_input: ProfileInfosFilterInput): ProfileInfosAggExp
   profileInfosById(id: String!): ProfileInfos
@@ -2757,6 +3140,8 @@ input UrlTypesOrderByExp {
 type Urls {
   coreTableName: CoreTableNames
   id: String!
+  root: Roots
+  rootId: String!
   rowId: String!
   tableId: String!
   url: String!
@@ -2767,6 +3152,7 @@ type Urls {
 type UrlsAggExp {
   _count: Int!
   id: StringAggExp!
+  rootId: StringAggExp!
   rowId: StringAggExp!
   tableId: StringAggExp!
   url: StringAggExp!
@@ -2779,6 +3165,8 @@ input UrlsBoolExp {
   _or: [UrlsBoolExp!]
   coreTableName: CoreTableNamesBoolExp
   id: StringBoolExp
+  root: RootsBoolExp
+  rootId: StringBoolExp
   rowId: StringBoolExp
   tableId: StringBoolExp
   url: StringBoolExp
@@ -2796,6 +3184,8 @@ input UrlsFilterInput {
 input UrlsOrderByExp {
   coreTableName: CoreTableNamesOrderByExp
   id: OrderBy
+  root: RootsOrderByExp
+  rootId: OrderBy
   rowId: OrderBy
   tableId: OrderBy
   url: OrderBy

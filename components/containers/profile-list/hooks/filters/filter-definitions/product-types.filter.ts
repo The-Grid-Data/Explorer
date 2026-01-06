@@ -75,6 +75,15 @@ function buildProfileSectorsWhere(
 ): ProductTypesBoolExp {
   const conditions: ProductTypesBoolExp[] = [];
 
+  // Limit product type options to configured IDs
+  if (isNotEmpty(siteConfig.overrideFilterValues.productTypes)) {
+    conditions.push({
+      id: {
+        _in: siteConfig.overrideFilterValues.productTypes
+      }
+    });
+  }
+
   // Apply base config restriction for product types
   if (isNotEmpty(siteConfig.overrideFilterValues.productTypes)) {
     conditions.push({

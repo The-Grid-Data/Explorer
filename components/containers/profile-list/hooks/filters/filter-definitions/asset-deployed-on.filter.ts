@@ -26,12 +26,12 @@ export const useAssetDeployedOnFilter = (filterStore: FiltersStore) => {
       const data = await execute(
         graphql(`
           query getAssetDeployedOnProductsOptions($where: ProductsBoolExp) {
-            products(where: $where) {
+            products(where: $where, order_by: {root: {gridRank: {score: Desc}}}) {
               name
               id
               description
             }
-          }
+        }
         `),
         {
           where: buildDeployedOnProductsWhere(filterStore)
@@ -79,14 +79,10 @@ function buildDeployedOnProductsWhere(
     });
   }
 
-  if (isNotEmpty(siteConfig.overrideFilterValues.productTypes)) {
+  if (isNotEmpty(siteConfig.overrideOptionsFilterValues.productTypes)) {
     conditions.push({
-      root: {
-        products: {
-          productTypeId: {
-            _in: siteConfig.overrideFilterValues.productTypes
-          }
-        }
+      productTypeId: {
+        _in: siteConfig.overrideOptionsFilterValues.productTypes
       }
     });
   }

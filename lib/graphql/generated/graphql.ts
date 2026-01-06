@@ -24,6 +24,60 @@ export type Scalars = {
   Json: { input: any; output: any; }
 };
 
+export type AllowedAttributeTypes = {
+  __typename?: 'AllowedAttributeTypes';
+  attributeType?: Maybe<AttributeTypes>;
+  attributeTypeId: Scalars['String']['output'];
+  coreTableName?: Maybe<CoreTableNames>;
+  enumRowId: Scalars['String']['output'];
+  enumTableId: Scalars['String']['output'];
+  enumTableName?: Maybe<EnumTableNames>;
+  id: Scalars['String']['output'];
+  tableId: Scalars['String']['output'];
+};
+
+export type AllowedAttributeTypesAggExp = {
+  __typename?: 'AllowedAttributeTypesAggExp';
+  _count: Scalars['Int']['output'];
+  attributeTypeId: StringAggExp;
+  enumRowId: StringAggExp;
+  enumTableId: StringAggExp;
+  id: StringAggExp;
+  tableId: StringAggExp;
+};
+
+export type AllowedAttributeTypesBoolExp = {
+  _and?: InputMaybe<Array<AllowedAttributeTypesBoolExp>>;
+  _not?: InputMaybe<AllowedAttributeTypesBoolExp>;
+  _or?: InputMaybe<Array<AllowedAttributeTypesBoolExp>>;
+  attributeType?: InputMaybe<AttributeTypesBoolExp>;
+  attributeTypeId?: InputMaybe<StringBoolExp>;
+  coreTableName?: InputMaybe<CoreTableNamesBoolExp>;
+  enumRowId?: InputMaybe<StringBoolExp>;
+  enumTableId?: InputMaybe<StringBoolExp>;
+  enumTableName?: InputMaybe<EnumTableNamesBoolExp>;
+  id?: InputMaybe<StringBoolExp>;
+  tableId?: InputMaybe<StringBoolExp>;
+};
+
+export type AllowedAttributeTypesFilterInput = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<AllowedAttributeTypesOrderByExp>>;
+  where?: InputMaybe<AllowedAttributeTypesBoolExp>;
+};
+
+export type AllowedAttributeTypesOrderByExp = {
+  attributeType?: InputMaybe<AttributeTypesOrderByExp>;
+  attributeTypeId?: InputMaybe<OrderBy>;
+  coreTableName?: InputMaybe<CoreTableNamesOrderByExp>;
+  enumRowId?: InputMaybe<OrderBy>;
+  enumTableId?: InputMaybe<OrderBy>;
+  enumTableName?: InputMaybe<EnumTableNamesOrderByExp>;
+  id?: InputMaybe<OrderBy>;
+  tableId?: InputMaybe<OrderBy>;
+};
+
 export type AllowedUrlTypes = {
   __typename?: 'AllowedUrlTypes';
   coreTableName?: Maybe<CoreTableNames>;
@@ -65,6 +119,58 @@ export type AllowedUrlTypesOrderByExp = {
   tableId?: InputMaybe<OrderBy>;
   urlType?: InputMaybe<UrlTypesOrderByExp>;
   urlTypeId?: InputMaybe<OrderBy>;
+};
+
+export type AssetAttributes = {
+  __typename?: 'AssetAttributes';
+  attributeType?: Maybe<AttributeTypes>;
+  attributeTypeId: Scalars['String']['output'];
+  id: Scalars['String']['output'];
+  rootId: Scalars['String']['output'];
+  rowId: Scalars['String']['output'];
+  tableId: Scalars['String']['output'];
+  value: Scalars['String']['output'];
+};
+
+export type AssetAttributesAggExp = {
+  __typename?: 'AssetAttributesAggExp';
+  _count: Scalars['Int']['output'];
+  attributeTypeId: StringAggExp;
+  id: StringAggExp;
+  rootId: StringAggExp;
+  rowId: StringAggExp;
+  tableId: StringAggExp;
+  value: StringAggExp;
+};
+
+export type AssetAttributesBoolExp = {
+  _and?: InputMaybe<Array<AssetAttributesBoolExp>>;
+  _not?: InputMaybe<AssetAttributesBoolExp>;
+  _or?: InputMaybe<Array<AssetAttributesBoolExp>>;
+  attributeType?: InputMaybe<AttributeTypesBoolExp>;
+  attributeTypeId?: InputMaybe<StringBoolExp>;
+  id?: InputMaybe<StringBoolExp>;
+  rootId?: InputMaybe<StringBoolExp>;
+  rowId?: InputMaybe<StringBoolExp>;
+  tableId?: InputMaybe<StringBoolExp>;
+  value?: InputMaybe<StringBoolExp>;
+};
+
+export type AssetAttributesFilterInput = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<AssetAttributesOrderBy>>;
+  where?: InputMaybe<AssetAttributesBoolExp>;
+};
+
+export type AssetAttributesOrderBy = {
+  attributeType?: InputMaybe<AttributeTypesOrderByExp>;
+  attributeTypeId?: InputMaybe<OrderBy>;
+  id?: InputMaybe<OrderBy>;
+  rootId?: InputMaybe<OrderBy>;
+  rowId?: InputMaybe<OrderBy>;
+  tableId?: InputMaybe<OrderBy>;
+  value?: InputMaybe<OrderBy>;
 };
 
 export type AssetDeployments = {
@@ -460,6 +566,7 @@ export type Assets = {
   assetStatusId?: Maybe<Scalars['String']['output']>;
   assetType?: Maybe<AssetTypes>;
   assetTypeId?: Maybe<Scalars['String']['output']>;
+  attributes?: Maybe<Array<AssetAttributes>>;
   derivativeAssets?: Maybe<Array<DerivativeAssets>>;
   derivativeAssetsAggregate: DerivativeAssetsAggExp;
   description: Scalars['String']['output'];
@@ -487,6 +594,14 @@ export type AssetsAssetDeploymentsArgs = {
 
 export type AssetsAssetDeploymentsAggregateArgs = {
   filter_input?: InputMaybe<AssetDeploymentsFilterInput>;
+};
+
+
+export type AssetsAttributesArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<AssetAttributesOrderBy>>;
+  where?: InputMaybe<AssetAttributesBoolExp>;
 };
 
 
@@ -561,6 +676,7 @@ export type AssetsBoolExp = {
   assetStatusId?: InputMaybe<StringBoolExp>;
   assetType?: InputMaybe<AssetTypesBoolExp>;
   assetTypeId?: InputMaybe<StringBoolExp>;
+  attributes?: InputMaybe<AssetAttributesBoolExp>;
   derivativeAssets?: InputMaybe<DerivativeAssetsBoolExp>;
   description?: InputMaybe<StringBoolExp>;
   icon?: InputMaybe<StringBoolExp>;
@@ -593,6 +709,137 @@ export type AssetsOrderByExp = {
   root?: InputMaybe<RootsOrderByExp>;
   rootId?: InputMaybe<OrderBy>;
   ticker?: InputMaybe<OrderBy>;
+};
+
+export type AttributeTypes = {
+  __typename?: 'AttributeTypes';
+  allowedAttributeTypes?: Maybe<Array<AllowedAttributeTypes>>;
+  allowedAttributeTypesAggregate: AllowedAttributeTypesAggExp;
+  attributes?: Maybe<Array<Attributes>>;
+  attributesAggregate: AttributesAggExp;
+  definition: Scalars['String']['output'];
+  id: Scalars['String']['output'];
+  name: Scalars['String']['output'];
+  slug?: Maybe<Scalars['String']['output']>;
+};
+
+
+export type AttributeTypesAllowedAttributeTypesArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<AllowedAttributeTypesOrderByExp>>;
+  where?: InputMaybe<AllowedAttributeTypesBoolExp>;
+};
+
+
+export type AttributeTypesAllowedAttributeTypesAggregateArgs = {
+  filter_input?: InputMaybe<AllowedAttributeTypesFilterInput>;
+};
+
+
+export type AttributeTypesAttributesArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<AttributesOrderByExp>>;
+  where?: InputMaybe<AttributesBoolExp>;
+};
+
+
+export type AttributeTypesAttributesAggregateArgs = {
+  filter_input?: InputMaybe<AttributesFilterInput>;
+};
+
+export type AttributeTypesAggExp = {
+  __typename?: 'AttributeTypesAggExp';
+  _count: Scalars['Int']['output'];
+  definition: StringAggExp;
+  id: StringAggExp;
+  name: StringAggExp;
+  slug: StringAggExp;
+};
+
+export type AttributeTypesBoolExp = {
+  _and?: InputMaybe<Array<AttributeTypesBoolExp>>;
+  _not?: InputMaybe<AttributeTypesBoolExp>;
+  _or?: InputMaybe<Array<AttributeTypesBoolExp>>;
+  allowedAttributeTypes?: InputMaybe<AllowedAttributeTypesBoolExp>;
+  attributes?: InputMaybe<AttributesBoolExp>;
+  definition?: InputMaybe<StringBoolExp>;
+  id?: InputMaybe<StringBoolExp>;
+  name?: InputMaybe<StringBoolExp>;
+  slug?: InputMaybe<StringBoolExp>;
+};
+
+export type AttributeTypesFilterInput = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<AttributeTypesOrderByExp>>;
+  where?: InputMaybe<AttributeTypesBoolExp>;
+};
+
+export type AttributeTypesOrderByExp = {
+  definition?: InputMaybe<OrderBy>;
+  id?: InputMaybe<OrderBy>;
+  name?: InputMaybe<OrderBy>;
+  slug?: InputMaybe<OrderBy>;
+};
+
+export type Attributes = {
+  __typename?: 'Attributes';
+  attributeType?: Maybe<AttributeTypes>;
+  attributeTypeId?: Maybe<Scalars['String']['output']>;
+  coreTableName?: Maybe<CoreTableNames>;
+  id: Scalars['String']['output'];
+  root?: Maybe<Roots>;
+  rootId: Scalars['String']['output'];
+  rowId?: Maybe<Scalars['String']['output']>;
+  tableId?: Maybe<Scalars['String']['output']>;
+  value: Scalars['String']['output'];
+};
+
+export type AttributesAggExp = {
+  __typename?: 'AttributesAggExp';
+  _count: Scalars['Int']['output'];
+  attributeTypeId: StringAggExp;
+  id: StringAggExp;
+  rootId: StringAggExp;
+  rowId: StringAggExp;
+  tableId: StringAggExp;
+  value: StringAggExp;
+};
+
+export type AttributesBoolExp = {
+  _and?: InputMaybe<Array<AttributesBoolExp>>;
+  _not?: InputMaybe<AttributesBoolExp>;
+  _or?: InputMaybe<Array<AttributesBoolExp>>;
+  attributeType?: InputMaybe<AttributeTypesBoolExp>;
+  attributeTypeId?: InputMaybe<StringBoolExp>;
+  coreTableName?: InputMaybe<CoreTableNamesBoolExp>;
+  id?: InputMaybe<StringBoolExp>;
+  root?: InputMaybe<RootsBoolExp>;
+  rootId?: InputMaybe<StringBoolExp>;
+  rowId?: InputMaybe<StringBoolExp>;
+  tableId?: InputMaybe<StringBoolExp>;
+  value?: InputMaybe<StringBoolExp>;
+};
+
+export type AttributesFilterInput = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<AttributesOrderByExp>>;
+  where?: InputMaybe<AttributesBoolExp>;
+};
+
+export type AttributesOrderByExp = {
+  attributeType?: InputMaybe<AttributeTypesOrderByExp>;
+  attributeTypeId?: InputMaybe<OrderBy>;
+  coreTableName?: InputMaybe<CoreTableNamesOrderByExp>;
+  id?: InputMaybe<OrderBy>;
+  root?: InputMaybe<RootsOrderByExp>;
+  rootId?: InputMaybe<OrderBy>;
+  rowId?: InputMaybe<OrderBy>;
+  tableId?: InputMaybe<OrderBy>;
+  value?: InputMaybe<OrderBy>;
 };
 
 export type CoreTableNames = {
@@ -1126,6 +1373,55 @@ export type EntityUrlsOrderBy = {
   urlTypeId?: InputMaybe<OrderBy>;
 };
 
+export type EnumTableNames = {
+  __typename?: 'EnumTableNames';
+  allowedAttributeTypes?: Maybe<Array<AllowedAttributeTypes>>;
+  allowedAttributeTypesAggregate: AllowedAttributeTypesAggExp;
+  id: Scalars['String']['output'];
+  tableName: Scalars['String']['output'];
+};
+
+
+export type EnumTableNamesAllowedAttributeTypesArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<AllowedAttributeTypesOrderByExp>>;
+  where?: InputMaybe<AllowedAttributeTypesBoolExp>;
+};
+
+
+export type EnumTableNamesAllowedAttributeTypesAggregateArgs = {
+  filter_input?: InputMaybe<AllowedAttributeTypesFilterInput>;
+};
+
+export type EnumTableNamesAggExp = {
+  __typename?: 'EnumTableNamesAggExp';
+  _count: Scalars['Int']['output'];
+  id: StringAggExp;
+  tableName: StringAggExp;
+};
+
+export type EnumTableNamesBoolExp = {
+  _and?: InputMaybe<Array<EnumTableNamesBoolExp>>;
+  _not?: InputMaybe<EnumTableNamesBoolExp>;
+  _or?: InputMaybe<Array<EnumTableNamesBoolExp>>;
+  allowedAttributeTypes?: InputMaybe<AllowedAttributeTypesBoolExp>;
+  id?: InputMaybe<StringBoolExp>;
+  tableName?: InputMaybe<StringBoolExp>;
+};
+
+export type EnumTableNamesFilterInput = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<EnumTableNamesOrderByExp>>;
+  where?: InputMaybe<EnumTableNamesBoolExp>;
+};
+
+export type EnumTableNamesOrderByExp = {
+  id?: InputMaybe<OrderBy>;
+  tableName?: InputMaybe<OrderBy>;
+};
+
 export type Float32AggExp = {
   __typename?: 'Float32AggExp';
   _count: Scalars['Int']['output'];
@@ -1396,6 +1692,58 @@ export type ProductAssetRelationshipsOrderByExp = {
   id?: InputMaybe<OrderBy>;
   product?: InputMaybe<ProductsOrderByExp>;
   productId?: InputMaybe<OrderBy>;
+};
+
+export type ProductAttributes = {
+  __typename?: 'ProductAttributes';
+  attributeType?: Maybe<AttributeTypes>;
+  attributeTypeId: Scalars['String']['output'];
+  id: Scalars['String']['output'];
+  rootId: Scalars['String']['output'];
+  rowId: Scalars['String']['output'];
+  tableId: Scalars['String']['output'];
+  value: Scalars['String']['output'];
+};
+
+export type ProductAttributesAggExp = {
+  __typename?: 'ProductAttributesAggExp';
+  _count: Scalars['Int']['output'];
+  attributeTypeId: StringAggExp;
+  id: StringAggExp;
+  rootId: StringAggExp;
+  rowId: StringAggExp;
+  tableId: StringAggExp;
+  value: StringAggExp;
+};
+
+export type ProductAttributesBoolExp = {
+  _and?: InputMaybe<Array<ProductAttributesBoolExp>>;
+  _not?: InputMaybe<ProductAttributesBoolExp>;
+  _or?: InputMaybe<Array<ProductAttributesBoolExp>>;
+  attributeType?: InputMaybe<AttributeTypesBoolExp>;
+  attributeTypeId?: InputMaybe<StringBoolExp>;
+  id?: InputMaybe<StringBoolExp>;
+  rootId?: InputMaybe<StringBoolExp>;
+  rowId?: InputMaybe<StringBoolExp>;
+  tableId?: InputMaybe<StringBoolExp>;
+  value?: InputMaybe<StringBoolExp>;
+};
+
+export type ProductAttributesFilterInput = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<ProductAttributesOrderBy>>;
+  where?: InputMaybe<ProductAttributesBoolExp>;
+};
+
+export type ProductAttributesOrderBy = {
+  attributeType?: InputMaybe<AttributeTypesOrderByExp>;
+  attributeTypeId?: InputMaybe<OrderBy>;
+  id?: InputMaybe<OrderBy>;
+  rootId?: InputMaybe<OrderBy>;
+  rowId?: InputMaybe<OrderBy>;
+  tableId?: InputMaybe<OrderBy>;
+  value?: InputMaybe<OrderBy>;
 };
 
 export type ProductDeployments = {
@@ -1671,6 +2019,7 @@ export type ProductUrlsOrderBy = {
 
 export type Products = {
   __typename?: 'Products';
+  attributes?: Maybe<Array<ProductAttributes>>;
   description: Scalars['String']['output'];
   id: Scalars['String']['output'];
   isMainProduct: Scalars['Int8']['output'];
@@ -1693,6 +2042,14 @@ export type Products = {
   supportsProductsBySupportsProductId?: Maybe<Array<SupportsProducts>>;
   supportsProductsBySupportsProductIdAggregate: SupportsProductsAggExp;
   urls?: Maybe<Array<ProductUrls>>;
+};
+
+
+export type ProductsAttributesArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<ProductAttributesOrderBy>>;
+  where?: InputMaybe<ProductAttributesBoolExp>;
 };
 
 
@@ -1788,6 +2145,7 @@ export type ProductsBoolExp = {
   _and?: InputMaybe<Array<ProductsBoolExp>>;
   _not?: InputMaybe<ProductsBoolExp>;
   _or?: InputMaybe<Array<ProductsBoolExp>>;
+  attributes?: InputMaybe<ProductAttributesBoolExp>;
   description?: InputMaybe<StringBoolExp>;
   id?: InputMaybe<StringBoolExp>;
   isMainProduct?: InputMaybe<Int8BoolExp>;
@@ -1826,6 +2184,58 @@ export type ProductsOrderByExp = {
   productTypeId?: InputMaybe<OrderBy>;
   root?: InputMaybe<RootsOrderByExp>;
   rootId?: InputMaybe<OrderBy>;
+};
+
+export type ProfileInfoAttributes = {
+  __typename?: 'ProfileInfoAttributes';
+  attributeType?: Maybe<AttributeTypes>;
+  attributeTypeId: Scalars['String']['output'];
+  id: Scalars['String']['output'];
+  rootId: Scalars['String']['output'];
+  rowId: Scalars['String']['output'];
+  tableId: Scalars['String']['output'];
+  value: Scalars['String']['output'];
+};
+
+export type ProfileInfoAttributesAggExp = {
+  __typename?: 'ProfileInfoAttributesAggExp';
+  _count: Scalars['Int']['output'];
+  attributeTypeId: StringAggExp;
+  id: StringAggExp;
+  rootId: StringAggExp;
+  rowId: StringAggExp;
+  tableId: StringAggExp;
+  value: StringAggExp;
+};
+
+export type ProfileInfoAttributesBoolExp = {
+  _and?: InputMaybe<Array<ProfileInfoAttributesBoolExp>>;
+  _not?: InputMaybe<ProfileInfoAttributesBoolExp>;
+  _or?: InputMaybe<Array<ProfileInfoAttributesBoolExp>>;
+  attributeType?: InputMaybe<AttributeTypesBoolExp>;
+  attributeTypeId?: InputMaybe<StringBoolExp>;
+  id?: InputMaybe<StringBoolExp>;
+  rootId?: InputMaybe<StringBoolExp>;
+  rowId?: InputMaybe<StringBoolExp>;
+  tableId?: InputMaybe<StringBoolExp>;
+  value?: InputMaybe<StringBoolExp>;
+};
+
+export type ProfileInfoAttributesFilterInput = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<ProfileInfoAttributesOrderBy>>;
+  where?: InputMaybe<ProfileInfoAttributesBoolExp>;
+};
+
+export type ProfileInfoAttributesOrderBy = {
+  attributeType?: InputMaybe<AttributeTypesOrderByExp>;
+  attributeTypeId?: InputMaybe<OrderBy>;
+  id?: InputMaybe<OrderBy>;
+  rootId?: InputMaybe<OrderBy>;
+  rowId?: InputMaybe<OrderBy>;
+  tableId?: InputMaybe<OrderBy>;
+  value?: InputMaybe<OrderBy>;
 };
 
 export type ProfileInfoSocials = {
@@ -1910,12 +2320,15 @@ export type ProfileInfoUrlsOrderBy = {
 
 export type ProfileInfos = {
   __typename?: 'ProfileInfos';
+  attributes?: Maybe<Array<ProfileInfoAttributes>>;
   descriptionLong: Scalars['String']['output'];
   descriptionMarketing: Scalars['String']['output'];
   descriptionShort: Scalars['String']['output'];
   foundingDate?: Maybe<Scalars['Date']['output']>;
+  /** @deprecated Use ProfileInfos.media with the appropriate media type instead */
   icon: Scalars['String']['output'];
   id: Scalars['String']['output'];
+  /** @deprecated Use ProfileInfos.media with the appropriate media type instead */
   logo: Scalars['String']['output'];
   media?: Maybe<Array<ProfileInfosMedia>>;
   name: Scalars['String']['output'];
@@ -1931,6 +2344,14 @@ export type ProfileInfos = {
   /** Self promotion field */
   tagLine: Scalars['String']['output'];
   urls?: Maybe<Array<ProfileInfoUrls>>;
+};
+
+
+export type ProfileInfosAttributesArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<ProfileInfoAttributesOrderBy>>;
+  where?: InputMaybe<ProfileInfoAttributesBoolExp>;
 };
 
 
@@ -1964,8 +2385,10 @@ export type ProfileInfosAggExp = {
   descriptionMarketing: StringAggExp;
   descriptionShort: StringAggExp;
   foundingDate: DateAggExp;
+  /** @deprecated Use ProfileInfos.media with the appropriate media type instead */
   icon: StringAggExp;
   id: StringAggExp;
+  /** @deprecated Use ProfileInfos.media with the appropriate media type instead */
   logo: StringAggExp;
   name: StringAggExp;
   profileSectorId: StringAggExp;
@@ -1979,13 +2402,12 @@ export type ProfileInfosBoolExp = {
   _and?: InputMaybe<Array<ProfileInfosBoolExp>>;
   _not?: InputMaybe<ProfileInfosBoolExp>;
   _or?: InputMaybe<Array<ProfileInfosBoolExp>>;
+  attributes?: InputMaybe<ProfileInfoAttributesBoolExp>;
   descriptionLong?: InputMaybe<StringBoolExp>;
   descriptionMarketing?: InputMaybe<StringBoolExp>;
   descriptionShort?: InputMaybe<StringBoolExp>;
   foundingDate?: InputMaybe<DateBoolExp>;
-  icon?: InputMaybe<StringBoolExp>;
   id?: InputMaybe<StringBoolExp>;
-  logo?: InputMaybe<StringBoolExp>;
   name?: InputMaybe<StringBoolExp>;
   profileSector?: InputMaybe<ProfileSectorsBoolExp>;
   profileSectorId?: InputMaybe<StringBoolExp>;
@@ -2301,11 +2723,16 @@ export type ProgramRankingResponse = {
 
 export type Query = {
   __typename?: 'Query';
+  allowedAttributeTypes?: Maybe<Array<AllowedAttributeTypes>>;
+  allowedAttributeTypesAggregate?: Maybe<AllowedAttributeTypesAggExp>;
+  allowedAttributeTypesById?: Maybe<AllowedAttributeTypes>;
   allowedUrlTypes?: Maybe<Array<AllowedUrlTypes>>;
   allowedUrlTypesAggregate?: Maybe<AllowedUrlTypesAggExp>;
   allowedUrlTypesById?: Maybe<AllowedUrlTypes>;
   /** Get ranked Solana programs */
   alphaVybeRanking: ProgramRankingResponse;
+  assetAttributes?: Maybe<Array<AssetAttributes>>;
+  assetAttributesAggregate?: Maybe<AssetAttributesAggExp>;
   assetDeployments?: Maybe<Array<AssetDeployments>>;
   assetDeploymentsAggregate?: Maybe<AssetDeploymentsAggExp>;
   assetDeploymentsById?: Maybe<AssetDeployments>;
@@ -2324,6 +2751,12 @@ export type Query = {
   assets?: Maybe<Array<Assets>>;
   assetsAggregate?: Maybe<AssetsAggExp>;
   assetsById?: Maybe<Assets>;
+  attributeTypes?: Maybe<Array<AttributeTypes>>;
+  attributeTypesAggregate?: Maybe<AttributeTypesAggExp>;
+  attributeTypesById?: Maybe<AttributeTypes>;
+  attributes?: Maybe<Array<Attributes>>;
+  attributesAggregate?: Maybe<AttributesAggExp>;
+  attributesById?: Maybe<Attributes>;
   coreTableNames?: Maybe<Array<CoreTableNames>>;
   coreTableNamesAggregate?: Maybe<CoreTableNamesAggExp>;
   coreTableNamesById?: Maybe<CoreTableNames>;
@@ -2342,6 +2775,9 @@ export type Query = {
   entityTypes?: Maybe<Array<EntityTypes>>;
   entityTypesAggregate?: Maybe<EntityTypesAggExp>;
   entityTypesById?: Maybe<EntityTypes>;
+  enumTableNames?: Maybe<Array<EnumTableNames>>;
+  enumTableNamesAggregate?: Maybe<EnumTableNamesAggExp>;
+  enumTableNamesById?: Maybe<EnumTableNames>;
   gridRank?: Maybe<Array<GridRank>>;
   gridRankAggregate?: Maybe<GridRankAggExp>;
   gridRankById?: Maybe<GridRank>;
@@ -2354,6 +2790,8 @@ export type Query = {
   productAssetRelationships?: Maybe<Array<ProductAssetRelationships>>;
   productAssetRelationshipsAggregate?: Maybe<ProductAssetRelationshipsAggExp>;
   productAssetRelationshipsById?: Maybe<ProductAssetRelationships>;
+  productAttributes?: Maybe<Array<ProductAttributes>>;
+  productAttributesAggregate?: Maybe<ProductAttributesAggExp>;
   productDeployments?: Maybe<Array<ProductDeployments>>;
   productDeploymentsAggregate?: Maybe<ProductDeploymentsAggExp>;
   productDeploymentsById?: Maybe<ProductDeployments>;
@@ -2366,6 +2804,8 @@ export type Query = {
   products?: Maybe<Array<Products>>;
   productsAggregate?: Maybe<ProductsAggExp>;
   productsById?: Maybe<Products>;
+  profileInfoAttributes?: Maybe<Array<ProfileInfoAttributes>>;
+  profileInfoAttributesAggregate?: Maybe<ProfileInfoAttributesAggExp>;
   profileInfos?: Maybe<Array<ProfileInfos>>;
   profileInfosAggregate?: Maybe<ProfileInfosAggExp>;
   profileInfosById?: Maybe<ProfileInfos>;
@@ -2427,6 +2867,24 @@ export type Query = {
 };
 
 
+export type QueryAllowedAttributeTypesArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<AllowedAttributeTypesOrderByExp>>;
+  where?: InputMaybe<AllowedAttributeTypesBoolExp>;
+};
+
+
+export type QueryAllowedAttributeTypesAggregateArgs = {
+  filter_input?: InputMaybe<AllowedAttributeTypesFilterInput>;
+};
+
+
+export type QueryAllowedAttributeTypesByIdArgs = {
+  id: Scalars['String']['input'];
+};
+
+
 export type QueryAllowedUrlTypesArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
@@ -2450,6 +2908,19 @@ export type QueryAlphaVybeRankingArgs = {
   interval?: InputMaybe<Scalars['Enum']['input']>;
   limit?: InputMaybe<Scalars['Int32']['input']>;
   xApiKey: Scalars['String']['input'];
+};
+
+
+export type QueryAssetAttributesArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<AssetAttributesOrderBy>>;
+  where?: InputMaybe<AssetAttributesBoolExp>;
+};
+
+
+export type QueryAssetAttributesAggregateArgs = {
+  filter_input?: InputMaybe<AssetAttributesFilterInput>;
 };
 
 
@@ -2557,6 +3028,42 @@ export type QueryAssetsAggregateArgs = {
 
 
 export type QueryAssetsByIdArgs = {
+  id: Scalars['String']['input'];
+};
+
+
+export type QueryAttributeTypesArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<AttributeTypesOrderByExp>>;
+  where?: InputMaybe<AttributeTypesBoolExp>;
+};
+
+
+export type QueryAttributeTypesAggregateArgs = {
+  filter_input?: InputMaybe<AttributeTypesFilterInput>;
+};
+
+
+export type QueryAttributeTypesByIdArgs = {
+  id: Scalars['String']['input'];
+};
+
+
+export type QueryAttributesArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<AttributesOrderByExp>>;
+  where?: InputMaybe<AttributesBoolExp>;
+};
+
+
+export type QueryAttributesAggregateArgs = {
+  filter_input?: InputMaybe<AttributesFilterInput>;
+};
+
+
+export type QueryAttributesByIdArgs = {
   id: Scalars['String']['input'];
 };
 
@@ -2669,6 +3176,24 @@ export type QueryEntityTypesByIdArgs = {
 };
 
 
+export type QueryEnumTableNamesArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<EnumTableNamesOrderByExp>>;
+  where?: InputMaybe<EnumTableNamesBoolExp>;
+};
+
+
+export type QueryEnumTableNamesAggregateArgs = {
+  filter_input?: InputMaybe<EnumTableNamesFilterInput>;
+};
+
+
+export type QueryEnumTableNamesByIdArgs = {
+  id: Scalars['String']['input'];
+};
+
+
 export type QueryGridRankArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
@@ -2741,6 +3266,19 @@ export type QueryProductAssetRelationshipsByIdArgs = {
 };
 
 
+export type QueryProductAttributesArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<ProductAttributesOrderBy>>;
+  where?: InputMaybe<ProductAttributesBoolExp>;
+};
+
+
+export type QueryProductAttributesAggregateArgs = {
+  filter_input?: InputMaybe<ProductAttributesFilterInput>;
+};
+
+
 export type QueryProductDeploymentsArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
@@ -2810,6 +3348,19 @@ export type QueryProductsAggregateArgs = {
 
 export type QueryProductsByIdArgs = {
   id: Scalars['String']['input'];
+};
+
+
+export type QueryProfileInfoAttributesArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<ProfileInfoAttributesOrderBy>>;
+  where?: InputMaybe<ProfileInfoAttributesBoolExp>;
+};
+
+
+export type QueryProfileInfoAttributesAggregateArgs = {
+  filter_input?: InputMaybe<ProfileInfoAttributesFilterInput>;
 };
 
 
@@ -3261,6 +3812,8 @@ export type Roots = {
   __typename?: 'Roots';
   assets?: Maybe<Array<Assets>>;
   assetsAggregate: AssetsAggExp;
+  attributes?: Maybe<Array<Attributes>>;
+  attributesAggregate: AttributesAggExp;
   childRootRelationships?: Maybe<Array<RootRelationships>>;
   childRootRelationshipsAggregate: RootRelationshipsAggExp;
   entities?: Maybe<Array<Entities>>;
@@ -3283,6 +3836,8 @@ export type Roots = {
   socials?: Maybe<Array<Socials>>;
   socialsAggregate: SocialsAggExp;
   urlMain: Scalars['String']['output'];
+  urls?: Maybe<Array<Urls>>;
+  urlsAggregate: UrlsAggExp;
 };
 
 
@@ -3296,6 +3851,19 @@ export type RootsAssetsArgs = {
 
 export type RootsAssetsAggregateArgs = {
   filter_input?: InputMaybe<AssetsFilterInput>;
+};
+
+
+export type RootsAttributesArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<AttributesOrderByExp>>;
+  where?: InputMaybe<AttributesBoolExp>;
+};
+
+
+export type RootsAttributesAggregateArgs = {
+  filter_input?: InputMaybe<AttributesFilterInput>;
 };
 
 
@@ -3402,6 +3970,19 @@ export type RootsSocialsAggregateArgs = {
   filter_input?: InputMaybe<SocialsFilterInput>;
 };
 
+
+export type RootsUrlsArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<UrlsOrderByExp>>;
+  where?: InputMaybe<UrlsBoolExp>;
+};
+
+
+export type RootsUrlsAggregateArgs = {
+  filter_input?: InputMaybe<UrlsFilterInput>;
+};
+
 export type RootsAggExp = {
   __typename?: 'RootsAggExp';
   _count: Scalars['Int']['output'];
@@ -3417,6 +3998,7 @@ export type RootsBoolExp = {
   _not?: InputMaybe<RootsBoolExp>;
   _or?: InputMaybe<Array<RootsBoolExp>>;
   assets?: InputMaybe<AssetsBoolExp>;
+  attributes?: InputMaybe<AttributesBoolExp>;
   childRootRelationships?: InputMaybe<RootRelationshipsBoolExp>;
   entities?: InputMaybe<EntitiesBoolExp>;
   firstPublicValidation?: InputMaybe<DateBoolExp>;
@@ -3431,6 +4013,7 @@ export type RootsBoolExp = {
   slug?: InputMaybe<StringBoolExp>;
   socials?: InputMaybe<SocialsBoolExp>;
   urlMain?: InputMaybe<StringBoolExp>;
+  urls?: InputMaybe<UrlsBoolExp>;
 };
 
 export type RootsFilterInput = {
@@ -3875,9 +4458,14 @@ export type StringBoolExp = {
 
 export type Subscription = {
   __typename?: 'Subscription';
+  allowedAttributeTypes?: Maybe<Array<AllowedAttributeTypes>>;
+  allowedAttributeTypesAggregate?: Maybe<AllowedAttributeTypesAggExp>;
+  allowedAttributeTypesById?: Maybe<AllowedAttributeTypes>;
   allowedUrlTypes?: Maybe<Array<AllowedUrlTypes>>;
   allowedUrlTypesAggregate?: Maybe<AllowedUrlTypesAggExp>;
   allowedUrlTypesById?: Maybe<AllowedUrlTypes>;
+  assetAttributes?: Maybe<Array<AssetAttributes>>;
+  assetAttributesAggregate?: Maybe<AssetAttributesAggExp>;
   assetDeployments?: Maybe<Array<AssetDeployments>>;
   assetDeploymentsAggregate?: Maybe<AssetDeploymentsAggExp>;
   assetDeploymentsById?: Maybe<AssetDeployments>;
@@ -3896,6 +4484,12 @@ export type Subscription = {
   assets?: Maybe<Array<Assets>>;
   assetsAggregate?: Maybe<AssetsAggExp>;
   assetsById?: Maybe<Assets>;
+  attributeTypes?: Maybe<Array<AttributeTypes>>;
+  attributeTypesAggregate?: Maybe<AttributeTypesAggExp>;
+  attributeTypesById?: Maybe<AttributeTypes>;
+  attributes?: Maybe<Array<Attributes>>;
+  attributesAggregate?: Maybe<AttributesAggExp>;
+  attributesById?: Maybe<Attributes>;
   coreTableNames?: Maybe<Array<CoreTableNames>>;
   coreTableNamesAggregate?: Maybe<CoreTableNamesAggExp>;
   coreTableNamesById?: Maybe<CoreTableNames>;
@@ -3914,6 +4508,9 @@ export type Subscription = {
   entityTypes?: Maybe<Array<EntityTypes>>;
   entityTypesAggregate?: Maybe<EntityTypesAggExp>;
   entityTypesById?: Maybe<EntityTypes>;
+  enumTableNames?: Maybe<Array<EnumTableNames>>;
+  enumTableNamesAggregate?: Maybe<EnumTableNamesAggExp>;
+  enumTableNamesById?: Maybe<EnumTableNames>;
   gridRank?: Maybe<Array<GridRank>>;
   gridRankAggregate?: Maybe<GridRankAggExp>;
   gridRankById?: Maybe<GridRank>;
@@ -3926,6 +4523,8 @@ export type Subscription = {
   productAssetRelationships?: Maybe<Array<ProductAssetRelationships>>;
   productAssetRelationshipsAggregate?: Maybe<ProductAssetRelationshipsAggExp>;
   productAssetRelationshipsById?: Maybe<ProductAssetRelationships>;
+  productAttributes?: Maybe<Array<ProductAttributes>>;
+  productAttributesAggregate?: Maybe<ProductAttributesAggExp>;
   productDeployments?: Maybe<Array<ProductDeployments>>;
   productDeploymentsAggregate?: Maybe<ProductDeploymentsAggExp>;
   productDeploymentsById?: Maybe<ProductDeployments>;
@@ -3938,6 +4537,8 @@ export type Subscription = {
   products?: Maybe<Array<Products>>;
   productsAggregate?: Maybe<ProductsAggExp>;
   productsById?: Maybe<Products>;
+  profileInfoAttributes?: Maybe<Array<ProfileInfoAttributes>>;
+  profileInfoAttributesAggregate?: Maybe<ProfileInfoAttributesAggExp>;
   profileInfos?: Maybe<Array<ProfileInfos>>;
   profileInfosAggregate?: Maybe<ProfileInfosAggExp>;
   profileInfosById?: Maybe<ProfileInfos>;
@@ -3995,6 +4596,24 @@ export type Subscription = {
 };
 
 
+export type SubscriptionAllowedAttributeTypesArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<AllowedAttributeTypesOrderByExp>>;
+  where?: InputMaybe<AllowedAttributeTypesBoolExp>;
+};
+
+
+export type SubscriptionAllowedAttributeTypesAggregateArgs = {
+  filter_input?: InputMaybe<AllowedAttributeTypesFilterInput>;
+};
+
+
+export type SubscriptionAllowedAttributeTypesByIdArgs = {
+  id: Scalars['String']['input'];
+};
+
+
 export type SubscriptionAllowedUrlTypesArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
@@ -4010,6 +4629,19 @@ export type SubscriptionAllowedUrlTypesAggregateArgs = {
 
 export type SubscriptionAllowedUrlTypesByIdArgs = {
   id: Scalars['String']['input'];
+};
+
+
+export type SubscriptionAssetAttributesArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<AssetAttributesOrderBy>>;
+  where?: InputMaybe<AssetAttributesBoolExp>;
+};
+
+
+export type SubscriptionAssetAttributesAggregateArgs = {
+  filter_input?: InputMaybe<AssetAttributesFilterInput>;
 };
 
 
@@ -4117,6 +4749,42 @@ export type SubscriptionAssetsAggregateArgs = {
 
 
 export type SubscriptionAssetsByIdArgs = {
+  id: Scalars['String']['input'];
+};
+
+
+export type SubscriptionAttributeTypesArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<AttributeTypesOrderByExp>>;
+  where?: InputMaybe<AttributeTypesBoolExp>;
+};
+
+
+export type SubscriptionAttributeTypesAggregateArgs = {
+  filter_input?: InputMaybe<AttributeTypesFilterInput>;
+};
+
+
+export type SubscriptionAttributeTypesByIdArgs = {
+  id: Scalars['String']['input'];
+};
+
+
+export type SubscriptionAttributesArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<AttributesOrderByExp>>;
+  where?: InputMaybe<AttributesBoolExp>;
+};
+
+
+export type SubscriptionAttributesAggregateArgs = {
+  filter_input?: InputMaybe<AttributesFilterInput>;
+};
+
+
+export type SubscriptionAttributesByIdArgs = {
   id: Scalars['String']['input'];
 };
 
@@ -4229,6 +4897,24 @@ export type SubscriptionEntityTypesByIdArgs = {
 };
 
 
+export type SubscriptionEnumTableNamesArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<EnumTableNamesOrderByExp>>;
+  where?: InputMaybe<EnumTableNamesBoolExp>;
+};
+
+
+export type SubscriptionEnumTableNamesAggregateArgs = {
+  filter_input?: InputMaybe<EnumTableNamesFilterInput>;
+};
+
+
+export type SubscriptionEnumTableNamesByIdArgs = {
+  id: Scalars['String']['input'];
+};
+
+
 export type SubscriptionGridRankArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
@@ -4301,6 +4987,19 @@ export type SubscriptionProductAssetRelationshipsByIdArgs = {
 };
 
 
+export type SubscriptionProductAttributesArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<ProductAttributesOrderBy>>;
+  where?: InputMaybe<ProductAttributesBoolExp>;
+};
+
+
+export type SubscriptionProductAttributesAggregateArgs = {
+  filter_input?: InputMaybe<ProductAttributesFilterInput>;
+};
+
+
 export type SubscriptionProductDeploymentsArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
@@ -4370,6 +5069,19 @@ export type SubscriptionProductsAggregateArgs = {
 
 export type SubscriptionProductsByIdArgs = {
   id: Scalars['String']['input'];
+};
+
+
+export type SubscriptionProfileInfoAttributesArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<ProfileInfoAttributesOrderBy>>;
+  where?: InputMaybe<ProfileInfoAttributesBoolExp>;
+};
+
+
+export type SubscriptionProfileInfoAttributesAggregateArgs = {
+  filter_input?: InputMaybe<ProfileInfoAttributesFilterInput>;
 };
 
 
@@ -4942,6 +5654,8 @@ export type Urls = {
   __typename?: 'Urls';
   coreTableName?: Maybe<CoreTableNames>;
   id: Scalars['String']['output'];
+  root?: Maybe<Roots>;
+  rootId: Scalars['String']['output'];
   rowId: Scalars['String']['output'];
   tableId: Scalars['String']['output'];
   url: Scalars['String']['output'];
@@ -4953,6 +5667,7 @@ export type UrlsAggExp = {
   __typename?: 'UrlsAggExp';
   _count: Scalars['Int']['output'];
   id: StringAggExp;
+  rootId: StringAggExp;
   rowId: StringAggExp;
   tableId: StringAggExp;
   url: StringAggExp;
@@ -4965,6 +5680,8 @@ export type UrlsBoolExp = {
   _or?: InputMaybe<Array<UrlsBoolExp>>;
   coreTableName?: InputMaybe<CoreTableNamesBoolExp>;
   id?: InputMaybe<StringBoolExp>;
+  root?: InputMaybe<RootsBoolExp>;
+  rootId?: InputMaybe<StringBoolExp>;
   rowId?: InputMaybe<StringBoolExp>;
   tableId?: InputMaybe<StringBoolExp>;
   url?: InputMaybe<StringBoolExp>;
@@ -4982,6 +5699,8 @@ export type UrlsFilterInput = {
 export type UrlsOrderByExp = {
   coreTableName?: InputMaybe<CoreTableNamesOrderByExp>;
   id?: InputMaybe<OrderBy>;
+  root?: InputMaybe<RootsOrderByExp>;
+  rootId?: InputMaybe<OrderBy>;
   rowId?: InputMaybe<OrderBy>;
   tableId?: InputMaybe<OrderBy>;
   url?: InputMaybe<OrderBy>;
@@ -6743,7 +7462,7 @@ export const GetOrderByFieldsDocument = new TypedDocumentString(`
     `) as unknown as TypedDocumentString<GetOrderByFieldsQuery, GetOrderByFieldsQueryVariables>;
 export const GetAssetDeployedOnProductsOptionsDocument = new TypedDocumentString(`
     query getAssetDeployedOnProductsOptions($where: ProductsBoolExp) {
-  products(where: $where) {
+  products(where: $where, order_by: {root: {gridRank: {score: Desc}}}) {
     name
     id
     description
@@ -6809,7 +7528,7 @@ export const GetProductAssetRelationshipsOptionsDocument = new TypedDocumentStri
     `) as unknown as TypedDocumentString<GetProductAssetRelationshipsOptionsQuery, GetProductAssetRelationshipsOptionsQueryVariables>;
 export const GetProductDeployedOnProductsOptionsDocument = new TypedDocumentString(`
     query getProductDeployedOnProductsOptions($where: ProductsBoolExp) {
-  products(where: $where) {
+  products(where: $where, order_by: {root: {gridRank: {score: Desc}}}) {
     name
     id
     description

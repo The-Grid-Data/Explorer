@@ -26,7 +26,7 @@ export const useProductDeployedOnFilter = (filterStore: FiltersStore) => {
       const data = await execute(
         graphql(`
           query getProductDeployedOnProductsOptions($where: ProductsBoolExp) {
-            products(where: $where) {
+            products(where: $where, order_by: {root: {gridRank: {score: Desc}}})  {
               name
               id
               description
@@ -83,17 +83,9 @@ function buildDeployedOnProductsWhere(
 
   if (isNotEmpty(siteConfig.overrideOptionsFilterValues.productTypes)) {
     conditions.push({
-      _or: [
-        {
-          root: {
-            products: {
-              productTypeId: {
-                _in: siteConfig.overrideOptionsFilterValues.productTypes
-              }
-            }
-          }
-        }
-      ]
+      productTypeId: {
+        _in: siteConfig.overrideOptionsFilterValues.productTypes
+      }
     });
   }
 
