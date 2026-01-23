@@ -130,7 +130,11 @@ export const ProfileCard = ({ profile: profileData }: ProfileCardCardProps) => {
             <Link href={paths.profile.detail(profile.root?.slug ?? '')}>
               <Avatar className="h-[100px] w-[160px] min-w-[120px] rounded-xl p-2">
                 {validLogoUrl && (
-                  <AvatarImage src={validLogoUrl} alt={profile.name} />
+                  <AvatarImage
+                    src={validLogoUrl}
+                    alt={profile.name}
+                    className="object-contain object-center"
+                  />
                 )}
                 <AvatarFallback className="bg-white">No logo</AvatarFallback>
               </Avatar>
