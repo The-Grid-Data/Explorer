@@ -7,7 +7,6 @@ import { ProfileDataPoint } from './components/profile-data-point';
 import ProfileLoading from './components/profile-loading';
 import { ProductCard } from './components/product-card';
 import { AssetCard } from './components/asset-card';
-import { AttributeCard } from './components/attribute-card';
 import { EntityCard } from './components/entity-card';
 import { Banknote, Building2, Package } from 'lucide-react';
 import { OverviewSection } from './components/overview-section';
@@ -75,6 +74,7 @@ export const ProfileAttributesQuery = graphql(`
         attributes {
           id
           value
+          rowId
           attributeType {
             id
             name
@@ -113,12 +113,15 @@ export const ProfileDetail = ({ profileId }: ProfileDetailProps) => {
 
   const attributes =
     attributesData?.profileInfos?.[0]?.root?.attributes ?? [];
-  const productAttributes = attributes.filter(
-    a => a.coreTableName?.tableName === 'products'
-  );
-  const assetAttributes = attributes.filter(
-    a => a.coreTableName?.tableName === 'assets'
-  );
+
+  const attributesByRowId = new Map<string, typeof attributes>();
+  for (const attr of attributes) {
+    const key = attr.rowId;
+    if (!key) continue;
+    const existing = attributesByRowId.get(key) ?? [];
+    existing.push(attr);
+    attributesByRowId.set(key, existing);
+  }
 
   if (isLoading) {
     return <ProfileLoading />;
@@ -177,13 +180,15 @@ export const ProfileDetail = ({ profileId }: ProfileDetailProps) => {
         icon={<Package className="h-6 w-6" />}
       >
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {!Boolean(profile.root?.products?.length) &&
-            !Boolean(productAttributes.length) && <p>No products found</p>}
+          {!Boolean(profile.root?.products?.length) && (
+            <p>No products found</p>
+          )}
           {profile.root?.products?.map(product => (
-            <ProductCard key={product.id} product={product} />
-          ))}
-          {productAttributes.map(attr => (
-            <AttributeCard key={attr.id} attribute={attr} />
+            <ProductCard
+              key={product.id}
+              product={product}
+              attributes={attributesByRowId.get(product.id)}
+            />
           ))}
         </div>
       </ProfileDataSection>
@@ -193,13 +198,13 @@ export const ProfileDetail = ({ profileId }: ProfileDetailProps) => {
         title="Assets"
       >
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {!Boolean(profile.root?.assets?.length) &&
-            !Boolean(assetAttributes.length) && <p>No assets found</p>}
+          {!Boolean(profile.root?.assets?.length) && <p>No assets found</p>}
           {profile.root?.assets?.map(asset => (
-            <AssetCard key={asset.id} asset={asset} />
-          ))}
-          {assetAttributes.map(attr => (
-            <AttributeCard key={attr.id} attribute={attr} />
+            <AssetCard
+              key={asset.id}
+              asset={asset}
+              attributes={attributesByRowId.get(asset.id)}
+            />
           ))}
         </div>
       </ProfileDataSection>

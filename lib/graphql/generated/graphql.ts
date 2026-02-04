@@ -5864,7 +5864,7 @@ export type GetProfileAttributesQueryVariables = Exact<{
 }>;
 
 
-export type GetProfileAttributesQuery = { __typename?: 'Query', profileInfos?: Array<{ __typename?: 'ProfileInfos', root?: { __typename?: 'Roots', attributes?: Array<{ __typename?: 'Attributes', id: string, value: string, attributeType?: { __typename?: 'AttributeTypes', id: string, name: string, definition: string, slug?: string | null } | null, coreTableName?: { __typename?: 'CoreTableNames', tableName: string } | null }> | null } | null }> | null };
+export type GetProfileAttributesQuery = { __typename?: 'Query', profileInfos?: Array<{ __typename?: 'ProfileInfos', root?: { __typename?: 'Roots', attributes?: Array<{ __typename?: 'Attributes', id: string, value: string, rowId?: string | null, attributeType?: { __typename?: 'AttributeTypes', id: string, name: string, definition: string, slug?: string | null } | null, coreTableName?: { __typename?: 'CoreTableNames', tableName: string } | null }> | null } | null }> | null };
 
 export type ProfileCardFragmentFragment = { __typename?: 'ProfileInfos', name: string, id: string, tagLine: string, descriptionShort: string, profileTypeId?: string | null, profileStatusId?: string | null, profileSectorId?: string | null, foundingDate?: string | null, profileSector?: { __typename?: 'ProfileSectors', name: string, id: string, definition: string } | null, profileStatus?: { __typename?: 'ProfileStatuses', name: string, id: string, definition: string } | null, profileType?: { __typename?: 'ProfileTypes', name: string, id: string, definition: string } | null, urls?: Array<{ __typename?: 'ProfileInfoUrls', url: string, urlType?: { __typename?: 'UrlTypes', name: string, id: string, definition: string } | null }> | null, media?: Array<{ __typename?: 'ProfileInfosMedia', id: string, url: string, mediaType?: { __typename?: 'MediaTypes', id: string, name: string, slug?: string | null } | null }> | null, mainProduct?: { __typename?: 'Roots', products?: Array<{ __typename?: 'Products', name: string, productType?: { __typename?: 'ProductTypes', name: string } | null }> | null } | null, root?: { __typename?: 'Roots', urlMain: string, slug: string, gridRank?: { __typename?: 'GridRank', score?: number | null } | null, assets?: Array<(
       { __typename?: 'Assets', ticker: string, name: string, id: string }
@@ -6921,6 +6921,7 @@ export const GetProfileAttributesDocument = new TypedDocumentString(`
       attributes {
         id
         value
+        rowId
         attributeType {
           id
           name

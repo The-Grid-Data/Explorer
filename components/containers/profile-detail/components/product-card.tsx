@@ -113,14 +113,24 @@ export const ProductFragment = graphql(`
   }
 `);
 
+export type ProductCardAttribute = {
+  id: string;
+  value?: string | null;
+  attributeType?: {
+    name?: string | null;
+  } | null;
+};
+
 export type ProductCardCardProps = {
   product: FragmentType<typeof ProductFragment>;
   variant?: ProfileDataCardProps['variant'];
+  attributes?: ProductCardAttribute[];
 };
 
 export const ProductCard = ({
   product: productData,
-  variant
+  variant,
+  attributes
 }: ProductCardCardProps) => {
   const product = useFragment(ProductFragment, productData);
 
@@ -128,17 +138,28 @@ export const ProductCard = ({
     <ProfileDataCard
       variant={variant}
       title={
-        <div className="flex items-center gap-2">
-          <CardTitle>{product.name}</CardTitle>
-          {product.urls && (
-            <>
-              <Separator
-                className="mx-2 h-[10px] rounded-lg border-[1px]"
-                orientation="vertical"
-              />
-              <UrlTypeIconLinks urls={[extractUrls(product.urls)]} />
-            </>
-          )}
+        <div className="flex items-center justify-between gap-2">
+          <div className="flex items-center gap-2">
+            <CardTitle>{product.name}</CardTitle>
+            {product.urls && (
+              <>
+                <Separator
+                  className="mx-2 h-[10px] rounded-lg border-[1px]"
+                  orientation="vertical"
+                />
+                <UrlTypeIconLinks urls={[extractUrls(product.urls)]} />
+              </>
+            )}
+          </div>
+          {attributes?.length ? (
+            <div className="flex flex-wrap gap-1">
+              {attributes.map(attr => (
+                <Badge key={attr.id} variant="secondary">
+                  {attr.attributeType?.name}: {attr.value}
+                </Badge>
+              ))}
+            </div>
+          ) : null}
         </div>
       }
       description={product.description || 'No description available'}
