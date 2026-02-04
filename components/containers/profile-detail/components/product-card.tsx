@@ -9,11 +9,6 @@ import { CardTitle } from '@/components/ui/card';
 import { CollapsibleList } from '@/components/ui/collapsible-list';
 import { DeepLinkBadge } from '@/components/ui/deep-link-badge';
 import { Separator } from '@/components/ui/separator';
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger
-} from '@/components/ui/tooltip';
 import { FragmentType, graphql, useFragment } from '@/lib/graphql/generated';
 import { paths } from '@/lib/routes/paths';
 import { Package } from 'lucide-react';
@@ -143,39 +138,17 @@ export const ProductCard = ({
     <ProfileDataCard
       variant={variant}
       title={
-        <div className="flex items-center justify-between gap-2">
-          <div className="flex items-center gap-2">
-            <CardTitle>{product.name}</CardTitle>
-            {product.urls && (
-              <>
-                <Separator
-                  className="mx-2 h-[10px] rounded-lg border-[1px]"
-                  orientation="vertical"
-                />
-                <UrlTypeIconLinks urls={[extractUrls(product.urls)]} />
-              </>
-            )}
-          </div>
-          {attributes?.length ? (
-            <div className="flex flex-wrap gap-1">
-              {attributes.map(attr => {
-                const label = `${attr.attributeType?.name}: ${attr.value}`;
-                return (
-                  <Tooltip key={attr.id}>
-                    <TooltipTrigger asChild>
-                      <Badge
-                        variant="secondary"
-                        className="max-w-[200px]"
-                      >
-                        <span className="truncate">{label}</span>
-                      </Badge>
-                    </TooltipTrigger>
-                    <TooltipContent>{label}</TooltipContent>
-                  </Tooltip>
-                );
-              })}
-            </div>
-          ) : null}
+        <div className="flex items-center gap-2">
+          <CardTitle>{product.name}</CardTitle>
+          {product.urls && (
+            <>
+              <Separator
+                className="mx-2 h-[10px] rounded-lg border-[1px]"
+                orientation="vertical"
+              />
+              <UrlTypeIconLinks urls={[extractUrls(product.urls)]} />
+            </>
+          )}
         </div>
       }
       description={product.description || 'No description available'}
@@ -197,7 +170,10 @@ export const ProductCard = ({
           label: 'Is Main Product',
           value: product.isMainProduct ? 'Yes' : 'No'
         },
-
+        ...(attributes?.map(attr => ({
+          label: attr.attributeType?.name || 'Attribute',
+          value: attr.value || '-'
+        })) ?? []),
         {
           label: 'Supports',
           fullWidth: true,

@@ -12,12 +12,6 @@ import {
 } from '@/components/containers/url-type-icon/url-type-icon-list';
 import Link from 'next/link';
 import { InlineDataPoint } from './inline-data-point';
-import { Badge } from '@/components/ui/badge';
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger
-} from '@/components/ui/tooltip';
 import { ContractAddressesBadge } from './contract-address-badge';
 import { FragmentType, graphql, useFragment } from '@/lib/graphql/generated';
 import { findMedia } from '@/lib/utils/media-utils';
@@ -132,49 +126,27 @@ export const AssetCard = ({
     <ProfileDataCard
       variant={variant}
       title={
-        <div className="flex items-center justify-between gap-2">
-          <div className="flex items-center gap-2">
-            <Avatar className="h-[20px] w-[20px] rounded-xl">
-              <AvatarImage
-                src={validIconUrl}
-                alt={asset.name}
-                className="object-scale-down"
+        <div className="flex items-center gap-2">
+          <Avatar className="h-[20px] w-[20px] rounded-xl">
+            <AvatarImage
+              src={validIconUrl}
+              alt={asset.name}
+              className="object-scale-down"
+            />
+            <AvatarFallback className="font-bold">
+              {asset.name?.at(0)?.toUpperCase()}
+            </AvatarFallback>
+          </Avatar>
+          <CardTitle>{asset.name}</CardTitle>
+          {asset.urls && (
+            <>
+              <Separator
+                className="mx-2 h-[10px] rounded-lg border-[1px]"
+                orientation="vertical"
               />
-              <AvatarFallback className="font-bold">
-                {asset.name?.at(0)?.toUpperCase()}
-              </AvatarFallback>
-            </Avatar>
-            <CardTitle>{asset.name}</CardTitle>
-            {asset.urls && (
-              <>
-                <Separator
-                  className="mx-2 h-[10px] rounded-lg border-[1px]"
-                  orientation="vertical"
-                />
-                <UrlTypeIconLinks urls={[extractUrls(asset.urls)]} />
-              </>
-            )}
-          </div>
-          {attributes?.length ? (
-            <div className="flex flex-wrap gap-1">
-              {attributes.map(attr => {
-                const label = `${attr.attributeType?.name}: ${attr.value}`;
-                return (
-                  <Tooltip key={attr.id}>
-                    <TooltipTrigger asChild>
-                      <Badge
-                        variant="secondary"
-                        className="max-w-[200px]"
-                      >
-                        <span className="truncate">{label}</span>
-                      </Badge>
-                    </TooltipTrigger>
-                    <TooltipContent>{label}</TooltipContent>
-                  </Tooltip>
-                );
-              })}
-            </div>
-          ) : null}
+              <UrlTypeIconLinks urls={[extractUrls(asset.urls)]} />
+            </>
+          )}
         </div>
       }
       description={asset.description || 'No description available'}
@@ -191,6 +163,10 @@ export const AssetCard = ({
           label: 'Asset Status',
           value: asset.assetStatus?.name || '-'
         },
+        ...(attributes?.map(attr => ({
+          label: attr.attributeType?.name || 'Attribute',
+          value: attr.value || '-'
+        })) ?? []),
         {
           label: 'Used by products',
           fullWidth: true,
