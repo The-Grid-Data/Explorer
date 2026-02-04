@@ -9,6 +9,11 @@ import { CardTitle } from '@/components/ui/card';
 import { CollapsibleList } from '@/components/ui/collapsible-list';
 import { DeepLinkBadge } from '@/components/ui/deep-link-badge';
 import { Separator } from '@/components/ui/separator';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger
+} from '@/components/ui/tooltip';
 import { FragmentType, graphql, useFragment } from '@/lib/graphql/generated';
 import { paths } from '@/lib/routes/paths';
 import { Package } from 'lucide-react';
@@ -153,11 +158,22 @@ export const ProductCard = ({
           </div>
           {attributes?.length ? (
             <div className="flex flex-wrap gap-1">
-              {attributes.map(attr => (
-                <Badge key={attr.id} variant="secondary">
-                  {attr.attributeType?.name}: {attr.value}
-                </Badge>
-              ))}
+              {attributes.map(attr => {
+                const label = `${attr.attributeType?.name}: ${attr.value}`;
+                return (
+                  <Tooltip key={attr.id}>
+                    <TooltipTrigger asChild>
+                      <Badge
+                        variant="secondary"
+                        className="max-w-[200px] truncate"
+                      >
+                        {label}
+                      </Badge>
+                    </TooltipTrigger>
+                    <TooltipContent>{label}</TooltipContent>
+                  </Tooltip>
+                );
+              })}
             </div>
           ) : null}
         </div>

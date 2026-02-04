@@ -13,6 +13,11 @@ import {
 import Link from 'next/link';
 import { InlineDataPoint } from './inline-data-point';
 import { Badge } from '@/components/ui/badge';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger
+} from '@/components/ui/tooltip';
 import { ContractAddressesBadge } from './contract-address-badge';
 import { FragmentType, graphql, useFragment } from '@/lib/graphql/generated';
 import { findMedia } from '@/lib/utils/media-utils';
@@ -152,11 +157,22 @@ export const AssetCard = ({
           </div>
           {attributes?.length ? (
             <div className="flex flex-wrap gap-1">
-              {attributes.map(attr => (
-                <Badge key={attr.id} variant="secondary">
-                  {attr.attributeType?.name}: {attr.value}
-                </Badge>
-              ))}
+              {attributes.map(attr => {
+                const label = `${attr.attributeType?.name}: ${attr.value}`;
+                return (
+                  <Tooltip key={attr.id}>
+                    <TooltipTrigger asChild>
+                      <Badge
+                        variant="secondary"
+                        className="max-w-[200px] truncate"
+                      >
+                        {label}
+                      </Badge>
+                    </TooltipTrigger>
+                    <TooltipContent>{label}</TooltipContent>
+                  </Tooltip>
+                );
+              })}
             </div>
           ) : null}
         </div>
