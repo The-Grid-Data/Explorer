@@ -164,9 +164,9 @@ export const AssetCard = ({
                     <TooltipTrigger asChild>
                       <Badge
                         variant="secondary"
-                        className="max-w-[200px] truncate"
+                        className="max-w-[200px]"
                       >
-                        {label}
+                        <span className="truncate">{label}</span>
                       </Badge>
                     </TooltipTrigger>
                     <TooltipContent>{label}</TooltipContent>
