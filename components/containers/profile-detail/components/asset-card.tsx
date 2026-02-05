@@ -17,6 +17,7 @@ import { FragmentType, graphql, useFragment } from '@/lib/graphql/generated';
 import { findMedia } from '@/lib/utils/media-utils';
 import { CollapsibleList } from '@/components/ui/collapsible-list';
 import { DeepLinkBadge } from '@/components/ui/deep-link-badge';
+import { AttributeHoverCard } from './attribute-hover-card';
 
 export const AssetFragment = graphql(`
   fragment AssetFieldsFragment on Assets {
@@ -105,6 +106,7 @@ export type AssetCardAttribute = {
   value?: string | null;
   attributeType?: {
     name?: string | null;
+    definition?: string | null;
   } | null;
 };
 
@@ -164,7 +166,16 @@ export const AssetCard = ({
           value: asset.assetStatus?.name || '-'
         },
         ...(attributes?.map(attr => ({
-          label: attr.attributeType?.name || 'Attribute',
+          label: attr.attributeType?.definition ? (
+            <AttributeHoverCard
+              name={attr.attributeType?.name || 'Attribute'}
+              definition={attr.attributeType.definition}
+            >
+              {attr.attributeType?.name || 'Attribute'}
+            </AttributeHoverCard>
+          ) : (
+            attr.attributeType?.name || 'Attribute'
+          ),
           value: attr.value || '-'
         })) ?? []),
         {

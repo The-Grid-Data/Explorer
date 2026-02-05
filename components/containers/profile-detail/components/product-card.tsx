@@ -16,6 +16,7 @@ import Link from 'next/link';
 import { ContractAddressesBadge } from './contract-address-badge';
 import { InlineDataPoint } from './inline-data-point';
 import { ProfileDataCard, ProfileDataCardProps } from './profile-data-card';
+import { AttributeHoverCard } from './attribute-hover-card';
 
 export const ProductFragment = graphql(`
   fragment ProductFieldsFragment on Products {
@@ -118,6 +119,7 @@ export type ProductCardAttribute = {
   value?: string | null;
   attributeType?: {
     name?: string | null;
+    definition?: string | null;
   } | null;
 };
 
@@ -171,7 +173,16 @@ export const ProductCard = ({
           value: product.isMainProduct ? 'Yes' : 'No'
         },
         ...(attributes?.map(attr => ({
-          label: attr.attributeType?.name || 'Attribute',
+          label: attr.attributeType?.definition ? (
+            <AttributeHoverCard
+              name={attr.attributeType?.name || 'Attribute'}
+              definition={attr.attributeType.definition}
+            >
+              {attr.attributeType?.name || 'Attribute'}
+            </AttributeHoverCard>
+          ) : (
+            attr.attributeType?.name || 'Attribute'
+          ),
           value: attr.value || '-'
         })) ?? []),
         {
