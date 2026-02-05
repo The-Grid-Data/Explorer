@@ -3,7 +3,7 @@ import { Separator } from '@/components/ui/separator';
 import { cn } from '@/lib/utils';
 
 type InlineDataPointProps = {
-  label: string;
+  label: string | ReactNode;
   value?: string | boolean | ReactNode;
   children?: ReactNode;
   fullWidth?: boolean;
@@ -18,7 +18,7 @@ export const InlineDataPoint = ({
   separator = true
 }: InlineDataPointProps) => {
   return (
-    <div key={label} className="flex flex-col gap-2">
+    <div className="flex flex-col gap-2">
       <div
         className={cn(
           'flex items-center justify-between',

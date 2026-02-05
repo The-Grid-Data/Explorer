@@ -17,6 +17,7 @@ import { FragmentType, graphql, useFragment } from '@/lib/graphql/generated';
 import { findMedia } from '@/lib/utils/media-utils';
 import { CollapsibleList } from '@/components/ui/collapsible-list';
 import { DeepLinkBadge } from '@/components/ui/deep-link-badge';
+import { AttributeHoverCard } from './attribute-hover-card';
 
 export const AssetFragment = graphql(`
   fragment AssetFieldsFragment on Assets {
@@ -100,12 +101,26 @@ export const AssetFragment = graphql(`
   }
 `);
 
+export type AssetCardAttribute = {
+  id: string;
+  value?: string | null;
+  attributeType?: {
+    name?: string | null;
+    definition?: string | null;
+  } | null;
+};
+
 export type AssetCardProps = {
   asset: FragmentType<typeof AssetFragment>;
   variant?: ProfileDataCardProps['variant'];
+  attributes?: AssetCardAttribute[];
 };
 
-export const AssetCard = ({ asset: assetData, variant }: AssetCardProps) => {
+export const AssetCard = ({
+  asset: assetData,
+  variant,
+  attributes
+}: AssetCardProps) => {
   const asset = useFragment(AssetFragment, assetData);
   const validIconUrl = asset.media?.find(findMedia.icon)?.url;
 
@@ -150,6 +165,19 @@ export const AssetCard = ({ asset: assetData, variant }: AssetCardProps) => {
           label: 'Asset Status',
           value: asset.assetStatus?.name || '-'
         },
+        ...(attributes?.map(attr => ({
+          label: attr.attributeType?.definition ? (
+            <AttributeHoverCard
+              name={attr.attributeType?.name || 'Attribute'}
+              definition={attr.attributeType.definition}
+            >
+              {attr.attributeType?.name || 'Attribute'}
+            </AttributeHoverCard>
+          ) : (
+            attr.attributeType?.name || 'Attribute'
+          ),
+          value: attr.value || '-'
+        })) ?? []),
         {
           label: 'Used by products',
           fullWidth: true,

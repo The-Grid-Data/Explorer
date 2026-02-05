@@ -40,24 +40,18 @@
     "supportsProducts": [],
     "productTypes": [],
     "productAssetRelationships": [],
-    "tags": [
-      "id1763118198-8S_Brqj3Q8q8Lhs7YT0wZA"
-    ],
+    "tags": [],
     "productIds": []
   },
   "overrideOptionsFilterValues": {
-    "productTypes": [
-      "15",
-      "16",
-      "17"
-    ]
+    "productTypes": ["15", "16", "17"]
   },
   "excludeTags": [],
   "featureFlags": {
     "displayQueriesButtons": false,
     "allowHeroFiltersSearch": true,
     "displayTagsFilter": false,
-    "displayPoweredBy": true, 
-    "hideTagsOnProfileCards": true    
+    "displayPoweredBy": true,
+    "hideTagsOnProfileCards": true
   }
 }

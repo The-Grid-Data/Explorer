@@ -16,6 +16,7 @@ import Link from 'next/link';
 import { ContractAddressesBadge } from './contract-address-badge';
 import { InlineDataPoint } from './inline-data-point';
 import { ProfileDataCard, ProfileDataCardProps } from './profile-data-card';
+import { AttributeHoverCard } from './attribute-hover-card';
 
 export const ProductFragment = graphql(`
   fragment ProductFieldsFragment on Products {
@@ -113,14 +114,25 @@ export const ProductFragment = graphql(`
   }
 `);
 
+export type ProductCardAttribute = {
+  id: string;
+  value?: string | null;
+  attributeType?: {
+    name?: string | null;
+    definition?: string | null;
+  } | null;
+};
+
 export type ProductCardCardProps = {
   product: FragmentType<typeof ProductFragment>;
   variant?: ProfileDataCardProps['variant'];
+  attributes?: ProductCardAttribute[];
 };
 
 export const ProductCard = ({
   product: productData,
-  variant
+  variant,
+  attributes
 }: ProductCardCardProps) => {
   const product = useFragment(ProductFragment, productData);
 
@@ -160,7 +172,19 @@ export const ProductCard = ({
           label: 'Is Main Product',
           value: product.isMainProduct ? 'Yes' : 'No'
         },
-
+        ...(attributes?.map(attr => ({
+          label: attr.attributeType?.definition ? (
+            <AttributeHoverCard
+              name={attr.attributeType?.name || 'Attribute'}
+              definition={attr.attributeType.definition}
+            >
+              {attr.attributeType?.name || 'Attribute'}
+            </AttributeHoverCard>
+          ) : (
+            attr.attributeType?.name || 'Attribute'
+          ),
+          value: attr.value || '-'
+        })) ?? []),
         {
           label: 'Supports',
           fullWidth: true,

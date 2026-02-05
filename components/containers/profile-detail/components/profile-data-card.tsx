@@ -12,7 +12,7 @@ import { InlineDataPoint } from './inline-data-point';
 import { cn } from '@/lib/utils';
 
 export type DataPoint = {
-  label: string;
+  label: string | ReactNode;
   value?: string | boolean | ReactNode;
   children?: ReactNode;
   fullWidth?: boolean;
@@ -45,8 +45,8 @@ export const ProfileDataCard = ({
       </CardHeader>
       <CardContent>
         <div className="space-y-4">
-          {dataPoints.map(dataPoint => (
-            <InlineDataPoint key={dataPoint.label} {...dataPoint} />
+          {dataPoints.map((dataPoint, index) => (
+            <InlineDataPoint key={typeof dataPoint.label === 'string' ? dataPoint.label : `dp-${index}`} {...dataPoint} />
           ))}
         </div>
       </CardContent>
