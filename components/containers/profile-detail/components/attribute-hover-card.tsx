@@ -4,6 +4,7 @@ import {
   HoverCardContent,
   HoverCardTrigger
 } from '@/components/ui/hover-card';
+import { LinkifyText } from '@/components/ui/linkify-text';
 
 type AttributeHoverCardProps = {
   name: string;
@@ -30,7 +31,7 @@ export const AttributeHoverCard = ({
       <HoverCardContent side="top" align="start">
         <div className="space-y-1">
           <p className="text-sm font-semibold">{name}</p>
-          <p className="text-xs text-muted-foreground">{definition}</p>
+          <LinkifyText text={definition} className="text-xs text-muted-foreground" />
         </div>
       </HoverCardContent>
     </HoverCard>
