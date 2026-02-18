@@ -39,7 +39,9 @@ export const useHasAttributeFilter = (filterStore: FiltersStore) => {
       return validateAndFormatOptions(options);
     },
     getQueryConditions: value => ({
-      attributes: { attributeTypeId: { _in: value } }
+      root: {
+        attributes: { attributeTypeId: { _in: value } }
+      }
     })
   });
 };
