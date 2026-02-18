@@ -10,6 +10,19 @@ export const ProfileListFiltersList = () => {
   return (
     <ScrollArea className="h-full">
       <div className="space-y-8 pr-4">
+        <FilterGroup title="Attribute filters">
+          {filters.hasAttributeFilter.enabled && (
+            <ComboBox
+              label="Has Attribute"
+              selected={filters.hasAttributeFilter.value}
+              onChange={options => {
+                filters.hasAttributeFilter.setValue(options);
+              }}
+              options={filters.hasAttributeFilter.options?.data}
+            />
+          )}
+        </FilterGroup>
+
         <FilterGroup title="Profile filters">
           {filters.profileTypeFilter.enabled && (
             <ComboBox
