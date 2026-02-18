@@ -5956,6 +5956,11 @@ export type GetEntityTypeOptionsQueryVariables = Exact<{
 
 export type GetEntityTypeOptionsQuery = { __typename?: 'Query', entityTypes?: Array<{ __typename?: 'EntityTypes', label: string, value: string, description: string }> | null };
 
+export type GetAttributeTypesOptionsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetAttributeTypesOptionsQuery = { __typename?: 'Query', attributeTypes?: Array<{ __typename?: 'AttributeTypes', label: string, value: string, description: string, attributesAggregate: { __typename?: 'AttributesAggExp', _count: number } }> | null };
+
 export type GetProductAssetRelationshipsOptionsQueryVariables = Exact<{
   where?: InputMaybe<AssetsBoolExp>;
 }>;
@@ -7548,6 +7553,18 @@ export const GetEntityTypeOptionsDocument = new TypedDocumentString(`
   }
 }
     `) as unknown as TypedDocumentString<GetEntityTypeOptionsQuery, GetEntityTypeOptionsQueryVariables>;
+export const GetAttributeTypesOptionsDocument = new TypedDocumentString(`
+    query getAttributeTypesOptions {
+  attributeTypes {
+    label: name
+    value: id
+    description: definition
+    attributesAggregate {
+      _count
+    }
+  }
+}
+    `) as unknown as TypedDocumentString<GetAttributeTypesOptionsQuery, GetAttributeTypesOptionsQueryVariables>;
 export const GetProductAssetRelationshipsOptionsDocument = new TypedDocumentString(`
     query getProductAssetRelationshipsOptions($where: AssetsBoolExp) {
   assets(where: $where) {

@@ -25,7 +25,8 @@ import {
   useProfileSectorsFilter,
   useProfileStatusesFilter,
   useProfileFoundingDateFilter,
-  useProductAssetRelationshipsFilter
+  useProductAssetRelationshipsFilter,
+  useHasAttributeFilter
 } from './filters/filter-definitions';
 import { ProfileInfosBoolExp } from '@/lib/graphql/generated/graphql';
 
@@ -49,6 +50,7 @@ export type FiltersStore = {
   entityCountryFilter: MultiSelectReturn<string, string>['value'];
   tagsFilter: MultiSelectReturn<string, string>['value'];
   productAssetRelationshipsFilter: MultiSelectReturn<string, string>['value'];
+  hasAttributeFilter: MultiSelectReturn<string, string>['value'];
 };
 
 export type Filters = ReturnType<typeof useProfileFilters>;
@@ -79,7 +81,8 @@ export function useProfileFilters() {
     entityCountryFilter: useEntityCountryFilter(filterStore),
     tagsFilter: useTagsFilter(filterStore),
     productAssetRelationshipsFilter:
-      useProductAssetRelationshipsFilter(filterStore)
+      useProductAssetRelationshipsFilter(filterStore),
+    hasAttributeFilter: useHasAttributeFilter(filterStore)
   };
 
   filtersRef.current = Object.entries(filters).reduce(

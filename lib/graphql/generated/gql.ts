@@ -35,6 +35,7 @@ const documents = {
     "\n          query getEntityCountryOptions($where: CountriesBoolExp) {\n            countries(where: $where) {\n              label: name\n              value: id\n            }\n          }\n        ": types.GetEntityCountryOptionsDocument,
     "\n          query getEntityNameOptions($where: EntitiesBoolExp) {\n            entities(where: $where) {\n              label: name\n              value: id\n            }\n          }\n        ": types.GetEntityNameOptionsDocument,
     "\n          query getEntityTypeOptions($where: EntityTypesBoolExp) {\n            entityTypes(where: $where) {\n              label: name\n              value: id\n              description: definition\n            }\n          }\n        ": types.GetEntityTypeOptionsDocument,
+    "\n          query getAttributeTypesOptions {\n            attributeTypes {\n              label: name\n              value: id\n              description: definition\n              attributesAggregate {\n                _count\n              }\n            }\n          }\n        ": types.GetAttributeTypesOptionsDocument,
     "\n          query getProductAssetRelationshipsOptions($where: AssetsBoolExp) {\n            assets(where: $where) {\n              ticker\n            }\n          }\n        ": types.GetProductAssetRelationshipsOptionsDocument,
     "\n          query getProductDeployedOnProductsOptions($where: ProductsBoolExp) {\n            products(where: $where, order_by: {root: {gridRank: {score: Desc}}})  {\n              name\n              id\n              description\n            }\n          }\n        ": types.GetProductDeployedOnProductsOptionsDocument,
     "\n          query getProductStatusesOptions($where: ProductStatusesBoolExp) {\n            productStatuses(where: $where) {\n              label: name\n              value: id\n              description: definition\n            }\n          }\n        ": types.GetProductStatusesOptionsDocument,
@@ -126,6 +127,10 @@ export function graphql(source: "\n          query getEntityNameOptions($where: 
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "\n          query getEntityTypeOptions($where: EntityTypesBoolExp) {\n            entityTypes(where: $where) {\n              label: name\n              value: id\n              description: definition\n            }\n          }\n        "): typeof import('./graphql').GetEntityTypeOptionsDocument;
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n          query getAttributeTypesOptions {\n            attributeTypes {\n              label: name\n              value: id\n              description: definition\n              attributesAggregate {\n                _count\n              }\n            }\n          }\n        "): typeof import('./graphql').GetAttributeTypesOptionsDocument;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
