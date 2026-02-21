@@ -16,17 +16,17 @@ export const ProfileCardDataPoint = ({
   children,
   className
 }: ProfileCardDataPointProps) => (
-  <div className={cn('flex flex-col items-baseline md:flex-row', className)}>
-    <div
+  <div className={cn('flex flex-col items-baseline gap-1 md:flex-row md:gap-2', className)}>
+    <span
       className={cn(
-        'text w-full shrink-0 rounded border border-primary bg-primary p-1 px-2 text-xs text-muted dark:border-secondary dark:bg-primary-foreground dark:text-primary dark:text-primary md:w-fit',
-        active && 'bg-orange-400 font-medium text-primary dark:bg-orange-400'
+        'shrink-0 text-xs font-medium text-muted-foreground',
+        active && 'text-primary'
       )}
     >
       {label}:
-    </div>
-    <div className="ml-1 flex flex-col items-start pt-2 lg:pt-0">
-      {children || <span className="text w-full text-sm">{value || '-'}</span>}
+    </span>
+    <div className="flex flex-col items-start">
+      {children || <span className="text-sm">{value || '-'}</span>}
     </div>
   </div>
 );

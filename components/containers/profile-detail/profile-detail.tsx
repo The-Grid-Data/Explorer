@@ -6,8 +6,8 @@ import { ProfileDataSection } from './components/profile-data-section';
 import { ProfileDataPoint } from './components/profile-data-point';
 import ProfileLoading from './components/profile-loading';
 import { ProductCard } from './components/product-card';
-import { AssetCard } from './components/asset-card';
 import { EntityCard } from './components/entity-card';
+import { AssetTableDetail } from './components/asset-table-detail';
 import { Banknote, Building2, Package } from 'lucide-react';
 import { OverviewSection } from './components/overview-section';
 import { ParentRelationshipsSection } from './components/parent-relationships-section';
@@ -178,16 +178,10 @@ export const ProfileDetail = ({ profileId }: ProfileDetailProps) => {
         icon={<Banknote className="h-6 w-6" />}
         title="Assets"
       >
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {!Boolean(profile.root?.assets?.length) && <p>No assets found</p>}
-          {profile.root?.assets?.map(asset => (
-            <AssetCard
-              key={asset.id}
-              asset={asset}
-              attributes={attributesByRowId.get(asset.id)}
-            />
-          ))}
-        </div>
+        <AssetTableDetail
+          assets={profile.root?.assets}
+          attributesByRowId={attributesByRowId}
+        />
       </ProfileDataSection>
 
       <ProfileDataSection

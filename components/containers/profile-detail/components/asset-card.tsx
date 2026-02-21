@@ -42,6 +42,9 @@ export const AssetFragment = graphql(`
       product {
         name
         rootId
+        root {
+          slug
+        }
         media {
           url
           mediaType {
@@ -189,7 +192,14 @@ export const AssetCard = ({
                 <div className="flex gap-2">
                   <DeepLinkBadge
                     icon={<Package size={16} />}
-                    href={'#'}
+                    href={
+                      relationship.product?.root?.slug
+                        ? paths.profile.detail(
+                            relationship.product.root.slug,
+                            { section: 'products' }
+                          )
+                        : undefined
+                    }
                     value={relationship.product?.name}
                   />
                 </div>
