@@ -1,0 +1,63 @@
+{
+  "metadata": {
+    "title": "The Grid | Data Explorer",
+    "description": "Powering Discoverability of Assets, Products, and Services in Web3.",
+    "icon": "/favicon.ico"
+  },
+  "verifiedTagId": "7",
+  "banner": {
+    "text": "YOU SHOULD NOT USE THIS AS A DAILY DRIVER. This is a reference implementation of <a target='_blank' href='https://thegrid.id/legal/web-services-terms' class='underline'>The Grid&apos;s data</a>  which is in Beta - API users can pick and show data relevant to their users."
+  },
+  "header": {
+    "logoSrc": {
+      "dark": "/thegrid-logo-white.svg",
+      "light": "/thegrid-logo.svg"
+    },
+    "docsButton": {
+      "label": "Read the docs",
+      "href": "https://docs.thegrid.id"
+    },
+    "claimProfileButton": {
+      "label": "Claim your profile",
+      "href": "https://enter.thegrid.id/claimprofile"
+    },
+    "githubButton": {
+      "label": "Clone project",
+      "href": "https://github.com/The-Grid-Data/Explorer"
+    }
+  },
+  "pages": {
+    "home": {
+      "hero": {
+        "badge": "For all of Web3 but currently focused on Solana.",
+        "title": "A Node of Truth on Assets, Products, and Services in Web3.",
+        "description": "Explore the largest offchain dataset for Solana projects, use the filters to find projects relevant to you."
+      }
+    }
+  },
+  "overrideFilterValues": {
+    "productDeployedOn": [],
+    "supportsProducts": [],
+    "productTypes": [],
+    "productAssetRelationships": [],
+    "tags": [],
+    "productIds": []
+  },
+  "overrideOptionsFilterValues": {
+    "productTypes": [
+      "15",
+      "16",
+      "17"
+    ]
+  },
+  "excludeTags": [],
+  "featureFlags": {
+    "displayQueriesButtons": true,
+    "allowHeroFiltersSearch": true,
+    "displayTagsFilter": true,
+    "displayAssetTypeFilter": true,
+    "displayPoweredBy": true,
+    "hideTagsOnProfileCards": false
+  },
+  "quickFilters": []
+}
