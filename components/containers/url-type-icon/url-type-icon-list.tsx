@@ -21,10 +21,10 @@ export const UrlTypeIconLinks = ({
   noTooltip = false
 }: UrlTypeIconLinksProps) => {
   return (
-    <div className="flex items-center gap-2">
+    <div className="flex flex-wrap items-center gap-2">
       {urls.map((urlList, index) => (
-        <div key={index} className="flex items-center gap-2">
-          <div className="flex items-center gap-2">
+        <div key={index} className="flex flex-wrap items-center gap-2">
+          <div className="flex flex-wrap items-center gap-2">
             {urlList.map(
               (url, subindex) =>
                 url.url && (
