@@ -218,7 +218,14 @@ const AssetRow = ({
                             <DeepLinkBadge
                               key={i}
                               icon={<Package size={14} />}
-                              href="#"
+                              href={
+                                relationship.product?.root?.slug
+                                  ? paths.profile.detail(
+                                      relationship.product.root.slug,
+                                      { section: 'products' }
+                                    )
+                                  : undefined
+                              }
                               value={relationship.product?.name}
                             />
                           )
