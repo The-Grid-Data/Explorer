@@ -11,6 +11,7 @@ export const ProfileListHeroFilters = () => {
   const [sectorSearch, setSectorSearch] = useState('');
   const [productSearch, setProductSearch] = useState('');
   const [tagSearch, setTagSearch] = useState('');
+  const [assetSearch, setAssetSearch] = useState('');
 
   const filteredSectors = useMemo(() => {
     return (
@@ -35,6 +36,14 @@ export const ProfileListHeroFilters = () => {
       ) ?? []
     );
   }, [filters.tagsFilter.options?.data, tagSearch]);
+
+  const filteredAssetTypes = useMemo(() => {
+    return (
+      filters.assetTypeFilter.options?.data?.filter(option =>
+        option.label.toLowerCase().includes(assetSearch.toLowerCase())
+      ) ?? []
+    );
+  }, [filters.assetTypeFilter.options?.data, assetSearch]);
 
   return (
     <>
@@ -118,6 +127,34 @@ export const ProfileListHeroFilters = () => {
           }}
         />
       </div>
+      {Boolean(siteConfig.featureFlags?.displayAssetTypeFilter) && (
+        <div className="space-y-4">
+          <div className="flex flex-col gap-2 md:flex-row">
+            <FilterTitle
+              title="Asset types"
+              count={filteredAssetTypes.length}
+              isFetching={filters.assetTypeFilter.options?.isFetching}
+            />
+            {siteConfig.featureFlags?.allowHeroFiltersSearch && (
+              <SearchInput
+                value={assetSearch}
+                onChange={setAssetSearch}
+                placeholder="Search asset types..."
+              />
+            )}
+          </div>
+          <CheckboxGrid
+            initialVisibleCount={12}
+            isFetching={filters.assetTypeFilter.options?.isFetching}
+            isLoading={filters.assetTypeFilter.options?.isLoading}
+            selected={filters.assetTypeFilter.value}
+            options={filteredAssetTypes}
+            onChange={selected => {
+              filters.assetTypeFilter.setValue(selected);
+            }}
+          />
+        </div>
+      )}
     </>
   );
 };

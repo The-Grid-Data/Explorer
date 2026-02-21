@@ -78,6 +78,9 @@ export const configSchema = z.object({
     displayTagsFilter: z
       .boolean()
       .default(defaultConfig.featureFlags.displayTagsFilter),
+    displayAssetTypeFilter: z
+      .boolean()
+      .default(defaultConfig.featureFlags.displayAssetTypeFilter),
     displayPoweredBy: z
       .boolean()
       .default(defaultConfig.featureFlags.displayPoweredBy),

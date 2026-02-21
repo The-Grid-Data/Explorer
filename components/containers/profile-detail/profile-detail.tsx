@@ -175,6 +175,22 @@ export const ProfileDetail = ({ profileId }: ProfileDetailProps) => {
       <OverviewSection profile={profile} />
 
       <ProfileDataSection
+        icon={<Banknote className="h-6 w-6" />}
+        title="Assets"
+      >
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {!Boolean(profile.root?.assets?.length) && <p>No assets found</p>}
+          {profile.root?.assets?.map(asset => (
+            <AssetCard
+              key={asset.id}
+              asset={asset}
+              attributes={attributesByRowId.get(asset.id)}
+            />
+          ))}
+        </div>
+      </ProfileDataSection>
+
+      <ProfileDataSection
         title="Products"
         id="products"
         icon={<Package className="h-6 w-6" />}
@@ -188,22 +204,6 @@ export const ProfileDetail = ({ profileId }: ProfileDetailProps) => {
               key={product.id}
               product={product}
               attributes={attributesByRowId.get(product.id)}
-            />
-          ))}
-        </div>
-      </ProfileDataSection>
-
-      <ProfileDataSection
-        icon={<Banknote className="h-6 w-6" />}
-        title="Assets"
-      >
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {!Boolean(profile.root?.assets?.length) && <p>No assets found</p>}
-          {profile.root?.assets?.map(asset => (
-            <AssetCard
-              key={asset.id}
-              asset={asset}
-              attributes={attributesByRowId.get(asset.id)}
             />
           ))}
         </div>

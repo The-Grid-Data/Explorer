@@ -55,6 +55,7 @@
     "displayQueriesButtons": true,
     "allowHeroFiltersSearch": true,
     "displayTagsFilter": true,
+    "displayAssetTypeFilter": true,
     "displayPoweredBy": true,
     "hideTagsOnProfileCards": false
   }

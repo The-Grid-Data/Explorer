@@ -41,7 +41,7 @@
     "productTypes": [],
     "productAssetRelationships": [],
     "tags": [],
-    "productIds": []
+    "productIds": ["87"]
   },
   "overrideOptionsFilterValues": {
     "productTypes": ["15", "16", "17"]
@@ -51,6 +51,7 @@
     "displayQueriesButtons": false,
     "allowHeroFiltersSearch": true,
     "displayTagsFilter": false,
+    "displayAssetTypeFilter": true,
     "displayPoweredBy": true,
     "hideTagsOnProfileCards": true
   }
