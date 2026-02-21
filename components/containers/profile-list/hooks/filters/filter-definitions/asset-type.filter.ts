@@ -19,20 +19,35 @@ export const useAssetTypeFilter = (filterStore: FiltersStore) => {
     initialValue: value,
     onChange: newValue => setValue(newValue),
     getOptions: async () => {
-      const where = {};
       const data = await execute(
         graphql(`
-          query getAssetTypeOptions($where: AssetTypesBoolExp) {
+          query getAssetTypeOptions(
+            $where: AssetTypesBoolExp
+            $aggregateInput: AssetsFilterInput
+          ) {
             assetTypes(where: $where) {
               label: name
               value: id
               description: definition
+              assetsAggregate(filter_input: $aggregateInput) {
+                _count
+              }
             }
           }
         `),
-        { where }
+        { where: {} }
       );
-      return validateAndFormatOptions(data?.assetTypes);
+      return validateAndFormatOptions(
+        data?.assetTypes
+          ?.map(item => ({
+            label: item.label,
+            value: item.value,
+            description: item.description,
+            count: item?.assetsAggregate?._count
+          }))
+          .filter(item => item.count)
+          .sort((a, b) => (b.count ?? 0) - (a.count ?? 0))
+      );
     },
     getQueryConditions: value => ({
       root: {

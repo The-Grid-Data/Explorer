@@ -234,30 +234,6 @@ export const ProfileCard = ({ profile: profileData }: ProfileCardCardProps) => {
               active={filters.productTypesFilter.active}
             /> */}
             <ProfileCardDataPoint
-              label="Products"
-              active={[
-                filters.productTypesFilter.active,
-                filters.productDeployedOnFilter.active,
-                filters.productLaunchDateFilter.active,
-                filters.productStatusFilter.active,
-                filters.supportsProductsFilter.active
-              ].some(value => value)}
-              className="items-start"
-            >
-              <div className="flex h-full flex-wrap gap-2">
-                {profile.root?.products?.length ? (
-                  profile.root.products.map(
-                    product =>
-                      product && (
-                        <ProductBadge key={product.id} product={product} />
-                      )
-                  )
-                ) : (
-                  <span className="mt-1 text-sm">-</span>
-                )}
-              </div>
-            </ProfileCardDataPoint>
-            <ProfileCardDataPoint
               label="Assets"
               active={[
                 filters.assetDeployedOnFilter.active,
@@ -283,6 +259,30 @@ export const ProfileCard = ({ profile: profileData }: ProfileCardCardProps) => {
                       content={<AssetCard variant="fluid" asset={asset} />}
                     />
                   ))
+                ) : (
+                  <span className="mt-1 text-sm">-</span>
+                )}
+              </div>
+            </ProfileCardDataPoint>
+            <ProfileCardDataPoint
+              label="Products"
+              active={[
+                filters.productTypesFilter.active,
+                filters.productDeployedOnFilter.active,
+                filters.productLaunchDateFilter.active,
+                filters.productStatusFilter.active,
+                filters.supportsProductsFilter.active
+              ].some(value => value)}
+              className="items-start"
+            >
+              <div className="flex h-full flex-wrap gap-2">
+                {profile.root?.products?.length ? (
+                  profile.root.products.map(
+                    product =>
+                      product && (
+                        <ProductBadge key={product.id} product={product} />
+                      )
+                  )
                 ) : (
                   <span className="mt-1 text-sm">-</span>
                 )}
