@@ -37,3 +37,6 @@ next-env.d.ts
 
 .env
 .envrc
+
+# generated config (built from Vercel blob storage or default-config.json)
+lib/config/config.json
