@@ -2,10 +2,12 @@ import CheckboxGrid from '@/components/ui/checkbox-grid';
 import { Spinner } from '@/components/ui/spinner';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { siteConfig } from '@/lib/site-config';
 import { useProfileFiltersContext } from '@/providers/filters-provider';
-import { useState, useMemo } from 'react';
+import { type ReactNode, useState, useMemo } from 'react';
 import { ChevronDownIcon, MagnifyingGlassIcon } from '@radix-ui/react-icons';
+import { Layers, Package, Banknote, Tag } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 export const ProfileListHeroFilters = () => {
@@ -52,7 +54,7 @@ export const ProfileListHeroFilters = () => {
     <div className="space-y-4">
       <Button
         variant="ghost"
-        className="flex items-center gap-2 px-0 text-xl font-bold hover:bg-transparent"
+        className="flex items-center gap-2 px-0 text-lg font-semibold hover:bg-transparent"
         onClick={() => setIsOpen(!isOpen)}
       >
         Advanced Filters
@@ -64,23 +66,16 @@ export const ProfileListHeroFilters = () => {
         />
       </Button>
       {isOpen && (
-        <div className="space-y-4 md:space-y-10">
+        <div className="grid gap-4 md:grid-cols-2">
           {Boolean(siteConfig.featureFlags?.displayTagsFilter) && (
-            <div className="space-y-4">
-              <div className="flex flex-col gap-2 md:flex-row">
-                <FilterTitle
-                  title="Tags"
-                  count={filteredTags.length}
-                  isFetching={filters.tagsFilter.options?.isFetching}
-                />
-                {siteConfig.featureFlags.allowHeroFiltersSearch && (
-                  <SearchInput
-                    value={tagSearch}
-                    onChange={setTagSearch}
-                    placeholder="Search tags..."
-                  />
-                )}
-              </div>
+            <FilterCard
+              icon={<Tag className="h-4 w-4" />}
+              title="Tags"
+              isFetching={filters.tagsFilter.options?.isFetching}
+              searchValue={tagSearch}
+              onSearchChange={setTagSearch}
+              searchPlaceholder="Search tags..."
+            >
               <CheckboxGrid
                 initialVisibleCount={12}
                 isFetching={filters.tagsFilter.options?.isFetching}
@@ -91,23 +86,16 @@ export const ProfileListHeroFilters = () => {
                   filters.tagsFilter.setValue(selected);
                 }}
               />
-            </div>
+            </FilterCard>
           )}
-          <div className="space-y-4">
-            <div className="flex flex-col gap-2 md:flex-row">
-              <FilterTitle
-                title="Profile Sectors"
-                count={filteredSectors.length}
-                isFetching={filters.profileSectorsFilter.options?.isFetching}
-              />
-              {siteConfig.featureFlags?.allowHeroFiltersSearch && (
-                <SearchInput
-                  value={sectorSearch}
-                  onChange={setSectorSearch}
-                  placeholder="Search sectors..."
-                />
-              )}
-            </div>
+          <FilterCard
+            icon={<Layers className="h-4 w-4" />}
+            title="Profile Sectors"
+            isFetching={filters.profileSectorsFilter.options?.isFetching}
+            searchValue={sectorSearch}
+            onSearchChange={setSectorSearch}
+            searchPlaceholder="Search sectors..."
+          >
             <CheckboxGrid
               initialVisibleCount={12}
               isFetching={filters.profileSectorsFilter.options?.isFetching}
@@ -118,22 +106,15 @@ export const ProfileListHeroFilters = () => {
                 filters.profileSectorsFilter.setValue(selected);
               }}
             />
-          </div>
-          <div className="space-y-4">
-            <div className="flex flex-col gap-2 md:flex-row">
-              <FilterTitle
-                title="Product types"
-                count={filteredProducts.length}
-                isFetching={filters.productTypesFilter.options?.isFetching}
-              />
-              {siteConfig.featureFlags?.allowHeroFiltersSearch && (
-                <SearchInput
-                  value={productSearch}
-                  onChange={setProductSearch}
-                  placeholder="Search product types..."
-                />
-              )}
-            </div>
+          </FilterCard>
+          <FilterCard
+            icon={<Package className="h-4 w-4" />}
+            title="Product Types"
+            isFetching={filters.productTypesFilter.options?.isFetching}
+            searchValue={productSearch}
+            onSearchChange={setProductSearch}
+            searchPlaceholder="Search product types..."
+          >
             <CheckboxGrid
               initialVisibleCount={12}
               isFetching={filters.productTypesFilter.options?.isFetching}
@@ -144,23 +125,16 @@ export const ProfileListHeroFilters = () => {
                 filters.productTypesFilter.setValue(selected);
               }}
             />
-          </div>
+          </FilterCard>
           {Boolean(siteConfig.featureFlags?.displayAssetTypeFilter) && (
-            <div className="space-y-4">
-              <div className="flex flex-col gap-2 md:flex-row">
-                <FilterTitle
-                  title="Asset types"
-                  count={filteredAssetTypes.length}
-                  isFetching={filters.assetTypeFilter.options?.isFetching}
-                />
-                {siteConfig.featureFlags?.allowHeroFiltersSearch && (
-                  <SearchInput
-                    value={assetSearch}
-                    onChange={setAssetSearch}
-                    placeholder="Search asset types..."
-                  />
-                )}
-              </div>
+            <FilterCard
+              icon={<Banknote className="h-4 w-4" />}
+              title="Asset Types"
+              isFetching={filters.assetTypeFilter.options?.isFetching}
+              searchValue={assetSearch}
+              onSearchChange={setAssetSearch}
+              searchPlaceholder="Search asset types..."
+            >
               <CheckboxGrid
                 initialVisibleCount={12}
                 isFetching={filters.assetTypeFilter.options?.isFetching}
@@ -171,7 +145,7 @@ export const ProfileListHeroFilters = () => {
                   filters.assetTypeFilter.setValue(selected);
                 }}
               />
-            </div>
+            </FilterCard>
           )}
         </div>
       )}
@@ -179,19 +153,44 @@ export const ProfileListHeroFilters = () => {
   );
 };
 
-const FilterTitle = ({
+const FilterCard = ({
+  icon,
   title,
-  count,
-  isFetching
+  isFetching,
+  searchValue,
+  onSearchChange,
+  searchPlaceholder,
+  children
 }: {
+  icon: ReactNode;
   title: string;
-  count?: number;
   isFetching?: boolean;
+  searchValue: string;
+  onSearchChange: (value: string) => void;
+  searchPlaceholder: string;
+  children: ReactNode;
 }) => (
-  <h1 className="flex items-center gap-2 text-xl font-bold lg:text-xl">
-    {title}{' '}
-    {isFetching ? <Spinner size="sm" /> : count !== undefined && `(${count})`}
-  </h1>
+  <Card className="shadow-sm">
+    <CardHeader className="flex flex-row items-center justify-between space-y-0 px-4 py-3">
+      <div className="flex items-center gap-2">
+        <span className="text-muted-foreground">{icon}</span>
+        <h3 className="text-sm font-medium">
+          {title}
+          {isFetching && <Spinner size="sm" className="ml-2 inline" />}
+        </h3>
+      </div>
+      {siteConfig.featureFlags?.allowHeroFiltersSearch && (
+        <SearchInput
+          value={searchValue}
+          onChange={onSearchChange}
+          placeholder={searchPlaceholder}
+        />
+      )}
+    </CardHeader>
+    <CardContent className="px-4 pb-4 pt-0">
+      {children}
+    </CardContent>
+  </Card>
 );
 
 const SearchInput = ({
@@ -202,8 +201,6 @@ const SearchInput = ({
   value: string;
   onChange: (value: string) => void;
   placeholder: string;
-  className?: string;
-  variant?: 'default';
 }) => (
   <div className="flex items-center rounded-md">
     <MagnifyingGlassIcon className="mr-1 h-4 w-4 shrink-0 text-muted-foreground/50" />

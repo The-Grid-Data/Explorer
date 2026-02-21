@@ -7,27 +7,37 @@ interface CollapsibleListProps<T> {
   renderItem: (item: T) => React.ReactNode;
   renderEmpty?: () => React.ReactNode;
   initialVisibleCount?: number;
+  minVisibleCount?: number;
+  getKey?: (item: T, index: number) => string | number;
 }
 
 export const CollapsibleList = <T extends unknown>({
   items,
   renderItem,
   renderEmpty = () => null,
-  initialVisibleCount = 3
+  initialVisibleCount = 3,
+  minVisibleCount,
+  getKey
 }: CollapsibleListProps<T>) => {
-  // Move useState outside of conditional
   const [showAll, setShowAll] = useState(false);
 
   if (!items?.length) return renderEmpty?.();
 
-  const visibleItems = showAll ? items : items.slice(0, initialVisibleCount);
+  const effectiveVisibleCount = Math.max(
+    initialVisibleCount,
+    minVisibleCount ?? 0
+  );
+  const visibleItems = showAll
+    ? items
+    : items.slice(0, effectiveVisibleCount);
 
   return (
     <div className="flex flex-wrap items-center gap-2">
       <AnimatePresence>
         {visibleItems.map((item, index) => (
           <motion.div
-            key={index}
+            key={getKey ? getKey(item, index) : index}
+            layout
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
@@ -37,7 +47,7 @@ export const CollapsibleList = <T extends unknown>({
           </motion.div>
         ))}
       </AnimatePresence>
-      {items.length > initialVisibleCount && (
+      {items.length > effectiveVisibleCount && (
         <Button
           variant="link"
           className="p-0"
@@ -45,7 +55,7 @@ export const CollapsibleList = <T extends unknown>({
         >
           {showAll
             ? 'Show Less'
-            : `Show ${items.length - initialVisibleCount} More`}
+            : `Show ${items.length - effectiveVisibleCount} More`}
         </Button>
       )}
     </div>

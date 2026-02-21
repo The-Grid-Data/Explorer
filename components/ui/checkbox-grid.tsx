@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 import { Button } from '@/components/ui/button';
 import { cn, isNil } from '@/lib/utils';
 import {
@@ -46,9 +46,17 @@ export default function CheckboxGrid<T extends string | number>({
     [selected, onChange]
   );
 
+  const orderedOptions = useMemo(() => {
+    if (!selected?.length) return options;
+    const selectedSet = new Set(selected);
+    const selectedItems = options.filter(o => selectedSet.has(o.value));
+    const unselectedItems = options.filter(o => !selectedSet.has(o.value));
+    return [...selectedItems, ...unselectedItems];
+  }, [options, selected]);
+
   return (
     <div>
-      <div className="mb-6 flex flex-wrap gap-4">
+      <div className="mb-6 flex flex-wrap gap-2">
         {isLoading ? (
           <>
             {new Array(12).fill(null).map((_, index) => (
@@ -62,49 +70,57 @@ export default function CheckboxGrid<T extends string | number>({
         ) : (
           <div
             className={cn(
-              'flex flex-wrap gap-4',
+              'flex flex-wrap gap-2',
               isFetching && 'animate-pulse'
             )}
           >
             <CollapsibleList
-              items={options}
+              items={orderedOptions}
               initialVisibleCount={initialVisibleCount}
+              minVisibleCount={selected?.length ?? 0}
+              getKey={option => String(option.value)}
               renderEmpty={() => null}
-              renderItem={option => (
-                <TooltipProvider>
-                  <Tooltip>
-                    <TooltipTrigger asChild>
-                      <Button
-                        disabled={option.disabled || isFetching}
-                        variant={
-                          selected?.includes(option.value)
-                            ? 'outline'
-                            : 'secondary'
-                        }
-                        className={cn(
-                          'flex items-center justify-center gap-2 text-sm font-medium transition-opacity duration-300',
-                          selected?.includes(option.value)
-                            ? 'border-2 border-primary text-primary'
-                            : 'text-secondary-foreground'
-                        )}
-                        onClick={() => toggleItem(option.value)}
-                      >
-                        <span>{option.label}</span>
-                        {!isNil(option.count) && (
-                          <div className="min-w-6 rounded-md bg-primary/10 px-1 py-0 text-center text-[10px]">
-                            {option.count}
-                          </div>
-                        )}
-                      </Button>
-                    </TooltipTrigger>
-                    {option.description && (
-                      <TooltipContent className="max-w-64 text-base">
-                        <p>{option.description}</p>
-                      </TooltipContent>
-                    )}
-                  </Tooltip>
-                </TooltipProvider>
-              )}
+              renderItem={option => {
+                const isSelected = selected?.includes(option.value);
+                return (
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <Button
+                          disabled={option.disabled || isFetching}
+                          variant={isSelected ? 'outline' : 'secondary'}
+                          className={cn(
+                            'flex items-center justify-center gap-2 text-sm font-medium transition-opacity duration-300',
+                            isSelected
+                              ? 'border-2 border-primary text-primary'
+                              : 'text-secondary-foreground'
+                          )}
+                          onClick={() => toggleItem(option.value)}
+                        >
+                          <span>{option.label}</span>
+                          {!isNil(option.count) && (
+                            <span
+                              className={cn(
+                                'text-[10px]',
+                                isSelected
+                                  ? 'text-primary/40'
+                                  : 'text-muted-foreground/50'
+                              )}
+                            >
+                              {option.count}
+                            </span>
+                          )}
+                        </Button>
+                      </TooltipTrigger>
+                      {option.description && (
+                        <TooltipContent className="max-w-64 text-base">
+                          <p>{option.description}</p>
+                        </TooltipContent>
+                      )}
+                    </Tooltip>
+                  </TooltipProvider>
+                );
+              }}
             />
           </div>
         )}

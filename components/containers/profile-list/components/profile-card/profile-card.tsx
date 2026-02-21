@@ -14,9 +14,7 @@ import {
   UrlTypeIconLinks
 } from '@/components/containers/url-type-icon/url-type-icon-list';
 import { useProfileFiltersContext } from '@/providers/filters-provider';
-import { Banknote, Package } from 'lucide-react';
-import { ItemWithSheet } from '@/components/containers/profile-detail/components/Item-with-sheet';
-import { AssetCard } from '@/components/containers/profile-detail/components/asset-card';
+import { AssetTable } from './asset-table';
 import { format } from 'date-fns';
 import { graphql, FragmentType, useFragment } from '@/lib/graphql/generated';
 import { ProfileTags } from '@/components/containers/profile-detail/components/profile-tags';
@@ -243,26 +241,7 @@ export const ProfileCard = ({ profile: profileData }: ProfileCardCardProps) => {
               ].some(value => value)}
               className="items-start"
             >
-              <div className="flex h-full flex-wrap gap-2">
-                {profile.root?.assets?.length ? (
-                  profile.root.assets.map(asset => (
-                    <ItemWithSheet
-                      key={asset.id}
-                      trigger={
-                        <Badge
-                          variant="secondary"
-                          className="flex w-fit items-center gap-2 hover:cursor-pointer"
-                        >
-                          <Banknote size={16} /> {asset.name}
-                        </Badge>
-                      }
-                      content={<AssetCard variant="fluid" asset={asset} />}
-                    />
-                  ))
-                ) : (
-                  <span className="mt-1 text-sm">-</span>
-                )}
-              </div>
+              <AssetTable assets={profile.root?.assets} />
             </ProfileCardDataPoint>
             <ProfileCardDataPoint
               label="Products"

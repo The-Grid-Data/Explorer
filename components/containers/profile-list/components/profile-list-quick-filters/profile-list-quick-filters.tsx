@@ -72,8 +72,8 @@ export const ProfileListQuickFilters = () => {
 
   return (
     <div className="space-y-4">
-      <h1 className="text-xl font-bold">Quick Filters</h1>
-      <div className="flex flex-wrap gap-6">
+      <h1 className="text-lg font-semibold">Quick Filters</h1>
+      <div className="flex flex-wrap gap-4">
         {[...grouped.entries()].map(([key, items]) => {
           const config = filterKeyConfig[key];
           if (!config) return null;
@@ -106,7 +106,6 @@ export const ProfileListQuickFilters = () => {
                       <TooltipTrigger asChild>
                         <Button
                           variant={isActive ? 'outline' : 'secondary'}
-                          size="sm"
                           className={cn(
                             'flex items-center justify-center gap-1.5 text-sm font-medium transition-opacity duration-300',
                             isActive
