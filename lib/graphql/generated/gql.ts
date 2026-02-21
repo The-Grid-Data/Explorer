@@ -31,7 +31,7 @@ const documents = {
     "\n          query getAssetDeployedOnProductsOptions($where: ProductsBoolExp) {\n            products(where: $where, order_by: {root: {gridRank: {score: Desc}}}) {\n              name\n              id\n              description\n            }\n        }\n        ": types.GetAssetDeployedOnProductsOptionsDocument,
     "\n          query getAssetStandardOptions($where: AssetStandardsBoolExp) {\n            assetStandards(where: $where) {\n              label: name\n              value: id\n              description: definition\n            }\n          }\n        ": types.GetAssetStandardOptionsDocument,
     "\n          query getAssetTickerOptions($where: AssetsBoolExp) {\n            assets(where: $where) {\n              ticker\n            }\n          }\n        ": types.GetAssetTickerOptionsDocument,
-    "\n          query getAssetTypeOptions($where: AssetTypesBoolExp) {\n            assetTypes(where: $where) {\n              label: name\n              value: id\n              description: definition\n            }\n          }\n        ": types.GetAssetTypeOptionsDocument,
+    "\n          query getAssetTypeOptions($where: AssetTypesBoolExp) {\n            assetTypes(where: $where) {\n              label: name\n              value: id\n              description: definition\n              assetsAggregate {\n                _count\n              }\n            }\n          }\n        ": types.GetAssetTypeOptionsDocument,
     "\n          query getEntityCountryOptions($where: CountriesBoolExp) {\n            countries(where: $where) {\n              label: name\n              value: id\n            }\n          }\n        ": types.GetEntityCountryOptionsDocument,
     "\n          query getEntityNameOptions($where: EntitiesBoolExp) {\n            entities(where: $where) {\n              label: name\n              value: id\n            }\n          }\n        ": types.GetEntityNameOptionsDocument,
     "\n          query getEntityTypeOptions($where: EntityTypesBoolExp) {\n            entityTypes(where: $where) {\n              label: name\n              value: id\n              description: definition\n            }\n          }\n        ": types.GetEntityTypeOptionsDocument,
@@ -114,7 +114,7 @@ export function graphql(source: "\n          query getAssetTickerOptions($where:
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n          query getAssetTypeOptions($where: AssetTypesBoolExp) {\n            assetTypes(where: $where) {\n              label: name\n              value: id\n              description: definition\n            }\n          }\n        "): typeof import('./graphql').GetAssetTypeOptionsDocument;
+export function graphql(source: "\n          query getAssetTypeOptions($where: AssetTypesBoolExp) {\n            assetTypes(where: $where) {\n              label: name\n              value: id\n              description: definition\n              assetsAggregate {\n                _count\n              }\n            }\n          }\n        "): typeof import('./graphql').GetAssetTypeOptionsDocument;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

@@ -6,6 +6,7 @@ import {
   SearchProfilesQuery
 } from './components/profile-list-cards';
 import { ProfileListHeroFilters } from './components/profile-list-hero-filters';
+import { ProfileListQuickFilters } from './components/profile-list-quick-filters/profile-list-quick-filters';
 import {
   ProfileListFilters,
   ProfileListFiltersLabel
@@ -28,6 +29,7 @@ export const ProfileList = () => {
         <ProfileQueryProvider>
           <div className="w-full space-y-4">
             <div className="container space-y-4 md:space-y-10">
+              <ProfileListQuickFilters />
               <ProfileListHeroFilters />
 
               <div className="flex gap-8">

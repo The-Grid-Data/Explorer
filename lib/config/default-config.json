@@ -58,5 +58,6 @@
     "displayAssetTypeFilter": true,
     "displayPoweredBy": true,
     "hideTagsOnProfileCards": false
-  }
+  },
+  "quickFilters": []
 }

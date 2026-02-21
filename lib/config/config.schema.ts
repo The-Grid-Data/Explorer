@@ -87,7 +87,17 @@ export const configSchema = z.object({
     hideTagsOnProfileCards: z
       .boolean()
       .default(defaultConfig.featureFlags.hideTagsOnProfileCards)
-  })
+  }),
+  quickFilters: z
+    .array(
+      z.object({
+        label: z.string(),
+        filterKey: z.enum(['assetType', 'attribute', 'productType', 'sector']),
+        valueId: z.string().optional(),
+        description: z.string().optional()
+      })
+    )
+    .default([])
 });
 
 export type Config = z.infer<typeof configSchema>;

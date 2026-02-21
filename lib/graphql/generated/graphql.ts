@@ -5933,7 +5933,7 @@ export type GetAssetTypeOptionsQueryVariables = Exact<{
 }>;
 
 
-export type GetAssetTypeOptionsQuery = { __typename?: 'Query', assetTypes?: Array<{ __typename?: 'AssetTypes', label: string, value: string, description: string }> | null };
+export type GetAssetTypeOptionsQuery = { __typename?: 'Query', assetTypes?: Array<{ __typename?: 'AssetTypes', label: string, value: string, description: string, assetsAggregate: { __typename?: 'AssetsAggExp', _count: number } }> | null };
 
 export type GetEntityCountryOptionsQueryVariables = Exact<{
   where?: InputMaybe<CountriesBoolExp>;
@@ -7525,6 +7525,9 @@ export const GetAssetTypeOptionsDocument = new TypedDocumentString(`
     label: name
     value: id
     description: definition
+    assetsAggregate {
+      _count
+    }
   }
 }
     `) as unknown as TypedDocumentString<GetAssetTypeOptionsQuery, GetAssetTypeOptionsQueryVariables>;

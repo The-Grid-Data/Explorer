@@ -21,15 +21,12 @@ export const useAssetTypeFilter = (filterStore: FiltersStore) => {
     getOptions: async () => {
       const data = await execute(
         graphql(`
-          query getAssetTypeOptions(
-            $where: AssetTypesBoolExp
-            $aggregateInput: AssetsFilterInput
-          ) {
+          query getAssetTypeOptions($where: AssetTypesBoolExp) {
             assetTypes(where: $where) {
               label: name
               value: id
               description: definition
-              assetsAggregate(filter_input: $aggregateInput) {
+              assetsAggregate {
                 _count
               }
             }
