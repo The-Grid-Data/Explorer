@@ -154,7 +154,7 @@ export const ProfileCard = ({ profile: profileData }: ProfileCardCardProps) => {
               ) && <ClaimedBadge />}
             </div>
             <div className="flex flex-col gap-4 lg:mr-[-16px] lg:flex-row">
-              <div className="w-fit flex-1">
+              <div className="min-w-0 flex-1">
                 <UrlTypeIconLinks
                   urls={[
                     extractUrls(profile.urls),
