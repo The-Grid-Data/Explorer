@@ -52,10 +52,6 @@ const codegenConfig: CodegenConfig = {
             input: 'string',
             output: 'string'
           },
-          AlphaVybe_RankingInterval: {
-            input: 'string',
-            output: 'string'
-          },
           Float641: {
             input: 'number',
             output: 'number'
@@ -68,10 +64,6 @@ const codegenConfig: CodegenConfig = {
             input: 'number',
             output: 'number'
           },
-          Enum: {
-            input: 'string',
-            output: 'string'
-          },
           Json: {
             input: 'any',
             output: 'any'
@@ -79,10 +71,6 @@ const codegenConfig: CodegenConfig = {
           Json_1: {
             input: 'any',
             output: 'any'
-          },
-          RawHttpMethod: {
-            input: 'string',
-            output: 'string'
           },
           String2: {
             input: 'string',
